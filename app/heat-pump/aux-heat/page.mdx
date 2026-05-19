@@ -1,0 +1,383 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { Sources } from '@/components/article/Sources';
+import { SourceCite } from '@/components/article/SourceCite';
+import { AuthorByline } from '@/components/article/AuthorByline';
+import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { HeroAuxHeatFlow } from '@/components/svg/aux-heat/HeroAuxHeatFlow';
+import { BalancePointChart } from '@/components/svg/aux-heat/BalancePointChart';
+import { ThermostatCallFlow } from '@/components/svg/aux-heat/ThermostatCallFlow';
+import { CostComparisonBar } from '@/components/svg/aux-heat/CostComparisonBar';
+import { NormalVsProblemDecision } from '@/components/svg/aux-heat/NormalVsProblemDecision';
+
+export const metadata = {
+  title: 'Heat Pump Auxiliary Heat: What It Is and When It Should Run',
+  description:
+    "Auxiliary heat kicks in when your heat pump can't meet demand alone. Learn what triggers it, what it costs, and when constant aux heat signals a problem.",
+  openGraph: {
+    title: "Heat Pump Auxiliary Heat: When It Should Run (and When It Shouldn't)",
+    description:
+      "Aux heat costs 2-3x more per BTU than your heat pump. Here's when it's normal and when it signals a problem.",
+    type: 'article',
+    publishedTime: '2026-05-18',
+    modifiedTime: '2026-05-18',
+    authors: ['Jonathan S.'],
+  },
+};
+
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'Heat Pump', url: '/heat-pump/' },
+  { name: 'Auxiliary Heat' },
+];
+
+export const HEADINGS = [
+  { id: 'what-auxiliary-heat-actually-is', text: 'What Auxiliary Heat Actually Is', level: 2 },
+  { id: 'how-aux-heat-engages-the-mechanical-sequence', text: 'How Aux Heat Engages: The Mechanical Sequence', level: 2 },
+  { id: 'the-balance-point-why-aux-heat-exists', text: 'The Balance Point: Why Aux Heat Exists', level: 2 },
+  { id: 'four-scenarios-when-aux-heat-is-normal', text: 'Four Scenarios When Aux Heat Is Normal', level: 2 },
+  { id: 'four-scenarios-when-aux-heat-is-a-problem', text: 'Four Scenarios When Aux Heat Is a Problem', level: 2 },
+  { id: 'what-aux-heat-costs-to-run', text: 'What Aux Heat Costs to Run', level: 2 },
+  { id: 'auxiliary-heat-vs-emergency-heat', text: 'Auxiliary Heat vs Emergency Heat', level: 2 },
+  { id: 'how-thermostats-control-aux-heat', text: 'How Thermostats Control Aux Heat', level: 2 },
+  { id: 'when-aux-heat-usage-justifies-a-system-upgrade', text: 'When Aux Heat Usage Justifies a System Upgrade', level: 2 },
+];
+
+export const SOURCES = [
+  {
+    id: 'eia-residential-electricity-2025',
+    title: 'Average Price of Electricity to Ultimate Customers by End-Use Sector, Table 5.6.A',
+    publisher: 'US Energy Information Administration',
+    year: 2025,
+    url: 'https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_6_a',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'energystar-heat-pump-spec',
+    title: 'ENERGY STAR Program Requirements for Central Air Conditioners and Air-Source Heat Pumps, Version 6.0',
+    publisher: 'US EPA / ENERGY STAR',
+    year: 2024,
+    url: 'https://www.energystar.gov/products/spec/central_air_conditioner_and_heat_pump_specification_version_6_0_pd',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'neep-cchp-spec',
+    title: 'Cold Climate Air Source Heat Pump Specification, Version 4.0',
+    publisher: 'Northeast Energy Efficiency Partnerships (NEEP)',
+    year: 2024,
+    url: 'https://neep.org/heating-electrification/ccashp-specification-product-list',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'doe-heat-pump-basics',
+    title: 'Heat Pump Systems',
+    publisher: 'US Department of Energy, Office of Energy Efficiency and Renewable Energy',
+    year: 2024,
+    url: 'https://www.energy.gov/energysaver/heat-pump-systems',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'acca-manual-j-8',
+    title: 'Manual J — Residential Load Calculation, 8th Edition (ANSI/ACCA 2 Manual J - 2016)',
+    publisher: 'Air Conditioning Contractors of America (ACCA)',
+    year: 2016,
+    url: 'https://www.acca.org/standards/technical-manuals/manual-j',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'doe-cchp-challenge',
+    title: 'Residential Cold Climate Heat Pump Challenge, Technical Specification',
+    publisher: 'US Department of Energy, Building Technologies Office',
+    year: 2023,
+    url: 'https://www.energy.gov/eere/buildings/residential-cold-climate-heat-pump-challenge',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'ahri-210-240',
+    title: 'ANSI/AHRI Standard 210/240-2023, Performance Rating of Unitary Air-Conditioning and Air-Source Heat Pump Equipment',
+    publisher: 'Air-Conditioning, Heating and Refrigeration Institute (AHRI)',
+    year: 2023,
+    url: 'https://www.ahrinet.org/search-standards/ahri-210240-2023-performance-rating-unitary-air-conditioning-air-source-heat-pump',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+];
+
+export const FAQ_ITEMS = [
+  {
+    q: "Why is my aux heat on when it's not that cold outside?",
+    a: 'Aux heat can engage during mild weather for three normal reasons: the system is recovering from a thermostat setback, the heat pump is in a defrost cycle, or the indoor temperature dropped more than 2-3°F below setpoint. If aux heat runs in mild weather without any of those triggers, the most common causes are an undersized heat pump, a malfunctioning outdoor temperature sensor, or a thermostat configured to use aux heat more aggressively than necessary.',
+  },
+  {
+    q: 'Is it normal for aux heat to run during defrost?',
+    a: 'Yes. During defrost, the system reverses to send hot refrigerant to the outdoor coil to melt frost, which means it temporarily cools the indoor air. Aux heat strips activate to keep the air coming out of the registers warm during the 5-15 minute defrost cycle. This is designed behavior, not a problem.',
+  },
+  {
+    q: 'Can I disable auxiliary heat to save money?',
+    a: 'Most thermostats allow you to lock out aux heat above a temperature you choose. This works in mild climates where the heat pump alone is enough. In colder climates, fully disabling aux heat risks letting the house drop below setpoint on the coldest days and during defrost. A better approach is to raise the aux heat lockout temperature to keep it from kicking on during minor temperature swings.',
+  },
+  {
+    q: "What's the difference between aux heat and emergency heat on my thermostat?",
+    a: 'Auxiliary heat (AUX) is automatic, the thermostat activates it as a supplement when the heat pump cannot meet demand. Emergency heat (EM HEAT) is manual, you select it to lock out the heat pump entirely and run only the resistance strips, typically when the heat pump itself has failed.',
+  },
+  {
+    q: 'How much does it cost to run aux heat?',
+    a: 'A 5 kW aux heat strip running for one hour at the 2024 US average electricity rate of $0.16/kWh costs about $0.80 per hour. A 10 kW strip doubles that. By comparison, the heat pump alone delivering the same amount of heat typically costs $0.20-$0.30 per hour because it moves heat rather than generating it.',
+  },
+  {
+    q: 'Why does my aux heat run when the thermostat is satisfied?',
+    a: "It shouldn't. If aux heat continues to run after the thermostat shows the setpoint is reached, the most likely causes are a stuck relay in the air handler, a thermostat wiring error, or a control board fault. This is a service call.",
+  },
+  {
+    q: 'How long should aux heat normally run?',
+    a: "In a properly sized system, aux heat should run during defrost cycles (5-15 minutes a few times per cold day), during setback recovery (10-30 minutes when the thermostat raises the setpoint), and below the system's balance point (continuously when outdoor temperature is below that threshold). Hours of continuous aux heat operation in mild weather indicates a problem.",
+  },
+  {
+    q: 'Will running aux heat damage my system?',
+    a: 'No, but it indicates the heat pump cannot meet the load on its own. The resistance strips themselves are robust. The concern is the cost: aux heat consumes 2-3x more electricity per BTU delivered than the heat pump does, and the fact that frequent aux heat operation suggests either undersizing, equipment problems, or both.',
+  },
+  {
+    q: 'Does aux heat work the same on all heat pumps?',
+    a: 'The principle is the same: electric resistance strips supplement the heat pump when needed. Implementation varies. Some systems use a single 5 kW strip; larger systems use 10-20 kW total split into multiple stages. Variable-speed inverter heat pumps engage aux heat less often than single-stage models because they can ramp output to match demand more precisely.',
+  },
+  {
+    q: 'Should I upgrade my heat pump if aux heat runs a lot?',
+    a: "Possibly, but troubleshoot first. Common fixes that don't require replacement: raise the aux heat lockout temperature on the thermostat, check for dirty filters or duct leakage, verify outdoor unit is clear of snow and debris, ensure the refrigerant charge is correct. If those don't help and aux heat runs frequently in mild weather, the heat pump is likely undersized for the house and an upgrade may be justified.",
+  },
+];
+
+export const RELATED = [
+  {
+    title: 'Heat pump balance point',
+    url: '/heat-pump/cold-climate/balance-point/',
+    description: 'The outdoor temperature below which auxiliary heat engages to meet demand.',
+  },
+  {
+    title: 'Configure aux heat on Ecobee thermostats',
+    url: '/heat-pump/aux-heat/ecobee/',
+    description: 'Walkthrough of lockout temperature, droop, and runtime reporting on Ecobee models.',
+  },
+  {
+    title: 'Heat pump defrost cycle behavior',
+    url: '/heat-pump/cold-climate/defrost-cycle/',
+    description: 'Why aux heat engages during defrost and how long the cycle lasts.',
+  },
+  {
+    title: 'Aux heat vs emergency heat',
+    url: '/heat-pump/aux-heat/emergency-heat-difference/',
+    description: 'Full breakdown of the automatic-vs-manual distinction.',
+  },
+];
+
+export const FRONTMATTER = {
+  title: 'Heat Pump Auxiliary Heat: What It Is and When It Should Run',
+  h1: 'Heat Pump Auxiliary Heat Explained',
+  meta_description:
+    "Auxiliary heat kicks in when your heat pump can't meet demand alone. Learn what triggers it, what it costs, and when constant aux heat signals a problem.",
+  url: '/heat-pump/aux-heat/',
+  date_published: '2026-05-18',
+  last_reviewed: '2026-05-18',
+  target_keyword: 'auxiliary heat',
+  secondary_keywords: ['aux heat', 'heat pump aux heat', 'emergency heat', 'balance point'],
+  sources: SOURCES,
+  faq: FAQ_ITEMS,
+  parent_title: 'Heat Pump',
+};
+
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={2400} />
+
+<JsonLdBreadcrumb items={BREADCRUMBS} />
+
+<Container>
+
+<Breadcrumbs items={BREADCRUMBS} />
+
+<HeroAuxHeatFlow />
+
+<ArticleHeader
+  h1="Heat Pump Auxiliary Heat Explained"
+  description="Auxiliary heat kicks in when your heat pump can't meet demand alone. Learn what triggers it, what it costs, and when constant aux heat signals a problem."
+  datePublished="2026-05-18"
+  lastReviewed="2026-05-18"
+  readingTimeMinutes={11}
+/>
+
+<KeyTakeaways
+  items={[
+    'Auxiliary heat is electric resistance backup mounted downstream of the heat pump indoor coil; it supplements, not replaces, the heat pump.',
+    'A heat pump system has a balance point — typically 25-35°F for conventional units, 5-15°F for cold-climate models — below which aux heat fills the heating gap.',
+    'Aux heat is automatic; emergency heat is manual. Aux runs alongside the compressor; emergency locks the compressor out and runs only the strips.',
+    'Heat pumps move heat at COP 2.5-4.0; resistance strips make heat at COP 1.0. Strips cost roughly three times more per BTU delivered.',
+    'Aux heat is normal during cold weather, defrost, setback recovery, and sustained temperature drops. It is a warning sign in mild weather, after setpoint is reached, or when running alone.',
+  ]}
+/>
+
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
+
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+If your thermostat is showing "AUX HEAT" right now and you're trying to figure out whether it's a problem, here's the short answer: it depends on what's happening outside and what your thermostat is set to do.
+
+Auxiliary heat is the electric resistance backup that lives inside your air handler, downstream of the heat pump's indoor coil. When the heat pump alone can't keep up with what the thermostat is asking for, the resistance strips switch on and help close the gap. Most of the time, this is exactly what the system is supposed to do. Sometimes, it's a sign something else is wrong.
+
+This article walks through both cases — when aux heat is doing its job, and when it's telling you to investigate.
+
+## What Auxiliary Heat Actually Is
+
+When you see "AUX HEAT ON" on a thermostat, the meaning is direct: electric resistance heating elements have engaged inside your air handler to supplement what the heat pump is delivering. These strips, what HVAC techs sometimes call heater aux heat or heater auxiliary heat, sit downstream of the indoor evaporator coil. The same air that just passed through the coil flows through them on its way to the supply ducts.
+
+A typical residential air handler has aux heat strips rated at 5, 10, 15, or 20 kW total, usually split across two stages.<SourceCite id="energystar-heat-pump-spec" number={2} /> The strips are sized to roughly match the home's design heating load, so they can carry the heating job on their own if the heat pump fails, though running them alone costs noticeably more.
+
+The heat pump itself works on a different principle. It uses a refrigerant cycle to move heat from outdoor air into the indoor coil, which is more efficient than burning electricity directly into resistance heat. The auxiliary strips, by contrast, simply convert electricity into heat at a one-to-one ratio.
+
+Heat pumps move heat. Resistance strips make heat. Moving is cheaper than making.
+
+Aux heat is automatic. Emergency heat is manual. The difference matters and gets its own section below. For a deeper breakdown of [what aux heat means on your thermostat](/heat-pump/aux-heat/meaning/), see the dedicated explainer. If you are new to [heat pump fundamentals](/heat-pump/), the brief version is that a heat pump moves heat with a refrigerant cycle rather than generating it directly, and aux heat is the resistance backup it falls back on when the cycle alone cannot deliver enough. The [DOE heat pump systems overview](https://www.energy.gov/energysaver/heat-pump-systems) covers the basics in more depth.
+
+## How Aux Heat Engages: The Mechanical Sequence
+
+Aux heat does not engage randomly. The thermostat runs through a defined escalation when the home is losing temperature faster than the heat pump alone can recover.
+
+Step one is the call for heat. The thermostat senses indoor temperature drop below setpoint by some differential (usually 1°F) and signals the air handler.
+
+Step two is the compressor. The heat pump's outdoor unit starts the refrigerant cycle. On a single-stage system that means full output; on a variable-speed inverter system the compressor ramps up smoothly. The indoor coil warms, the blower runs, supply air starts to warm.
+
+Step three is escalation. If indoor temperature continues to fall after a few minutes, or drops past a droop threshold of 2-3°F below setpoint, the thermostat calls for the next stage. Variable-speed units engage their second compressor stage. Single-stage units have no second compressor stage, so they go straight to aux heat.
+
+Step four is supplemental heating. The resistance strips switch on, drawing 5-20 kW depending on configuration. The heat pump and aux heat run simultaneously: same airstream, two heat sources, working together. This trips up a lot of homeowners. Aux heat on a heat pump system specifically does not mean the heat pump shut off.
+
+[Dual-fuel heat pump configurations](/heat-pump/types/dual-fuel/) behave differently. Instead of resistance strips, they pair the heat pump with a gas furnace and switch between the two based on outdoor temperature.
+
+The system always tries the heat pump first. Aux heat is the supplement, not the substitute.
+
+<ThermostatCallFlow />
+
+## The Balance Point: Why Aux Heat Exists
+
+The balance point is the outdoor temperature at which your heat pump's heating capacity exactly equals your home's heat loss. Above that temperature, the heat pump alone delivers enough heat to maintain the indoor setpoint. Below it, the heat pump cannot keep up on its own — and aux heat fills the gap. The colder it gets, the more aux heat contributes.
+
+Two curves explain it. As outdoor temperature drops, the heat pump's capacity declines, because it has to "pump" heat across a larger temperature difference. At the same time, the home's heat loss rises, because the indoor-outdoor temperature gap grows. The chart below shows what this looks like for a typical residential system.
+
+<BalancePointChart />
+
+Where the heat pump capacity and home heat loss curves intersect is the balance point. For a conventional split heat pump in a typical home, the balance point sits between 25°F and 35°F.<SourceCite id="neep-cchp-spec" number={3} /> Below that, heat pump output falls short of demand and the resistance strips fill the deficit. Heat pump auxiliary heat exists precisely because of this capacity gap. Without resistance backup, the home would drop below setpoint on cold days.
+
+[Cold-climate heat pump performance](/heat-pump/cold-climate/) pushes the balance point lower. NEEP-listed cold-climate units typically maintain useful capacity down to 5-15°F balance points, with some delivering full rated capacity at 5°F per the DOE cold-climate target.<SourceCite id="neep-cchp-spec" number={3} /><SourceCite id="doe-cchp-challenge" number={6} /> They achieve this with inverter compressors that ramp output up in cold weather, vapor-injection refrigerant circuits that maintain mass flow at low ambient, and larger heat exchangers. The flatter the capacity curve, the lower the balance point sits.
+
+Below the unit's minimum operating temperature (typically -5°F to -22°F depending on model), the heat pump locks out entirely. At that point, all heating comes from the strips alone.
+
+Heat pump capacity is rated at standard conditions: 47°F and 17°F outdoor temperatures, indoor dry-bulb 70°F.<SourceCite id="ahri-210-240" number={7} /> These rating points anchor the manufacturer's published performance curve. Balance point determination starts from those rating points and combines them with the home's design heating load, computed via the [Manual J load calculation](/manual-j/) methodology.<SourceCite id="acca-manual-j-8" number={5} />
+
+For the [balance point in detail](/heat-pump/cold-climate/balance-point/), including how it changes with envelope improvements, see the dedicated article. Estimate your own system's threshold with the [balance point calculator](/tools/balance-point-calculator/). The [NEEP cold-climate heat pump specification](https://neep.org/heating-electrification/ccashp-specification-product-list) lists every certified cold-climate model with capacity at low ambient temperatures.
+
+## Four Scenarios When Aux Heat Is Normal
+
+Aux heat is not only a cold-weather feature. Four routine situations trigger it, and recognizing them prevents unnecessary worry.
+
+**Outdoor temperature below the balance point.** This is the primary reason aux heat runs. Below the balance point the heat pump physically cannot deliver enough heat for the home, and the strips supplement automatically. In climate zones 5 through 7, expect aux heat to be active any time outdoor temperature drops into the teens or single digits, even on a properly sized cold-climate system.
+
+**Defrost cycle.** Frost accumulates on the outdoor coil when ambient temperature is below 47°F and humidity is sufficient. To clear it, the system reverses refrigerant flow and sends hot refrigerant to the outdoor coil. During that 5-15 minute reversal, the indoor coil temporarily becomes a heat absorber rather than a heat source, so aux heat strips engage to keep the supply air warm. Even cold-climate heat pumps run aux heat during defrost; the NEEP CCASHP spec treats this as expected behavior.<SourceCite id="neep-cchp-spec" number={3} /> The [defrost cycle behavior](/heat-pump/cold-climate/defrost-cycle/) explains why frequency and duration vary.
+
+**Setback recovery.** When the thermostat raises the setpoint by 3°F or more (for example, from a programmed nighttime setback back to a daytime comfort range), the heat pump alone often needs more than an hour to recover. Aux heat engages to shorten the catch-up time. Some smart thermostats schedule recovery to start earlier and avoid this; others let the strips do the work.
+
+**Sustained indoor temperature drop.** An open door during a delivery, a stuck damper, or a deeper-than-usual setback can pull indoor temperature 2°F or more below setpoint. The thermostat treats this as a stage 2 condition and brings strips on to recover quickly.
+
+## Four Scenarios When Aux Heat Is a Problem
+
+Aux heat in mild weather is not normal. Four patterns warrant troubleshooting; the first, heat pump on auxiliary with no real reason, is the most common.
+
+**Aux heat in mild weather.** If your heat is on aux but the outdoor temperature is above 50°F and nothing else is happening (no defrost, no setback recovery), something is wrong. Common causes: the heat pump is undersized for the load, the outdoor temperature sensor reads high, or the thermostat is configured to drop into aux heat too aggressively (low lockout temperature, tight droop threshold). The first thing to check is the thermostat aux heat lockout setting.
+
+**Continuous aux heat operation.** Aux heat that runs for hours without temperature drops triggering it suggests either severe undersizing or an equipment fault. A heat pump that runs continuously and still cannot make setpoint may be low on refrigerant, may have a failing reversing valve, or may simply be too small for the load. The diagnostic path overlaps with [why a heat pump runs continuously](/heat-pump/troubleshooting/running-constantly/).
+
+**Runs after setpoint is reached.** Aux heat that continues after the thermostat shows setpoint is satisfied means a relay is stuck closed, wiring is misrouted, or a control board is faulty. The strips draw 5-20 kW. If they do not shut off, the house overshoots setpoint and the electricity bill spikes. This is a service call.
+
+**Runs alone without the compressor.** If aux heat is the only heat source, with the outdoor unit silent, one of two things is happening. Either the thermostat is in Emergency Heat mode (manual override) or the heat pump's outdoor unit has failed and the system has defaulted to strips. Check the thermostat mode selector first; that fixes it roughly 80% of the time.
+
+<NormalVsProblemDecision />
+
+## What Aux Heat Costs to Run
+
+The cost story comes down to coefficient of performance (COP). A heat pump operating at COP 3.0 delivers three units of heat for every unit of electricity it consumes. A resistance heat strip operating at COP 1.0 delivers exactly one unit of heat per unit of electricity. The strips do not waste energy; they just do not pull off the trick the heat pump does.<SourceCite id="doe-heat-pump-basics" number={4} /> Heat pumps typically operate in the COP 2.5-4.0 range; resistance strips are fixed at 1.0 by definition.
+
+Consider a single hour of operation with the heat pump and aux heat running together. The aux strip draws 5 kW. At the 2024 US average residential electricity rate of $0.16 per kWh,<SourceCite id="eia-residential-electricity-2025" number={1} /> that is:
+
+5 kW × 1 hour × $0.16/kWh = **$0.80 per hour** for the aux strip alone.
+
+The heat pump's contribution costs much less per unit of heat. To produce the same 17,060 BTU that the 5 kW strip delivers in an hour, a heat pump at COP 3.0 needs roughly 1.67 kWh of electricity:
+
+17,060 BTU ÷ (3.0 × 3,412 BTU/kWh) ≈ 1.67 kWh
+
+At the same rate, that's **$0.27 per hour**.
+
+Heat pump auxiliary heat therefore costs about three times more per BTU than the heat pump itself. A 10 kW strip in a larger home doubles the hourly aux cost to roughly $1.60; a 20 kW configuration doubles again. The bar chart below shows the comparison.
+
+<CostComparisonBar />
+
+Multiply those hourly numbers by the number of hours per heating season that aux heat actually runs, and the impact becomes visible on the utility bill. In a properly sized system aux heat may run 50-150 hours per year. In an undersized system or one with thermostat misconfigurations, it can run ten times that.
+
+Regional rates change the math. California and Hawaii residential rates run two to three times the US average; Washington and Idaho run roughly 65% of average. Check [current US residential electricity rates from the EIA](https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_6_a) for your state. The [seasonal performance factor (SPF)](/heat-pump/performance/seasonal-performance-factor/) summarizes how aux heat hours roll into a system's overall efficiency across the heating season.
+
+## Auxiliary Heat vs Emergency Heat
+
+Aux heat is automatic. Emergency heat is manual. That single distinction explains most of the confusion homeowners have between the two.
+
+Auxiliary heat on a heat pump engages automatically; emergency heat does not. The thermostat decides when to bring aux heat on, based on the stage 2 droop threshold, balance point lockouts, and the call escalation logic described above. The compressor keeps running alongside.
+
+Emergency heat is a different mode entirely. When you select "EM HEAT" on the thermostat (most thermostats with an emergency heat setting place it on the mode selector next to "Heat" and "Cool"), the heat pump's compressor locks out. The system runs only on the resistance strips. The thermostat with emergency heat setting is doing exactly what its label says: it is the emergency, the manual override for use when the heat pump itself cannot run.
+
+When does emergency heat make sense? When the heat pump has actually failed: refrigerant leak, frozen outdoor coil that will not defrost, compressor motor failure, blown contactor. If the outdoor unit is silent and the indoor temperature is dropping, switching to EM HEAT keeps the house warm while you wait for service.
+
+The cost difference matters. Emergency heat is 100% resistance heating with zero compressor contribution, so it costs roughly three times what the heat pump would cost for the same heat output. Leave it on only as long as needed.
+
+See [the full breakdown of aux heat vs emergency heat](/heat-pump/aux-heat/emergency-heat-difference/) for a deeper comparison.
+
+## How Thermostats Control Aux Heat
+
+Any thermostat with aux heat capability exposes a few configuration parameters that determine when the strips engage and how often.
+
+The most important is the aux heat lockout temperature. Above this outdoor temperature, the thermostat will not call for aux heat regardless of how far indoor temperature drops below setpoint. Set this to 35-40°F in most climates and aux heat will not engage during routine cool weather. Set it too low (or leave it disabled) and aux heat runs more freely. The thermostat aux configuration is usually found under installer settings; on consumer-facing UIs, look for "comfort" or "advanced" sections.
+
+The stage 2 droop or differential controls how far indoor temperature has to fall below setpoint before the thermostat calls stage 2. Typical settings: 2-3°F. Tighter droop means aux heat engages sooner; wider droop means the heat pump gets more time to recover.
+
+The compressor lockout temperature is the inverse: below this outdoor temperature, the heat pump shuts off entirely and the system runs em heat only.
+
+Brand-specific behavior varies. Ecobee aux heat settings expose explicit lockout temperatures, runtime reports, and a Smart Recovery feature that anticipates setback recovery. Nest thermostats expose more limited user controls and learn behavior over time rather than expose direct parameters. Honeywell's T-series surfaces detailed staging controls. When auxiliary on the thermostat is illuminated, all three brands log it; the level of user-facing detail differs.
+
+For brand-specific walkthroughs, see how to [configure aux heat on Ecobee thermostats](/heat-pump/aux-heat/ecobee/) and how [Nest thermostat aux heat settings](/heat-pump/aux-heat/nest/) compare.
+
+## When Aux Heat Usage Justifies a System Upgrade
+
+Before replacing a heat pump that runs aux heat frequently, run through these in order: thermostat aux heat lockout temperature, air filter cleanliness, duct leakage, refrigerant charge, and outdoor unit clearance from snow and debris. Most heavy-aux-heat complaints resolve at one of those steps. If diagnostics pass and aux heat still runs heavily in mild weather, the heat pump is likely undersized for the home and an upgrade may be justified. Check your current system size against your home's load with the [heat pump sizing calculator](/tools/heat-pump-size-calculator/). See [heat pump short cycling diagnostics](/heat-pump/troubleshooting/short-cycling/) if your aux heat issue coincides with short cycling.
+
+</article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<Sources sources={SOURCES} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-18" />
+</div>
+
+</Container>
