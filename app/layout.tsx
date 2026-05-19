@@ -1,10 +1,13 @@
 import type { Metadata } from 'next';
+import { Header } from '@/components/layout/Header';
+import { Footer } from '@/components/layout/Footer';
+import { SITE } from '@/lib/seo/site';
 import './globals.css';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://hvacloadcalc.org'),
-  title: 'hvacloadcalc.org',
-  description: 'Educational HVAC sizing reference site.',
+  metadataBase: new URL(SITE.url),
+  title: SITE.name,
+  description: SITE.description,
 };
 
 export default function RootLayout({
@@ -14,7 +17,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="flex min-h-screen flex-col bg-white font-sans text-ink-900 antialiased">
+        <Header />
+        <main className="flex-1">{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }
