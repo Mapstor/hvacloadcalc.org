@@ -217,7 +217,7 @@ export const FRONTMATTER = {
 <KeyTakeaways
   items={[
     'Auxiliary heat is electric resistance backup mounted downstream of the heat pump indoor coil; it supplements, not replaces, the heat pump.',
-    'A heat pump system has a balance point — typically 25-35°F for conventional units, 5-15°F for cold-climate models — below which aux heat fills the heating gap.',
+    'A heat pump system has a balance point (typically 25-35°F for conventional units, 5-15°F for cold-climate models) below which aux heat fills the heating gap.',
     'Aux heat is automatic; emergency heat is manual. Aux runs alongside the compressor; emergency locks the compressor out and runs only the strips.',
     'Heat pumps move heat at COP 2.5-4.0; resistance strips make heat at COP 1.0. Strips cost roughly three times more per BTU delivered.',
     'Aux heat is normal during cold weather, defrost, setback recovery, and sustained temperature drops. It is a warning sign in mild weather, after setpoint is reached, or when running alone.',
@@ -240,11 +240,11 @@ When you see "AUX HEAT ON" on a thermostat, the meaning is direct: electric resi
 
 A typical residential air handler has aux heat strips rated at 5, 10, 15, or 20 kW total, usually split across two stages.<SourceCite id="energystar-heat-pump-spec" number={2} /> The strips are sized to roughly match the home's design heating load, so they can carry the heating job on their own if the heat pump fails, though running them alone costs noticeably more.
 
-The heat pump itself works on a different principle. It uses a refrigerant cycle to move heat from outdoor air into the indoor coil, which is more efficient than burning electricity directly into resistance heat. The auxiliary strips, by contrast, simply convert electricity into heat at a one-to-one ratio.
+The heat pump itself works on a different principle. It uses a refrigerant cycle to move heat from outdoor air into the indoor coil, which is more efficient than burning electricity directly into resistance heat. The auxiliary strips, by contrast, convert electricity into heat at a one-to-one ratio.
 
 Heat pumps move heat. Resistance strips make heat. Moving is cheaper than making.
 
-Aux heat is automatic. Emergency heat is manual. The difference matters and gets its own section below. For a deeper breakdown of [what aux heat means on your thermostat](/heat-pump/aux-heat/meaning/), see the dedicated explainer. If you are new to [heat pump fundamentals](/heat-pump/), the brief version is that a heat pump moves heat with a refrigerant cycle rather than generating it directly, and aux heat is the resistance backup it falls back on when the cycle alone cannot deliver enough. The [DOE heat pump systems overview](https://www.energy.gov/energysaver/heat-pump-systems) covers the basics in more depth.
+Aux heat is automatic. Emergency heat is manual. The difference gets its own section below. For a deeper read on [what aux heat means on your thermostat](/heat-pump/aux-heat/meaning/), see the dedicated explainer. If you are new to [heat pump fundamentals](/heat-pump/), a heat pump moves heat with a refrigerant cycle rather than generating it directly; aux heat is the electric backup it falls back on. The [DOE heat pump systems overview](https://www.energy.gov/energysaver/heat-pump-systems) covers the basics.
 
 ## How Aux Heat Engages: The Mechanical Sequence
 
@@ -258,7 +258,7 @@ Step three is escalation. If indoor temperature continues to fall after a few mi
 
 Step four is supplemental heating. The resistance strips switch on, drawing 5-20 kW depending on configuration. The heat pump and aux heat run simultaneously: same airstream, two heat sources, working together. This trips up a lot of homeowners. Aux heat on a heat pump system specifically does not mean the heat pump shut off.
 
-[Dual-fuel heat pump configurations](/heat-pump/types/dual-fuel/) behave differently. Instead of resistance strips, they pair the heat pump with a gas furnace and switch between the two based on outdoor temperature.
+One exception: [dual-fuel heat pump configurations](/heat-pump/types/dual-fuel/) replace the strips with a gas furnace and switch based on outdoor temperature.
 
 The system always tries the heat pump first. Aux heat is the supplement, not the substitute.
 
@@ -274,11 +274,11 @@ Two curves explain it. As outdoor temperature drops, the heat pump's capacity de
 
 Where the heat pump capacity and home heat loss curves intersect is the balance point. For a conventional split heat pump in a typical home, the balance point sits between 25°F and 35°F.<SourceCite id="neep-cchp-spec" number={3} /> Below that, heat pump output falls short of demand and the resistance strips fill the deficit. Heat pump auxiliary heat exists precisely because of this capacity gap. Without resistance backup, the home would drop below setpoint on cold days.
 
-[Cold-climate heat pump performance](/heat-pump/cold-climate/) pushes the balance point lower. NEEP-listed cold-climate units typically maintain useful capacity down to 5-15°F balance points, with some delivering full rated capacity at 5°F per the DOE cold-climate target.<SourceCite id="neep-cchp-spec" number={3} /><SourceCite id="doe-cchp-challenge" number={6} /> They achieve this with inverter compressors that ramp output up in cold weather, vapor-injection refrigerant circuits that maintain mass flow at low ambient, and larger heat exchangers. The flatter the capacity curve, the lower the balance point sits.
+But [cold-climate heat pump performance](/heat-pump/cold-climate/) pushes the balance point lower. NEEP-listed cold-climate units typically maintain useful capacity down to 5-15°F balance points, with some delivering full rated capacity at 5°F per the DOE cold-climate target.<SourceCite id="neep-cchp-spec" number={3} /><SourceCite id="doe-cchp-challenge" number={6} /> Inverter compressors, vapor-injection refrigerant circuits, and larger heat exchangers do this work. The flatter the capacity curve, the lower the balance point sits.
 
 Below the unit's minimum operating temperature (typically -5°F to -22°F depending on model), the heat pump locks out entirely. At that point, all heating comes from the strips alone.
 
-Heat pump capacity is rated at standard conditions: 47°F and 17°F outdoor temperatures, indoor dry-bulb 70°F.<SourceCite id="ahri-210-240" number={7} /> These rating points anchor the manufacturer's published performance curve. Balance point determination starts from those rating points and combines them with the home's design heating load, computed via the [Manual J load calculation](/manual-j/) methodology.<SourceCite id="acca-manual-j-8" number={5} />
+Heat pump capacity is rated at standard conditions: 47°F and 17°F outdoor, 70°F indoor.<SourceCite id="ahri-210-240" number={7} /> Those points anchor the published performance curve. Balance point determination combines them with the home's design heating load via the [Manual J load calculation](/manual-j/) methodology.<SourceCite id="acca-manual-j-8" number={5} />
 
 For the [balance point in detail](/heat-pump/cold-climate/balance-point/), including how it changes with envelope improvements, see the dedicated article. Estimate your own system's threshold with the [balance point calculator](/tools/balance-point-calculator/). The [NEEP cold-climate heat pump specification](https://neep.org/heating-electrification/ccashp-specification-product-list) lists every certified cold-climate model with capacity at low ambient temperatures.
 
@@ -300,7 +300,7 @@ Aux heat in mild weather is not normal. Four patterns warrant troubleshooting; t
 
 **Aux heat in mild weather.** If your heat is on aux but the outdoor temperature is above 50°F and nothing else is happening (no defrost, no setback recovery), something is wrong. Common causes: the heat pump is undersized for the load, the outdoor temperature sensor reads high, or the thermostat is configured to drop into aux heat too aggressively (low lockout temperature, tight droop threshold). The first thing to check is the thermostat aux heat lockout setting.
 
-**Continuous aux heat operation.** Aux heat that runs for hours without temperature drops triggering it suggests either severe undersizing or an equipment fault. A heat pump that runs continuously and still cannot make setpoint may be low on refrigerant, may have a failing reversing valve, or may simply be too small for the load. The diagnostic path overlaps with [why a heat pump runs continuously](/heat-pump/troubleshooting/running-constantly/).
+**Continuous aux heat operation.** Aux heat that runs for hours without temperature drops triggering it suggests either severe undersizing or an equipment fault. A heat pump that runs continuously and still cannot make setpoint may be low on refrigerant, may have a failing reversing valve, or may be undersized for the load. The diagnostic path overlaps with [why a heat pump runs continuously](/heat-pump/troubleshooting/running-constantly/).
 
 **Runs after setpoint is reached.** Aux heat that continues after the thermostat shows setpoint is satisfied means a relay is stuck closed, wiring is misrouted, or a control board is faulty. The strips draw 5-20 kW. If they do not shut off, the house overshoots setpoint and the electricity bill spikes. This is a service call.
 
