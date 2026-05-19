@@ -24,6 +24,7 @@ const config: Config = {
         warn: '#d97706',
         danger: '#dc2626',
         good: '#059669',
+        info: '#0284c7',
       },
       fontFamily: {
         sans: [
