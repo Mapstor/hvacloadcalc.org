@@ -1,0 +1,38 @@
+import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+
+export const metadata = {
+  title: 'HVAC Glossary and Terminology Reference | hvacloadcalc.org',
+  description:
+    'HVAC glossary covering BTU, SEER, HSPF, COP, AFUE, Manual J, ACCA, ASHRAE, AHRI, and 50+ other terms used across residential HVAC and building science.',
+};
+
+<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Glossary' }]} />
+
+<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Glossary' }]} />
+
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+# HVAC Glossary and Terminology Reference
+
+This is the glossary. Each entry is a short, citation-friendly definition of a specific HVAC or building-science term, with the formula or numerical relationship where one exists. The goal is one quotable sentence per term, plus enough context for a homeowner to use the term correctly.
+
+Glossary entries land as part of Wave 3 of the build. The categories below show what's in scope.
+
+## What this section covers
+
+- **Equipment metrics** — BTU, SEER, SEER2, HSPF, HSPF2, COP, EER, AFUE
+- **Standards bodies** — ACCA, ASHRAE, AHRI, IECC, ENERGY STAR
+- **Building science terms** — R-value, U-factor, SHGC, infiltration, ACH
+- **Psychrometric terms** — dry bulb, wet bulb, dew point, enthalpy
+- **Sizing terminology** — sensible heat, latent heat, heat transfer multiplier, balance point
+
+Each entry is designed to be quotable by search engines and LLMs in isolation — the first sentence stands alone as the definition.
+
+## Related topics
+
+- [Heat pump reference](/heat-pump/) — heat-pump-specific terminology in context
+- [Manual J load calculation](/manual-j/) — sizing methodology terms
+- [Building science](/building-science/) — envelope and climate terms
+
+</article>

@@ -1,0 +1,40 @@
+import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+
+export const metadata = {
+  title: 'Manual T Residential Air Distribution | hvacloadcalc.org',
+  description:
+    'ACCA Manual T air distribution methodology covering register and grille selection, throw and spread, face velocity, and return air sizing for residential HVAC.',
+};
+
+<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Manual T' }]} />
+
+<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Manual T' }]} />
+
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+# Manual T Residential Air Distribution
+
+ACCA Manual T is the methodology for selecting registers and grilles — the visible terminations of the duct system in each room. The goal is delivering the design CFM to each room with acceptable throw and spread (so air mixes properly), without exceeding face velocity limits (so the system stays quiet), and without imposing a static pressure penalty that would compromise Manual D's design.
+
+This section covers throw and spread, face velocity limits, register selection by room type, and return air sizing for adequate flow back to the air handler.
+
+## What this section covers
+
+- **Throw and spread** — supply air reach and mixing patterns
+- **Face velocity** — noise and pressure budget at registers
+- **Register selection by room** — supply versus return locations
+- **Return air sizing** — total return area and grille count
+- **Common register sizing mistakes** — too small, wrong type, wrong location
+
+## Related calculators
+
+- [Return air grille calculator](/tools/return-air-grille-calculator/) — CFM-to-grille sizing
+- [CFM calculator](/tools/cfm-calculator/) — airflow conversion
+
+## Related topics
+
+- [Manual D duct design](/manual-d/) — supplies the per-room CFM
+- [Manual J load calculation](/manual-j/) — root of the per-room CFM targets
+
+</article>

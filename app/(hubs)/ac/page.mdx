@@ -1,0 +1,42 @@
+import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+
+export const metadata = {
+  title: 'Air Conditioner Sizing and Reference | hvacloadcalc.org',
+  description:
+    'Residential air conditioner sizing, BTU-per-square-foot charts, short cycling diagnosis, and AC selection reference. Methodology-transparent, no rule-of-thumb.',
+};
+
+<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'AC' }]} />
+
+<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'AC' }]} />
+
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+# Air Conditioner Sizing and Reference
+
+Air conditioner sizing is more often wrong than right. The 30-second method most contractors use — square footage times a number — overshoots in well-insulated homes and undershoots in poorly-sealed ones. The result is either an oversized unit that short-cycles, dehumidifies poorly, and shortens its own life, or an undersized one that runs constantly without keeping up.
+
+This section covers correct sizing methodology, the BTU-per-square-foot ranges by climate, the diagnostic patterns for short cycling and undersizing, and the practical steps a homeowner can take to verify a contractor quote.
+
+## What this section covers
+
+- **Correct AC sizing** — Manual J load calculation versus square-footage rule-of-thumb
+- **Short cycling** — causes, consequences, diagnostic steps
+- **Oversizing problems** — humidity, comfort, equipment life
+- **BTU-per-square-foot ranges** — typical by climate zone, with caveats
+- **Split vs window vs portable** — sizing differences and use cases
+
+## Related calculators
+
+- [AC size calculator](/tools/ac-size-calculator/) — sizing for your home
+- [BTU calculator](/tools/btu-calculator/) — per-room BTU sizing
+- [Short cycling diagnostic](/tools/short-cycling-diagnostic/) — diagnose existing systems
+
+## Related topics
+
+- [Heat pump reference](/heat-pump/) — combined heating and cooling
+- [Manual J load calculation](/manual-j/) — sizing methodology
+- [Building science](/building-science/) — envelope drivers of cooling load
+
+</article>

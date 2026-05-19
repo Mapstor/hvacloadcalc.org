@@ -1,0 +1,43 @@
+import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+
+export const metadata = {
+  title: 'Building Science Reference for HVAC Sizing | hvacloadcalc.org',
+  description:
+    'Building envelope, R-values, U-factors, psychrometrics, infiltration, climate zones, and design temperatures — building science fundamentals for HVAC sizing.',
+};
+
+<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Building science' }]} />
+
+<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Building science' }]} />
+
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+# Building Science Reference for HVAC Sizing
+
+HVAC sizing decisions are downstream of the building. R-values, U-factors, air leakage rate, climate zone, and design temperatures all flow into the Manual J load calculation. Treat the envelope as a black box and the sizing math has nowhere to anchor. Treat it transparently and the load calc becomes auditable.
+
+This section covers the building science fundamentals that drive HVAC sizing: assembly R-values by climate, fenestration U-factors and SHGC, psychrometric properties, infiltration measurement, climate zones, and the design temperatures that anchor any load calculation.
+
+## What this section covers
+
+- **R-value and U-factor** — envelope thermal performance and how the two relate
+- **Psychrometrics** — wet bulb, dry bulb, dew point, enthalpy
+- **Infiltration** — ACH50, blower door measurement, air sealing
+- **Climate zones** — IECC zones and what they imply for HVAC sizing
+- **Design temperatures** — ASHRAE 99% heating and 1% cooling values
+- **Internal gains** — appliances, occupants, lighting contribution to cooling load
+
+## Related calculators
+
+- [R-value calculator](/tools/r-value-calculator/) — assembly R-value estimation
+- [ACH calculator](/tools/ach-calculator/) — infiltration rate
+- [Degree days calculator](/tools/degree-days-calculator/) — HDD and CDD lookup
+
+## Related topics
+
+- [Manual J load calculation](/manual-j/) — uses building science inputs
+- [Heat pump reference](/heat-pump/) — performance is climate-driven
+- [Air conditioner reference](/ac/) — cooling load is envelope-driven
+
+</article>

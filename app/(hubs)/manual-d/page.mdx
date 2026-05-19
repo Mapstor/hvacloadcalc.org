@@ -1,0 +1,41 @@
+import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+
+export const metadata = {
+  title: 'Manual D Residential Duct Design | hvacloadcalc.org',
+  description:
+    'ACCA Manual D duct design methodology for residential HVAC. Friction rate, equivalent length, static pressure, and flex vs metal duct trade-offs.',
+};
+
+<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Manual D' }]} />
+
+<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Manual D' }]} />
+
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+# Manual D Residential Duct Design
+
+ACCA Manual D is the methodology for designing residential duct systems. The goal is delivering the design airflow to each room within the static pressure budget the equipment can sustain, while keeping noise, leakage, and balance within reasonable limits. Done correctly, the result is even temperatures across the home, low noise, and equipment that can actually hit its rated performance.
+
+This section covers the friction-rate worksheet at the core of Manual D, equivalent length calculations for fittings, static pressure budgets, the practical differences between flex and metal duct, and what to look for in a contractor's duct design.
+
+## What this section covers
+
+- **Friction rate worksheet** — the central calculation in Manual D
+- **Equivalent length of fittings** — turns, takeoffs, and registers
+- **Static pressure budgets** — what's left for the duct system after coil and filter
+- **Flex vs metal vs duct board** — friction rates and trade-offs
+- **Return air sizing** — often the bottleneck in existing systems
+
+## Related calculators
+
+- [Duct size calculator](/tools/duct-size-calculator/) — Manual D-style duct sizing
+- [Return air grille calculator](/tools/return-air-grille-calculator/) — CFM-to-grille sizing
+
+## Related topics
+
+- [Manual J load calculation](/manual-j/) — provides the per-room CFM targets
+- [Manual S equipment selection](/manual-s/) — sets the static pressure budget
+- [Manual T air distribution](/manual-t/) — register selection downstream of Manual D
+
+</article>

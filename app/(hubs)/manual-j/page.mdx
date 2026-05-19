@@ -1,0 +1,43 @@
+import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+
+export const metadata = {
+  title: 'Manual J Residential Load Calculation | hvacloadcalc.org',
+  description:
+    'ACCA Manual J 8th Edition methodology for residential heating and cooling load calculation. Components, formulas, software comparison, and verification.',
+};
+
+<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Manual J' }]} />
+
+<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Manual J' }]} />
+
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+# Manual J Residential Load Calculation
+
+ACCA Manual J 8th Edition is the standard methodology for residential heating and cooling load calculation in North America. Done correctly, it produces heating and cooling loads that reflect the specific envelope, climate, and internal loads of a specific home. Done badly or skipped entirely, it's the root cause of most oversized HVAC installations and most short-cycling complaints downstream.
+
+This section covers the components of a Manual J calculation, the difference between by-hand and software calculations, what a homeowner should expect on a Manual J report, and how to verify whether a contractor's report is plausible.
+
+## What this section covers
+
+- **Heat Transfer Multipliers** — the HTM table approach to component-by-component load
+- **Design temperatures** — ASHRAE 99% heating and 1% cooling design conditions
+- **Internal gains** — appliances, occupants, lighting contribution to cooling load
+- **Infiltration** — ACH and blower-door estimation methods
+- **By-hand vs software** — what's gained and lost with each approach
+- **Verifying a contractor's report** — the practical sanity checks
+
+## Related calculators
+
+- [Manual J calculator](/tools/manual-j-calculator/) — full Manual J-style load calc
+- [BTU calculator](/tools/btu-calculator/) — quick room-level BTU estimation
+- [Heat loss calculator](/tools/heat-loss-calculator/) — home heat loss estimate
+
+## Related topics
+
+- [Manual S equipment selection](/manual-s/) — match equipment to the load
+- [Manual D duct design](/manual-d/) — duct system sizing
+- [Building science](/building-science/) — envelope and infiltration inputs
+
+</article>

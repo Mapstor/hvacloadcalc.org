@@ -1,0 +1,44 @@
+import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+
+export const metadata = {
+  title: 'Heat Pump Sizing, Performance, and Reference | hvacloadcalc.org',
+  description:
+    'Heat pump sizing methodology, balance point, auxiliary heat, cold-climate performance, and troubleshooting reference for homeowners and pros.',
+};
+
+<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Heat pump' }]} />
+
+<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Heat pump' }]} />
+
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+# Heat Pump Sizing, Performance, and Reference
+
+Heat pumps now match or beat gas furnaces in most US climates, but sizing them correctly is harder than sizing a single-stage air conditioner. Compressor capacity falls as outdoor temperature falls, the system has a balance point below which auxiliary heat carries part of the load, and the wrong size produces either short-cycling in mild weather or aux-heat-dominated bills in cold weather.
+
+This section covers the methodology for sizing heat pumps, the performance metrics that matter (HSPF2, COP, balance point, NEEP cold-climate data), and the troubleshooting patterns for the most common failure modes.
+
+## What this section covers
+
+- **Sizing methodology** — compute heating and cooling loads, then translate to capacity at the local 99% design temperature
+- **Auxiliary heat** — when it should run, when it shouldn't, and what staging really controls
+- **Cold-climate operation** — balance point, defrost cycles, NEEP cold-climate database
+- **Performance metrics** — HSPF2, SEER2, COP, EER and which applies when
+- **Troubleshooting** — short cycling, runs constantly, won't reach setpoint, icing
+
+Articles in this section ship across the launch set and ongoing Wave 3 content.
+
+## Related calculators
+
+- [Heat pump size calculator](/tools/heat-pump-size-calculator/) — target capacity by climate and home
+- [Balance point calculator](/tools/balance-point-calculator/) — temperature where aux heat engages
+- [Mini split calculator](/tools/mini-split-calculator/) — ductless installations
+
+## Related topics
+
+- [Air conditioner reference](/ac/) — cooling-only systems
+- [Manual J load calculation](/manual-j/) — underlying sizing methodology
+- [Building science](/building-science/) — envelope, infiltration, climate zones
+
+</article>

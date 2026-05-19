@@ -1,0 +1,39 @@
+import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+
+export const metadata = {
+  title: 'HVAC Calculators and Sizing Tools | hvacloadcalc.org',
+  description:
+    'Free HVAC calculators with documented methodology — BTU, heat pump sizing, balance point, Manual J, duct sizing, fuel-use load, and more.',
+};
+
+<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Tools' }]} />
+
+<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Tools' }]} />
+
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+# HVAC Calculators and Sizing Tools
+
+This is the calculator hub. Every calculator on the site shows its math, cites its sources, and states its limits. The default state of each calculator opens with a worked example using reasonable defaults, so the methodology is visible before any input is changed. No account, no signup, no email gate — just inputs in, outputs out, formula shown.
+
+Calculators ship over Wave 2 of the build. The categories below show what's in scope.
+
+## What this section covers
+
+- **Load calculators** — Manual J-style room and home load calculation
+- **Sizing calculators** — heat pump, AC, furnace, mini split capacity
+- **Performance calculators** — balance point, SEER savings, fuel-use load
+- **Duct calculators** — Manual D-style duct sizing, return air grille sizing
+- **Reference calculators** — R-value, ACH, CFM, degree days, wet bulb
+
+Each calculator carries a planning-grade disclaimer above the fold. Results are educational; permit-grade load calculations require a licensed HVAC contractor.
+
+## Related topics
+
+- [Methodology](/methodology/) — how every calculator computes
+- [Manual J load calculation](/manual-j/) — methodology behind sizing calculators
+- [Manual D duct design](/manual-d/) — methodology behind duct calculators
+- [Building science](/building-science/) — the inputs driving every load calc
+
+</article>

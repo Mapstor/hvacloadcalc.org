@@ -1,0 +1,41 @@
+import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+
+export const metadata = {
+  title: 'Manual S Residential Equipment Selection | hvacloadcalc.org',
+  description:
+    'ACCA Manual S equipment selection methodology for matching residential HVAC equipment capacity to Manual J load. AHRI matchup and sensible heat ratio.',
+};
+
+<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Manual S' }]} />
+
+<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Manual S' }]} />
+
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+# Manual S Residential Equipment Selection
+
+ACCA Manual S is the methodology for matching equipment to the load Manual J calculated. The principle is straightforward: equipment performance varies with outdoor and indoor conditions, so the capacity stamped on the unit at AHRI rating conditions isn't necessarily the capacity available at your local design temperature. Manual S walks through the corrections.
+
+This section covers the AHRI matchup process, sensible versus latent capacity, sensible heat ratio (SHR), the implications for variable-capacity equipment, and how cold-climate heat pump selection differs from conventional AC selection.
+
+## What this section covers
+
+- **AHRI matchup** — verifying the outdoor and indoor unit combination
+- **Sensible vs latent capacity** — sizing for the dehumidification you actually need
+- **Sensible heat ratio (SHR)** — what 0.75 means in humid vs dry climates
+- **Variable-capacity equipment** — modulation range and selection
+- **Cold-climate heat pump selection** — capacity at 17°F and 5°F
+
+## Related calculators
+
+- [Heat pump size calculator](/tools/heat-pump-size-calculator/) — incorporates Manual S adjustments
+- [AC size calculator](/tools/ac-size-calculator/) — sensible-load-aware sizing
+
+## Related topics
+
+- [Manual J load calculation](/manual-j/) — the load Manual S matches equipment to
+- [Heat pump reference](/heat-pump/) — performance at low temperatures
+- [Manual D duct design](/manual-d/) — downstream of equipment selection
+
+</article>
