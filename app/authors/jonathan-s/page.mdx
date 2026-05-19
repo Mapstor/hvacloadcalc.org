@@ -1,0 +1,49 @@
+import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { JsonLdPerson } from '@/components/seo/JsonLdPerson';
+
+export const metadata = {
+  title: 'Jonathan S. — Author at hvacloadcalc.org',
+  description:
+    'Jonathan S. writes about residential HVAC design, building science, and heat pump installation, translating ACCA standards into homeowner-friendly guidance.',
+};
+
+<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Jonathan S.' }]} />
+
+<JsonLdPerson />
+
+<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Jonathan S.' }]} />
+
+<header className="mb-8 flex items-center gap-5">
+  <div
+    role="img"
+    aria-label="Jonathan S., author and researcher at hvacloadcalc.org"
+    className="flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-full bg-brand text-2xl font-bold text-white"
+  >
+    JS
+  </div>
+  <div>
+    <h1 className="text-3xl font-bold text-ink-900">Jonathan S.</h1>
+    <p className="mt-1 text-sm text-ink-500">Author and researcher</p>
+  </div>
+</header>
+
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+Jonathan S. is a homeowner-turned-researcher who writes about residential HVAC design, building science, and heat pump installation. He started hvacloadcalc.org to help other homeowners level up from "I have no idea what my contractor is talking about" to "I can verify whether this quote makes sense."
+
+The site began as a personal project. After dealing with three contradictory HVAC quotes during a system upgrade — one recommending 2.5 tons, another 4 tons, a third unwilling to do a load calculation at all — Jonathan started reading. The ACCA Manual J, NEEP cold-climate specifications, ASHRAE Handbook of Fundamentals, DOE building science publications. Months of reading later, he had a working understanding of why the quotes diverged and which one was closest to right.
+
+Most of what he learned wasn't in HVAC blog posts or YouTube videos. It was in dense standards documents, peer-reviewed papers, and building-science publications that assume the reader is a professional. The educational content aimed at homeowners stopped at "you need 20 BTU per square foot," which is barely better than guessing.
+
+hvacloadcalc.org exists to bridge that gap. The goal is methodology-transparent education — every calculator shows its math, every recommendation cites its source, every claim links back to the standard it comes from. Homeowners shouldn't have to take a contractor's word for it, and contractors shouldn't be the only people with access to the math.
+
+Jonathan is not a licensed contractor, not a professional engineer, not ACCA-certified, and not selling anything. The site does not generate leads for installers, does not recommend specific brands, and does not earn affiliate commissions. It is funded entirely by display advertising and is independent of every HVAC manufacturer, contractor, and software vendor.
+
+If you find something inaccurate on the site, the corrections policy is straightforward: errors get fixed, fast, with a public correction note. If a building scientist or HVAC professional reading this disagrees with something Jonathan has written, the [contact form](/contact/) is the best way to raise it; substantive corrections always get attribution.
+
+## Articles
+
+Articles published by Jonathan S. will appear here as they ship. The launch set is in progress.
+
+</article>
