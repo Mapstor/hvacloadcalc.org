@@ -1,0 +1,97 @@
+import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+
+export const metadata = {
+  title: 'Editorial Standards',
+  description:
+    'How content is created and reviewed at hvacloadcalc.org. Sourcing standards, review process, and update cadence.',
+};
+
+<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Editorial Standards' }]} />
+
+<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Editorial Standards' }]} />
+
+# Editorial Standards
+
+## Mission
+
+hvacloadcalc.org exists to help homeowners understand residential HVAC well enough to make informed decisions about system sizing, equipment selection, and contractor recommendations. Content is educational, methodology-transparent, and free of commercial bias.
+
+## Who writes the content
+
+All content is written by Jonathan S. ([author page](/authors/jonathan-s/)). Jonathan is a homeowner-researcher, not a credentialed HVAC professional. The site does not claim professional engineering authority — it claims that rigorous research into ACCA, ASHRAE, NEEP, and DOE publications produces content that helps non-specialists make better decisions.
+
+When subject-matter expertise beyond the author's reading is required, the relevant source is cited directly. The site relies on authoritative standards for the substance of every claim.
+
+## Sourcing standards
+
+Every claim that could be disputed is cited to a source. Sources are tiered:
+
+- **Tier 1**: Industry standards (ACCA, ASHRAE, AHRI, IECC), government agencies (DOE, EIA, ENERGY STAR, NOAA), and authoritative databases (NEEP, AHRI Directory). Preferred for all factual claims.
+- **Tier 2**: Peer-reviewed publications, national laboratory reports (LBNL, ORNL, NREL), state energy office publications.
+- **Tier 3**: Established building-science publications (GreenBuildingAdvisor, Energy Vanguard, Building Science Corporation) for context where Tier 1/2 sources don't directly address a topic.
+
+The site does not cite competitor calculator outputs, HVAC contractor marketing blog posts, social media, or AI-generated content as sources of fact.
+
+## Review process
+
+Every article goes through a multi-stage review:
+
+1. **Brief**: Article topic, target keywords, required content, sources, and structure are specified in a detailed brief before writing begins.
+2. **Drafting**: Article is written against the brief, with all sources cited inline.
+3. **Editorial review**: Brand voice, content policy, factual claims, and source citations are verified.
+4. **Mobile/accessibility review**: Page is checked at 375px viewport, with screen reader, and against WCAG AA standards.
+5. **Schema validation**: All JSON-LD structured data is validated at schema.org validator and Google Rich Results Test.
+6. **Publication**: Article is published with a "Last reviewed" date in the byline.
+
+## Update cadence
+
+- Articles are reviewed at least annually, with the "Last reviewed" date updated regardless of whether content changed
+- When industry standards change (ACCA updates Manual J, NEEP updates CCASHP spec, etc.), affected articles are reviewed and updated within 60 days
+- When errors are identified, articles are corrected immediately and the correction is logged on the [corrections page](/corrections/)
+
+## Independence and bias
+
+hvacloadcalc.org is independent of:
+
+- HVAC equipment manufacturers
+- HVAC contractors and installers
+- HVAC software vendors
+- Trade associations
+- Real estate companies
+- Utility companies
+
+The site does not accept paid placement, sponsored content, contractor referral fees, or affiliate commissions. The site is funded entirely by display advertising managed by Raptive / AdSense. Display ad content does not influence editorial decisions.
+
+The site does not recommend specific brands or models. Where equipment categories are discussed (e.g., "cold-climate heat pumps with vapor-injection compressors"), general guidance is provided; specific model recommendations are out of scope.
+
+## Corrections policy
+
+When an error is identified — whether in factual content, methodology, or sourcing — the policy is:
+
+1. **Fix immediately** in the article
+2. **Update "Last reviewed" date** in the article frontmatter
+3. **Log the correction** on the [corrections page](/corrections/) with date, article URL, and summary of the change
+4. **Attribute** when the correction came from a reader, building scientist, or industry professional
+
+The site treats accuracy as a higher priority than ego. Corrections are public and prompt.
+
+## Accessibility
+
+Content is designed to be accessible across reading levels and devices:
+
+- Reading level target: high school graduate (Flesch reading ease ~50-65)
+- Technical concepts are introduced before being used
+- Headings provide a clear outline
+- Tables include responsive scrolling
+- Images include descriptive alt text
+- Color contrast meets WCAG AA
+- Site is functional with screen readers
+
+## Reader feedback
+
+Reader questions, corrections, and feedback are welcome via the [contact form](/contact/). The site is small and responses are not guaranteed, but substantive feedback is read and considered.
+
+---
+
+**Last reviewed**: May 18, 2026

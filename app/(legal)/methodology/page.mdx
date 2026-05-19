@@ -1,0 +1,83 @@
+import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+
+export const metadata = {
+  title: 'Methodology: How Our Calculators Work',
+  description:
+    'How hvacloadcalc.org calculators compute results. Every formula, every source, every assumption documented for transparency.',
+};
+
+<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Methodology' }]} />
+
+<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Methodology' }]} />
+
+# Methodology
+
+This page documents how every calculator on hvacloadcalc.org computes its results. Transparency about methodology is non-negotiable for an educational HVAC site — readers should be able to verify the math, identify where assumptions are made, and understand the limits of what a free online tool can compute.
+
+If you find a methodology issue, please report it through the [contact form](/contact/) and it will be reviewed.
+
+## General approach
+
+Calculators on the site follow these principles:
+
+1. **Methodology is industry-standard** — derived from ACCA Manual J 8th Edition (load calculation), Manual S (equipment selection), Manual D (duct design), ASHRAE Handbook of Fundamentals (design conditions, psychrometrics), and AHRI 210/240 (equipment rating standards).
+
+2. **Inputs are reasonable defaults** — calculators open with sensible default values (e.g., 1,500 sq ft, climate zone 4, average insulation) so users can see a worked example immediately. All defaults are listed on each calculator's methodology section.
+
+3. **Formulas are shown, not hidden** — the methodology section on every calculator page details the formula used.
+
+4. **Sources are cited** — every numeric constant, lookup table, or methodology choice cites the standard it comes from.
+
+5. **Limits are stated** — every calculator's methodology section explicitly notes what the calculator does NOT account for (e.g., "Does not include duct losses to unconditioned spaces" or "Assumes standard 8-foot ceilings").
+
+## Per-calculator methodology
+
+Each calculator has its own methodology section on its page. The calculators will populate here as they ship in Wave 2:
+
+- [BTU Calculator](/tools/btu-calculator/) — room sizing methodology
+- [Heat Pump Size Calculator](/tools/heat-pump-size-calculator/) — heat pump-specific load calc
+- [Furnace Size Calculator](/tools/furnace-size-calculator/) — furnace BTU sizing
+- [Mini Split Calculator](/tools/mini-split-calculator/) — ductless sizing
+- [Manual J Calculator](/tools/manual-j-calculator/) — full Manual J-style load calc
+- [Balance Point Calculator](/tools/balance-point-calculator/) — heat pump balance point
+- [Duct Size Calculator](/tools/duct-size-calculator/) — Manual D-style duct sizing
+- [Fuel-Use Load Calculator](/tools/fuel-use-load-calculator/) — back-calculate load from past fuel use
+- [Heat Loss Calculator](/tools/heat-loss-calculator/) — home-level heat loss estimation
+
+## Data sources
+
+Every calculator references one or more of these underlying data sources:
+
+- **ASHRAE Handbook of Fundamentals 2021** — outdoor design temperatures, psychrometric properties
+- **ASHRAE Standard 169** — IECC climate zone definitions
+- **ACCA Manual J 8th Edition** — load calculation methodology, Heat Transfer Multiplier tables
+- **NEEP Cold Climate Heat Pump Specification** — heat pump capacity at low temperatures
+- **AHRI Directory** — equipment performance ratings (47°F and 17°F)
+- **DOE Building America program data** — typical envelope characteristics by vintage and climate
+- **EIA monthly electricity rates** — operating cost calculations
+- **NOAA degree day data** — fuel-use load calculator inputs
+
+Where a calculator uses internal lookup tables (e.g., R-value defaults by climate zone), those tables are derived from the above sources and published in JSON form for transparency.
+
+## Limits of online calculators
+
+A free, browser-based calculator cannot match a full Manual J performed by a credentialed professional. Specifically:
+
+- **No site visit** — calculators cannot see your actual home, measure walls, or inspect insulation
+- **No blower door data** — actual infiltration is measured, not estimated
+- **No duct system characterization** — calculators don't know if your ducts leak or run through unconditioned spaces
+- **No appliance audit** — internal heat gains depend on specific equipment and occupancy patterns
+- **No code interpretation** — local code requirements vary and aren't comprehensively checked
+
+For these reasons, calculator results are planning-grade. They're useful for understanding magnitudes and for sanity-checking professional recommendations. They are not a substitute for professional load calculations where permits, rebates, or warranties depend on the result.
+
+## Corrections and updates
+
+When ACCA, ASHRAE, NEEP, AHRI, or other authoritative sources update their standards, the calculators are reviewed and updated to match. Material methodology changes are noted on the [corrections page](/corrections/).
+
+If you identify a methodology issue, please report it through the [contact form](/contact/) with category "Correction".
+
+---
+
+**Last reviewed**: May 18, 2026
