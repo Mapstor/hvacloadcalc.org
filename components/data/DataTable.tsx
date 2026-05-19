@@ -13,7 +13,7 @@ interface Props<T> {
   caption?: string;
 }
 
-export function DataTable<T extends Record<string, unknown>>({
+export function DataTable<T>({
   columns,
   rows,
   caption,

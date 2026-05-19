@@ -19,6 +19,11 @@ import { DataSeries } from '@/components/svg/DataSeries';
 import { Annotation } from '@/components/svg/Annotation';
 import { colors } from '@/components/svg/tokens';
 import type { Source, FaqItem, RelatedArticle, Heading } from '@/components/seo/types';
+import {
+  getDesignTempsByState,
+  getAshraeMetadata,
+  type AshraeDesignTemp,
+} from '@/lib/data-loaders/ashrae';
 
 export const metadata: Metadata = {
   title: 'Components demo (internal)',
@@ -97,7 +102,7 @@ const SAMPLE_RELATED: RelatedArticle[] = [
   },
 ];
 
-interface RValueRow extends Record<string, unknown> {
+interface RValueRow {
   zone: string;
   attic: string;
   walls: string;
@@ -316,6 +321,37 @@ export default function ComponentsDemoPage() {
               />
             </SvgWrapper>
           </div>
+        </section>
+
+        <section aria-labelledby="loader-demo-heading" className="mt-12">
+          <h2
+            id="loader-demo-heading"
+            className="text-2xl font-bold text-ink-900"
+          >
+            Data loader sample (Gate 3)
+          </h2>
+          <p className="mt-2 text-sm text-ink-500">
+            Renders ASHRAE design temps for California via{' '}
+            <code className="rounded bg-ink-100 px-1 py-0.5 text-xs">
+              getDesignTempsByState(&apos;CA&apos;)
+            </code>{' '}
+            from{' '}
+            <code className="rounded bg-ink-100 px-1 py-0.5 text-xs">
+              lib/data-loaders/ashrae
+            </code>
+            . The loader returns typed entries and exposes the source metadata for citation.
+          </p>
+          <DataTable<AshraeDesignTemp>
+            caption={`${getAshraeMetadata().source} (accessed ${getAshraeMetadata().accessed})`}
+            columns={[
+              { key: 'city', label: 'City' },
+              { key: 'climateZone', label: 'Zone' },
+              { key: 'heating99PctF', label: 'Heating 99% (°F)', align: 'right' },
+              { key: 'cooling1PctF', label: 'Cooling 1% (°F)', align: 'right' },
+              { key: 'elevationFt', label: 'Elevation (ft)', align: 'right' },
+            ]}
+            rows={getDesignTempsByState('CA')}
+          />
         </section>
 
         <FAQ items={SAMPLE_FAQ} />
