@@ -1,0 +1,378 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { Sources } from '@/components/article/Sources';
+import { SourceCite } from '@/components/article/SourceCite';
+import { AuthorByline } from '@/components/article/AuthorByline';
+import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { DataTable } from '@/components/data/DataTable';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { HeroSpfEnergyFlow } from '@/components/svg/spf/HeroSpfEnergyFlow';
+import { SpfVsCopComparison } from '@/components/svg/spf/SpfVsCopComparison';
+import { SpfTemperatureDistribution } from '@/components/svg/spf/SpfTemperatureDistribution';
+import { SpfHspfComparisonTable } from '@/components/svg/spf/SpfHspfComparisonTable';
+import { SpfByClimateChart } from '@/components/svg/spf/SpfByClimateChart';
+
+export const metadata = {
+  title: "Seasonal Performance Factor (SPF): What It Means and How It's Used",
+  description:
+    "Seasonal Performance Factor is the heating-season average efficiency of a heat pump, expressed as heat delivered divided by electricity consumed. Here's how SPF works.",
+  openGraph: {
+    title: 'Seasonal Performance Factor (SPF): What It Means',
+    description:
+      "SPF is the seasonal average efficiency of a heat pump. Here's how it differs from COP, HSPF, and HSPF2.",
+    type: 'article',
+    publishedTime: '2026-05-18',
+    modifiedTime: '2026-05-18',
+    authors: ['Jonathan S.'],
+  },
+};
+
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'Heat Pump', url: '/heat-pump/' },
+  { name: 'Seasonal Performance Factor' },
+];
+
+export const HEADINGS = [
+  { id: 'what-seasonal-performance-factor-is', text: 'What Seasonal Performance Factor Is', level: 2 },
+  { id: 'spf-vs-cop', text: 'SPF vs COP', level: 2 },
+  { id: 'what-lowers-spf', text: 'What Lowers SPF', level: 2 },
+  { id: 'spf-vs-hspf2-and-vs-older-hspf', text: 'SPF vs HSPF2 (and vs Older HSPF)', level: 2 },
+  { id: 'what-spf-tells-you-about-your-heat-pump', text: 'What SPF Tells You About Your Heat Pump', level: 2 },
+  { id: 'estimating-your-own-spf', text: 'Estimating Your Own SPF', level: 2 },
+  { id: 'when-spf-is-low-diagnostics', text: 'When SPF Is Low: Diagnostics', level: 2 },
+  { id: 'spf-in-the-real-world-what-to-expect', text: 'SPF in the Real World: What to Expect', level: 2 },
+];
+
+export const SOURCES = [
+  {
+    id: 'doe-heat-pump-basics',
+    title: 'Heat Pump Systems',
+    publisher: 'US Department of Energy, Office of Energy Efficiency and Renewable Energy',
+    year: 2024,
+    url: 'https://www.energy.gov/energysaver/heat-pump-systems',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'ahri-210-240',
+    title: 'ANSI/AHRI Standard 210/240-2023, Performance Rating of Unitary Air-Conditioning and Air-Source Heat Pump Equipment',
+    publisher: 'Air-Conditioning, Heating and Refrigeration Institute (AHRI)',
+    year: 2023,
+    url: 'https://www.ahrinet.org/search-standards/ahri-210240-2023-performance-rating-unitary-air-conditioning-air-source-heat-pump',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'iea-hpt-annex-49',
+    title: 'Design and integration of heat pumps for nZEB',
+    publisher: 'International Energy Agency Heat Pump Technologies (IEA HPT)',
+    year: 2018,
+    url: 'https://heatpumpingtechnologies.org/annex49/',
+    accessed: '2026-05-18',
+    tier: 2,
+  },
+  {
+    id: 'nrel-fieldmeasure',
+    title: 'Field-Measured Performance of Heat Pumps',
+    publisher: 'National Renewable Energy Laboratory (NREL)',
+    year: 2022,
+    url: 'https://www.nrel.gov/buildings/heat-pumps.html',
+    accessed: '2026-05-18',
+    tier: 2,
+  },
+  {
+    id: 'en-14825',
+    title: 'EN 14825 — Air conditioners, liquid chilling packages and heat pumps for space heating and cooling — Testing and rating at part load conditions',
+    publisher: 'European Committee for Standardization (CEN)',
+    year: 2022,
+    url: 'https://www.cencenelec.eu/',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'doe-cchp-challenge',
+    title: 'Residential Cold Climate Heat Pump Challenge',
+    publisher: 'US Department of Energy, Building Technologies Office',
+    year: 2023,
+    url: 'https://www.energy.gov/eere/buildings/residential-cold-climate-heat-pump-challenge',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'neep-cchp-spec',
+    title: 'Cold Climate Air Source Heat Pump Specification, Version 4.0',
+    publisher: 'Northeast Energy Efficiency Partnerships (NEEP)',
+    year: 2024,
+    url: 'https://neep.org/heating-electrification/ccashp-specification-product-list',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+];
+
+export const FAQ_ITEMS = [
+  {
+    q: 'What is a good SPF for a heat pump?',
+    a: 'An SPF of 3.0 means a heat pump delivers 3 units of heat for every unit of electricity consumed. In mild climates (zones 3-4), well-installed heat pumps routinely achieve SPF 3.0 or higher. In cold climates (zones 5-7), conventional heat pumps may drop to SPF 2.0-2.5 because of more aux heat usage and lower compressor COP at design temperatures; cold-climate models with vapor injection can hold SPF 2.5-3.0 through these zones.',
+  },
+  {
+    q: 'How is SPF different from HSPF2?',
+    a: 'HSPF2 is a standardized rating measured in a controlled climate profile defined by AHRI. SPF is the real-world measurement of how a specific heat pump performed in a specific home over a specific heating season. HSPF2 helps compare equipment models; SPF tells you what actually happened.',
+  },
+  {
+    q: 'Is SPF the same as SCOP?',
+    a: 'SCOP (Seasonal Coefficient of Performance) is the European equivalent of SPF, measured under EN 14825 with defined climate profiles for "average", "warmer", and "colder" European reference climates. In practice, SCOP and SPF refer to the same concept: a season-weighted average efficiency rather than a single test-point COP.',
+  },
+  {
+    q: 'Does SPF include auxiliary heat?',
+    a: 'Yes. SPF as measured in the field accounts for every kWh of electricity consumed by the system during the heating season, including the heat pump compressor, indoor fan, defrost cycles, and aux resistance heat. This is one of the reasons SPF is often lower than the rated HSPF2 or mild-weather COP.',
+  },
+  {
+    q: "How do I calculate my heat pump's SPF?",
+    a: 'Measure (or estimate) the total heat delivered to the home during the heating season in kWh, and divide by the total electricity consumed by the heat pump system in the same period. In practice, this requires either an electricity sub-meter on the heat pump circuit and an estimate of heat output, or back-calculation from fuel-bill data and degree-day analysis.',
+  },
+  {
+    q: "What's the difference between SPF and annual COP?",
+    a: 'Annual COP and Seasonal COP are sometimes used interchangeably with SPF, especially in academic literature. All refer to the same idea: dividing total useful heat output by total electricity input over an extended period. SPF is the most common label in residential contexts.',
+  },
+  {
+    q: 'Can SPF be higher than the rated HSPF2?',
+    a: 'Yes, in some cases. HSPF2 uses a defined climate profile that may be colder than your actual conditions. A heat pump installed in a milder climate, with low aux heat usage and well-sized to its load, can achieve a real-world SPF higher than its HSPF2 rating.',
+  },
+  {
+    q: 'Why is my SPF lower than expected?',
+    a: 'Common reasons for lower-than-expected SPF: aux heat running more than necessary (check thermostat lockout setting), an undersized system that runs aux heat frequently, ductwork leakage, low refrigerant charge, an installation environment colder than the rating profile, or short cycling.',
+  },
+  {
+    q: 'How does a cold-climate heat pump improve SPF?',
+    a: 'Cold-climate heat pumps use vapor-injection compressors, larger heat exchangers, and inverter speed control to maintain capacity at low temperatures. The result is less aux heat usage, higher compressor efficiency at the coldest conditions, and an SPF that holds up across the heating season instead of collapsing in cold weather.',
+  },
+  {
+    q: 'Is SPF reported by manufacturers?',
+    a: "Manufacturers report rated efficiency metrics (HSPF2, SEER2) but not real-world SPF. SPF depends on the installation, climate, and operation, so it's measured in the field after installation. Some utility rebate programs and research projects publish SPF measurements across populations of installed heat pumps.",
+  },
+];
+
+export const RELATED = [
+  {
+    title: 'Auxiliary heat explained',
+    url: '/heat-pump/aux-heat/',
+    description: 'When aux heat is normal, when it signals a problem, and how to control it.',
+  },
+  {
+    title: 'Heat pump balance point',
+    url: '/heat-pump/cold-climate/balance-point/',
+    description: 'The outdoor temperature where aux heat starts engaging.',
+  },
+  {
+    title: 'HSPF vs HSPF2',
+    url: '/heat-pump/performance/hspf-vs-hspf2/',
+    description: 'How the 2023 rating standard changed efficiency comparisons.',
+  },
+];
+
+export const SPF_RANGES = [
+  { zone: 'Zone 3 (Atlanta, Dallas)', conventional: '3.0–3.5', coldClimate: '3.3–3.7' },
+  { zone: 'Zone 4 (Nashville, NYC)', conventional: '2.8–3.2', coldClimate: '3.0–3.5' },
+  { zone: 'Zone 5 (Chicago, Denver)', conventional: '2.4–2.8', coldClimate: '2.7–3.2' },
+  { zone: 'Zone 6 (Minneapolis)', conventional: '2.0–2.5', coldClimate: '2.5–3.0' },
+  { zone: 'Zone 7 (Fargo)', conventional: '1.7–2.2', coldClimate: '2.2–2.7' },
+];
+
+export const FRONTMATTER = {
+  title: "Seasonal Performance Factor (SPF): What It Means and How It's Used",
+  h1: 'Seasonal Performance Factor Explained',
+  meta_description:
+    "Seasonal Performance Factor is the heating-season average efficiency of a heat pump, expressed as heat delivered divided by electricity consumed. Here's how SPF works.",
+  url: '/heat-pump/performance/seasonal-performance-factor/',
+  date_published: '2026-05-18',
+  last_reviewed: '2026-05-18',
+  target_keyword: 'seasonal performance factor',
+  secondary_keywords: ['SPF', 'SCOP', 'HSPF2', 'heat pump efficiency'],
+  sources: SOURCES,
+  faq: FAQ_ITEMS,
+  parent_title: 'Heat Pump',
+};
+
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={2200} />
+
+<JsonLdBreadcrumb items={BREADCRUMBS} />
+
+<Container>
+
+<Breadcrumbs items={BREADCRUMBS} />
+
+<HeroSpfEnergyFlow />
+
+<ArticleHeader
+  h1="Seasonal Performance Factor Explained"
+  description="Seasonal Performance Factor is the heating-season average efficiency of a heat pump, expressed as heat delivered divided by electricity consumed."
+  datePublished="2026-05-18"
+  lastReviewed="2026-05-18"
+  readingTimeMinutes={9}
+/>
+
+<KeyTakeaways
+  items={[
+    'Seasonal Performance Factor (SPF) is the heating-season-average ratio of useful heat delivered to total electricity consumed by a heat pump system.',
+    'SPF differs from COP in that COP measures efficiency at a single test point, while SPF averages across an entire heating season including aux heat, defrost, and part-load operation.',
+    'In mild climates (zones 3-4), heat pumps routinely achieve SPF 3.0+. In cold climates (zones 5-7), conventional models often drop to SPF 2.0-2.5; cold-climate models hold SPF 2.5-3.0+.',
+    'HSPF2 is for comparing equipment; SPF is for evaluating an installation. Both matter, for different decisions.',
+    'The biggest user-controllable lever on SPF is the thermostat aux heat lockout temperature.',
+  ]}
+/>
+
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
+
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+If a heat pump's brochure says it's rated HSPF2 9.5, what does that actually mean for your electric bill? Probably not as much as you'd hope.
+
+The Seasonal Performance Factor — SPF, or sometimes SCOP in European references — is the metric that comes closer to predicting real-world performance. It's the ratio of useful heat delivered to electricity consumed, averaged across the entire heating season. Where COP measures efficiency at a single instant and HSPF2 measures it under a standardized lab profile, SPF tells you what your specific heat pump did in your specific home over the actual winter you lived through.
+
+This article explains what SPF is, how it differs from the other efficiency metrics, what numbers to expect for different climates and equipment classes, and how to estimate it for your own system. If you're new to [heat pump fundamentals](/heat-pump/), a heat pump moves heat with a refrigerant cycle rather than generating it directly; the [DOE heat pump systems overview](https://www.energy.gov/energysaver/heat-pump-systems) covers the operating principles.
+
+## What Seasonal Performance Factor Is
+
+Seasonal performance factor is the ratio of useful heat delivered by a heat pump to the electricity it consumed, measured across an entire heating season. The seasonal performance factor of a heat pump captures everything that actually happened: the compressor, the fan, the defrost cycles, every kilowatt-hour of aux resistance heat that engaged when temperatures dropped below the balance point.
+
+The formula is simple. Divide total heat output (in kWh thermal) by total electricity input (in kWh). The result is dimensionless. An SPF of 3.0 means three units of heat for every unit of electricity.<SourceCite id="doe-heat-pump-basics" number={1} /> Heat pump seasonal efficiency reported as SPF is what utility programs and research projects measure post-installation.
+
+SPF is the broader concept of [heat pump coefficient of performance (COP)](/heat-pump/performance/cop-explained/) stretched across a full season. Where COP is a measurement at a single operating point, typically 47°F or 17°F outdoor temperature, SPF averages across the entire range of outdoor conditions a heat pump actually sees during winter. The [coefficient of performance (COP)](/glossary/cop/) glossary entry covers the point-in-time concept; the next section compares it to SPF directly.
+
+The European version is SCOP, or Seasonal Coefficient of Performance, defined under EN 14825 with different reference climate profiles for "average," "warmer," and "colder" zones. SPF and SCOP describe the same idea with different reference standards. Annual coefficient of performance is another label used interchangeably in academic literature.
+
+## SPF vs COP
+
+COP is a snapshot. SPF is a film.
+
+A heat pump's COP at 47°F might be 3.5, meaning it delivers 3.5 units of heat for every unit of electricity at that exact operating point. But during your heating season, the outdoor temperature isn't a constant 47°F. It varies from 50°F on mild fall days to single digits on the coldest nights. The heat pump's instantaneous COP varies with it — high in mild weather, low in cold weather. SPF averages all of those moments together, weighted by how many hours each occurred, and folds in defrost cycles and any aux heat that ran along the way. The result is one number that describes the whole season instead of one instant.
+
+That same heat pump rated COP 3.5 at 47°F might have a real SPF of 2.8 in a Zone 5 home. The math hasn't changed; the conditions have. The seasonal performance factor heat pump researchers measure in the field rolls hours of mild operation, hours of cold operation, defrost penalty time, and aux heat consumption into one ratio.<SourceCite id="iea-hpt-annex-49" number={3} />
+
+The reverse comparison, SCOP vs COP, plays out identically. The [IEA Heat Pump Technologies Annex 49](https://heatpumpingtechnologies.org/annex49/) work uses SCOP/SPF measurements across European climates to evaluate real performance. If you want to compare two heat pumps, COP is the wrong tool: it can mislead unless you specify the operating point. SPF compresses everything into one comparable number, though it requires measurement rather than manufacturer specification.
+
+<SpfVsCopComparison />
+
+## What Lowers SPF
+
+Four things drag SPF below the rated COP a heat pump shows at 47°F.
+
+**Outdoor temperature distribution.** The heating season is not evenly distributed across temperature. In a typical Zone 5 climate, the most heating hours happen between 25°F and 45°F, where the heat pump runs efficiently. A few hundred hours per year fall below 15°F, where capacity drops and aux heat engages. The COP at every temperature multiplied by the hours at that temperature, summed and divided by total hours, gives you the seasonal weighted average.
+
+<SpfTemperatureDistribution />
+
+**Aux heat consumption.** Every kilowatt-hour the resistance strips burn counts in the denominator of the SPF formula. The compressor was delivering, say, COP 2.5 at 20°F outdoor; the strips that engaged alongside it added COP 1.0 worth of heat. Both go into the seasonal average. An undersized heat pump or an aggressive thermostat configuration runs aux heat more often, dragging SPF down.
+
+**Defrost cycles.** During defrost, the system briefly reverses to melt ice off the outdoor coil. For 5-15 minutes per cycle, the heat pump runs in reverse while aux heat keeps supply air warm. The [defrost cycle behavior](/heat-pump/cold-climate/defrost-cycle/) detail page covers the timing and triggers. Defrost is unavoidable on any heat pump operating below 47°F in humid air; it costs perhaps 2-5% of seasonal capacity in cold-and-humid climates.
+
+**Part-load cycling.** Single-stage heat pumps either run at full output or off. In mild weather when the load is small, they short-cycle: start, run briefly, stop, repeat. Start-up losses (motor inrush, refrigerant settling, blower spin-up) compound across cycles. Variable-speed inverter units modulate output to match demand instead, which keeps efficiency higher in mild weather.
+
+Distribution losses round out the list. Leaky ducts to unconditioned spaces deliver heat to the attic instead of the home. That heat counts as electricity consumed but not as useful heat delivered.
+
+## SPF vs HSPF2 (and vs Older HSPF)
+
+HSPF2 (heating seasonal performance factor, version 2) is the rating number on a heat pump brochure. SPF is what the heat pump actually delivers. They are related but not the same.
+
+HSPF2 is computed under ANSI/AHRI Standard 210/240-2023, which defines a standardized climate profile and a test methodology that incorporates several outdoor temperatures, defrost, and a representative aux heat usage.<SourceCite id="ahri-210-240" number={2} /> The result is a number that compares equipment models head-to-head under matched conditions. HSPF2 replaced the older HSPF starting with the 2023 rating year; the [HSPF vs HSPF2](/heat-pump/performance/hspf-vs-hspf2/) explainer covers the methodology change. The cooling-side equivalent is covered in [SEER and SEER2 explained](/heat-pump/performance/seer-vs-seer2/). The [HSPF2](/glossary/hspf2/) glossary entry summarizes the metric in one sentence.
+
+SPF (the topic of this article) is the measurement of that same ratio in a specific installation. It uses your home's actual envelope, your actual thermostat schedule, your aux heat lockout settings, your duct leakage rate, and the actual weather your region had during the heating season. HSPF2 says "if you average across our reference profile, this is the efficiency." SPF says "in your actual situation, this is what happened."
+
+Both numbers matter. HSPF2 is the right metric for comparison shopping. SPF is the right metric for evaluating an installation. Pre-2023 HSPF values cannot be compared directly to HSPF2 because the test profile changed; convert with a factor of roughly 0.85 to estimate equivalent HSPF2 from old HSPF data.
+
+The European equivalent of HSPF2 is SCOP. EN 14825 defines three reference climates ("average," "warmer," "colder") and reports separately for each, so a European heat pump may list three SCOP values where a US unit lists one HSPF2.<SourceCite id="en-14825" number={5} />
+
+<SpfHspfComparisonTable />
+
+## What SPF Tells You About Your Heat Pump
+
+In mild climates (IECC zones 3-4), well-installed heat pumps routinely achieve SPF 3.0 or higher. In cold climates (zones 5-7), conventional models often drop to SPF 2.0-2.5 because of more aux heat usage and lower compressor COP at design temperatures. The real-world heat pump efficiency you experience depends on where you live and what equipment you have.
+
+<DataTable
+  caption="Representative SPF ranges by IECC climate zone (NEEP-derived ranges validated against NREL field measurements)"
+  columns={[
+    { key: 'zone', label: 'Climate zone' },
+    { key: 'conventional', label: 'Conventional HP', align: 'center' },
+    { key: 'coldClimate', label: 'Cold-climate HP', align: 'center' },
+  ]}
+  rows={SPF_RANGES}
+/>
+
+SPF 3 in a Zone 3 home is unremarkable for a properly installed system. SPF 4 is achievable in mild climates with cold-climate equipment, a well-sealed envelope, and minimal aux heat usage. SPF below 2.0 in any climate is a sign something is off; the diagnostics section below covers the most common causes.
+
+<SpfByClimateChart />
+
+What separates the columns is design choices. [Cold-climate heat pump performance](/heat-pump/cold-climate/) holds higher SPF in cold zones because vapor-injection refrigerant circuits, inverter compressors, and larger heat exchangers maintain capacity below 17°F.<SourceCite id="neep-cchp-spec" number={7} /> The DOE Cold Climate Heat Pump Challenge sets targets aimed at lifting SPF in zones 5-7 by guaranteeing capacity at low ambient.<SourceCite id="doe-cchp-challenge" number={6} /> NEEP-listed units routinely outperform conventional split heat pumps by 0.3-0.5 SPF points in zones 5 and colder.<SourceCite id="nrel-fieldmeasure" number={4} />
+
+[Dual-fuel heat pump configurations](/heat-pump/types/dual-fuel/) take a different approach: pair a heat pump with a gas furnace and switch to gas below the balance point. The [balance point in detail](/heat-pump/cold-climate/balance-point/) discussion connects sizing to SPF. [Auxiliary heat explained](/heat-pump/aux-heat/) is the primary user-controllable lever; the lower your aux heat usage, the higher your SPF.
+
+Operating cost connects directly. A 30% SPF improvement (from 2.0 to 2.6) cuts annual heating costs by roughly 23% at the same electricity rate. The [NEEP cold-climate heat pump specification](https://neep.org/heating-electrification/ccashp-specification-product-list) lists every certified cold-climate model with the capacity data needed to predict expected SPF.
+
+## Estimating Your Own SPF
+
+Two ways to estimate SPF: measure it, or calculate it from existing data. Most homeowners don't need an exact number; rough order of magnitude is enough.
+
+**Measuring SPF** requires an electricity sub-meter on the heat pump circuit (often available as a clip-on CT sensor) and an estimate of heat delivered. Sub-meter for a full heating season, divide total heat (in kWh thermal) by total electricity (in kWh), and you have SPF. Heat delivered is usually estimated rather than measured directly because in-duct thermal measurement is finicky.
+
+**Estimating SPF** uses your home's heat load and electricity bills. The math:
+
+A 1,800 sq ft home in climate zone 5 with a 3-ton heat pump consumes 4,200 kWh of electricity for heating across a 7-month heating season. The home's heating load was estimated at 36,000 BTU/hour at design conditions, with an average load of about 9,000 BTU/hour after factoring in the temperature distribution.
+
+Total heat delivered: 9,000 BTU/hr × 30 days/month × 24 hr/day × 7 months ÷ 3,412 BTU/kWh ≈ **13,300 kWh thermal**.
+
+Total electricity in: **4,200 kWh**.
+
+SPF: 13,300 ÷ 4,200 ≈ **3.2**.
+
+This is the calculation method behind "spf calculation" or "how to calculate spf": divide the seasonal heat output by the seasonal electricity input. The numbers can be ballparked; don't overstate precision.
+
+The [heat pump sizing calculator](/tools/heat-pump-size-calculator/) gives you the design heating load, which feeds the seasonal heat output estimate. The [SEER savings calculator](/tools/seer-savings-calculator/) handles the operating-cost side of the equation. Some utility rebate programs pay extra for verified SPF performance after install, using interval-meter data plus a degree-day-corrected heating load estimate. The typical homeowner does not need to verify SPF directly; it's a reference concept, not an operational dashboard.
+
+## When SPF Is Low: Diagnostics
+
+An SPF below 2.0 in any climate is worth investigating. Diagnostics happen in a specific order, because the cheapest fixes usually solve the problem.
+
+**Thermostat aux heat lockout.** This is the most common single cause of low SPF. If aux heat is configured to engage at 45°F outdoor temperature instead of 25°F, the strips run for hundreds of extra hours per season. Raising the lockout is a 30-second fix on most thermostats. The [auxiliary heat explained](/heat-pump/aux-heat/) article walks through the thermostat settings in detail.
+
+**Air filter.** A dirty filter restricts airflow through the indoor coil, drops heat pump output, and forces longer compressor runtimes plus more aux heat. Check the filter every 30-60 days during heating season.
+
+**Duct leakage.** Heat delivered to an unconditioned attic, basement, or crawl space doesn't count toward useful heat output but does count toward electricity consumed. Pressure-testing identifies leakage; sealing it recovers 10-20% of capacity in some homes.
+
+**Refrigerant charge.** An undercharged heat pump cannot deliver rated capacity at any outdoor temperature, which means more aux heat usage and lower SPF. This is a service call; refrigerant work requires EPA certification.
+
+**Outdoor unit clearance.** Snow, leaves, ice on top of the cabinet, or a hedge growing too close all restrict airflow to the outdoor coil. Keep a 24-inch clearance on all sides.
+
+If diagnostics pass and SPF is still below the climate-zone expectation for your equipment class, the heat pump is probably undersized for the home. That's the upgrade-or-not decision.
+
+## SPF in the Real World: What to Expect
+
+Real-world SPF is almost always lower than rated HSPF2 would suggest. Your installation, climate, ductwork, and operational habits all push the number around. Cold-climate models earn their premium specifically by holding SPF higher across cold zones; the gap between conventional and cold-climate widens as IECC zone numbers rise.
+
+If you want to influence your own SPF, the aux heat lockout temperature setting on your thermostat is the single biggest lever you control. Most thermostats default to a low lockout (or none), which means aux heat engages more freely than necessary. Raising the lockout to 35-40°F in most climates pays for itself within one heating season.
+
+SPF is a useful concept, not a daily dashboard. You don't need to monitor it weekly. You need to understand what it measures so you can evaluate equipment, troubleshoot performance, and compare quotes. If you're evaluating a heat pump for purchase, focus on HSPF2 for comparison and expect real SPF to be 70-85% of the implied rating. If you have a heat pump installed already and aux heat seems to run more than it should, start with the diagnostics above; replacement is a last resort.
+
+</article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<Sources sources={SOURCES} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-18" />
+</div>
+
+</Container>
