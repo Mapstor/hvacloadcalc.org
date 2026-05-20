@@ -1,0 +1,402 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { Sources } from '@/components/article/Sources';
+import { SourceCite } from '@/components/article/SourceCite';
+import { AuthorByline } from '@/components/article/AuthorByline';
+import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { HeroShortCyclingRuntime } from '@/components/svg/short-cycling/HeroShortCyclingRuntime';
+import { ShortCyclingCausesRanked } from '@/components/svg/short-cycling/ShortCyclingCausesRanked';
+import { OversizedCyclingComparison } from '@/components/svg/short-cycling/OversizedCyclingComparison';
+import { RefrigerantCircuitLowCharge } from '@/components/svg/short-cycling/RefrigerantCircuitLowCharge';
+import { ShortCyclingDiyVsPro } from '@/components/svg/short-cycling/ShortCyclingDiyVsPro';
+import { CostOfShortCycling } from '@/components/svg/short-cycling/CostOfShortCycling';
+
+export const metadata = {
+  title: 'AC Short Cycling: Causes, Diagnosis, and What It Costs You',
+  description:
+    'AC short cycling means the compressor turns on and off too often. Learn the seven most common causes, how to diagnose them, and which ones need a pro.',
+  openGraph: {
+    title: 'AC Short Cycling: Causes and Fixes',
+    description:
+      'An AC that cycles every few minutes is wasting energy, failing to dehumidify, and shortening its own life. Here are the seven causes ranked by likelihood.',
+    type: 'article',
+    publishedTime: '2026-05-18',
+    modifiedTime: '2026-05-18',
+    authors: ['Jonathan S.'],
+  },
+};
+
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'AC', url: '/ac/' },
+  { name: 'Short Cycling' },
+];
+
+export const HEADINGS = [
+  { id: 'what-ac-short-cycling-actually-is', text: 'What AC Short Cycling Actually Is', level: 2 },
+  { id: 'cause-1-oversized-ac', text: 'Cause 1: Oversized AC', level: 2 },
+  { id: 'cause-2-dirty-air-filter', text: 'Cause 2: Dirty Air Filter', level: 2 },
+  { id: 'cause-3-frozen-evaporator-coil', text: 'Cause 3: Frozen Evaporator Coil', level: 2 },
+  { id: 'cause-4-low-refrigerant-leak', text: 'Cause 4: Low Refrigerant (Leak)', level: 2 },
+  { id: 'cause-5-dirty-condenser-coil', text: 'Cause 5: Dirty Condenser Coil', level: 2 },
+  { id: 'cause-6-thermostat-issues', text: 'Cause 6: Thermostat Issues', level: 2 },
+  { id: 'cause-7-electrical-issues', text: 'Cause 7: Electrical Issues', level: 2 },
+  { id: 'what-short-cycling-costs-you', text: 'What Short Cycling Costs You', level: 2 },
+  { id: 'diy-vs-pro-where-to-draw-the-line', text: 'DIY vs Pro: Where to Draw the Line', level: 2 },
+];
+
+export const SOURCES = [
+  {
+    id: 'ahri-210-240',
+    title: 'ANSI/AHRI Standard 210/240-2023, Performance Rating of Unitary Air-Conditioning and Air-Source Heat Pump Equipment',
+    publisher: 'Air-Conditioning, Heating and Refrigeration Institute',
+    year: 2023,
+    url: 'https://www.ahrinet.org/search-standards/ahri-210240-2023-performance-rating-unitary-air-conditioning-air-source-heat-pump',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'epa-section-608',
+    title: 'EPA Section 608 Technician Certification',
+    publisher: 'US Environmental Protection Agency',
+    year: 2024,
+    url: 'https://www.epa.gov/section608',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'doe-air-conditioning-basics',
+    title: 'Central Air Conditioners',
+    publisher: 'US Department of Energy, Energy Saver',
+    year: 2024,
+    url: 'https://www.energy.gov/energysaver/central-air-conditioners',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'doe-rite-sizing',
+    title: 'Right-Sizing Heating and Cooling Systems',
+    publisher: 'US Department of Energy, Building Technologies Office',
+    year: 2023,
+    url: 'https://www.energy.gov/scep/articles/right-sizing-heating-and-cooling-systems',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'acca-manual-s',
+    title: 'Manual S — Residential Equipment Selection (ANSI/ACCA 3 Manual S - 2014)',
+    publisher: 'Air Conditioning Contractors of America',
+    year: 2014,
+    url: 'https://www.acca.org/standards/technical-manuals/manual-s',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'energystar-maintenance',
+    title: 'Maintenance Checklist — Central AC',
+    publisher: 'US EPA / ENERGY STAR',
+    year: 2024,
+    url: 'https://www.energystar.gov/products/heating_cooling/central_air_conditioners/maintenance_checklist',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'eia-residential-electricity-2025',
+    title: 'Average Price of Electricity to Ultimate Customers',
+    publisher: 'US Energy Information Administration',
+    year: 2025,
+    url: 'https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_6_a',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+];
+
+export const FAQ_ITEMS = [
+  {
+    q: 'How short is too short for an AC cycle?',
+    a: 'Normal AC cycles run 10-15 minutes once the home is up to temperature, with longer cycles during hot weather. Cycles shorter than 5-7 minutes are short cycling. Cycles of 1-2 minutes indicate severe short cycling and almost always have a fixable cause. Note that variable-speed inverter ACs do not cycle in the same sense; they modulate output, so short cycling does not apply.',
+  },
+  {
+    q: 'Will short cycling damage my AC?',
+    a: 'Yes, over time. The compressor draws several times its running current during startup. Frequent startups stress the compressor windings, the contactor, and the start capacitor. A short-cycling AC typically reaches end-of-life in 6-8 years rather than the 12-15 years a normally-cycling unit lasts.',
+  },
+  {
+    q: 'Is short cycling dangerous?',
+    a: 'Not dangerous to people, but bad for the equipment. The risks are compressor failure, tripped breakers from repeated startup current, and ice buildup on the evaporator coil which can damage the refrigerant lines if it forms a complete blockage. None of these pose a safety risk to occupants.',
+  },
+  {
+    q: 'Can a dirty filter really cause short cycling?',
+    a: "Yes. A dirty filter restricts airflow over the evaporator coil. With less air moving across the coil, the coil temperature drops below freezing and ice forms. The ice further restricts airflow, the coil temperature drops further, the system either trips on low pressure or freezes solid and shuts off. Change the filter, let the ice melt completely, and run the system. If the problem returns, the filter wasn't the only cause.",
+  },
+  {
+    q: "Why does my AC short cycle only when it's hot outside?",
+    a: 'Three likely reasons: refrigerant level is borderline (only short cycles under high heat load), the outdoor condenser coil is dirty (cannot reject heat efficiently when the air is already hot), or the system is undersized for extreme conditions (rare; oversized is far more common).',
+  },
+  {
+    q: 'Can I fix AC short cycling myself?',
+    a: 'Some causes, yes. Filter changes, condenser coil cleaning, thermostat battery replacement, and outdoor unit clearance are all homeowner-friendly. Refrigerant work specifically requires EPA Section 608 certification; handling refrigerants without it is a federal violation. Frozen evaporator coil, suspected refrigerant issues, and electrical component replacement are all professional service calls.',
+  },
+  {
+    q: "How much does it cost to fix an AC that's short cycling?",
+    a: 'DIY fixes (filter, cleaning) cost $5-50. Thermostat replacement runs $150-400 installed. Refrigerant recharge with leak repair typically runs $300-1,500 depending on leak location and refrigerant type. Capacitor replacement runs $150-300. Compressor replacement runs $1,500-3,000, usually the trigger to consider replacing the whole unit instead.',
+  },
+  {
+    q: "My AC is short cycling but it's a brand new system — what now?",
+    a: "Most common causes for new systems: oversized for the home (Manual J wasn't done correctly), thermostat placement (in direct sun, near a vent, or on an exterior wall), wiring error in installation, or a defective control board. Contact the installer first; this is almost certainly under warranty.",
+  },
+  {
+    q: "What's the difference between AC short cycling and the compressor failing?",
+    a: "A short-cycling AC starts up and runs briefly, then shuts off, then restarts. A failing compressor either won't start at all, hums without starting (capacitor or compressor failure), trips the breaker, or makes loud mechanical noises. Short cycling can lead to compressor failure if left unaddressed long enough.",
+  },
+  {
+    q: 'Does short cycling waste electricity?',
+    a: 'Significantly. Startup draws several times the running current and contributes nothing to cooling; the system reaches steady-state efficiency 1-3 minutes into a cycle. A short-cycling AC running 2-minute cycles spends a large fraction of its energy in startup mode, achieving little cooling. Real-world energy waste is typically 30-60% above what a properly cycling unit would use to deliver the same cooling.',
+  },
+];
+
+export const RELATED = [
+  {
+    title: 'AC oversizing in detail',
+    url: '/ac/oversizing/',
+    description: 'Why oversized ACs cycle rapidly and what it costs in comfort.',
+  },
+  {
+    title: 'Heat pump short cycling',
+    url: '/heat-pump/troubleshooting/short-cycling/',
+    description: 'Same diagnostic framework, heat pump specifics.',
+  },
+  {
+    title: 'Manual J load calculation',
+    url: '/manual-j/',
+    description: 'The methodology that prevents oversizing in the first place.',
+  },
+];
+
+export const FRONTMATTER = {
+  title: 'AC Short Cycling: Causes, Diagnosis, and What It Costs You',
+  h1: 'Why Your AC Short Cycles (and How to Fix It)',
+  meta_description:
+    'AC short cycling means the compressor turns on and off too often. Learn the seven most common causes, how to diagnose them, and which ones need a pro.',
+  url: '/ac/short-cycling/',
+  date_published: '2026-05-18',
+  last_reviewed: '2026-05-18',
+  target_keyword: 'ac short cycling',
+  secondary_keywords: ['air conditioner short cycling', 'ac short cycling causes', 'oversized ac short cycling', 'frozen evaporator coil', 'low refrigerant'],
+  sources: SOURCES,
+  faq: FAQ_ITEMS,
+  parent_title: 'AC',
+};
+
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={2600} />
+
+<JsonLdBreadcrumb items={BREADCRUMBS} />
+
+<Container>
+
+<Breadcrumbs items={BREADCRUMBS} />
+
+<HeroShortCyclingRuntime />
+
+<ArticleHeader
+  h1="Why Your AC Short Cycles (and How to Fix It)"
+  description="AC short cycling means the compressor turns on and off too often. Learn the seven most common causes, how to diagnose them, and which ones need a pro."
+  datePublished="2026-05-18"
+  lastReviewed="2026-05-18"
+  readingTimeMinutes={11}
+/>
+
+<KeyTakeaways
+  items={[
+    'AC short cycling means the compressor runs in cycles shorter than 5-7 minutes, more than 6 times per hour. Normal cycling is 10-15 minutes per cycle, 3-4 times per hour.',
+    'Seven causes account for almost every case: oversized AC, dirty filter, frozen evaporator coil, low refrigerant, dirty condenser coil, thermostat issues, electrical problems.',
+    'DIY-friendly: filter, outdoor coil cleaning, thermostat batteries, clearance check. Pro required: refrigerant (EPA Section 608 federal law), electrical components, repeated cycling after DIY fixes.',
+    'Short cycling typically wastes 30-60% of the energy a properly cycling AC would use to deliver the same cooling, and halves compressor lifespan (6-8 years instead of 12-15).',
+    'Variable-speed inverter ACs modulate output continuously and do not cycle in the traditional sense.',
+  ]}
+/>
+
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
+
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+An air conditioner that turns on and off every two minutes is not working harder for you. It's wasting energy, failing to remove humidity, and shortening its own life by every cycle. Short cycling is one of the most common AC problems, and most causes are well-defined and diagnosable.
+
+Seven causes account for almost every case of AC short cycling. Some you can fix yourself in twenty minutes. Some require a technician with refrigerant certification. This article ranks the causes by likelihood, explains how to identify each, and tells you which ones you can address yourself. For a refresher on [central AC fundamentals](/ac/) before diving in, the hub covers the basics.
+
+## What AC Short Cycling Actually Is
+
+A "cycle" is one ON-OFF-ON sequence of the compressor. A normal AC cycle runs 10-15 minutes per ON period, with 3-4 complete cycles per hour during moderate cooling load. Short cycling means cycles under 5 minutes ON, more than 6 cycles per hour, sometimes as severe as 1-2 minute runs followed by 1-2 minute pauses.
+
+The cycle length and frequency come from how the compressor responds to thermostat calls. AHRI 210/240 rates equipment under steady-state conditions; the on-off behavior in real homes depends on thermostat differential and house thermal mass.<SourceCite id="ahri-210-240" number={1} /> A normal residential thermostat differential (1-2°F) combined with typical home thermal capacitance produces 3-4 cycles per hour. Short cycling means something is preventing the compressor from completing its normal run.
+
+Variable-speed inverter air conditioners do not cycle in the traditional sense; they modulate output continuously to match the load. "Short cycling" as a concept does not apply to fully modulating equipment. This article focuses on single-stage and two-stage compressors, which represent the majority of installed residential AC.
+
+Seven causes account for almost all real-world short cycling. The ranking that follows is by likelihood across a typical residential service population. Items 1-2 (oversizing and dirty filter) cover most of what you'll encounter. Items 3-7 fill in the remainder. The [DOE central air conditioner guidance](https://www.energy.gov/energysaver/central-air-conditioners) provides the broader context for how a healthy AC system should operate.<SourceCite id="doe-air-conditioning-basics" number={3} />
+
+<ShortCyclingCausesRanked />
+
+## Cause 1: Oversized AC
+
+Of the seven causes, oversizing is the only one you can't fix without replacing equipment — but it is the most common structural reason a relatively new, well-maintained AC short cycles. An oversized AC reaches the thermostat setpoint in two or three minutes. It hasn't run long enough to reach steady-state efficiency, and it hasn't run long enough to remove humidity from the air. The home is cool and clammy. Then the compressor shuts off, the air warms up slightly, the thermostat calls again, and the cycle repeats. The bigger the AC relative to the actual cooling load, the shorter the cycles and the worse the humidity.
+
+<OversizedCyclingComparison />
+
+The physics is straightforward. Cooling has two components: sensible cooling lowers air temperature, and latent cooling removes moisture by condensing it on the evaporator coil. A correctly sized AC takes 1-3 minutes to reach steady-state coil temperature, then runs another 7-12 minutes removing moisture while also lowering air temperature. An oversized AC delivers more sensible cooling per minute than the home actually needs, hits setpoint before latent cooling has done much work, and shuts off.
+
+Oversizing is everywhere because of structural industry incentives, not malice. The [Manual J load calculation methodology](/manual-j/) determines the home's actual cooling load; the [Manual S equipment selection rules](/manual-s/) set the maximum allowable oversizing. Manual S permits 15% over the heating load for a furnace and 15-25% over the cooling load for AC depending on equipment type.<SourceCite id="acca-manual-s" number={5} /> Beyond those tolerances, short cycling becomes likely. DOE has pushed right-sizing initiatives in response to widespread oversizing.<SourceCite id="doe-rite-sizing" number={4} />
+
+Diagnosis: this cause is suspected when the AC is reasonably new, well-maintained, but cycles rapidly even on hot days. There's no filter problem, no ice, no obvious mechanical fault. The unit is just bigger than the home needs.
+
+The fix is replacement with a correctly sized unit, or upgrading to a variable-capacity (inverter) unit that can modulate down. For [AC oversizing in detail](/ac/oversizing/), the dedicated article covers the comfort and energy impact. Check your current system size against your home's load with our [AC sizing calculator](/tools/ac-sizing-calculator/), or consult the [AC BTU sizing chart](/ac/btu/chart/) for a rule-of-thumb estimate.
+
+## Cause 2: Dirty Air Filter
+
+Dirty filter short cycling is the most common cause overall and almost always a DIY fix. The mechanism: a clogged filter restricts airflow across the indoor evaporator coil. With less air moving across the coil, the coil temperature drops below freezing. Ice forms. Ice further restricts airflow. The coil temperature drops further. The system either trips on low pressure or freezes solid and shuts off. After a brief pause, the cycle repeats.
+
+ENERGY STAR recommends changing standard 1-inch fiberglass filters every 1-3 months during cooling season, with longer intervals for thicker pleated filters and shorter intervals in homes with pets or heavy dust.<SourceCite id="energystar-maintenance" number={6} /> The [ENERGY STAR AC maintenance checklist](https://www.energystar.gov/products/heating_cooling/central_air_conditioners/maintenance_checklist) covers the full schedule.
+
+Diagnosis is direct: pull the filter and look at it. A clean filter is white or light-colored with visible weave or pleats. A dirty filter is gray or brown, matted, with no visible weave. If you can't read a newspaper through the filter, replace it.
+
+The fix:
+
+1. Turn the AC off at the thermostat (not just the breaker; the blower needs to keep running to melt ice).
+2. Replace the filter with the correct size and MERV rating for your system (typically MERV 8-13 for residential).
+3. Run the blower-only fan setting for 2-4 hours to melt any ice on the coil. Don't chip the ice off; that damages the fins.
+4. Switch the AC back to cooling and observe runtime. Cycles should return to 10-15 minutes within an hour.
+
+If short cycling returns within a day after a filter change with no visible ice, the filter wasn't the only issue. Check the outdoor unit and condenser coil next. For [how often to change your AC filter](/ac/maintenance/filter-change-frequency/) by type, the maintenance article covers the full schedule.
+
+## Cause 3: Frozen Evaporator Coil
+
+Frozen evaporator coil short cycling is often downstream of cause 2 (dirty filter) or cause 4 (low refrigerant). The coil temperature drops below 32°F, water vapor in the airstream condenses and freezes on the fins, ice blocks airflow, and the system shuts down or trips a safety switch.
+
+Diagnosis: open the air handler or check the refrigerant lines leaving the indoor unit. Ice on the suction line (the larger, insulated line) or visible frost on the coil itself confirms the diagnosis. If you can see your breath in front of the supply registers, ice on the coil is almost certain.
+
+The fix has two steps:
+
+1. Turn the cooling off but leave the blower running. The blower-only fan setting circulates warmer return air over the coil and melts ice in 2-4 hours.
+2. Don't chip, scrape, or hose down the ice. The fins bend easily and the refrigerant lines damage easily. Wait.
+
+After ice melts completely, run the AC and observe. If cycles return to normal: the cause was airflow (filter, blocked supply registers, closed dampers). Address the airflow issue, change the filter, and the problem stays gone.
+
+If ice returns within 24 hours despite a clean filter and unblocked airflow: the cause is refrigerant, not air. Refrigerant pressure has dropped enough to chill the coil below freezing. This is a service call; see Cause 4. The full [frozen evaporator coil diagnosis](/ac/troubleshooting/frozen-evaporator-coil/) walks through the airflow-vs-refrigerant distinction in more detail.
+
+## Cause 4: Low Refrigerant (Leak)
+
+Low refrigerant short cycling is one of the most common pro-only causes. Refrigerant moves heat through a sealed loop; it doesn't get consumed, doesn't degrade with use, and doesn't need "topping off" unless the loop has a leak. A system that needs refrigerant added has a leak somewhere.
+
+<RefrigerantCircuitLowCharge />
+
+The mechanism: lower refrigerant pressure means lower evaporator coil temperature (per the pressure-temperature relationship). The coil drops below freezing, ice forms, the compressor may also trip on a low-pressure safety switch designed to prevent damage to the compressor. The system stops, recovers briefly, restarts, and short cycles.
+
+Diagnosis is by gauges. A technician connects to the service ports and reads suction and liquid pressures. R-410A (current standard refrigerant) typically operates around 70-80 psi suction and 250-350 psi liquid in moderate conditions. Pressures noticeably below this range with normal load conditions indicate low charge. Leak detection uses electronic detectors, UV dye, or soap solution depending on suspected leak location.
+
+The fix: locate and repair the leak first, then evacuate the system and recharge with the correct refrigerant to manufacturer specification. Topping off without finding the leak is a temporary fix at best, and federal regulations restrict refrigerant venting and recharge to certified technicians.
+
+EPA Section 608 certification is required by federal law for any work involving refrigerants in stationary air conditioning equipment. See the [EPA Section 608 certification requirement](https://www.epa.gov/section608) for the regulatory detail.<SourceCite id="epa-section-608" number={2} /> Civil penalties apply for handling refrigerants without certification. This is not a DIY job.
+
+Cost range: $300-1,500 for leak detection, repair, evacuation, and recharge depending on leak location and refrigerant type. Older systems still running R-22 refrigerant face higher recharge costs as R-22 phases out; a major leak in an R-22 system is often the trigger to replace the whole unit instead. For [low refrigerant diagnosis](/ac/troubleshooting/low-refrigerant/), the dedicated article covers what gauges show under various scenarios.
+
+## Cause 5: Dirty Condenser Coil
+
+The outdoor coil is easy to clean and frequently neglected. The condenser rejects the heat the AC has absorbed from the home; when its fins are matted with dust, leaves, cottonwood seeds, or grass clippings, it can't reject heat efficiently. Refrigerant pressure rises, a high-pressure safety switch trips, the compressor shuts off briefly, restarts, and short cycles. The same mechanism trips faster on hot days when the outdoor air is already warm.
+
+Diagnosis: pull the outdoor unit's top grille or look through the side fins. Clean fins are bare metal with visible spacing between them. Dirty fins are matted with debris, often a layer of cottonwood fluff or fine dust completely blocking airflow.
+
+DIY cleaning is straightforward:
+
+1. Cut power at the disconnect or breaker before working on the outdoor unit.
+2. Remove visible debris by hand (leaves, twigs).
+3. Use a garden hose at standard pressure (not a pressure washer; high pressure bends fins). Spray from the inside out, sending dirt back through the fins toward the outside.
+4. For bent fins, a fin comb (cheap, hardware store) straightens them. Straight fins move air much better.
+5. Restore power and observe runtime over the next few cycles.
+
+Annual cleaning at the start of cooling season is the ENERGY STAR maintenance recommendation. Skip the pressure washer; the fins are thin aluminum and don't tolerate it. For [dirty outdoor condenser coil symptoms](/ac/troubleshooting/dirty-condenser-coil/) and the full cleaning procedure, see the maintenance article.
+
+## Cause 6: Thermostat Issues
+
+Thermostat short cycling is less common but real. Three sub-causes appear most often.
+
+**Bad placement.** A thermostat in direct sun reads higher than actual room temperature, calling cooling sooner. A thermostat above or near a supply register reads cooler than the room, ending cycles early. A thermostat on an exterior wall reads colder than the room in winter, warmer in summer. Any of these produce erratic call timing that looks like short cycling.
+
+**Dead or low batteries.** A wireless or battery-backed thermostat with low batteries can produce erratic readings or intermittent operation. Replace the batteries before assuming anything else.
+
+**Differential or anticipator settings too tight.** Most thermostats have a programmable temperature differential (often called "swing" or "cycle rate"). A 0.5°F differential triggers cycles too frequently; a 1-2°F differential is typical. Older mechanical thermostats use a heat anticipator that can be miscalibrated.
+
+The DIY diagnostic path: visually check thermostat placement, swap batteries, check the differential setting. The same stage timing logic that affects [Ecobee aux heat settings](/heat-pump/aux-heat/ecobee/) applies to AC compressor stages and timing.
+
+If placement, batteries, and settings are all correct and short cycling continues, the thermostat may have a faulty internal sensor or relay. Replacement runs $150-400 installed. Wiring errors are a service call; don't open up thermostat wiring without confirming the system is off at the breaker. For [thermostat placement problems](/ac/troubleshooting/thermostat-placement/) in detail, the troubleshooting article covers the diagnostic path.
+
+## Cause 7: Electrical Issues
+
+Electrical short cycling covers capacitor failure, contactor pitting, control board faults, and low voltage from the utility. These are the least common cause overall but the most variable in difficulty.
+
+**Capacitor.** The most common electrical cause. Run capacitors degrade over time, especially in hot climates where they sit on a hot outdoor unit. A failing capacitor produces hum without start, intermittent starting, or short runtime followed by tripout. Replacement is straightforward for a trained technician but involves stored electrical charge; do not attempt without proper training.
+
+**Contactor.** The relay that switches the compressor circuit on and off. Contacts pit and oxidize over years of cycling; pitted contacts make intermittent contact, producing short or erratic cycles.
+
+**Control board.** The PCB that orchestrates compressor, blower, and aux signals. Boards are the most expensive electrical fix and frequently misdiagnosed because other failures look similar.
+
+**Low voltage.** Utility brownouts or undersized service lines can reduce supply voltage enough to prevent normal compressor starting. Less common but worth checking if short cycling correlates with neighborhood electrical events.
+
+Diagnosis requires a multimeter and component-level testing by a technician. Cost ranges: capacitor $150-300, contactor $200-400, control board $400-900. AC electrical work is not a DIY-friendly category; high voltage, stored charge in capacitors, and component-level testing all argue for a technician.
+
+## What Short Cycling Costs You
+
+Short cycling is expensive even when it doesn't break anything. Three categories of cost compound across a cooling season.
+
+<CostOfShortCycling />
+
+**Energy waste.** Compressor startup draws several times running current and contributes little to cooling. The system reaches steady-state efficiency 1-3 minutes into a cycle; a 2-minute cycle is mostly startup. Real-world energy waste from short cycling typically runs 30-60% above what a properly cycling AC would use to deliver the same total cooling.
+
+**Comfort.** Latent cooling (moisture removal) requires sustained runtime. A short-cycling AC reaches setpoint quickly but doesn't run long enough to remove humidity. Indoor RH rises from a healthy 45-55% to 60-70%, which feels warmer than the dry-bulb temperature suggests. The [wet-bulb temperature and dehumidification](/building-science/psychrometrics/wet-bulb/) discussion covers the physics.
+
+**Compressor lifespan.** Each compressor startup is a stress event. Frequent startups wear out start capacitors, contactors, and compressor windings. A short-cycling unit typically reaches end-of-life in 6-8 years rather than the 12-15 years a normally-cycling unit achieves.
+
+Concrete dollar math for a typical 2-ton AC running 1,500 cooling hours per year:
+
+Normal operation at 1.0 kW steady-state: 1.0 × 1,500 = 1,500 kWh/year × $0.16/kWh = **$240/year**.<SourceCite id="eia-residential-electricity-2025" number={7} />
+
+Short-cycling operation averaging 1.6 kW with startup-heavy cycles: 1.6 × 1,500 = 2,400 kWh/year × $0.16 = **$384/year**.
+
+Difference: **$144/year** in wasted electricity at the US average residential rate, every year, until the underlying cause is fixed. Verify your home's actual cooling load with our [Manual J-style load calculator](/tools/manual-j-calculator/) if oversizing is suspected.
+
+## DIY vs Pro: Where to Draw the Line
+
+Where to draw the DIY-vs-pro line on short cycling depends on whether the cause involves refrigerant, electrical components, or any cause that returns after a homeowner fix.
+
+<ShortCyclingDiyVsPro />
+
+DIY-friendly fixes: filter, outdoor coil cleaning, thermostat batteries, outdoor unit clearance. Most short-cycling AC short cycling causes resolve at one of these. Walk through them before scheduling a service call.
+
+Professional service required: refrigerant work (EPA Section 608 federal certification), electrical component replacement, frozen evaporator coil if the filter is clean, any cause that returns after a DIY fix. AC short cycling repair cost varies widely depending on which cause is found. The [AC short cycling repair cost breakdown](/ac/short-cycling/repair-cost/) covers the cost of each fix.
+
+When to consider replacement instead of repair: AC over 12 years old, multiple service visits needed in one cooling season, R-22 refrigerant in the system (recharge cost is escalating as R-22 phases out), or an oversizing problem that diagnostics confirm. Replacement isn't a default; it's the answer when repair economics stop making sense.
+
+If your AC is new (less than a year old) and short cycling, contact the installer first. Most new-system short cycling traces to either oversizing (Manual J wasn't done) or installation defects (thermostat placement, wiring), both of which are typically covered by installation warranty. For [heat pump short cycling specifics](/heat-pump/troubleshooting/short-cycling/) if you landed here from a heat pump symptom, the heat pump troubleshooting article covers the differences.
+
+</article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<Sources sources={SOURCES} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-18" />
+</div>
+
+</Container>
