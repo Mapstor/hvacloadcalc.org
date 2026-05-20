@@ -1,0 +1,396 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { Sources } from '@/components/article/Sources';
+import { SourceCite } from '@/components/article/SourceCite';
+import { AuthorByline } from '@/components/article/AuthorByline';
+import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { HeroWetBulbThermometer } from '@/components/svg/wet-bulb/HeroWetBulbThermometer';
+import { PsychrometricChartSimplified } from '@/components/svg/wet-bulb/PsychrometricChartSimplified';
+import { WetBulbVsOthersComparison } from '@/components/svg/wet-bulb/WetBulbVsOthersComparison';
+import { SlingPsychrometer } from '@/components/svg/wet-bulb/SlingPsychrometer';
+import { WbgtZones } from '@/components/svg/wet-bulb/WbgtZones';
+import { WetBulbSurvivabilityMap } from '@/components/svg/wet-bulb/WetBulbSurvivabilityMap';
+
+export const metadata = {
+  title: 'Wet Bulb Temperature: What It Measures and Why It Matters',
+  description:
+    'Wet bulb temperature is the temperature a thermometer reads when its bulb is wrapped in a wet wick. It measures cooling potential, not air temperature.',
+  openGraph: {
+    title: 'Wet Bulb Temperature: What It Is and How to Read It',
+    description:
+      "Wet bulb temperature shows how much cooling air can do through evaporation. Here's how it differs from dry bulb, dew point, and 'feels like' temperature.",
+    type: 'article',
+    publishedTime: '2026-05-18',
+    modifiedTime: '2026-05-18',
+    authors: ['Jonathan S.'],
+  },
+};
+
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'Building Science', url: '/building-science/' },
+  { name: 'Psychrometrics' },
+  { name: 'Wet Bulb Temperature' },
+];
+
+export const HEADINGS = [
+  { id: 'what-wet-bulb-temperature-actually-is', text: 'What Wet Bulb Temperature Actually Is', level: 2 },
+  { id: 'how-wet-bulb-differs-from-dry-bulb', text: 'How Wet Bulb Differs from Dry Bulb', level: 2 },
+  { id: 'wet-bulb-vs-dew-point', text: 'Wet Bulb vs Dew Point', level: 2 },
+  { id: 'how-wet-bulb-is-measured', text: 'How Wet Bulb Is Measured', level: 2 },
+  { id: 'wet-bulb-on-the-psychrometric-chart', text: 'Wet Bulb on the Psychrometric Chart', level: 2 },
+  { id: 'how-to-calculate-wet-bulb-temperature', text: 'How to Calculate Wet Bulb Temperature', level: 2 },
+  { id: 'wet-bulb-vs-heat-index-feels-like', text: 'Wet Bulb vs Heat Index ("Feels Like")', level: 2 },
+  { id: 'wbgt-and-heat-stress', text: 'WBGT and Heat Stress', level: 2 },
+  { id: 'wet-bulb-survivability', text: 'Wet Bulb Survivability', level: 2 },
+  { id: 'where-to-find-current-wet-bulb-readings', text: 'Where to Find Current Wet Bulb Readings', level: 2 },
+];
+
+export const SOURCES = [
+  {
+    id: 'ashrae-fundamentals-2021-psychrometrics',
+    title: 'ASHRAE Handbook of Fundamentals 2021, Chapter 1 (Psychrometrics)',
+    publisher: 'ASHRAE',
+    year: 2021,
+    url: 'https://www.ashrae.org/technical-resources/ashrae-handbook',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'noaa-heat-index',
+    title: 'NOAA National Weather Service Heat Index',
+    publisher: 'US National Oceanic and Atmospheric Administration',
+    year: 2024,
+    url: 'https://www.weather.gov/safety/heat-index',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'niosh-wbgt',
+    title: 'NIOSH Criteria for a Recommended Standard: Occupational Exposure to Heat and Hot Environments',
+    publisher: 'US National Institute for Occupational Safety and Health',
+    year: 2016,
+    url: 'https://www.cdc.gov/niosh/docs/2016-106/default.html',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'penn-state-wet-bulb-survivability',
+    title: 'Evaluating the 35°C Wet-Bulb Temperature Adaptability Threshold',
+    publisher: 'Vecellio et al., Journal of Applied Physiology (Penn State)',
+    year: 2022,
+    url: 'https://journals.physiology.org/doi/10.1152/japplphysiol.00738.2021',
+    accessed: '2026-05-18',
+    tier: 2,
+  },
+  {
+    id: 'ashrae-169',
+    title: 'ANSI/ASHRAE Standard 169-2021, Climatic Data for Building Design Standards',
+    publisher: 'ASHRAE',
+    year: 2021,
+    url: 'https://www.ashrae.org/technical-resources/standards-and-guidelines/standards-addenda',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'stull-2011-wet-bulb-formula',
+    title: 'Wet-Bulb Temperature from Relative Humidity and Air Temperature',
+    publisher: 'Stull, R., Journal of Applied Meteorology and Climatology',
+    year: 2011,
+    url: 'https://doi.org/10.1175/JAMC-D-11-0143.1',
+    accessed: '2026-05-18',
+    tier: 2,
+  },
+  {
+    id: 'doe-evaporative-cooling',
+    title: 'Evaporative Coolers',
+    publisher: 'US Department of Energy, Energy Saver',
+    year: 2024,
+    url: 'https://www.energy.gov/energysaver/evaporative-coolers',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+];
+
+export const FAQ_ITEMS = [
+  {
+    q: "Is wet bulb temperature the same as 'feels like' temperature?",
+    a: 'No. "Feels like" temperature is the heat index, calculated from dry bulb temperature and relative humidity using a formula developed by NOAA to estimate how the temperature feels to a typical person in shade. Wet bulb temperature is a physical measurement of the lowest temperature that air can reach by evaporation. The two are related but not the same. A 90°F dry bulb at 50% RH gives a wet bulb of 78°F and a heat index of 106°F.',
+  },
+  {
+    q: "What's a dangerous wet bulb temperature?",
+    a: 'For healthy adults at rest in shade with airflow, sustained wet bulb temperatures above 85°F begin to stress thermoregulation. Above 90°F, even healthy adults at rest face heat stroke risk. The widely-cited 95°F (35°C) threshold is the theoretical upper limit where human skin can no longer cool by evaporation. Recent research (Penn State, 2022) suggests the practical survivability threshold is closer to 88°F (31°C) wet bulb for most healthy adults.',
+  },
+  {
+    q: 'How do you measure wet bulb temperature?',
+    a: 'Traditionally with a sling psychrometer: two thermometers mounted together, one with a wet cotton wick over its bulb, slung through the air for 30 seconds, then both read quickly. Modern instruments use fan-aspirated psychrometers or solid-state sensors with built-in calculations from dry bulb and relative humidity. The Stull formula gives a good approximation from temperature and humidity readings.',
+  },
+  {
+    q: "What's the difference between wet bulb and dew point?",
+    a: 'Dew point is the temperature at which water vapor in the air starts to condense. Wet bulb is the lowest temperature air can reach by evaporative cooling. Wet bulb is always between dry bulb and dew point. At 100% relative humidity, dry bulb, wet bulb, and dew point are all equal. As humidity drops, the three diverge: wet bulb stays closer to dry bulb than dew point does.',
+  },
+  {
+    q: 'What is WBGT?',
+    a: 'Wet Bulb Globe Temperature (WBGT) is a heat-stress index used in occupational health, sports, and military training. It combines wet bulb temperature, dry bulb temperature, and globe temperature (which captures solar radiation) into a single number. NIOSH and OSHA use WBGT thresholds to set work-rest cycles in hot environments.',
+  },
+  {
+    q: 'Why is wet bulb important for HVAC?',
+    a: "Wet bulb is the design condition for the cooling tower and evaporative cooling equipment industries; it's the theoretical lower limit those systems can reach. For air conditioning, the mean coincident wet bulb (the typical wet bulb that occurs at the cooling design dry bulb) determines the latent (dehumidification) portion of the cooling load. ASHRAE design data publishes 1% dry bulb design conditions with their mean coincident wet bulb.",
+  },
+  {
+    q: 'Can wet bulb temperature exceed dry bulb temperature?',
+    a: 'No. Wet bulb temperature is always less than or equal to dry bulb temperature. The two are equal only at 100% relative humidity. Whenever evaporation is possible (humidity below 100%), wet bulb is lower than dry bulb. The difference between dry bulb and wet bulb is called the wet bulb depression.',
+  },
+  {
+    q: 'How is wet bulb temperature different from absolute humidity?',
+    a: 'Wet bulb is a temperature measurement that captures both temperature and moisture in one number, expressed in degrees. Absolute humidity is the mass of water vapor per unit volume of air, expressed in grams per cubic meter or grains per pound of dry air. They are related (both depend on temperature and moisture) but they are different physical quantities with different uses.',
+  },
+  {
+    q: 'What is the highest wet bulb temperature ever recorded?',
+    a: 'Reliable peak wet bulb temperatures of 35°C (95°F) have been measured in the Persian Gulf, particularly at sites in coastal Iran, the UAE, and Saudi Arabia. South Asia (Pakistan, India) has measured 33-34°C (91-93°F) wet bulb during pre-monsoon heat waves. Sustained wet bulb above 31°C (88°F) is rare but increasing in frequency with climate change.',
+  },
+  {
+    q: 'Where can I find current wet bulb temperatures?',
+    a: "NOAA's National Weather Service publishes current observations including wet bulb at most reporting stations. Apps like Ambient Weather, Weather Underground, and Tempest include wet bulb on their station detail pages. For historical and climate-design wet bulb data, ASHRAE Standard 169 publishes mean coincident wet bulb values for thousands of locations.",
+  },
+];
+
+export const RELATED = [
+  {
+    title: 'Manual J load calculation',
+    url: '/manual-j/',
+    description: 'Mean coincident wet bulb feeds into the latent cooling load calculation.',
+  },
+  {
+    title: 'AC short cycling and dehumidification',
+    url: '/ac/short-cycling/',
+    description: 'Why short cycles fail to remove the latent load, and what that means for comfort.',
+  },
+  {
+    title: 'Seasonal Performance Factor (SPF)',
+    url: '/heat-pump/performance/seasonal-performance-factor/',
+    description: 'Season-averaged heat pump efficiency, including latent cooling contribution.',
+  },
+];
+
+export const FRONTMATTER = {
+  title: 'Wet Bulb Temperature: What It Measures and Why It Matters',
+  h1: 'Wet Bulb Temperature Explained',
+  meta_description:
+    'Wet bulb temperature is the temperature a thermometer reads when its bulb is wrapped in a wet wick. It measures cooling potential, not air temperature.',
+  url: '/building-science/psychrometrics/wet-bulb/',
+  date_published: '2026-05-18',
+  last_reviewed: '2026-05-18',
+  target_keyword: 'wet bulb temperature',
+  secondary_keywords: ['wet bulb', 'WBGT', 'wet bulb vs dry bulb', 'wet bulb survivability'],
+  sources: SOURCES,
+  faq: FAQ_ITEMS,
+  parent_title: 'Building Science',
+};
+
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={2800} />
+
+<JsonLdBreadcrumb items={BREADCRUMBS} />
+
+<Container>
+
+<Breadcrumbs items={BREADCRUMBS} />
+
+<HeroWetBulbThermometer />
+
+<ArticleHeader
+  h1="Wet Bulb Temperature Explained"
+  description="Wet bulb temperature is the temperature a thermometer reads when its bulb is wrapped in a wet wick. It measures cooling potential, not air temperature."
+  datePublished="2026-05-18"
+  lastReviewed="2026-05-18"
+  readingTimeMinutes={12}
+/>
+
+<KeyTakeaways
+  items={[
+    'Wet bulb temperature is the lowest temperature air can reach through evaporative cooling, measured by a wet-wick-covered thermometer with airflow across it.',
+    'Wet bulb is always less than or equal to dry bulb. They are equal only at 100% relative humidity. The difference is the wet bulb depression.',
+    'Order: dew point ≤ wet bulb ≤ dry bulb, always. All three are equal at 100% RH.',
+    'WBGT (Wet Bulb Globe Temperature) combines wet bulb, globe, and dry bulb into one number; NIOSH publishes thresholds for outdoor work and athletic activity.',
+    'The 35°C (95°F) wet bulb survivability threshold is theoretical; recent Penn State research found 88°F (31°C) is closer to the practical limit for most adults.',
+  ]}
+/>
+
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
+
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+A regular thermometer reads the air temperature. A wet bulb thermometer reads something different and more useful: the lowest temperature that air can possibly cool to through evaporation.
+
+Wrap the bulb of a thermometer in a wet cotton wick. Move air across it. Water evaporates from the wick, drawing heat from the bulb, and the thermometer drops below the air temperature. How far it drops depends on how dry the air is. In dry desert air, the wet bulb can be 25°F below the dry bulb. In saturated tropical air, the two are equal.
+
+Wet bulb temperature shows up in HVAC design, climate science, sports medicine, occupational safety, and human survivability research. This article covers what it is, how it's measured, what it relates to (dew point, heat index, enthalpy), and why a wet bulb above 88°F is more dangerous than a dry bulb above 110°F. For a broader take on [psychrometrics fundamentals](/building-science/psychrometrics/) before this article, the hub covers the related properties.
+
+## What Wet Bulb Temperature Actually Is
+
+Wet bulb temperature is the lowest temperature that air can reach through evaporative cooling, measured by a thermometer whose bulb is wrapped in a wet wick and exposed to airflow.<SourceCite id="ashrae-fundamentals-2021-psychrometrics" number={1} /> A regular thermometer reads ambient air temperature. A wet bulb thermometer reads how cold the air could get if available moisture evaporated into it. Those are different numbers most of the time.
+
+The lay term "wet thermometer" refers to the same instrument and the same measurement. HVAC technicians, weather observers, and occupational safety officers all use wet bulb temperature; "wet thermometer" is the colloquial label.
+
+The physical reading works like this. Water evaporates from the wet wick. Each gram of water that evaporates absorbs about 540 calories of heat (the latent heat of vaporization), and that heat comes from the thermometer's bulb. The bulb cools below ambient air temperature until evaporation slows to the rate at which the bulb gains heat from the surrounding air by conduction. Equilibrium at that lower temperature is the wet bulb reading.
+
+Drier air evaporates water faster, so dry air gives wet bulb readings well below dry bulb. Saturated air (100% relative humidity) doesn't permit any net evaporation, so wet bulb equals dry bulb. In between, wet bulb sits somewhere between the dew point (the lowest possible value for the air's moisture content) and the dry bulb.
+
+Wet bulb temperature shows up across several fields. HVAC engineers use it for cooling load design, evaporative cooler sizing, and cooling tower performance. Sports medicine and occupational safety use it through the Wet Bulb Globe Temperature index. Climate science tracks peak wet bulb readings because of the survivability threshold this article covers in section 9.
+
+## How Wet Bulb Differs from Dry Bulb
+
+[Dry bulb temperature](/building-science/psychrometrics/dry-bulb/) is the ordinary air temperature, what an ordinary thermometer reads in a shaded location with adequate airflow. It says nothing directly about humidity.
+
+Wet bulb temperature is always less than or equal to dry bulb temperature. The two are equal only at 100% relative humidity, when the air cannot accept any more water vapor and evaporation stops.
+
+The wet bulb depression is the difference between dry bulb and wet bulb. A 90°F dry bulb at 50% relative humidity yields a wet bulb of about 78°F, so the wet bulb depression is 12°F. A 90°F dry bulb at 20% relative humidity yields a wet bulb closer to 67°F, a 23°F depression. Same dry bulb, wildly different cooling potential.
+
+Larger depression means drier air and more evaporative cooling potential. This is why swamp coolers work in Phoenix (large wet bulb depression in summer) but not in Houston (small wet bulb depression). It's why skin feels cool when sweat evaporates faster, and why high humidity feels oppressive: at high relative humidity, sweat cannot evaporate efficiently, so the body's main cooling mechanism degrades.
+
+For HVAC, the wet bulb depression at the cooling design hour determines latent cooling load. A 90°F dry bulb day in Phoenix needs sensible cooling but minimal dehumidification. The same dry bulb in Houston demands both. Equipment matched to the wrong climate cools but doesn't dehumidify, or vice versa. The Manual S equipment selection process accounts for the sensible-latent split using local design wet bulb data.
+
+## Wet Bulb vs Dew Point
+
+[Dew point temperature](/building-science/psychrometrics/dew-point/) is the temperature at which water vapor in the air condenses into liquid water. Cool air below its dew point and droplets form on cold surfaces (windows, mirrors, the outside of a cold drink). Dew point is a direct measure of how much moisture the air actually contains, independent of current air temperature.
+
+Wet bulb temperature is the lowest temperature reachable by evaporation. Dew point is the temperature at which condensation starts. They measure different physical events.
+
+The relationship between the three temperatures is fixed by the laws of psychrometrics: dew point ≤ wet bulb ≤ dry bulb. At 100% relative humidity, all three are equal. As humidity drops, dew point falls fastest, dry bulb stays constant, and wet bulb sits between them.
+
+<WetBulbVsOthersComparison />
+
+A worked example: 90°F dry bulb at 50% relative humidity gives a wet bulb of about 78°F and a dew point of about 70°F.<SourceCite id="ashrae-fundamentals-2021-psychrometrics" number={1} /> The dry bulb is what you'd read on an outdoor thermometer. The wet bulb is the lowest your skin could cool to by sweating. The dew point is the temperature your eyeglasses would fog at if you walked from cold AC into that air. All three describe the same parcel of air; the use case picks which one matters.
+
+When to reach for each: use dew point to predict condensation on cold surfaces and the absolute moisture in the air. Use wet bulb to predict evaporative cooling potential, HVAC dehumidification load, and human heat survivability. Use dry bulb for ordinary weather forecasts, indoor thermostat settings, and the casual "how hot is it" question.
+
+## How Wet Bulb Is Measured
+
+Two instruments dominate wet bulb measurement: the traditional sling psychrometer and modern fan-aspirated or solid-state psychrometers.
+
+A sling psychrometer is two thermometers mounted in parallel on a Y-shaped handle. One has a bare bulb (dry bulb), the other has its bulb wrapped in a cotton wick (wet bulb). The handle pivots at the top so the entire assembly can be slung in a circle for 30 seconds. The slinging provides the airflow needed for evaporation at the wet bulb, and both thermometers are read quickly afterward before evaporation slows.
+
+<SlingPsychrometer />
+
+Modern instruments do the same job without manual labor. Fan-aspirated psychrometers blow air across both thermometers at a controlled velocity. Solid-state instruments measure dry bulb and [relative humidity](/building-science/psychrometrics/relative-humidity/) directly and compute wet bulb from those two values using a psychrometric equation. The handheld units used by HVAC technicians, indoor air quality professionals, and weather observers are all of this type now.
+
+Two calibration details matter for accurate readings. The wick must be wet with distilled or deionized water; tap water deposits minerals that change the wick's evaporation behavior over time. The airflow over the wet wick must be at least 2 meters per second; below that, wet bulb reads too high because evaporation runs slow enough to let conduction from the air dominate.
+
+Common errors: dirty wick (mineral buildup), insufficient airflow (wet bulb runs warm), reading too long after slinging stops (evaporation has slowed, wet bulb is creeping back up toward dry bulb), or thermometer hysteresis (the bulb hasn't fully equilibrated). Modern fan-aspirated instruments avoid most of these by controlling the measurement conditions tightly.
+
+## Wet Bulb on the Psychrometric Chart
+
+The psychrometric chart is a two-dimensional plot of all possible states of moist air at a given barometric pressure. Every point on the chart corresponds to one specific combination of dry bulb temperature, wet bulb temperature, dew point, relative humidity, humidity ratio (mass of water vapor per mass of dry air), and enthalpy (total heat content per mass of dry air).<SourceCite id="ashrae-fundamentals-2021-psychrometrics" number={1} />
+
+<PsychrometricChartSimplified />
+
+The chart's power is that any two independent properties determine all the others. Read dry bulb and relative humidity from a weather report, and the chart gives you the wet bulb, dew point, humidity ratio, and enthalpy directly. HVAC engineers use the chart to size cooling and humidification equipment because every cooling process traces a path across it. Use our [psychrometric calculator](/tools/psychrometric-calculator/) to compute any state property from any pair.
+
+Lines of constant wet bulb run diagonally from upper-left (low dry bulb, high humidity) to lower-right (high dry bulb, low humidity). They are not exactly parallel to lines of constant [enthalpy and total heat content](/building-science/psychrometrics/enthalpy/), but they are very close. The small divergence is the enthalpy contribution of the water added during the wet bulb measurement process. For most engineering purposes, constant wet bulb and constant enthalpy are interchangeable. For [the psychrometric chart](/building-science/psychrometrics/chart/) in detail, the dedicated article covers each line family.
+
+HVAC design relies on a specific wet bulb value: the mean coincident wet bulb. That's the average wet bulb temperature that occurs at the same hours as the location's 1% cooling design dry bulb. ASHRAE Standard 169 publishes mean coincident wet bulb values for thousands of US and global locations.<SourceCite id="ashrae-169" number={5} /> Mean coincident wet bulb feeds into [Manual J load calculation](/manual-j/) latent load. Short cycles fail to remove the latent load; see [AC short cycling and dehumidification](/ac/short-cycling/).
+
+Wet bulb is also the theoretical lower limit for evaporative cooling. An ideal direct evaporative cooler can cool incoming air down to its wet bulb temperature but no further.<SourceCite id="doe-evaporative-cooling" number={7} /> Real evaporative coolers reach 70-90% of the wet bulb depression in practice. The [ASHRAE Handbook of Fundamentals](https://www.ashrae.org/technical-resources/ashrae-handbook) is the authoritative reference for psychrometric data and chart conventions.
+
+## How to Calculate Wet Bulb Temperature
+
+Exact wet bulb calculation requires iterative solving of the psychrometric equations, which is what software packages and physical charts do for you. For pencil-and-paper estimation, the Stull (2011) empirical formula gives results within 0.3°C for most conditions.<SourceCite id="stull-2011-wet-bulb-formula" number={6} />
+
+The wet bulb formula, with T = dry bulb temperature in °C and RH = relative humidity in %:
+
+```
+Tw ≈ T × atan(0.151977 × √(RH + 8.313659))
+    + atan(T + RH) − atan(RH − 1.676331)
+    + 0.00391838 × RH^1.5 × atan(0.023101 × RH)
+    − 4.686035
+```
+
+The result is wet bulb temperature in °C. The formula is accurate within 0.3°C for 5% < RH < 99% and -20°C < T < 50°C. Outside those ranges accuracy degrades.
+
+A worked example. Start with 30°C dry bulb (86°F) and 60% relative humidity. Stull yields approximately 23.4°C, or about 74°F wet bulb. The Stull-formula spf calculation runs the same algorithm regardless of input source: dry bulb and RH go in, wet bulb comes out.
+
+For US units, the cleanest workflow is convert Fahrenheit to Celsius first (subtract 32, multiply by 5/9), apply Stull, then convert back. The site's [wet bulb temperature calculator](/tools/wet-bulb-calculator/) runs this exact formula and handles unit conversions automatically.
+
+For HVAC engineering precision, don't rely on Stull alone. The full psychrometric equations include corrections for barometric pressure and account for the non-ideal behavior of moist air at extremes. ASHRAE psychrometric subroutines or Cool Calc's built-in tools handle this correctly.
+
+For weather and general estimation, Stull is more than enough. For locations significantly above or below sea level, atmospheric pressure variations introduce a small additional error; at 5,000 feet elevation, Stull may read 0.3-0.5°C high without a pressure correction.
+
+## Wet Bulb vs Heat Index ("Feels Like")
+
+Heat index, often labeled "feels like" temperature in weather apps, is a different measurement entirely. It comes from a regression formula developed by NOAA in the 1990s that estimates the apparent temperature for a typical person in shade with light wind, based on dry bulb temperature and relative humidity.<SourceCite id="noaa-heat-index" number={2} /> See the [NOAA heat index reference](https://www.weather.gov/safety/heat-index) for the authoritative description.
+
+The same 90°F dry bulb at 50% relative humidity used earlier: wet bulb is 78°F, dew point is 70°F, heat index is approximately 106°F. The heat index assumes a person in shade with light wind — it represents how hot the air feels to that hypothetical person, not how hot it actually is.
+
+Wet bulb is physical, independent of the person. It measures a property of the air. Heat index is empirical, calibrated to typical human perception in specific conditions. The two answer different questions.
+
+When does heat index work and when doesn't it? Heat index works for general public weather forecasting, decisions about spending time outdoors, and personal hydration planning. It doesn't work for occupational heat stress thresholds, athletic training decisions, or any setting requiring a physical (not perceptual) measure. Those domains use Wet Bulb Globe Temperature instead.
+
+Calculator: our [heat index calculator](/tools/heat-index-calculator/) computes the apparent temperature from dry bulb and humidity using NOAA's formula. The contrast between heat index and wet bulb at the same air state explains why a 106°F heat index day still has a 78°F wet bulb. Different numbers, different purposes.
+
+## WBGT and Heat Stress
+
+Wet Bulb Globe Temperature (WBGT) is a composite heat-stress index used in occupational safety, athletic training, and military operations. WBGT combines three temperatures into a single number, capturing the cooling effect of evaporation, radiant heat from sun, and the ambient air temperature in one value.
+
+The outdoor formula (with direct sun):
+
+```
+WBGT = 0.7 × Tw_natural + 0.2 × Tg + 0.1 × Td
+```
+
+Where Tw_natural is the natural wet bulb (no aspiration), Tg is the globe temperature (a black-painted sphere thermometer that captures solar radiation), and Td is the dry bulb. The indoor formula (no solar load) drops the dry bulb term and uses 0.7 × Tw + 0.3 × Tg.
+
+<WbgtZones />
+
+NIOSH publishes recommended WBGT thresholds for occupational heat stress, with action levels and ceiling values that depend on workload intensity and worker acclimatization.<SourceCite id="niosh-wbgt" number={3} /> The [NIOSH heat stress criteria](https://www.cdc.gov/niosh/docs/2016-106/default.html) document defines the methodology and the recommended thresholds. Standards used by OSHA-aware industries, NCAA, USA Track & Field, the US Military, and the International Olympic Committee all rely on WBGT zones for activity scheduling.
+
+Practical implications: outdoor sports practices reschedule when WBGT exceeds local thresholds; construction and military training cycle work and rest periods based on WBGT; school districts cancel outdoor PE during high WBGT events; occupational heat illness prevention plans key off WBGT zones.
+
+OSHA does not currently have a federal WBGT-based heat stress standard, though California (Title 8 Section 3395) and Washington both have state-level standards. For the methodology and threshold detail, see [wet bulb globe temperature (WBGT) in detail](/building-science/psychrometrics/wet-bulb/wbgt/).
+
+WBGT is not directly readable from a standard thermometer. Field instruments combine the three sensors into a single integrated reading. Cheap WBGT meters cost $200-400; calibrated instruments for occupational compliance run $800-2,000.
+
+## Wet Bulb Survivability
+
+The widely cited 95°F (35°C) wet bulb threshold is the theoretical upper limit for human heat tolerance. At that wet bulb, the temperature of your skin equals or exceeds the temperature of the surrounding air, so sweat can no longer evaporate fast enough to cool you. Heat from your body has nowhere to go. Recent research from Penn State (Vecellio et al., 2022) tested this directly in a controlled chamber with young healthy adults and found uncompensable heat stress at 88°F (31°C) wet bulb under realistic conditions — well below the textbook limit. The practical survivability threshold for most people is lower than the theoretical one.<SourceCite id="penn-state-wet-bulb-survivability" number={4} />
+
+The physics is straightforward. Human core body temperature must stay near 37°C (98.6°F). The body loses heat primarily by evaporation of sweat. Evaporation requires a vapor-pressure gradient from skin to air, and that gradient depends on the wet bulb temperature of the environment. When wet bulb approaches skin temperature, the gradient approaches zero, and sweating stops being a useful cooling mechanism. Without intervention (air conditioning, immersion in cool water, shade with strong wind), core temperature rises and heat stroke develops within hours.
+
+The original 35°C limit was derived under idealized conditions: healthy adult at rest, full shade, some air movement, adequate hydration. Real-world conditions are usually worse. Older adults, people on certain medications, anyone doing physical work, anyone without shade or airflow: all face the limit at lower wet bulb temperatures. The Vecellio finding of 31°C as a practical limit reflects a more realistic baseline.
+
+<WetBulbSurvivabilityMap />
+
+Sustained wet bulb temperatures above 31°C have become more common globally over the past decade. The Persian Gulf region (coastal Iran, the UAE, Saudi Arabia) has measured peak wet bulb temperatures at or near 35°C several times since 2015. South Asia (Pakistan, India) routinely sees 33-34°C wet bulb during pre-monsoon heat waves. Parts of the US Gulf Coast and Mexican coast have measured 88-90°F wet bulb during heat dome events.
+
+This section is descriptive, not predictive: wet bulb survivability research is an active field, and threshold values continue to be refined. For the latest treatment and the full implications, see the [wet bulb survivability threshold](/building-science/psychrometrics/wet-bulb/survivability/) article.
+
+## Where to Find Current Wet Bulb Readings
+
+For current wet bulb temperatures, NOAA's National Weather Service publishes observations including wet bulb at most reporting stations. Weather apps such as Ambient Weather, Weather Underground, and Tempest include wet bulb in their station detail pages. The site's [current wet bulb temperatures by US city](/building-science/psychrometrics/wet-bulb/today/) directory aggregates live readings for major locations.
+
+For historical and climate-design wet bulb data, ASHRAE Standard 169 publishes mean coincident wet bulb values for thousands of locations globally; this is the data HVAC engineers use to design equipment that handles a region's actual cooling demands.
+
+</article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<Sources sources={SOURCES} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-18" />
+</div>
+
+</Container>
