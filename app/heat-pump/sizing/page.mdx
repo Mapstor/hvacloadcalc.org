@@ -1,0 +1,404 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { Sources } from '@/components/article/Sources';
+import { SourceCite } from '@/components/article/SourceCite';
+import { AuthorByline } from '@/components/article/AuthorByline';
+import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { HeroHeatPumpSizingFlow } from '@/components/svg/heat-pump-sizing/HeroHeatPumpSizingFlow';
+import { HeatingVsCoolingLoadByClimate } from '@/components/svg/heat-pump-sizing/HeatingVsCoolingLoadByClimate';
+import { CapacityVsOutdoorTemperature } from '@/components/svg/heat-pump-sizing/CapacityVsOutdoorTemperature';
+import { OversizeUndersizeTradeoffs } from '@/components/svg/heat-pump-sizing/OversizeUndersizeTradeoffs';
+import { RuleOfThumbVsManualJ } from '@/components/svg/heat-pump-sizing/RuleOfThumbVsManualJ';
+import { ColdClimateBalancePointStrategy } from '@/components/svg/heat-pump-sizing/ColdClimateBalancePointStrategy';
+
+export const metadata = {
+  title: "Heat Pump Sizing: How to Get It Right (and Why Most Don't)",
+  description:
+    "Heat pump sizing differs from AC sizing because heat pumps must handle both heating and cooling loads. Here's how to size correctly without oversizing.",
+  openGraph: {
+    title: 'Heat Pump Sizing: Heating vs Cooling Load Tradeoff',
+    description:
+      'Heat pumps must heat AND cool, and the loads are rarely equal. This article explains how sizing tradeoffs really work.',
+    type: 'article',
+    publishedTime: '2026-05-18',
+    modifiedTime: '2026-05-18',
+    authors: ['Jonathan S.'],
+  },
+};
+
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'Heat Pump', url: '/heat-pump/' },
+  { name: 'Sizing' },
+];
+
+export const HEADINGS = [
+  { id: 'heat-pump-sizing-starts-with-a-question', text: 'Heat Pump Sizing Starts with a Question', level: 2 },
+  { id: 'how-heat-pumps-are-rated', text: 'How Heat Pumps Are Rated', level: 2 },
+  { id: 'heat-pump-sizing-is-different-from-ac-sizing', text: 'Heat Pump Sizing Is Different from AC Sizing', level: 2 },
+  { id: 'why-rule-of-thumb-sizing-falls-short', text: 'Why Rule-of-Thumb Sizing Falls Short', level: 2 },
+  { id: 'why-heat-pump-sizing-matters', text: 'Why Heat Pump Sizing Matters', level: 2 },
+  { id: 'balance-point-sizing-approach', text: 'Balance Point Sizing Approach', level: 2 },
+  { id: 'cold-climate-considerations', text: 'Cold Climate Considerations', level: 2 },
+  { id: 'oversizing-vs-undersizing', text: 'Oversizing vs Undersizing', level: 2 },
+  { id: 'system-type-variations', text: 'System Type Variations', level: 2 },
+];
+
+export const SOURCES = [
+  {
+    id: 'acca-manual-j-8',
+    title: 'Manual J: Residential Load Calculation, 8th Edition (ANSI/ACCA 2 Manual J - 2016)',
+    publisher: 'Air Conditioning Contractors of America (ACCA)',
+    year: 2016,
+    url: 'https://www.acca.org/standards/technical-manuals/manual-j',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'acca-manual-s',
+    title: 'Manual S: Residential Equipment Selection (ANSI/ACCA 3 Manual S - 2014)',
+    publisher: 'Air Conditioning Contractors of America',
+    year: 2014,
+    url: 'https://www.acca.org/standards/technical-manuals/manual-s',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'neep-ccashp-sizing-guide',
+    title: 'Cold Climate Air Source Heat Pump Sizing Considerations',
+    publisher: 'Northeast Energy Efficiency Partnerships',
+    year: 2023,
+    url: 'https://neep.org/heating-electrification/ccashp-specification-product-list/sizing',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'nrel-cold-climate-heat-pump',
+    title: 'Cold-Climate Air-Source Heat Pump Performance',
+    publisher: 'US National Renewable Energy Laboratory',
+    year: 2022,
+    url: 'https://www.nrel.gov/buildings/cold-climate-heat-pumps.html',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'doe-rite-sizing',
+    title: 'Right-Sizing Heating and Cooling Systems',
+    publisher: 'US Department of Energy',
+    year: 2023,
+    url: 'https://www.energy.gov/scep/articles/right-sizing-heating-and-cooling-systems',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'ahri-210-240',
+    title: 'ANSI/AHRI Standard 210/240-2023',
+    publisher: 'Air-Conditioning, Heating and Refrigeration Institute',
+    year: 2023,
+    url: 'https://www.ahrinet.org/search-standards/ahri-210240-2023-performance-rating-unitary-air-conditioning-air-source-heat-pump',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'ashrae-fundamentals-2021-cz',
+    title: 'ASHRAE Handbook of Fundamentals 2021, Chapter 14 (Climatic Design Information)',
+    publisher: 'ASHRAE',
+    year: 2021,
+    url: 'https://www.ashrae.org/technical-resources/ashrae-handbook',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+];
+
+export const FAQ_ITEMS = [
+  {
+    q: 'What size heat pump do I need for a 2000 square foot home?',
+    a: 'A 2,000 sq ft home typically needs a 2.5-3.5 ton heat pump (30,000-42,000 BTU/hr nominal cooling capacity), but this range is just a starting estimate. Climate, insulation quality, window area and quality, infiltration, ductwork condition, and orientation all shift the number by 30-50%. A Manual J load calculation gives the right answer for your specific home.',
+  },
+  {
+    q: 'Can I size a heat pump by square footage alone?',
+    a: 'Square footage is a starting point, not a final answer. Rules of thumb like "1 ton per 600 square feet" ignore insulation, windows, air leakage, and climate, factors that easily shift the right size by 30-50%. Heat pumps in particular suffer from rule-of-thumb sizing because heating capacity at design temperature differs significantly from nominal cooling capacity, and the imbalance varies by climate.',
+  },
+  {
+    q: 'Should I size a heat pump to the heating load or cooling load?',
+    a: "In cold climates, you typically size to a balance point: a temperature above which the heat pump handles 100% of the load and below which auxiliary heat assists. Sizing exactly to the heating load means a heat pump that's oversized for cooling. Sizing exactly to the cooling load means an aux-heavy installation. The middle ground depends on aux fuel cost, climate, and equipment type.",
+  },
+  {
+    q: 'What is the balance point in heat pump sizing?',
+    a: "The balance point is the outdoor temperature at which the heat pump's heating capacity exactly equals the home's heating load. Above the balance point, the heat pump alone keeps up. Below it, auxiliary heat fills the gap. Sizing to a higher balance point reduces aux runtime but increases equipment cost and cooling oversizing risk.",
+  },
+  {
+    q: 'How is heat pump sizing different from AC sizing?',
+    a: "AC sizing optimizes for the cooling design day only. Heat pump sizing must handle two different loads, heating and cooling, and they're rarely equal. The size that perfectly matches the cooling load may be too small for heating, especially in cold climates. The size that matches the heating load may be too large for cooling, causing short cycling and humidity problems in summer.",
+  },
+  {
+    q: 'What happens if my heat pump is oversized?',
+    a: 'Oversized heat pumps short cycle in cooling mode (similar to oversized AC), causing humidity control problems and reduced equipment life. In heating mode, oversizing has fewer downsides because aux heat is rarely engaged, but the higher purchase price and potential for cycling in mild weather are real costs. Variable-speed heat pumps tolerate oversizing better than single-stage units.',
+  },
+  {
+    q: 'What happens if my heat pump is undersized?',
+    a: "Undersized heat pumps run constantly, struggle to maintain comfort on extreme days, and rely heavily on expensive auxiliary heat below the balance point. In cooling mode, an undersized unit can't keep up on the hottest days and indoor temperature rises. In heating, aux heat runtime becomes a significant portion of operating cost.",
+  },
+  {
+    q: 'Do mini-splits need different sizing?',
+    a: 'Mini-splits are still heat pumps and follow the same physics. The difference is per-zone sizing rather than whole-house. Multi-zone mini-split systems require accounting for simultaneous-vs-staggered loads (you rarely heat every zone at full capacity at the same time), which can allow for somewhat smaller condenser capacity than the sum of zone loads.',
+  },
+  {
+    q: 'How accurate is online heat pump sizing without a Manual J?',
+    a: 'Online calculators with reasonable inputs (square footage, climate zone, insulation level, window area) typically land within 20-30% of a proper Manual J. That accuracy is enough for planning purposes, like choosing between 2-ton and 3-ton or evaluating contractor quotes, but not enough for actual permit-grade sizing. For the actual installation, get a Manual J from the contractor or hire it out independently.',
+  },
+  {
+    q: 'Do cold climate heat pumps need different sizing?',
+    a: 'Yes. Cold-climate heat pumps (CCASHP-rated) maintain capacity at much lower temperatures than standard heat pumps. This allows sizing for a lower balance point, sometimes the design temperature itself, which dramatically reduces aux heat runtime. The tradeoff is cost; cold-climate units are pricier than standard ones.',
+  },
+];
+
+export const RELATED = [
+  {
+    title: 'Manual J load calculation',
+    url: '/manual-j/',
+    description: 'The load calculation methodology underlying any proper heat pump sizing.',
+  },
+  {
+    title: 'Auxiliary heat',
+    url: '/heat-pump/aux-heat/',
+    description: 'How aux heat interacts with balance point and what oversizing does to aux runtime.',
+  },
+  {
+    title: 'Heat pump defrost cycle',
+    url: '/heat-pump/cold-climate/defrost-cycle/',
+    description: 'Defrost reduces effective capacity in cold humid weather, another reason proper sizing matters.',
+  },
+];
+
+export const FRONTMATTER = {
+  title: "Heat Pump Sizing: How to Get It Right (and Why Most Don't)",
+  h1: 'Heat Pump Sizing Explained',
+  meta_description:
+    "Heat pump sizing differs from AC sizing because heat pumps must handle both heating and cooling loads. Here's how to size correctly without oversizing.",
+  url: '/heat-pump/sizing/',
+  date_published: '2026-05-18',
+  last_reviewed: '2026-05-18',
+  target_keyword: 'heat pump sizing',
+  secondary_keywords: ['what size heat pump', 'heat pump balance point', 'heat pump tonnage', 'cold climate heat pump sizing'],
+  sources: SOURCES,
+  faq: FAQ_ITEMS,
+  parent_title: 'Heat Pump',
+};
+
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={2800} />
+
+<JsonLdBreadcrumb items={BREADCRUMBS} />
+
+<Container>
+
+<Breadcrumbs items={BREADCRUMBS} />
+
+<HeroHeatPumpSizingFlow />
+
+<ArticleHeader
+  h1="Heat Pump Sizing Explained"
+  description="Heat pump sizing differs from AC sizing because heat pumps must handle both heating and cooling loads. Here's how to size correctly without oversizing."
+  datePublished="2026-05-18"
+  lastReviewed="2026-05-18"
+  readingTimeMinutes={12}
+/>
+
+<KeyTakeaways
+  items={[
+    'Heat pumps must handle two loads (heating + cooling) that are rarely equal. Sizing requires an explicit decision about which load to match.',
+    'Rule-of-thumb sizing (1 ton per 600 sq ft) typically produces 30-50% oversized equipment compared to a proper Manual J calculation.',
+    "The balance point is the outdoor temperature at which the heat pump's capacity equals the home's heating load. Above it, the heat pump alone keeps up; below it, aux heat fills the gap.",
+    'Cold-climate certified (NEEP CCASHP) heat pumps maintain meaningful capacity at low temperatures, shifting the balance point dramatically lower and reducing aux runtime.',
+    'Online calculators land within 20-30% of Manual J for planning purposes, but a real Manual J is needed for the final equipment specification.',
+  ]}
+/>
+
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
+
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+Sizing a heat pump is harder than sizing an air conditioner, and most contractors don't do it right. The difference is structural: an AC only has to handle the cooling load. A heat pump has to handle both heating and cooling, and the two loads are almost never equal. In Miami the cooling load is several times the heating load. In Minneapolis, it's the reverse. The size that perfectly matches one load almost certainly mismatches the other.
+
+The right approach is to start with the home's actual loads — both of them — then decide explicitly which load to size to. The wrong approach, which dominates the industry, is to read the home's square footage off a real estate listing and pull a heat pump off the truck.
+
+This article covers how heat pumps are rated, why sizing is genuinely tricky, the balance-point method that solves the dual-load problem, when cold-climate equipment changes the math, and how to evaluate a contractor's proposal before signing it. For background on the broader topic, the [heat pump fundamentals](/heat-pump/) hub covers operating principles.
+
+## Heat Pump Sizing Starts with a Question
+
+How to size a heat pump comes down to one question: which load do you size to? The cooling design load, the heating design load, or somewhere between? The answer depends on climate, equipment type, aux fuel cost, and budget. There is no universal right answer, only tradeoffs that this article makes explicit.
+
+The article assumes a residential single-family or small multi-family context. Commercial sizing involves different load profiles (longer occupancy hours, higher internal gains, simultaneous heating and cooling in different zones) and is outside scope. The methodology generalizes; the specific values do not.
+
+Nothing in this article substitutes for a permit-grade Manual J load calculation in actual installation contexts. Online tools and rules of thumb produce planning-grade estimates that get you 70-80% of the way to a Manual J answer. That accuracy is fine for budgeting and evaluating contractor proposals. It is not fine for the final equipment order.
+
+The next sections cover how heat pumps are rated by manufacturers, why sizing is structurally different from AC sizing, why the dominant rule-of-thumb method falls short, what's at stake when sizing goes wrong, the balance-point methodology that resolves the dual-load problem, cold-climate-specific considerations, the comparative penalties of oversizing versus undersizing, and how sizing changes for ducted versus ductless systems.
+
+## How Heat Pumps Are Rated
+
+Heat pump capacity is rated in BTU per hour or in tons, where 1 ton equals 12,000 BTU/hr. A "3-ton" heat pump has a nominal capacity of 36,000 BTU/hr in cooling mode. The nominal rating is a specific test condition, not the capacity you actually get at every outdoor temperature.
+
+AHRI Standard 210/240 specifies the rating test conditions.<SourceCite id="ahri-210-240" number={6} /> Cooling capacity is rated at 95°F outdoor dry bulb and 80°F indoor dry bulb (67°F wet bulb). Heating capacity is rated at 47°F outdoor and 70°F indoor (referred to as the "high-temperature" heating rating). Modern listings also publish heating capacity at 17°F (the "low-temperature" rating) and, for cold-climate certified products, at 5°F.
+
+A heat pump tonnage calculator that converts square footage to tons is a rule-of-thumb shortcut. A 3-ton output is 36,000 BTU/hr at the rated cooling condition. Heating output at real outdoor temperatures is what matters in winter; the tons label says little about that.
+
+Capacity drops as outdoor temperature drops in heating mode. A standard heat pump with 36,000 BTU/hr at 47°F may deliver only 22,000 at 17°F (61% of rated) and 12,000 at 5°F (33% of rated). A cold-climate certified unit might deliver 30,000 at 17°F and 25,000 at 5°F (83% and 69% respectively). The difference is enormous over a heating season.
+
+[HSPF2 ratings](/heat-pump/performance/hspf2/) measure heating seasonal efficiency. SEER2 measures cooling seasonal efficiency. Both are BTU per Wh seasonal averages and account for capacity, defrost, and part-load behavior. A 1.0 HSPF2 difference is meaningful (roughly 10-12% efficiency).
+
+[Manual S equipment selection rules](/manual-s/) define the tolerances for matching equipment to Manual J loads.<SourceCite id="acca-manual-s" number={2} /> A heat pump can be up to 15-25% above the Manual J cooling load (varies by equipment type) and still be Manual S compliant. Going further oversized creates the cycling problems covered later.
+
+## Heat Pump Sizing Is Different from AC Sizing
+
+AC sizing answers one question: how much cooling does the home need on the 1% cooling design day? Pick the equipment whose nominal capacity matches the answer, within Manual S tolerances. Done.
+
+Heat pump sizing answers two questions, and the answers are usually different numbers. How much cooling? How much heating? When the answers conflict, which one wins? That last question is where heat pump sizing differs structurally.
+
+<HeatingVsCoolingLoadByClimate />
+
+The heat pump heating load vs cooling load mismatch is climate-dependent. In hot climates (zones 1-2), cooling load dominates by a factor of 3-4×, so sizing to cooling and accepting modest aux heat in winter is reasonable. In cold climates (zones 5-7), heating load dominates, so sizing to cooling means substantial aux heat runtime through winter; sizing to heating means oversizing for cooling. In moderate climates (zones 3-4), the loads are close but rarely equal.
+
+The full [heating load vs cooling load tradeoff](/heat-pump/sizing/heating-vs-cooling-load/) discussion is covered separately. The short version: in any climate where heating and cooling loads differ by more than ~25%, an explicit sizing decision is required. That decision drives the rest of the design (aux strategy, equipment selection, balance point).
+
+The takeaway: an AC sizing methodology applied to a heat pump produces a unit that cools well but heats badly, or vice versa. Heat pumps require their own methodology, which the rest of this article covers.
+
+## Why Rule-of-Thumb Sizing Falls Short
+
+The classic rule of thumb: 1 ton per 600 sq ft for cooling-dominant climates. Variations exist (1 ton per 500 sq ft in hot humid climates, 1 ton per 700 sq ft in milder ones). The math is appealing: a 2,000 sq ft home gets a 3.3-ton heat pump. Done.
+
+<RuleOfThumbVsManualJ />
+
+What rule of thumb ignores: insulation R-values, window U-factors and area, air infiltration rate, building orientation, internal gains from people and equipment, ductwork condition (leaky ducts add 15-25% to the load), and climate severity. Each of these can shift the load by 10-25%, and they compound. A modern tight 2,000 sq ft home in Atlanta may have a Manual J cooling load of 24,000 BTU/hr (2 tons), while a leaky 1970s 2,000 sq ft home in Houston may show 42,000 BTU/hr (3.5 tons). Rule of thumb gives both the same answer.
+
+Heat pump size charts that scale by square footage typically assume 1970s-era construction with R-13 walls, single-pane windows, and 10 ACH50 infiltration. Modern homes are 2-4× tighter, with better windows and insulation. The same rule produces 30-50% oversized equipment for modern construction.<SourceCite id="acca-manual-s" number={2} />
+
+Concrete planning estimates by square footage:
+- A 1,500 square foot home typically needs 2-3 tons of nominal cooling capacity, depending on climate and envelope
+- Heat pump size for a 2,000 square foot home runs 2.5-3.5 tons
+- A 2,500 square foot home typically needs 3-4.5 tons
+
+These are starting points. What size heat pump do I need depends on the same envelope factors that rule of thumb ignores. For the planning-grade answer, our [heat pump sizing calculator](/tools/heat-pump-size-calculator/) takes square footage, climate, insulation level, and window area to produce an estimate within 20-30% of Manual J. A coarser first-pass is the [general BTU calculator](/tools/btu-calculator/), which handles the simple inputs.
+
+For the full per-region treatment of [heat pump sizing by square footage](/heat-pump/sizing/by-square-footage/), the dedicated article covers regional adjustments and the underlying Manual J variables. For DIY mini-split installs and quick first-cut numbers, square footage works. For permit-grade sizing, get a Manual J.
+
+## Why Heat Pump Sizing Matters
+
+Wrong-sized heat pumps cost money in three ways: higher purchase price (oversized) or higher operating cost (undersized), reduced comfort (both), and shortened equipment life from cycling (oversized) or constant runtime (undersized). The DOE position on right-sizing is direct: equipment should match load, not exceed it by more than Manual S tolerances allow.<SourceCite id="doe-rite-sizing" number={5} /> See the [DOE right-sizing guidance](https://www.energy.gov/scep/articles/right-sizing-heating-and-cooling-systems) for the federal position.
+
+In cooling mode, oversizing produces the same problems as an oversized AC: short cycles, poor humidity removal, indoor temperature swings, and accelerated compressor wear. The [AC short cycling from oversizing](/ac/short-cycling/) article covers the cooling-mode dynamics in detail; heat pumps in cooling mode behave identically to ACs.
+
+In heating mode, oversizing has less severe downsides because heat pumps don't short-cycle in heating as aggressively (heating load is more linear with outdoor temperature than cooling load with humidity, and modulating heat pumps adapt better in heating). But the purchase price penalty is real, and aux heat that you paid for sits unused.
+
+In cooling mode, undersizing produces hot indoor temperatures on the worst summer days. The unit runs continuously but can't catch up. Humidity is typically fine (extended runtime favors latent removal), but sensible cooling lags.
+
+In heating mode, undersizing means [auxiliary heat in heat pump sizing](/heat-pump/aux-heat/) makes the calculation more complex. The heat pump can't carry the heating load below the balance point, so aux heat runs frequently. Aux electricity at COP 1.0 costs 2-3× what the heat pump costs per BTU. Over a heating season, the penalty can run hundreds of dollars depending on climate and electricity rates.
+
+The [seasonal performance factor effects of sizing](/heat-pump/performance/seasonal-performance-factor/) show up as wider COP variation: oversized units cycle and lose efficiency at low loads, undersized units run at full capacity but rely on resistance backup. Right-sized units stay in the modulation sweet spot more of the time.
+
+The [Manual J load calculation methodology](/manual-j/) is the foundation for getting sizing right. The [ACCA Manual J standard](https://www.acca.org/standards/technical-manuals/manual-j) defines the procedure. For a planning-grade estimate, the [Manual J-style load calculator](/tools/manual-j-calculator/) runs the underlying calculation with simplified inputs.
+
+Heat pump sizing manual j workflows pair the load calc with equipment selection: Manual J produces loads, Manual S picks equipment within tolerances.<SourceCite id="acca-manual-j-8" number={1} /> This is the permit-grade method.
+
+## Balance Point Sizing Approach
+
+The balance point is the outdoor temperature at which your heat pump's heating capacity exactly equals your home's heating load. Above it, the heat pump alone keeps you warm. Below it, auxiliary heat fills the gap. This is the single most important concept in heat pump sizing, because it determines both how much aux heat you'll run and how much you'll spend on the equipment itself. A higher balance point (say 35°F) means a smaller, cheaper heat pump that needs aux help any time it's below freezing. A lower balance point (say 10°F) means a larger, pricier heat pump (often a cold-climate certified one) that rarely needs aux. Neither is universally right. The choice depends on the cost of aux fuel where you live, how often it actually gets cold, and your budget.<SourceCite id="neep-ccashp-sizing-guide" number={3} />
+
+<CapacityVsOutdoorTemperature />
+
+The construction is straightforward. Plot the home's heating load against outdoor temperature: a straight line from 0 BTU/hr at the indoor setpoint (typically 70°F) rising linearly to the Manual J design heating load at the design temperature. Plot the heat pump's capacity against outdoor temperature using the manufacturer's published values at 47°F, 17°F, and 5°F. Where the two curves cross is the balance point.<SourceCite id="nrel-cold-climate-heat-pump" number={4} />
+
+For a home with 45,000 BTU/hr design heating load at 5°F:
+- Plot the load line: 0 BTU/hr at 70°F, rising to 45,000 at 5°F
+- Plot the heat pump capacity curve from spec sheet
+- Find the intersection
+
+A standard heat pump delivering 22,000 at 17°F hits the load line around 28°F. Above 28°F: heat pump alone. Below 28°F: aux supplements. At 5°F, aux must provide 45,000 - 12,000 = 33,000 BTU/hr.
+
+A cold-climate heat pump delivering 30,000 at 17°F shifts the balance point to roughly 12°F. The total aux runtime over a heating season drops sharply; bin-hours below 12°F are a small fraction of bin-hours below 28°F in most US locations.
+
+Heat pump balance point sizing trade-offs: a higher balance point means smaller, cheaper equipment and more aux electricity. A lower balance point means larger or cold-climate equipment and less aux electricity. The cost-optimal balance point depends on aux fuel price, electricity price, climate severity, and equipment cost differential.
+
+The [balance point design methodology](/heat-pump/sizing/balance-point-design/) covers the calculation in detail, including how to read manufacturer capacity tables and how to estimate aux runtime from bin hours. Whichever balance point you pick, the [auxiliary heat](/heat-pump/aux-heat/) provides the gap-filler.
+
+## Cold Climate Considerations
+
+Cold climate heat pump sizing introduces variables that mild-climate sizing ignores. The 99% heating design temperature drops to single digits or below zero in northern US locations. Standard heat pumps lose substantial capacity at those temperatures. Aux strategy becomes the dominant cost driver.<SourceCite id="ashrae-fundamentals-2021-cz" number={7} />
+
+Design temperature look-up. ASHRAE Standard 169 publishes 99% heating design temperatures for thousands of US locations. The 99% means the outdoor temperature is at or above this value 99% of typical-year hours (about 87 hours per year are colder). Sample values: Miami 47°F, Phoenix 33°F, Atlanta 22°F, Denver 4°F, Chicago -2°F, Minneapolis -11°F, Anchorage -19°F. Local code may specify a different value; check with the building department.
+
+<ColdClimateBalancePointStrategy />
+
+Three valid cold-climate sizing strategies emerge. (1) Size to cooling load with aux: small heat pump, lots of aux runtime, lowest equipment cost. (2) Size to heating design temperature with no aux: large heat pump, no aux runtime, oversized for cooling. (3) Size to a balance point with cold-climate equipment: middle-priced heat pump, minimal aux runtime, cooling fit close to right-sized.<SourceCite id="neep-ccashp-sizing-guide" number={3} />
+
+For most cold-climate installations, strategy 3 wins economically. The cost differential between standard and cold-climate equipment ($2,000-5,000 depending on size) pays back over 5-10 years in reduced aux electricity for typical northern US homes. See the [NEEP cold climate heat pump sizing guide](https://neep.org/heating-electrification/ccashp-specification-product-list/sizing) for the authoritative discussion.
+
+The dual-fuel option is common in cold climates with existing gas service: heat pump primary above the balance point, gas/oil furnace backup below. The heat pump handles 70-90% of annual heating; the gas backup handles design-day shortfalls. This avoids the high cost of electric resistance aux but requires a furnace, gas line, and venting that all-electric installs skip.
+
+[Defrost cycles in cold climates](/heat-pump/cold-climate/defrost-cycle/) also reduce effective capacity. A heat pump running 5-15 minutes in defrost every 30-90 minutes loses ~5-10% of its delivered heating energy. Manufacturer capacity ratings already account for defrost, but real-world high-humidity climates can see more.
+
+For [cold climate heat pump sizing](/heat-pump/sizing/cold-climate/) in detail, the dedicated article covers ASHRAE design temperatures by location, capacity tables for common cold-climate models, and worked examples.
+
+## Oversizing vs Undersizing
+
+<OversizeUndersizeTradeoffs />
+
+Heat pump oversizing penalties:
+- Short cycling in cooling mode (compressor runs 2-4 minutes, off 5-10 minutes)
+- Poor humidity removal in cooling
+- Possible short cycling in mild winter weather
+- Higher purchase price
+- Faster compressor wear from cycling
+- Variable-speed equipment mitigates these somewhat (modulates down to 20-40% of nominal)
+
+Manual S allows up to 15-25% above Manual J cooling load (varies by equipment type). Beyond that range, oversizing is genuinely problematic. Some installers push to the limit; some go beyond. The [consequences of heat pump oversizing](/heat-pump/sizing/oversizing/) article covers what happens in detail.<SourceCite id="acca-manual-s" number={2} />
+
+Heat pump undersized penalties:
+- Aux heat runs frequently below balance point
+- Operating cost rises in winter
+- Cooling can't keep up on extreme summer days
+- Compressor runs at 100% constantly (less wear from cycling but no comfort margin)
+- The [heat pump undersizing risks](/heat-pump/sizing/undersizing/) article covers the failure modes
+
+The Goldilocks zone is the Manual J cooling load (within Manual S tolerance) paired with a balance point chosen for the climate. Variable-speed (inverter) equipment tolerates moderate oversizing better than single-stage units because they modulate down at low loads. Single-stage units cycle on and off; variable-speed units throttle.
+
+Practical implication: when comparing contractor proposals, calculate the proposed equipment's cooling capacity at AHRI conditions (use the model number to look up nominal capacity), compare to Manual J cooling load (which should be in writing in the proposal). If the proposed unit is more than 25% above Manual J cooling, ask the contractor to explain. If they cite "future expansion" or "safety margin," that is industry shorthand for oversizing.
+
+## System Type Variations
+
+Ducted central heat pumps use a single outdoor unit and a single indoor air handler, distributing conditioned air through ducts to the whole house. Sizing is whole-house: total Manual J load drives equipment selection. Most US heat pump installations are ducted.
+
+Ductless mini-splits skip the ductwork. A single-zone mini-split has one outdoor unit and one indoor head, sized for one room or zone. Sizing is zone-by-zone Manual J. Multi-zone mini-splits have one outdoor unit connected to multiple indoor heads via refrigerant lines.
+
+Multi-zone sizing introduces diversity. You rarely heat or cool every zone at full capacity at the same time. A house with five zones totaling 60,000 BTU/hr of room-by-room cooling load typically needs only 45,000-50,000 BTU/hr of outdoor unit capacity (75-85% diversity factor). The exact factor depends on usage pattern, zone count, and climate. Multi-zone systems are forgiving of moderate undersizing because zones can be staged.
+
+Don't oversize the outdoor unit on a multi-zone system. Modulating multi-zone units have a minimum capacity (typically 30-40% of nominal); below that, they cycle. An oversized outdoor unit cycles instead of modulating, defeating the efficiency advantage of variable-speed equipment. The mini split sizing calculator below handles per-zone sizing with diversity.
+
+DIY mini-split installs have grown rapidly. A 12k-36k BTU DIY-friendly mini-split (pre-charged refrigerant lines, plug-and-play indoor units) is within reach for moderately handy homeowners. Sizing is the same as for professionally installed units: per-zone Manual J or equivalent calculator output. The big difference is that the DIY installer carries the sizing risk personally; there is no contractor to blame for a wrong-sized unit. EPA Section 608 still applies to any refrigerant work beyond connecting pre-charged lines.
+
+For [ducted vs ductless heat pump sizing](/heat-pump/sizing/ducted-vs-ductless/) tradeoffs in detail (whole-house duct loss, zone control, duct condition), the dedicated article covers the comparison. Our [mini split sizing calculator](/tools/mini-split-sizing-calculator/) handles per-zone sizing with diversity factors for multi-zone systems.
+
+</article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<Sources sources={SOURCES} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-18" />
+</div>
+
+</Container>
