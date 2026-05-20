@@ -1,0 +1,392 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { Sources } from '@/components/article/Sources';
+import { SourceCite } from '@/components/article/SourceCite';
+import { AuthorByline } from '@/components/article/AuthorByline';
+import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { HeroDefrostCycleFlow } from '@/components/svg/defrost-cycle/HeroDefrostCycleFlow';
+import { FrostFormationTempHumidity } from '@/components/svg/defrost-cycle/FrostFormationTempHumidity';
+import { RefrigerantCircuitDefrost } from '@/components/svg/defrost-cycle/RefrigerantCircuitDefrost';
+import { DemandVsTimeDefrost } from '@/components/svg/defrost-cycle/DemandVsTimeDefrost';
+import { IndoorExperienceDuringDefrost } from '@/components/svg/defrost-cycle/IndoorExperienceDuringDefrost';
+import { DefrostProblemDecisionTree } from '@/components/svg/defrost-cycle/DefrostProblemDecisionTree';
+
+export const metadata = {
+  title: "Heat Pump Defrost Cycle: What It Is and Why It's Normal",
+  description:
+    'A heat pump defrost cycle reverses the system briefly to melt ice off the outdoor coil. Learn how it works, how long it lasts, and when it indicates a problem.',
+  openGraph: {
+    title: 'Heat Pump Defrost Cycle: Why Your Outdoor Unit Steams',
+    description:
+      "The steam, the brief stop in heating, the clunk — all are normal parts of how heat pumps stay efficient in cold weather. Here's the full picture.",
+    type: 'article',
+    publishedTime: '2026-05-18',
+    modifiedTime: '2026-05-18',
+    authors: ['Jonathan S.'],
+  },
+};
+
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'Heat Pump', url: '/heat-pump/' },
+  { name: 'Cold Climate', url: '/heat-pump/cold-climate/' },
+  { name: 'Defrost Cycle' },
+];
+
+export const HEADINGS = [
+  { id: 'what-a-defrost-cycle-actually-is', text: 'What a Defrost Cycle Actually Is', level: 2 },
+  { id: 'why-frost-forms-on-your-heat-pump', text: 'Why Frost Forms on Your Heat Pump', level: 2 },
+  { id: 'how-the-defrost-cycle-works-mechanically', text: 'How the Defrost Cycle Works Mechanically', level: 2 },
+  { id: 'defrost-frequency-whats-normal', text: "Defrost Frequency: What's Normal", level: 2 },
+  { id: 'auxiliary-heat-during-defrost', text: 'Auxiliary Heat During Defrost', level: 2 },
+  { id: 'what-you-experience-indoors', text: 'What You Experience Indoors', level: 2 },
+  { id: 'defrost-and-efficiency', text: 'Defrost and Efficiency', level: 2 },
+  { id: 'cold-climate-heat-pumps-and-defrost', text: 'Cold Climate Heat Pumps and Defrost', level: 2 },
+  { id: 'when-defrost-indicates-a-problem', text: 'When Defrost Indicates a Problem', level: 2 },
+];
+
+export const SOURCES = [
+  {
+    id: 'ahri-210-240',
+    title: 'ANSI/AHRI Standard 210/240-2023',
+    publisher: 'Air-Conditioning, Heating and Refrigeration Institute',
+    year: 2023,
+    url: 'https://www.ahrinet.org/search-standards/ahri-210240-2023-performance-rating-unitary-air-conditioning-air-source-heat-pump',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'nrel-cold-climate-heat-pump',
+    title: 'Cold-Climate Air-Source Heat Pump Performance',
+    publisher: 'US National Renewable Energy Laboratory',
+    year: 2022,
+    url: 'https://www.nrel.gov/buildings/cold-climate-heat-pumps.html',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'doe-heat-pump-systems',
+    title: 'Heat Pump Systems',
+    publisher: 'US Department of Energy, Energy Saver',
+    year: 2024,
+    url: 'https://www.energy.gov/energysaver/heat-pump-systems',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'ccac-cchp-spec',
+    title: 'Cold Climate Air Source Heat Pump Specification',
+    publisher: 'Cold Climate Air Source Heat Pump Challenge / NEEP',
+    year: 2024,
+    url: 'https://neep.org/heating-electrification/ccashp-specification-product-list',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'ashrae-fundamentals-hp',
+    title: 'ASHRAE Handbook of HVAC Systems and Equipment 2024, Chapter 49 (Unitary Air Conditioners and Heat Pumps)',
+    publisher: 'ASHRAE',
+    year: 2024,
+    url: 'https://www.ashrae.org/technical-resources/ashrae-handbook',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'rinnai-mitsubishi-defrost-tech',
+    title: 'Mitsubishi Electric Hyper-Heating Heat Pump Technical Manual (H2i)',
+    publisher: 'Mitsubishi Electric Trane HVAC US',
+    year: 2024,
+    url: 'https://www.mitsubishicomfort.com/',
+    accessed: '2026-05-18',
+    tier: 3,
+  },
+];
+
+export const FAQ_ITEMS = [
+  {
+    q: 'How long does a heat pump defrost cycle last?',
+    a: 'Typical defrost cycles last 5-15 minutes. Most well-designed systems complete defrost in under 10 minutes. Cycles longer than 15 minutes suggest a problem, usually a stuck reversing valve, low refrigerant, or defrost not terminating correctly on the temperature sensor.',
+  },
+  {
+    q: 'How often should a heat pump defrost?',
+    a: 'Defrost frequency depends on outdoor temperature and humidity. In cool, humid weather (32-40°F at high RH), defrost may run every 30-45 minutes. In dry cold (15°F at 30% RH), defrost may run only every 90-120 minutes or less. Modern demand-defrost systems may skip defrost entirely on cold dry days. If your system defrosts every 10-20 minutes regardless of conditions, that suggests a defrost board or sensor problem.',
+  },
+  {
+    q: 'Why is my heat pump steaming outside?',
+    a: "That's a defrost cycle in progress. The outdoor coil briefly runs hot (200°F+) to melt accumulated frost. The melted ice flashes to steam in the cold air, producing the visible plume. This is normal operation, not a sign of fire or refrigerant leak. The steam lasts a few minutes and disappears once defrost completes.",
+  },
+  {
+    q: 'Is it normal for ice to form on my heat pump?',
+    a: "Light frost on the outdoor coil during cold humid weather is normal: that's exactly what the defrost cycle is designed to handle. Heavy ice that covers the coil, fan, or grille and persists between defrost cycles is not normal. Heavy persistent ice indicates a problem with defrost initiation, refrigerant charge, or airflow.",
+  },
+  {
+    q: 'What happens to my indoor temperature during defrost?',
+    a: "The compressor is still running but reversed, so the indoor coil briefly cools instead of heats. Most systems pause the indoor blower during defrost to avoid blowing cool air, and may engage auxiliary electric heat to maintain indoor temperature. If you have aux heat, you typically won't notice defrost. Without aux, you may feel a 5-15 minute lull in heat output.",
+  },
+  {
+    q: 'Does defrost waste energy?',
+    a: 'Yes, modestly. Defrost cycles temporarily reverse heating direction, then need to ramp the system back up. Aux heat (if used) consumes electricity at COP=1. Real-world defrost energy penalty is typically 3-10% of total heating season energy, depending on climate and system design. AHRI HSPF2 ratings account for this in cold-climate test conditions.',
+  },
+  {
+    q: "What's the difference between time defrost and demand defrost?",
+    a: 'Time-initiated defrost runs on a clock, every 30, 60, or 90 minutes, regardless of whether frost has actually formed. Demand-initiated defrost uses outdoor coil temperature and pressure sensors to detect frost buildup and only defrosts when needed. Modern systems (especially cold-climate certified models) use demand defrost, which saves 5-15% of defrost-related energy.',
+  },
+  {
+    q: "My heat pump defrosts every 10 minutes: what's wrong?",
+    a: 'Defrosting every 10-15 minutes is excessive. Common causes: defrost control board malfunction (the board is initiating defrost too aggressively), outdoor coil temperature sensor reading incorrectly, low refrigerant (coil running too cold and frosting too fast), or restricted airflow over the outdoor coil (debris, plants too close, dirty coil). Schedule a service call. Continued operation can damage the compressor.',
+  },
+  {
+    q: 'Should I clear ice off my heat pump?',
+    a: 'Light frost: no, let the defrost cycle handle it. Heavy ice covering the coil or fan: turn the system off first to prevent damage, then carefully remove ice with warm water. Never use sharp tools, hammers, or hot water above 110°F. These can damage the coil fins or refrigerant lines. If heavy ice forms repeatedly, the system has a defrost problem that needs professional diagnosis.',
+  },
+  {
+    q: 'Do all heat pumps have defrost cycles?',
+    a: 'All air-source heat pumps have defrost cycles. Ground-source (geothermal) heat pumps do not need defrost because their heat source is the ground, which stays above freezing year-round. Mini-split air-source heat pumps defrost, just like ducted ones. The defrost mechanism is universal across air-source equipment.',
+  },
+];
+
+export const RELATED = [
+  {
+    title: 'Auxiliary heat',
+    url: '/heat-pump/aux-heat/',
+    description: 'How electric resistance backup engages during defrost and at low outdoor temperatures.',
+  },
+  {
+    title: 'Seasonal Performance Factor (SPF)',
+    url: '/heat-pump/performance/seasonal-performance-factor/',
+    description: 'Season-averaged efficiency including the defrost energy penalty.',
+  },
+  {
+    title: 'Manual J load calculation',
+    url: '/manual-j/',
+    description: 'Right-sizing your system so it cycles correctly without excessive defrost.',
+  },
+];
+
+export const FRONTMATTER = {
+  title: "Heat Pump Defrost Cycle: What It Is and Why It's Normal",
+  h1: 'How Heat Pump Defrost Cycles Work',
+  meta_description:
+    'A heat pump defrost cycle reverses the system briefly to melt ice off the outdoor coil. Learn how it works, how long it lasts, and when it indicates a problem.',
+  url: '/heat-pump/cold-climate/defrost-cycle/',
+  date_published: '2026-05-18',
+  last_reviewed: '2026-05-18',
+  target_keyword: 'heat pump defrost cycle',
+  secondary_keywords: ['heat pump defrost', 'demand defrost', 'heat pump frozen outside', 'heat pump steaming'],
+  sources: SOURCES,
+  faq: FAQ_ITEMS,
+  parent_title: 'Heat Pump',
+};
+
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={2700} />
+
+<JsonLdBreadcrumb items={BREADCRUMBS} />
+
+<Container>
+
+<Breadcrumbs items={BREADCRUMBS} />
+
+<HeroDefrostCycleFlow />
+
+<ArticleHeader
+  h1="How Heat Pump Defrost Cycles Work"
+  description="A heat pump defrost cycle reverses the system briefly to melt ice off the outdoor coil. Learn how it works, how long it lasts, and when it indicates a problem."
+  datePublished="2026-05-18"
+  lastReviewed="2026-05-18"
+  readingTimeMinutes={11}
+/>
+
+<KeyTakeaways
+  items={[
+    'A defrost cycle briefly reverses the heat pump to melt frost off the outdoor coil, then returns to heating. Normal duration: 5-15 minutes. Normal frequency: every 30-90 minutes in frost conditions.',
+    'The steam, the brief blower pause, and the clunk sound are all normal parts of defrost. The clunk is the reversing valve repositioning.',
+    'Modern demand-initiated defrost uses coil sensors to defrost only when frost is detected, saving 5-15% of defrost energy compared to time-initiated systems.',
+    'Defrost only indicates a problem when frequency is high (every 10-20 min), duration is long (>20 min), or heavy ice persists between cycles.',
+    'Real-world defrost energy penalty is 3-10% of seasonal heating energy. AHRI HSPF2 ratings already account for defrost in their test conditions.',
+  ]}
+/>
+
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
+
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+Your heat pump outdoor unit just produced a cloud of steam. Then the indoor blower briefly went quiet. Then you heard a thunk from outside. None of this is a problem. It is a defrost cycle, and it is the normal way an air-source heat pump handles frost on its outdoor coil.
+
+Defrost cycles happen because the outdoor coil in heating mode runs colder than the outdoor air — sometimes well below freezing. Moisture in the air condenses on the cold coil and freezes, eventually insulating the coil and reducing efficiency. The defrost cycle briefly reverses the system, makes the outdoor coil hot, and melts the frost off. Then the system goes back to heating.
+
+This article covers what's happening, why, how long it should take, what you should feel indoors during it, and how to tell a normal defrost cycle from one that indicates an actual problem. For background on the broader topic, the [cold climate heat pump fundamentals](/heat-pump/cold-climate/) hub covers low-temperature operation.
+
+## What a Defrost Cycle Actually Is
+
+A defrost cycle is a temporary reversal of the heat pump's normal operation. The outdoor coil, which was acting as an evaporator (cold, absorbing heat from outdoor air), briefly switches to acting as a condenser (hot, releasing heat). The frost that accumulated on the coil during heating melts off in 5 to 15 minutes, and the system returns to normal heating mode.
+
+Every air-source heat pump has a defrost cycle. Ducted central systems, mini-splits, packaged rooftop units, and modern cold-climate certified equipment all defrost. The mechanism is universal because the underlying physics is universal: any heat pump pulling heat from outdoor air will cool its outdoor coil below freezing under certain conditions, and any cold surface in humid air will collect frost.<SourceCite id="doe-heat-pump-systems" number={3} />
+
+A defrost cycle is not a malfunction. It is an engineered, programmed response to a normal operating condition. The defrost control board on the heat pump is specifically designed to detect frost formation (or run on a timer in older systems) and initiate the defrost sequence. See the [DOE heat pump fundamentals](https://www.energy.gov/energysaver/heat-pump-systems) for an overview of how the heating cycle works overall.
+
+The sections that follow cover why frost forms, how the reversal works mechanically, how often defrost cycles should happen, what you experience indoors during one, the efficiency impact, cold-climate-specific behavior, and how to spot the difference between a normal defrost and a defrost problem.
+
+## Why Frost Forms on Your Heat Pump
+
+Heat pump heating mode works by evaporating refrigerant inside the outdoor coil. As the refrigerant boils from liquid to vapor, it absorbs heat from the air flowing over the coil. The thermodynamics are straightforward: to absorb heat from outdoor air, the refrigerant inside the coil must be colder than that air. The outdoor coil's surface temperature ends up roughly 10-25°F below the outdoor air temperature, depending on system design and refrigerant pressure.<SourceCite id="ashrae-fundamentals-hp" number={5} />
+
+When outdoor air is 32-45°F, the coil's surface temperature is at or below freezing. Moisture in the air condenses on the cold metal surface and immediately freezes into frost. The physics behind [dew point and frost formation](/building-science/psychrometrics/dew-point/) explain exactly when coil surfaces ice up. The related [wet bulb temperature](/building-science/psychrometrics/wet-bulb/) gives another way to predict condensation conditions on cold surfaces.
+
+Higher outdoor humidity means faster frost formation. More water vapor is available to deposit on the cold coil. A 35°F day at 90% relative humidity produces frost much faster than a 35°F day at 30% relative humidity.
+
+Counter-intuitively, very cold weather produces less frost than moderate cool weather. Cold air holds less moisture in absolute terms. A 10°F day, even at 100% RH, contains a fraction of the water vapor in a 40°F day at 70% RH. Heat pumps in very cold dry weather may defrost only every 90-120 minutes, while the same system at 35°F in humid weather may defrost every 30-45 minutes.
+
+<FrostFormationTempHumidity />
+
+The frost itself accumulates in layers. A thin film of frost barely affects coil performance. A thick rime, half an inch or more, drops capacity significantly because it insulates the coil from the air it is supposed to extract heat from. That is what triggers defrost: either a timer says enough time has passed, or sensors detect the temperature differential that thick frost causes.
+
+## How the Defrost Cycle Works Mechanically
+
+The defrost cycle is implemented through the heat pump's reversing valve, a four-port solenoid-actuated valve in the refrigerant circuit. The valve has two stable positions: one routes refrigerant in the heating direction, the other routes it in the cooling/defrost direction. A solenoid coil holds the valve in the heating position; energizing or de-energizing the coil (depending on manufacturer) flips it to the defrost position.<SourceCite id="ashrae-fundamentals-hp" number={5} />
+
+<RefrigerantCircuitDefrost />
+
+The defrost sequence runs in distinct stages:
+
+1. **Initiation.** The defrost control board signals start, either because a timer expired (older systems) or because outdoor coil sensors detected significant frost (modern systems).
+2. **Blower pause.** The indoor blower stops to avoid blowing cold air to occupants once the indoor coil cools.
+3. **Aux heat engages.** Most installations have electric resistance auxiliary heat strips that turn on to maintain indoor comfort.
+4. **Valve reversal.** The reversing valve solenoid actuates, sliding the internal spool from heating to cooling/defrost position. This is the clunk or whoosh sound homeowners notice. The valve transition takes 1-2 seconds.
+5. **Coil heating.** With the valve reversed, refrigerant flows in the opposite direction. The outdoor coil now acts as the condenser. Hot, high-pressure refrigerant from the compressor enters the coil and rapidly heats it to 100-200°F.
+6. **Frost melts.** The frost on the coil melts within 5-15 minutes. The melted water flashes to steam on contact with the cold outdoor air, producing the visible plume that worries homeowners.
+7. **Termination.** When the outdoor coil sensor reads above the termination threshold (typically 50-65°F), the valve flips back to heating, the blower restarts, and aux heat shuts off.
+
+A heat pump reverse cycle defrost works through this same valve mechanism. Some systems use auxiliary tools (hot gas bypass, electric resistance heating elements on the coil itself) but the dominant approach is reverse cycle. For full background on [auxiliary heat during defrost](/heat-pump/aux-heat/), the aux heat article covers when and how strips engage.
+
+## Defrost Frequency: What's Normal
+
+A defrost cycle every 30 minutes is on the frequent end of normal for cool humid weather. A defrost cycle every 90 minutes is normal in dry cold weather. Cycle frequency depends primarily on outdoor temperature and humidity. The further outside the frost-formation zone the weather is, the less often defrost runs.
+
+Two initiation methods exist. Time-initiated defrost uses a solid-state timer in the defrost board. The board triggers defrost every fixed interval (30, 60, or 90 minutes are typical) if the compressor has been running and outdoor temperature is below about 45°F. Demand-initiated defrost monitors the outdoor coil temperature and ambient temperature. When the differential (coil colder than expected relative to ambient) exceeds a threshold, frost insulation is inferred and defrost initiates.<SourceCite id="ashrae-fundamentals-hp" number={5} />
+
+<DemandVsTimeDefrost />
+
+Demand defrost vs time defrost: demand defrost saves 5-15% of defrost-related energy in field studies because it skips unnecessary cycles when no frost has formed. Older heat pumps mostly used time defrost. Modern equipment, especially all cold-climate certified models, uses demand defrost.
+
+Frequency factors:
+- Outdoor temperature (most defrost happens in 25-40°F range)
+- Outdoor humidity (high RH means more frequent defrost)
+- System runtime (more runtime means more frost accumulation)
+- Coil design (some cold-climate designs resist frosting better)
+
+A heat pump in 35°F humid weather may defrost every 30-45 minutes. The same heat pump in 15°F dry weather may defrost every 90-120 minutes or skip defrost entirely. The [balance point in cold climates](/heat-pump/cold-climate/balance-point/) affects how often the heat pump runs, which in turn affects total defrost time.
+
+A system defrosting every 10-20 minutes regardless of weather is malfunctioning. That is not normal frequency; that is a defrost board, sensor, or refrigerant charge issue.
+
+## Auxiliary Heat During Defrost
+
+During defrost, the indoor coil briefly becomes the evaporator. Refrigerant absorbs heat from indoor air instead of releasing it. Without intervention, the supply register would blow air at 35-55°F into the room. Most installations prevent this by engaging electric resistance auxiliary heat.
+
+Aux heat strips are coils of nichrome wire inside the air handler, between the indoor coil and the supply duct. When current flows, the strips reach 800-1,500°F. Air passing over them warms by 20-40°F. The heat pump auxiliary heat during defrost runs for the duration of defrost plus a brief overlap as the system transitions back to heating.<SourceCite id="ashrae-fundamentals-hp" number={5} />
+
+Aux heat runs at COP = 1.0, meaning every watt of electricity becomes one watt of heat. That is much less efficient than the heat pump itself, which runs at COP 2.5-4.5 in mild weather and COP 1.8-2.5 in cold weather. But the cost penalty applies only for the 5-15 minutes of defrost, plus the brief recovery period. Over a heating season, aux heat during defrost is a small fraction of total energy use.
+
+Without aux heat, you will feel a cool spell at the registers during defrost. Some mini-split installations don't include aux strips; they pause indoor airflow during defrost instead. Some ducted installs are configured to use aux only during emergency heat mode, not during defrost. Either way, the heat pump is doing what it should; the homeowner just notices the brief lull.
+
+Configuring aux heat correctly is its own topic. For the full treatment, see [auxiliary heat during defrost](/heat-pump/aux-heat/), which covers both proper configuration and common misconfigurations.
+
+## What You Experience Indoors
+
+With aux heat configured normally, you may not notice defrost at all. The supply air stays warm because aux strips are running below the indoor coil. The compressor is still running (just reversed). Total electricity use spikes for a few minutes, then returns to normal. The outdoor unit stops blowing air through its fan (or runs the fan in some designs), produces some steam, and resumes normal operation.
+
+<IndoorExperienceDuringDefrost />
+
+Without aux heat, you'll feel a 5-15 minute period of cool air from the registers. Some installations stop the indoor blower entirely during defrost; others let it run with no heat source, blowing room-temperature air. Then the heat pump returns to heating and supply temperature climbs back up.
+
+The thermostat may display "defrost", "auxiliary heat active", or just continue showing the regular heating setpoint. Smart thermostats (Nest, Ecobee, etc.) sometimes show aux runtime as a separate metric. None of these displays are errors; they reflect what is actually happening.
+
+The sounds: a clunk or whoosh from the outdoor unit when the reversing valve actuates, possibly a brief change in fan speed, and (sometimes) the sound of frost melting and dripping off the coil. None of these indicate damage.
+
+Heat pump blowing cold air during defrost without aux is normal but brief. If cold air persists for more than 15 minutes, see [heat pump blowing cold air diagnosis](/heat-pump/troubleshooting/blowing-cold-air/) for non-defrost causes such as reversing valve failure or low refrigerant.
+
+## Defrost and Efficiency
+
+Defrost cycles cost energy without delivering heating. The compressor runs in reverse for 5-15 minutes (consuming about 3 kW for a residential 3-ton heat pump). Aux heat strips run for most of that time (another 5-10 kW). Net effect: a single defrost cycle consumes 0.5-1.0 kWh, the energy equivalent of about 30-60 minutes of normal heating output.
+
+How much this adds up to over a season depends on climate. In the Pacific Northwest (cool humid winters), defrost runs frequently and the seasonal penalty can reach 8-10% of heating energy. In Colorado (cold dry winters), defrost rarely runs and the penalty may be 3-5%. NREL field studies of cold-climate heat pumps put the typical range at 3-10% of seasonal heating energy.<SourceCite id="nrel-cold-climate-heat-pump" number={2} />
+
+[HSPF2 ratings and defrost penalties](/heat-pump/performance/hspf2/) account for defrost in the standardized test conditions. AHRI Standard 210/240 specifies test conditions that include the frost regime (17°F at high humidity), so HSPF2 numbers already reflect defrost-related performance losses.<SourceCite id="ahri-210-240" number={1} /> When comparing two heat pumps by HSPF2, you are comparing them with defrost included.
+
+Real-world [seasonal performance factor](/heat-pump/performance/seasonal-performance-factor/) often comes in below HSPF2 because actual field conditions, climate, oversizing, installation quality, and homeowner thermostat behavior all degrade performance more than the standardized test predicts. Defrost is one component of that gap, but generally not the largest.
+
+For [NREL cold-climate heat pump research](https://www.nrel.gov/buildings/cold-climate-heat-pumps.html) with detailed performance data at low temperatures, NREL's reports document defrost-related energy use under controlled and field conditions.
+
+To estimate your own defrost energy use, the [defrost energy cost calculator](/tools/heat-pump-defrost-cost-calculator/) takes your climate, system size, and electricity rate as inputs and produces an annual estimate.
+
+## Cold Climate Heat Pumps and Defrost
+
+A cold climate heat pump is one designed for sustained operation below 17°F. The NEEP Cold Climate Air Source Heat Pump (CCASHP) Specification defines the standard: rated capacity and COP at 5°F, demonstrated operation down to lower temperatures, and meaningful capacity available at -13°F or below for certified models.<SourceCite id="ccac-cchp-spec" number={4} />
+
+Cold-climate models all use demand-initiated defrost, not time-initiated. The control system monitors coil temperature and ambient temperature in real time and only initiates defrost when sensors detect frost insulation. This matters more in cold dry weather, where time-defrost systems would defrost unnecessarily on a clock and waste energy.
+
+These systems also use refrigerant circuiting designed to resist frosting. Vapor injection (sometimes called enhanced vapor injection, or EVI) keeps the compressor working efficiently at low temperatures and reduces the coil temperature swing that drives frost formation. Some designs use a small refrigerant accumulator and crankcase heating to handle cold restart conditions.
+
+Mitsubishi heat pump defrost behavior in the H2i Hyper-Heating series is a representative example. The system uses demand defrost combined with a vapor-injection compressor, and the documentation explicitly covers cold-climate defrost behavior down to -13°F operating temperatures.<SourceCite id="rinnai-mitsubishi-defrost-tech" number={6} />
+
+Cold climate models still defrost. They just defrost more efficiently, more selectively, and with better performance maintained between defrost cycles. The [cold climate heat pump (CCASHP) certification](/heat-pump/cold-climate/cold-climate-heat-pump/) covers which models qualify and the testing standard. The [NEEP CCASHP product list](https://neep.org/heating-electrification/ccashp-specification-product-list) is the authoritative source for current certified equipment.
+
+## When Defrost Indicates a Problem
+
+Most defrost cycles are normal. A few are not. The difference is in frequency, duration, and whether the coil clears. A defrost cycle that runs every 10 minutes regardless of weather, or that takes 25 minutes to complete, or that ends with the outdoor unit still mostly covered in ice — those are signs of a real problem, and they are worth calling a technician about before the system damages itself. If the cycle runs every 45 minutes for 8 minutes and the coil is clean afterward, your heat pump is doing exactly what it was designed to do.
+
+<DefrostProblemDecisionTree />
+
+Problem indicators:
+- **Frequency too high:** defrost every 10-20 minutes regardless of weather
+- **Duration too long:** cycles running 20+ minutes (defrost not terminating)
+- **Heavy ice persists** between cycles or unit becomes encased in ice
+- **System runs constantly** in winter (heat pump cannot keep up with load plus excessive defrost)
+- A heat pump runs constantly in winter, never reaching setpoint, often combines undersizing, defrost issues, or both
+
+Common root causes:
+- Defrost control board malfunction (most common for frequency problems)
+- Outdoor coil temperature sensor reading incorrectly (causes both frequency and duration problems)
+- Reversing valve stuck mid-position (causes duration problems and refrigerant short-circuiting)
+- Low refrigerant (coil running colder than designed, frosting too fast)
+- Restricted airflow over outdoor coil (debris, dirty fins, vegetation too close, snow blockage)
+- Oversized heat pump short cycling, where each compressor run produces a small frost layer that triggers defrost too soon
+
+DIY checks before calling a pro:
+- Outdoor unit has 24+ inches of clearance on all sides
+- No debris, leaves, or snow damming the bottom of the unit
+- Breaker hasn't tripped
+- Thermostat isn't accidentally in emergency heat mode
+
+A heat pump frozen outside in cold weather is normally a sign that defrost is malfunctioning, not that the cold itself is causing a problem. Persistent heavy ice means defrost is not running or not terminating correctly. The fix involves diagnostic work on the defrost board, sensors, or refrigerant circuit. None of this is DIY-territory. Continued operation with broken defrost can damage the compressor.
+
+For heavy ice removal: turn the system off first to prevent the compressor from running while iced up. Then carefully use warm (not hot) water to melt the ice. Never use sharp tools, hammers, or hot water above 110°F. These can damage the aluminum coil fins or rupture refrigerant lines. EPA Section 608 regulations require certified technicians for any refrigerant work; do not attempt refrigerant charge adjustments yourself.
+
+Oversizing makes defrost problems worse. If [Manual J load calculation](/manual-j/) was skipped or done badly at installation and the heat pump is significantly oversized, the compressor short-cycles, each cycle generates a small frost layer, and defrost runs unnecessarily often. For [cold climate heat pump sizing](/heat-pump/cold-climate/sizing/) in detail, the sizing article covers how to verify your unit is correctly matched to your home's load. Use the [heat pump sizing calculator](/tools/heat-pump-size-calculator/) for a quick sanity check.
+
+When defrost behavior crosses into problem territory, the full guide on [heat pump defrost not working](/heat-pump/troubleshooting/defrost-not-working/) covers root cause diagnostics in detail. Most defrost problems are repairable; the goal is to diagnose them before they cause secondary damage.
+
+</article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<Sources sources={SOURCES} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-18" />
+</div>
+
+</Container>
