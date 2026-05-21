@@ -1,0 +1,425 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { Sources } from '@/components/article/Sources';
+import { SourceCite } from '@/components/article/SourceCite';
+import { AuthorByline } from '@/components/article/AuthorByline';
+import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { HeroHersIndexScale } from '@/components/svg/hers-index/HeroHersIndexScale';
+import { HersVsMpgAnalogy } from '@/components/svg/hers-index/HersVsMpgAnalogy';
+import { HersDistributionUs } from '@/components/svg/hers-index/HersDistributionUs';
+import { HersReductionStack } from '@/components/svg/hers-index/HersReductionStack';
+import { HersVsEnergyStarVsZerh } from '@/components/svg/hers-index/HersVsEnergyStarVsZerh';
+import { HersRatingProcess } from '@/components/svg/hers-index/HersRatingProcess';
+
+export const metadata = {
+  title: 'HERS Index Explained: What the Score Means and Why It Matters',
+  description:
+    "The HERS Index rates home energy performance on a scale where 100 is a 2006 reference home and 0 is net-zero. Here's what the score means and how it's calculated.",
+  openGraph: {
+    title: 'HERS Index: The Home Energy Score Explained',
+    description:
+      "A HERS Index of 100 means average for a 2006 code home. 70 means 30% more efficient. 0 means net-zero. Here's how to read and use the score.",
+    type: 'article',
+    publishedTime: '2026-05-18',
+    modifiedTime: '2026-05-18',
+    authors: ['Jonathan S.'],
+  },
+};
+
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'Building Science', url: '/building-science/' },
+  { name: 'HERS Index' },
+];
+
+export const HEADINGS = [
+  { id: 'what-hers-is', text: 'What HERS Is', level: 2 },
+  { id: 'how-to-read-the-score', text: 'How to Read the Score', level: 2 },
+  { id: 'quick-hers-estimate', text: 'Quick HERS Estimate', level: 2 },
+  { id: 'how-the-calculation-works', text: 'How the Calculation Works', level: 2 },
+  { id: 'typical-hers-scores', text: 'Typical HERS Scores', level: 2 },
+  { id: 'how-to-lower-a-hers-score', text: 'How to Lower a HERS Score', level: 2 },
+  { id: 'hers-energy-star-and-zerh', text: 'HERS, ENERGY STAR, and ZERH', level: 2 },
+  { id: 'getting-a-hers-rating', text: 'Getting a HERS Rating', level: 2 },
+  { id: 'what-hers-doesnt-measure', text: "What HERS Doesn't Measure", level: 2 },
+];
+
+export const SOURCES = [
+  {
+    id: 'resnet-mortgage-industry-standard',
+    title: 'ANSI/RESNET/ICC 301: Standard for the Calculation and Labeling of the Energy Performance of Dwelling and Sleeping Units using an Energy Rating Index',
+    publisher: 'Residential Energy Services Network (RESNET)',
+    year: 2022,
+    url: 'https://www.resnet.us/about/standards/mortgage/',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'resnet-overview',
+    title: 'What is the HERS Index?',
+    publisher: 'Residential Energy Services Network',
+    year: 2024,
+    url: 'https://www.resnet.us/about/hers-index/',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'iecc-2021-eri',
+    title: 'International Energy Conservation Code 2021, Section R406 (Energy Rating Index Compliance)',
+    publisher: 'International Code Council',
+    year: 2021,
+    url: 'https://codes.iccsafe.org/content/IECC2021P1/chapter-4-re-residential-energy-efficiency',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'doe-zerh',
+    title: 'DOE Zero Energy Ready Home Program',
+    publisher: 'US Department of Energy',
+    year: 2024,
+    url: 'https://www.energy.gov/eere/buildings/zero-energy-ready-home',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'irs-25c-179d',
+    title: 'Energy Efficient Home Improvement Credit (Section 25C) and New Energy Efficient Home Credit (Section 45L)',
+    publisher: 'US Internal Revenue Service',
+    year: 2024,
+    url: 'https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'energystar-certified-homes',
+    title: 'ENERGY STAR Residential New Construction Program',
+    publisher: 'US EPA / ENERGY STAR',
+    year: 2024,
+    url: 'https://www.energystar.gov/partner_resources/residential_new',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'nahb-hers-distribution',
+    title: 'Annual Report on US Home Energy Ratings',
+    publisher: 'RESNET / National Association of Home Builders',
+    year: 2024,
+    url: 'https://www.resnet.us/registry/',
+    accessed: '2026-05-18',
+    tier: 2,
+  },
+];
+
+export const FAQ_ITEMS = [
+  {
+    q: 'What is a good HERS Index score?',
+    a: 'For new construction in 2024, HERS 60-70 is typical for code-built homes; HERS 50-60 is typical for ENERGY STAR certified new homes; HERS 30-40 is required for DOE Zero Energy Ready Home certification; HERS 0 is net-zero (the home produces as much energy as it consumes, typically through solar PV). For existing homes, the median is around HERS 130. Good depends on context: a 1985 home brought down to HERS 80 is a notable improvement; a new 2024 home at HERS 80 is below average.',
+  },
+  {
+    q: 'How is the HERS Index calculated?',
+    a: "A RESNET-certified rater inspects the home, conducts diagnostic testing (blower door for air leakage, duct blaster for duct leakage), and inputs all data into approved software (REM/Rate, Ekotrope, or others). The software models the home's annual energy consumption and compares it to a reference home, a hypothetical version of the same home built to 2006 IECC code. The HERS Index is the ratio of the rated home's energy use to the reference home's energy use, multiplied by 100.",
+  },
+  {
+    q: 'What does a HERS Index of 0 mean?',
+    a: 'A HERS Index of 0 means the home produces as much energy as it consumes on an annual net basis. This is usually achieved through a combination of high-performance envelope (insulation, air sealing, windows), high-efficiency equipment (heat pump, heat pump water heater), and on-site renewable energy generation (typically solar PV). HERS 0 is the definition of a net-zero home.',
+  },
+  {
+    q: 'How much does a HERS rating cost?',
+    a: 'For new construction, a HERS rating typically costs $400-1,000, often paid by the builder and included in the home price. For existing homes, ratings cost more ($500-1,500) because the rater must investigate and verify existing construction details. Some utilities subsidize HERS ratings for energy efficiency programs.',
+  },
+  {
+    q: 'Is HERS the same as ENERGY STAR?',
+    a: 'No. HERS is a numeric score (0 to 200+). ENERGY STAR is a pass/fail certification that uses HERS as one criterion among several. To be ENERGY STAR Certified New Home, the home must score below a certain HERS threshold (varies by climate zone, typically HERS 50-60) AND meet additional requirements for ducts, mechanical equipment, lighting, and quality installation.',
+  },
+  {
+    q: 'Can my HERS Index be used for federal tax credits?',
+    a: "Yes, in specific contexts. The 45L New Energy Efficient Home Credit (up to $5,000 per unit) requires HERS-based certification at specific thresholds. The 25C Energy Efficient Home Improvement Credit doesn't directly use HERS but uses equipment efficiency criteria that contribute to lower HERS scores. State and utility programs often tie incentives to specific HERS thresholds.",
+  },
+  {
+    q: 'Can I get a HERS Index for an existing home?',
+    a: 'Yes. Existing-home HERS ratings are less common than new construction ratings but provide useful baseline data for renovation planning, refinancing (some lenders offer energy-efficient mortgages with HERS data), or before/after improvement comparisons. The methodology is the same as new construction.',
+  },
+  {
+    q: 'How can I lower my HERS Index?',
+    a: 'Most impactful improvements, in rough order: (1) reduce air leakage through air sealing, (2) increase attic insulation, (3) upgrade windows (especially if currently single-pane), (4) replace older HVAC equipment with high-efficiency models (heat pumps typically score best), (5) install heat pump water heater, (6) add solar PV if going for very low HERS. Each improvement adds, but the cost-effectiveness varies dramatically by climate, current condition, and equipment age.',
+  },
+  {
+    q: 'Is HERS used for code compliance?',
+    a: 'Yes, as one of three pathways under 2021 IECC. The Energy Rating Index (ERI) pathway, which is HERS by another name, requires the home to score at or below a specific ERI for the climate zone. The other pathways are prescriptive (specific component requirements) and performance (whole-home energy modeling). Many builders use the ERI/HERS pathway because it provides flexibility on individual component specifications.',
+  },
+  {
+    q: 'Does a lower HERS Index mean lower energy bills?',
+    a: "Generally yes, but the relationship isn't linear and depends on local energy costs. A home with HERS 50 uses approximately half the energy of the 2006 reference home; with HERS 75, three-quarters. Actual energy bills depend on local rates, occupant behavior, weather, and equipment maintenance, but HERS scores correlate strongly with energy bills across comparable homes.",
+  },
+];
+
+export const RELATED = [
+  {
+    title: 'Manual J load calculation',
+    url: '/manual-j/',
+    description: 'The heating and cooling load math underlying the HERS energy calculation.',
+  },
+  {
+    title: 'Attic R-value',
+    url: '/building-science/insulation/attic-r-value/',
+    description: 'Often the cheapest way to drop a HERS score: air seal and top off attic insulation.',
+  },
+  {
+    title: 'Heat pump sizing',
+    url: '/heat-pump/sizing/',
+    description: 'Heat pump installation typically drops HERS 10-15 points vs older AC + furnace.',
+  },
+];
+
+export const FRONTMATTER = {
+  title: 'HERS Index Explained: What the Score Means and Why It Matters',
+  h1: 'HERS Index Explained',
+  meta_description:
+    "The HERS Index rates home energy performance on a scale where 100 is a 2006 reference home and 0 is net-zero. Here's what the score means and how it's calculated.",
+  url: '/building-science/hers-index/',
+  date_published: '2026-05-18',
+  last_reviewed: '2026-05-18',
+  target_keyword: 'hers index',
+  secondary_keywords: ['hers rating', 'hers score', 'resnet hers', 'energy star home'],
+  sources: SOURCES,
+  faq: FAQ_ITEMS,
+  parent_title: 'Building Science',
+};
+
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={2500} />
+
+<JsonLdBreadcrumb items={BREADCRUMBS} />
+
+<Container>
+
+<Breadcrumbs items={BREADCRUMBS} />
+
+<HeroHersIndexScale />
+
+<ArticleHeader
+  h1="HERS Index Explained"
+  description="The HERS Index rates home energy performance on a scale where 100 is a 2006 reference home and 0 is net-zero. Here's what the score means and how it's calculated."
+  datePublished="2026-05-18"
+  lastReviewed="2026-05-18"
+  readingTimeMinutes={11}
+/>
+
+<KeyTakeaways
+  items={[
+    'HERS Index is a number from 0 to 200+ rating home energy performance against a 2006 IECC reference home. Lower is better. 100 = reference; 0 = net-zero.',
+    'A RESNET-certified rater inspects the home, runs blower-door and duct-blaster tests, and inputs data into approved software (REM/Rate, Ekotrope) per ANSI/RESNET/ICC 301.',
+    'Typical 2024 US new construction: HERS 60-70 code-built, HERS 50-60 ENERGY STAR certified, HERS 30-40 DOE Zero Energy Ready, HERS 0 net-zero. Existing US median: HERS 130.',
+    'Cheapest HERS reductions: air sealing (5-10 points for a few hundred dollars), attic insulation top-off (3-8 points). Below HERS 30 typically requires solar PV.',
+    'HERS qualifies the 45L tax credit (up to $5,000 per unit for ZERH certified) and is the basis of the IECC ERI compliance pathway.',
+  ]}
+/>
+
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
+
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+The HERS Index is a number from 0 to 200-plus that tells you how energy-efficient a home is. Lower is better. The scale is calibrated so 100 represents a reference home built exactly to 2006 IECC code, 0 represents a net-zero home that produces as much energy as it consumes, and scores above 100 represent homes less efficient than the 2006 reference.
+
+The number alone is almost useless without context. A new home at HERS 65 is below the certification threshold for ENERGY STAR. A 1985 home brought down to HERS 65 through retrofits is a remarkable achievement. The same number means different things depending on the starting point.
+
+This article explains what HERS is, how to read the scale, how a HERS rating is actually calculated, what scores are typical for new and existing homes, how to lower a score, how HERS relates to ENERGY STAR and Zero Energy Ready Home certifications, and what a rating costs. For broader context, [building science fundamentals](/building-science/) covers the methodology that underlies HERS.
+
+## What HERS Is
+
+HERS stands for Home Energy Rating System. The HERS Index is the numeric output, ranging from 0 to 200+ for typical residential structures.<SourceCite id="resnet-overview" number={2} /> The system is developed and maintained by RESNET, the Residential Energy Services Network, which also certifies the HERS raters who perform individual ratings. See the [RESNET HERS Index overview](https://www.resnet.us/about/hers-index/) for the authoritative description.
+
+What is a HERS rating, in plain terms: it is a standardized, third-party-verified score that tells you how much energy a home uses compared to a reference home built to 2006 IECC code. The standardization matters: a HERS 65 in Phoenix and a HERS 65 in Minneapolis represent equivalently efficient performance for their respective climates, since the reference home in each location reflects the local 2006 IECC requirements.
+
+<HersVsMpgAnalogy />
+
+The HERS score is unusual because it runs in the opposite direction from most efficiency metrics. Cars rate efficiency in miles per gallon (higher is better). Air conditioners rate efficiency in SEER (higher is better). Refrigerators rate efficiency by energy use (lower is better) or by Energy Star tier (qualifying is better). HERS picked the energy-use direction: lower means less energy used relative to reference, so lower is better.
+
+The resnet hers system is standardized under ANSI/RESNET/ICC 301, the national standard for the calculation and labeling of energy performance.<SourceCite id="resnet-mortgage-industry-standard" number={1} /> The standard defines the reference home, the modeling methodology, and the qualifications a rater must hold to issue a certified score.
+
+HERS is used for multiple purposes: code compliance via the IECC Energy Rating Index pathway, federal tax credit qualification (45L), ENERGY STAR Certified Home certification, DOE Zero Energy Ready Home certification, energy-efficient mortgage underwriting, utility rebate programs, and before/after improvement comparisons for renovations.
+
+## How to Read the Score
+
+The HERS Index scale anchors at two points and extends in both directions:
+
+- **HERS 0**: the home produces as much energy as it consumes on an annual net basis. This is a net-zero home, typically achieved through high-performance envelope, electric equipment, and on-site solar PV
+- **HERS 100**: the reference home, a hypothetical version of the same physical home built exactly to 2006 IECC code. This is the calibration anchor
+- **Above 100**: less efficient than the 2006 reference. Older existing homes often score HERS 130-180
+
+Each point on the scale represents approximately 1% energy difference from the reference home. A HERS Index 70 home uses about 30% less energy than the 2006 reference. HERS Index 50 means about 50% less. HERS Index 0 is the net-zero anchor. A HERS 130 home uses about 30% more energy than the reference.
+
+The hers score chart in the hero diagram above shows the major anchor points (DOE ZERH at 30, ENERGY STAR roughly 50, modern code roughly 70). A good hers score depends on the home's age and starting point: a new 2024 home should rate HERS 60-70 if code-built and HERS 50-55 if ENERGY STAR; an older existing home at HERS 80 after renovations represents substantial improvement work.
+
+The hers index 70 number is roughly the threshold between code-minimum new construction and ENERGY STAR Certified New Home. The hers index 50 number represents top-quartile new construction. The hers index 0 number represents net-zero. For [HERS Index scale interpretation](/building-science/hers-index/scale/) in detail, the dedicated article walks through edge cases and what each segment of the scale represents.
+
+## Quick HERS Estimate
+
+A planning-grade HERS estimate doesn't require a certified rater. Our [HERS Index estimator](/tools/hers-index-estimator/) accepts simple inputs (location, square footage, insulation level, window quality, HVAC equipment type, approximate air sealing, water heater type) and returns an approximate HERS range plus suggested improvements.
+
+The estimator outputs a range, typically ±10 HERS points around the actual rating. That accuracy is enough for:
+- Comparing two potential new homes from spec sheets
+- Sanity-checking a builder's claimed HERS Index
+- Pre-improvement planning (what range can I realistically achieve?)
+- Deciding whether to pay for a certified rating
+
+The estimator does NOT replace a certified rating. It cannot be used for:
+- Code compliance (IECC ERI pathway)
+- Tax credit qualification (45L or state programs)
+- ENERGY STAR or ZERH certification
+- Energy-efficient mortgage underwriting
+- Closing documentation on a new home purchase
+
+For any official use, you need a RESNET-certified rater following the process described in section 8. The HERS Index calculator on this site is a planning tool; the official HERS Index certificate is the deliverable for incentives, code compliance, and certification programs.
+
+The estimator works best on new construction with reasonable input quality. Existing homes have more variation in actual envelope condition (settled insulation, hidden moisture damage, undocumented retrofits) that a brief input form cannot capture.
+
+## How the Calculation Works
+
+The HERS Index calculation follows ANSI/RESNET/ICC 301.<SourceCite id="resnet-mortgage-industry-standard" number={1} /> Two key concepts:
+
+**The rated home**: the actual home being measured. The rater inspects it, tests it, and models it in approved software.
+
+**The reference home**: a hypothetical version of the same physical home (same orientation, geometry, square footage, room layout) but built exactly to 2006 IECC code. Envelope R-values match 2006 IECC prescriptive values for the climate. Equipment is the 2006 IECC baseline: typically AFUE 78% gas furnace OR HSPF 7.7 heat pump, SEER 13 AC, 0.59 EF gas water heater. Air leakage is 7 ACH50 for existing homes (varies for new construction). The reference home gets its own energy model run by the same software.
+
+The software (most commonly REM/Rate from Architectural Energy Corporation, Ekotrope RATER, or other RESNET-certified packages) models annual energy use for both rated and reference homes across:
+- Heating (using the [Manual J load calculation](/manual-j/) for the building, multiplied by inverse equipment efficiency)
+- Cooling
+- Water heating
+- Lighting
+- Plug loads (miscellaneous electric loads, or MELs)
+- Refrigeration and other major appliances
+
+For HVAC efficiency inputs, modern modeling uses the heat pump's [seasonal performance factor](/heat-pump/performance/seasonal-performance-factor/) or HSPF2 (heating) and SEER2 (cooling). The accuracy of [how home heat loss works](/building-science/heat-loss/) calculations directly impacts HERS accuracy, since heating typically dominates the load in northern US climates.
+
+The HERS formula is straightforward:
+
+```
+HERS Index = (Rated home annual energy use / Reference home annual energy use) × 100
+```
+
+On-site renewable generation (solar PV, typically) reduces the rated home's energy use on an annual net basis. PV is modeled per PVWatts or similar with location-specific solar resource data. Enough PV to offset all consumption brings the score to HERS 0.
+
+Our [Manual J-style load calculator](/tools/manual-j-calculator/) handles the load portion of the HERS calculation but doesn't run the full reference-home comparison; the full HERS calculation requires certified software and rater input. For [how a HERS rating is calculated](/building-science/hers-index/calculation/) step by step including how the software handles fuel switching analysis, the dedicated article walks through the methodology.
+
+## Typical HERS Scores
+
+What's typical depends heavily on whether you're looking at new construction or the existing US housing stock.<SourceCite id="nahb-hers-distribution" number={7} />
+
+<HersDistributionUs />
+
+**New construction (2024 medians)**:
+- Code-built (IECC 2021 prescriptive compliance): HERS 60-70
+- ENERGY STAR Certified New Home: HERS 50-60 (threshold varies by climate zone)
+- DOE Zero Energy Ready Home: HERS 30-40
+- Net-zero homes: HERS 0 (or negative if a net energy producer)
+
+The average hers index new home in the US in 2024 is roughly HERS 62. Average results have improved steadily since the 2006 reference baseline as IECC code has tightened and ENERGY STAR thresholds have moved down.
+
+**Existing homes** vary widely:
+- 1980s-2000s, no significant retrofits: HERS 100-150
+- Pre-1980s, no retrofits: HERS 130-200+
+- Older homes with substantial retrofits (insulation, air sealing, HVAC): HERS 70-100 possible
+- Older homes with major retrofits + solar: HERS 30-70 possible
+
+Median US existing home: approximately HERS 130. The hers index existing home distribution reflects 40+ years of code history; the bulk of US housing was built before the modern code era, and accumulated retrofits cover only a fraction of the stock.
+
+The hers index new construction distribution clusters tightly around HERS 60 because builders aim at the code minimum and ENERGY STAR certification threshold, both of which fall in that range. Going below requires extra investment that not all builders make.
+
+For per-state breakdowns reflecting climate zone, code adoption, and builder practices, see [average HERS Index by state](/building-science/hers-index/by-state/) for the regional data.
+
+## How to Lower a HERS Score
+
+The cheapest HERS points come from sealing air leaks. The most expensive come from solar panels. Between those two extremes, the cost per HERS point varies dramatically with climate, current condition, and equipment age. A blower-door test followed by targeted air sealing can drop a HERS score by 5 to 10 points for a few hundred dollars; a new heat pump replacing an old AC and furnace can drop it 10 to 15 points but costs tens of thousands. There is no universal answer to "what should I do first"; there is a fairly universal order of cost-effectiveness, and the order rarely starts with windows or solar.
+
+<HersReductionStack />
+
+The how to lower hers score progression in rough cost-effectiveness order:
+
+1. **[Air sealing](/building-science/insulation/air-sealing/)** is the single most cost-effective HERS reduction, typically 5-10 points for $500-1,500 of caulk, foam, and gaskets. ACH50 reduction from 7 to 3 directly affects the HERS model.
+2. **[Attic R-value](/building-science/insulation/attic-r-value/)** improvements typically deliver 3-8 HERS points for $1,500-4,000 in materials and labor. Cost per HERS point is similar to air sealing for many homes.
+3. **HVAC upgrade** (especially heat pump replacing AC + gas furnace) can be 10-15 HERS points for $5,000-15,000. [Heat pump sizing](/heat-pump/sizing/) affects how the HERS calculation weights the equipment.
+4. **Heat pump water heater** replacement: 3-5 HERS points for $1,500-3,000 installed
+5. **[Window U-factor](/building-science/windows/u-factor/)** improvements range widely in HERS impact: 5-10 points if upgrading from single-pane; 1-3 points if already double-pane Low-E. Cost per HERS point is typically high here
+6. **Solar PV** is the only way to reach low HERS scores (below ~30) without massive envelope work. A 4-8 kW system delivers 25-50 HERS points
+
+The diminishing returns curve matters. HERS 100 → 70 is much cheaper than HERS 50 → 30. Early improvements address big inefficiencies cheaply; later improvements squeeze marginal gains. Try our [insulation upgrade payback calculator](/tools/insulation-payback-calculator/) to estimate HERS impact for specific upgrades.
+
+Each improvement's HERS impact depends on climate, current condition, and equipment age. The exact number varies; the order rarely does. Air sealing first, then envelope, then equipment, then renewables.
+
+## HERS, ENERGY STAR, and ZERH
+
+HERS is a numeric score. ENERGY STAR Certified New Home and DOE Zero Energy Ready Home are certifications that use HERS as one criterion among several.
+
+<HersVsEnergyStarVsZerh />
+
+**HERS Index**: A standardized number from 0 to 200+, issued by RESNET-certified raters following ANSI/RESNET/ICC 301. The output is the score itself. No pass/fail; the number is the result.
+
+**ENERGY STAR Certified New Home**: A pass/fail certification.<SourceCite id="energystar-certified-homes" number={6} /> See [ENERGY STAR Residential New Construction](https://www.energystar.gov/partner_resources/residential_new) for the program detail. To qualify, a home must score below a specific HERS threshold (typically HERS 50-60 by climate zone) AND meet additional requirements covering envelope quality, mechanical equipment, duct testing, lighting efficiency, and HVAC commissioning.
+
+**DOE Zero Energy Ready Home (ZERH)**: A tighter pass/fail certification.<SourceCite id="doe-zerh" number={4} /> See the [DOE Zero Energy Ready Home program](https://www.energy.gov/eere/buildings/zero-energy-ready-home) for program details. To qualify, a home must meet ENERGY STAR + tighter envelope + indoor air quality requirements + electrification-ready specs + WaterSense fixtures + a low HERS threshold (typically HERS 30-45 by climate).
+
+The hers vs energy star distinction trips up buyers. ENERGY STAR doesn't have a single "ENERGY STAR HERS"; it has a HERS threshold that varies by climate zone and a checklist of other requirements. A home can have a low HERS but not be ENERGY STAR certified (no inspection or no verifier) or have a higher HERS but qualify for some other reason (rare; usually thresholds line up).
+
+The hers index for tax credit and hers index for federal tax credits use cases are governed by IRS rules.<SourceCite id="irs-25c-179d" number={5} /> The 45L New Energy Efficient Home Credit (effective 2023-2032) provides $2,500 per single-family unit for ENERGY STAR certified new homes and $5,000 for ZERH certified. Multifamily amounts are smaller per unit but available at scale. The 25C Energy Efficient Home Improvement Credit (existing homes) up to $3,200/year doesn't directly use HERS but uses equipment efficiency criteria that contribute to lower HERS scores. See [IRS Energy Efficient Home Improvement Credit](https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit) for current specifics.
+
+The IECC ERI compliance pathway is an alternative to prescriptive code: instead of meeting specific component R-values and U-factors, the home must achieve a HERS Index at or below a specific value for the climate zone.<SourceCite id="iecc-2021-eri" number={3} /> Many builders use this pathway because it allows trade-offs between components. For [HERS Index and federal tax credits](/building-science/hers-index/tax-credits/) in detail, the dedicated article covers thresholds, claim procedures, and worked examples.
+
+## Getting a HERS Rating
+
+The hers rater near me search returns RESNET's national directory. RESNET maintains the authoritative list of certified raters at resnet.us. New construction: usually arranged by the builder and included in home price. Existing homes: homeowner arranges directly with the rater.
+
+<HersRatingProcess />
+
+The process:
+
+1. **Hire a RESNET-certified rater**. New construction is typically pre-arranged by the builder; existing homes require independent arrangement
+2. **Pre-inspection paperwork**. Home plans, equipment specs, location, HVAC documentation gathered before site visit
+3. **On-site inspection**. Insulation depth verification, windows, ductwork, HVAC equipment, water heater, air sealing, envelope details (1-3 hour visit typically)
+4. **Diagnostic testing**. Blower door test for whole-house air leakage (ACH50), duct blaster for duct leakage (CFM25). Usually done at the on-site visit
+5. **Software modeling**. Rater inputs everything to REM/Rate, Ekotrope, or equivalent. Calculates HERS Index
+6. **Certificate issued**. Typical timeline: 1-3 weeks from inspection to delivered certificate
+
+The hers index cost ranges $400-1,000 for new construction; $500-1,500 for existing homes. New construction is cheaper because plans and equipment specs are documented; existing homes require more inspection time to verify hidden details. Some utilities subsidize HERS ratings as part of energy efficiency programs; check local utility offers before paying out of pocket.
+
+For new home purchases, ask the builder for the HERS certificate before closing. It is standard documentation for ENERGY STAR Certified New Homes, code-compliance via the ERI pathway, and any utility or tax credit claim tied to the rating. For [HERS rating cost breakdown](/building-science/hers-index/cost/) by region and program, the dedicated article covers cost variation and subsidy availability.
+
+## What HERS Doesn't Measure
+
+The HERS Index focuses on annual modeled energy use. It does not measure:
+
+- **Indoor air quality** directly (mentioned in ENERGY STAR Certified New Home requirements but not scored in HERS itself)
+- **Water efficiency** (covered separately by WaterSense; ZERH includes water requirements but HERS does not score them)
+- **Embodied carbon and material sustainability** (not in HERS; emerging in other rating systems)
+- **Durability and moisture management** (related to envelope but not explicitly scored)
+- **Occupant behavior** (HERS uses standard occupancy assumptions; actual energy use varies with how the home is operated)
+- **Indoor environmental quality** (lighting, daylighting, acoustic, thermal comfort beyond setpoint achievement)
+
+ENERGY STAR Certified Homes and especially DOE Zero Energy Ready Home cover some of these gaps through their additional criteria. A home with a low HERS is energy-efficient; whether it is also healthy, durable, and well-built depends on the broader certification or scope of inspection.
+
+The whole-home picture: HERS Index for energy, ENERGY STAR or ZERH for the broader bundle, plus separate evaluations for water, indoor air quality, durability, and embodied carbon if those matter to you. HERS is a strong starting point and the most widely used residential energy score in the US, but it is one metric in a multi-dimensional picture.
+
+</article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<Sources sources={SOURCES} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-18" />
+</div>
+
+</Container>
