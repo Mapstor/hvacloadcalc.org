@@ -1,0 +1,464 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { Sources } from '@/components/article/Sources';
+import { SourceCite } from '@/components/article/SourceCite';
+import { AuthorByline } from '@/components/article/AuthorByline';
+import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { HeroGarageMinisplitInstall } from '@/components/svg/garage-mini-split/HeroGarageMinisplitInstall';
+import { GarageVsHouseLoads } from '@/components/svg/garage-mini-split/GarageVsHouseLoads';
+import { MiniSplitSizingByGarageSize } from '@/components/svg/garage-mini-split/MiniSplitSizingByGarageSize';
+import { GarageFeaturesChecklist } from '@/components/svg/garage-mini-split/GarageFeaturesChecklist';
+import { GarageMinisplitInstallDecision } from '@/components/svg/garage-mini-split/GarageMinisplitInstallDecision';
+import { ColdClimateGarageConsiderations } from '@/components/svg/garage-mini-split/ColdClimateGarageConsiderations';
+
+export const metadata = {
+  title: 'Mini Split for Garage: Sizing Guide and What to Look For',
+  description:
+    "Mini splits are the most practical way to heat and cool a garage. Here's how to size one, what features matter for garage use, and installation considerations.",
+  openGraph: {
+    title: 'Mini Split for Garage: Sizing and Installation',
+    description:
+      'Garage heating and cooling needs differ from interior spaces. Here is how to size correctly.',
+    type: 'article',
+    publishedTime: '2026-05-18',
+    modifiedTime: '2026-05-18',
+    authors: ['Jonathan S.'],
+  },
+};
+
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'AC', url: '/ac/' },
+  { name: 'BTU Sizing', url: '/ac/btu/' },
+  { name: 'Garage Mini Split' },
+];
+
+export const HEADINGS = [
+  { id: 'why-mini-splits-are-the-right-choice-for-garages', text: 'Why Mini Splits Are the Right Choice for Garages', level: 2 },
+  { id: 'why-garages-are-different-from-other-spaces', text: 'Why Garages Are Different From Other Spaces', level: 2 },
+  { id: 'how-to-size-a-garage-mini-split', text: 'How to Size a Garage Mini Split', level: 2 },
+  { id: 'tonnage-by-climate-quick-guide', text: 'Tonnage-by-Climate Quick Guide', level: 2 },
+  { id: 'sizing-chart-by-garage-size-and-insulation', text: 'Sizing Chart by Garage Size and Insulation', level: 2 },
+  { id: 'equipment-features-to-look-for', text: 'Equipment Features to Look For', level: 2 },
+  { id: 'cold-climate-garages', text: 'Cold Climate Garages', level: 2 },
+  { id: 'variations-workshops-detached-garages-multi-use', text: 'Variations: Workshops, Detached Garages, Multi-Use', level: 2 },
+  { id: 'cost-and-installation', text: 'Cost and Installation', level: 2 },
+];
+
+export const SOURCES = [
+  {
+    id: 'acca-manual-j-8',
+    title: 'Manual J: Residential Load Calculation, 8th Edition',
+    publisher: 'Air Conditioning Contractors of America',
+    year: 2016,
+    url: 'https://www.acca.org/standards/technical-manuals/manual-j',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'doe-heat-pump-systems',
+    title: 'Heat Pump Systems',
+    publisher: 'US Department of Energy',
+    year: 2024,
+    url: 'https://www.energy.gov/energysaver/heat-pump-systems',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'epa-section-608',
+    title: 'EPA Section 608 Technician Certification',
+    publisher: 'US Environmental Protection Agency',
+    year: 2024,
+    url: 'https://www.epa.gov/section608',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'irc-2021-garage',
+    title: 'International Residential Code 2021, Section R302.5 (Garage Separation)',
+    publisher: 'International Code Council',
+    year: 2021,
+    url: 'https://codes.iccsafe.org/content/IRC2021P1',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'neep-ccashp-product-list',
+    title: 'Cold Climate Air Source Heat Pump Specification Product List',
+    publisher: 'NEEP',
+    year: 2024,
+    url: 'https://neep.org/heating-electrification/ccashp-specification-product-list',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'ahri-210-240',
+    title: 'ANSI/AHRI Standard 210/240-2023',
+    publisher: 'AHRI',
+    year: 2023,
+    url: 'https://www.ahrinet.org/search-standards/ahri-210240-2023-performance-rating-unitary-air-conditioning-air-source-heat-pump',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+];
+
+export const FAQ_ITEMS = [
+  {
+    q: 'What size mini split do I need for a 2-car garage?',
+    a: 'For a typical 2-car garage (400-600 sq ft) with some insulation in a moderate climate, an 18,000 BTU (1.5 ton) mini split is a common choice. Insulated garages may get away with 12,000 BTU; uninsulated or in extreme climates may need 24,000 BTU. The right answer depends on insulation, climate, ceiling height, and how the garage is used (occasional vs daily occupancy).',
+  },
+  {
+    q: 'Is 12000 BTU enough for a 2-car garage?',
+    a: '12,000 BTU (1 ton) is adequate for a well-insulated 2-car garage in mild climates (zones 1-4) used occasionally. For an uninsulated garage, daily use, hot climates, or cold zones below 5°F design temp, 12,000 BTU is likely undersized. Run the numbers based on your specific situation rather than relying on a single tonnage rule.',
+  },
+  {
+    q: 'Can I install a mini split in my garage myself?',
+    a: "Pre-charged DIY mini splits (MrCool, Pioneer Quick Connect, and similar) can be installed without HVAC technician certification because the refrigerant lines arrive pre-charged and don't require evacuation or charging. Standard mini splits require EPA Section 608 certified technicians for refrigerant work; that is federal law, not a recommendation. Either way, electrical work typically requires an electrician and a permit.",
+  },
+  {
+    q: "What's the difference between a mini split and a window AC for a garage?",
+    a: 'Mini splits offer year-round heating AND cooling, run on inverter technology (variable-speed compressor, more efficient and quieter), have a small visible profile (no big window unit), and last 15-20 years with proper maintenance. Window units are cheaper upfront ($300-700 vs $1,500-4,000 for mini split), but provide cooling only (some have heat strips but inefficient), are louder, less efficient, and have shorter lifespan (5-10 years typical).',
+  },
+  {
+    q: 'Will a mini split work in an uninsulated garage?',
+    a: "Yes, but with caveats. Uninsulated garages have higher heat loss and gain so the mini split will run more often and use more energy, and you'll need a larger unit (rule of thumb: add 50-100% to your BTU calculation). Cooling performance is more affected than heating because hot summer air leakage adds significant latent load. Consider insulating before or alongside the mini split install if budget allows; payback is usually shorter than most homeowners expect.",
+  },
+  {
+    q: "What's the cheapest mini split that's still worth buying for a garage?",
+    a: 'Major-brand mini splits (Mitsubishi, Daikin, Fujitsu, LG, Pioneer, MrCool) start around $1,200-1,800 for 12,000 BTU equipment alone. Pre-charged DIY units (MrCool, Pioneer Quick Connect, Senville Aura, others) are at the lower end of price for self-install. Avoid no-name imports without AHRI certification; the warranty support and parts availability are typically poor and performance ratings unverified.',
+  },
+  {
+    q: 'Do I need a permit to install a mini split in my garage?',
+    a: "Most US jurisdictions require permits for electrical work involving 240V circuits and for HVAC equipment installation. Some jurisdictions also require permits for the outdoor unit's location (setbacks from property lines). Check with your local building department before installing. Many permits are inexpensive and the inspection helps catch installation errors.",
+  },
+  {
+    q: 'Will a mini split in my detached garage work in cold weather?',
+    a: "Cold-climate certified (NEEP CCASHP) mini splits maintain useful heating capacity down to 5°F or lower. Standard mini splits may struggle below 17°F. For detached garages in cold zones, consider either: (a) a CCASHP-rated mini split, (b) supplemental heat (electric resistance, propane radiant) for emergencies, or (c) accepting that on the coldest days, the mini split alone won't reach setpoint.",
+  },
+  {
+    q: 'Can I run a mini split through my attached garage wall to a workshop in the basement?',
+    a: "No. Mini split line sets are designed for direct connection between an outdoor unit and one or more indoor heads in fixed locations, with maximum line set lengths typically 50-75 feet for residential units. Routing through wall cavities and connecting to a different conditioned space isn't how the technology works; you'd need a separate indoor unit in each space (multi-zone setup) with the line sets running back to the outdoor unit.",
+  },
+  {
+    q: 'Should I get single-zone or multi-zone for garage plus another space?',
+    a: "If you're heating/cooling just the garage, single-zone is simpler, cheaper, and more efficient. If you also need to condition a workshop, finished bonus room above the garage, or an adjacent ADU, multi-zone makes sense; one outdoor unit can serve 2-5 indoor heads. Multi-zone outdoor units cost more upfront but save on multiple installations. The tradeoff is that one outdoor unit failure takes down the whole system.",
+  },
+];
+
+export const RELATED = [
+  {
+    title: 'Heat pump sizing',
+    url: '/heat-pump/sizing/',
+    description: 'The broader sizing methodology that underlies mini split selection for any space.',
+  },
+  {
+    title: 'AC short cycling',
+    url: '/ac/short-cycling/',
+    description: 'Why oversizing matters: an oversized garage mini split short-cycles in cooling.',
+  },
+  {
+    title: 'Heat pump defrost cycle',
+    url: '/heat-pump/cold-climate/defrost-cycle/',
+    description: 'Defrost behavior in cold climates applies to mini splits the same as any heat pump.',
+  },
+];
+
+export const FRONTMATTER = {
+  title: 'Mini Split for Garage: Sizing Guide and What to Look For',
+  h1: 'How to Size a Mini Split for Your Garage',
+  meta_description:
+    "Mini splits are the most practical way to heat and cool a garage. Here's how to size one, what features matter for garage use, and installation considerations.",
+  url: '/ac/btu/garage-mini-split/',
+  date_published: '2026-05-18',
+  last_reviewed: '2026-05-18',
+  target_keyword: 'mini split for garage',
+  secondary_keywords: ['garage mini split', 'mini split size for garage', 'garage heat pump', 'diy mini split garage'],
+  sources: SOURCES,
+  faq: FAQ_ITEMS,
+  parent_title: 'AC',
+};
+
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={2700} />
+
+<JsonLdBreadcrumb items={BREADCRUMBS} />
+
+<Container>
+
+<Breadcrumbs items={BREADCRUMBS} />
+
+<HeroGarageMinisplitInstall />
+
+<ArticleHeader
+  h1="How to Size a Mini Split for Your Garage"
+  description="Mini splits are the most practical way to heat and cool a garage. Here's how to size one, what features matter for garage use, and installation considerations."
+  datePublished="2026-05-18"
+  lastReviewed="2026-05-18"
+  readingTimeMinutes={11}
+/>
+
+<KeyTakeaways
+  items={[
+    'Garages need 2-3× the BTU per square foot of a conditioned bedroom due to lower insulation, leaky garage doors, and higher air infiltration.',
+    'A 2-car garage (400-600 sq ft) with partial insulation in zone 4-5 typically needs 18,000 BTU (1.5 ton). Insulated: 12,000. Uninsulated: 24,000.',
+    'Cold climates (zones 5-8): require CCASHP-certified models from the NEEP product list. Standard mini splits lose capacity below 17°F.',
+    'Pre-charged DIY units (MrCool, Pioneer Quick Connect) sidestep EPA Section 608 refrigerant certification. Electrical work still typically requires a permit and electrician.',
+    'Installed cost: $3,500-7,000 typical for professional install of an 18,000 BTU unit; $1,500-2,500 DIY with a pre-charged unit and self-electrical.',
+  ]}
+/>
+
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
+
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+A garage is one of the trickiest spaces to heat and cool. It's almost always less insulated than the rest of the house, has a giant air-leaky door, and most of the time nobody's in it — until you want to spend half a Saturday working on something in February. Mini splits are the right answer for this. They run as both heat and AC from a single unit, they install without ducts, and they can be sized for a garage specifically.
+
+This article covers how to size a mini split for your garage, why garages need more BTU per square foot than other spaces, what features to look for in equipment, how to handle cold-climate installations, and what the project will actually cost. For background on the broader topic, see [AC fundamentals](/ac/) for the conditioning side and the [mini split heat pumps overview](/heat-pump/types/mini-split/) for the equipment.
+
+## Why Mini Splits Are the Right Choice for Garages
+
+A mini split is a small heat pump.<SourceCite id="doe-heat-pump-systems" number={2} /> The outdoor condenser sits on an exterior wall, the indoor head mounts high on an interior wall, and a small refrigerant line set connects them through the wall. The whole system is ductless: no air handler, no ductwork, no register cutting. See [DOE heat pump systems guide](https://www.energy.gov/energysaver/heat-pump-systems) for the broader heat pump context.
+
+For a garage, this is the right form factor for several reasons:
+
+- **Provides both heating and cooling year-round.** A garage heat pump in one box does what a window AC plus a space heater do in two boxes, more efficiently and quietly
+- **No ducts needed.** Garages rarely have HVAC ductwork; running new ducts is expensive. Mini splits skip the problem entirely
+- **Compact outdoor unit.** Smaller than a central AC condenser; fits in the typical exterior side-yard space without crowding
+- **Indoor head mounts high.** Doesn't take floor space, doesn't interfere with vehicle storage or workshop layouts
+- **Inverter (variable-speed) technology.** Modulates output to actual load. Quieter at low load, more efficient over the year, fewer compressor starts
+- **15-20 year lifespan** with annual filter cleaning and coil rinses
+
+Garage hvac options other than mini splits exist but rarely fit as well:
+
+- **Window AC + space heater**: cheapest upfront ($400-1,000 total), louder, separate units for heating and cooling, shorter equipment life
+- **Garage unit heater (propane or gas-fired)**: best heating efficiency at extreme cold, but heating-only. Requires gas line and venting
+- **Through-the-wall PTAC**: similar to hotel room units; works if a window-shape opening is available
+- **Extending central HVAC**: usually code-prohibited (garage requires firewall separation per IRC R302.5) and bad practice (combustion byproducts and refrigerant from vehicles)
+
+For a garage with both heating and cooling needs across the year, mini splits win on net cost-effectiveness in almost every case.
+
+## Why Garages Are Different From Other Spaces
+
+A garage is not a bedroom. The walls are usually thinner, the ceiling insulation skimpier, the door alone has roughly the insulation value of a bedsheet, and air leaks through the perimeter and around the garage door every time the weather shifts. Add to that the intermittent use pattern — most garage heat/cool runs at unconditioned setpoint until someone wants to be in it — and you get a space that needs two to three times the BTU per square foot of an equivalent conditioned room inside the house. This is why a 600 sq ft bedroom takes 9,000 BTU and a 600 sq ft garage takes 18,000 to 24,000.
+
+<GarageVsHouseLoads />
+
+Five factors make garage HVAC harder than conditioned-space HVAC:
+
+1. **Lower insulation.** Typical garage walls run R-13 or less; ceilings R-19 or less; sometimes uninsulated entirely. Compare to R-13/R-38 minimums for conditioned space in most US zones
+2. **The garage door.** Even insulated doors are R-9 to R-12. Single-layer steel doors are R-2. The door covers 20-25% of the exterior wall area in a 2-car garage
+3. **Higher infiltration.** Garage doors create air gaps; weather stripping wears out; people open them. Tight garage 5-7 ACH50; typical 8-12 ACH50; loose 15+ ACH50
+4. **Building code requires firewall separation** from house living space, per IRC R302.5.<SourceCite id="irc-2021-garage" number={4} /> The firewall limits HVAC interconnection options and is why extending central air is usually not allowed
+5. **Intermittent use pattern.** You don't keep the garage at setpoint 24/7 like a bedroom. The HVAC needs to recover quickly from setback, which favors well-sized variable-speed equipment over oversized single-stage
+
+Add up all five: garages need 2-3× the BTU per square foot of a conditioned bedroom.
+
+Insulating a garage before or alongside the mini split install is usually high payback. See the [garage insulation guide](/building-science/insulation/garage-insulation/) for retrofit-friendly approaches. [Air sealing tips for garages](/building-science/insulation/air-sealing/) cover door perimeter, top plates, and penetrations.
+
+## How to Size a Garage Mini Split
+
+How to size a mini split for garage planning purposes follows a structured procedure. [Manual J load calculation methodology](/manual-j/) is the permit-grade approach.<SourceCite id="acca-manual-j-8" number={1} /> For planning, the following inputs let you reach a reasonable starting size:
+
+1. **Garage square footage**: floor area in sq ft
+2. **Ceiling height**: most attached garages are 9-10 ft. Lofts, cathedrals, or 12-ft+ ceilings raise the load
+3. **Insulation level**: uninsulated, partial (walls only or door uninsulated), or fully insulated (walls + ceiling + insulated door + sealed perimeter)
+4. **Climate zone**: 1-8 per IECC
+5. **Use pattern**: occasional weekend visits, daily 1-2 hour use, or continuous occupancy (workshop)
+
+The rule-of-thumb math for a planning estimate:
+
+```
+BTU_cooling = sq_ft × 30-40 BTU/sq ft × insulation_factor × climate_factor
+
+insulation_factor:
+  Uninsulated: 1.5-2.0
+  Partial: 1.2-1.5
+  Full: 1.0
+
+climate_factor:
+  Zones 1-2 (hot): 1.3 for cooling
+  Zones 3-4 (mid): 1.0
+  Zones 5-8 (cold): 0.7 for cooling, check heating separately
+```
+
+Heat pump sizing methodology applies the same physics across system types; see [heat pump sizing methodology](/heat-pump/sizing/) for the underlying decision framework. The garage-specific twist: in cold climates, calculate heating load separately because it likely dominates.
+
+Worked example for a 500 sq ft 2-car garage in zone 5 with partial insulation:
+- Cooling: 500 × 35 × 1.3 (partial insulation) × 0.7 (zone 5) = 15,925 BTU → round to 18,000
+- Heating: 18,000 × 1.1 (zone 5 multiplier) = 19,800 → round to 24,000 BTU for safety margin
+- Pick the larger: 24,000 BTU with CCASHP rating
+
+Oversizing risks short cycling in cooling mode, the [AC short cycling causes](/ac/short-cycling/) article covers the dynamics. Undersizing means the unit can't keep up on extreme days.
+
+Try our [mini split sizing calculator](/tools/mini-split-sizing-calculator/) for an automated version of this math with your specific inputs. The [general BTU calculator](/tools/btu-calculator/) works for any space and gives a coarser first-pass number.
+
+## Tonnage-by-Climate Quick Guide
+
+For the most common configurations, these starting points work without running full calculations:
+
+- **1-car garage (200-300 sq ft) in zone 4** with partial insulation: 12,000 BTU (1 ton)
+- **2-car garage (400-600 sq ft) in zone 4** with partial insulation: 18,000 BTU (1.5 ton). This is the most common configuration; mini split 2 car garage queries are the highest-volume search variant in this article
+- **Mini split 3 car garage (700-900 sq ft) in zone 4** with partial insulation: 24,000 BTU (2 ton)
+- For **zones 1-3** (cooling-dominant): drop one size if well-insulated, keep same if not
+- For **zones 5-8** (heating-dominant): add one size AND prioritize CCASHP equipment
+- For **uninsulated garages**: add 50-100% to BTU
+
+These are starting points. Verify with a calculator or full Manual J for installations.
+
+## Sizing Chart by Garage Size and Insulation
+
+<MiniSplitSizingByGarageSize />
+
+| Garage | Sq ft | Insulated | Partial | Uninsulated |
+|---|---|---|---|---|
+| 1-car | 200-300 | 9,000 | 12,000 | 18,000 |
+| 2-car | 400-600 | 12,000 | 18,000 | 24,000 |
+| 3-car | 700-900 | 18,000 | 24,000 | 36,000 |
+| Workshop | 1,000-1,500 | 24-30k | 36,000 | 48,000 |
+
+Specific scenarios people search for:
+
+- **Mini split for 400 sq ft garage** (smaller 2-car): 12,000-18,000 BTU depending on insulation. A well-insulated 400 sq ft garage in zone 4 gets the 12,000 BTU pick; partial insulation moves it to 18,000
+- **Mini split for 600 sq ft garage** (large 2-car): 18,000 BTU is the standard pick at partial insulation. Cold zone or uninsulated: bump to 24,000
+- **18000 BTU mini split garage** (the most common search by BTU rating): handles 2-car partial-insulation garages in zone 4-5 at moderate use
+- **24000 BTU mini split garage**: handles 2-car uninsulated or 3-car partial-insulation; cold-zone garages
+- **Mini split for insulated garage**: drop one size from the partial-insulation column
+- **Mini split for uninsulated garage**: bump up one to two sizes
+
+Caveat across all scenarios: the chart assumes 9-foot ceilings and zone 4-5 baseline. Adjust for climate, ceiling height, and frequent door opening. For the broader [AC BTU sizing chart by square footage](/ac/btu/chart/), the dedicated article covers non-garage spaces.
+
+## Equipment Features to Look For
+
+Best mini split for garage selection comes down to features. The brand matters less than feature alignment for your specific install. Major brands (Mitsubishi, Daikin, Fujitsu, LG, Pioneer, MrCool) all make capable units; differences are in feature set, price, and warranty support.
+
+<GarageFeaturesChecklist />
+
+Critical features for any garage:
+
+- **Heat pump capability**, not AC-only. Single-stage cooling-only units exist; for year-round garage use, the heat pump version is the right pick
+- **Inverter (variable-speed) compressor.** Modulates from ~30-100% of nominal capacity. Better efficiency at part load, less cycling, quieter
+- **AHRI certified rating.**<SourceCite id="ahri-210-240" number={6} /> Verifies the performance numbers on the spec sheet are real. No-name imports without AHRI certification are gambling on unverified performance
+- **HSPF2 ≥ 8 (heating) and SEER2 ≥ 17 (cooling)** as a minimum efficiency floor for reasonable payback
+
+Cold-climate specific (zones 5+):
+
+- **CCASHP certification.** Maintains rated capacity below 17°F
+- **Drain pan heater.** Prevents condensate freezing in the outdoor unit pan
+
+Garage-specific:
+
+- **Robust filter access.** Garages are dusty. Plan to clean filters monthly. A unit with a captive filter that requires unscrewing the cover gets old fast
+- **Wired wall controller option.** A wall-mount thermostat or controller is more durable in a garage than an IR remote you might lose. Most units offer both
+
+Less important features:
+- WiFi connectivity (nice-to-have for a garage; rarely cost-justified)
+- Voice control integration
+- Decorative lighting
+- Self-cleaning modes (limited value when the air is full of dust)
+
+The pre-charged DIY vs traditional choice trades installation complexity for unit cost. Pre-charged units (MrCool, Pioneer Quick Connect, Senville Aura) include sealed refrigerant lines that connect with mechanical fittings; no brazing or evacuation required, sidestepping the EPA 608 requirement. Traditional units are typically 20-30% cheaper at the equipment level but require professional installation.
+
+For full equipment context, [ductless vs ducted mini splits](/heat-pump/types/mini-split/ductless-vs-ducted/) covers the tradeoff. Real-world efficiency tracks the [seasonal performance factor for heat pumps](/heat-pump/performance/seasonal-performance-factor/), which captures climate-adjusted COP.
+
+## Cold Climate Garages
+
+For zones 5-8, prioritize CCASHP (Cold Climate Air Source Heat Pump) certified models.<SourceCite id="neep-ccashp-product-list" number={5} /> These maintain rated heating capacity at 5°F or lower. The [NEEP CCASHP product list](https://neep.org/heating-electrification/ccashp-specification-product-list) is the verification authority; check your specific model number before buying.
+
+<ColdClimateGarageConsiderations />
+
+Cold-climate features beyond CCASHP:
+
+- **Drain pan heater** (prevents condensate freezing at the outdoor unit)
+- **Base pan heater** on outdoor unit (keeps the pan from icing over)
+- **Compressor crankcase heater** (keeps oil viscosity manageable on cold starts)
+
+Backup heat in zones 7-8 garages: even a CCASHP can drop output at -10°F or below. Options for supplemental heat:
+
+- **Electric baseboard or strip heater**: simple, reliable, expensive to run (COP 1.0)
+- **Propane shop heater**: efficient at temperature extremes; requires propane delivery
+- **Acceptance**: on the coldest 3-5 days per year, the mini split alone may not reach setpoint. If you don't need full comfort on those days, the backup may not be worth installing
+
+[Heat pump defrost cycles](/heat-pump/cold-climate/defrost-cycle/) work the same way in mini splits as in central heat pumps. In cold humid weather, defrost reduces effective heating output 5-15% over the season.
+
+## Variations: Workshops, Detached Garages, Multi-Use
+
+**Workshops** (similar to garages but used daily, often for longer durations):
+- Often higher BTU per sq ft needed because of continuous occupancy
+- Dust control matters more; filter access is high-priority
+- Mini split for workshop sizing usually adds 20-30% to the equivalent-size garage. For [BTU sizing for workshops](/ac/btu/for-workshop/) in detail, see the dedicated guide
+
+**Detached garages**:
+- Often less insulated than attached (no shared house wall)
+- May need own electrical service or sub-panel from the house
+- More remote thermostat / control challenges; wired wall controller more useful
+- CCASHP benefits are larger because the garage has no thermal mass from the house
+- Mini split for detached garage installs are common; same sizing approach applies
+
+**Multi-use spaces** (garage + workshop, garage + gym, garage + ADU):
+- Consider multi-zone mini split: 1 outdoor unit, multiple indoor heads (2-5 typical)
+- Higher upfront cost than two single-zone systems, but simpler ductwork-free install
+- One outdoor unit failure takes down the whole system; redundancy lost
+
+**Bonus room above garage**:
+- Often a separate space, sometimes connected to house HVAC, sometimes its own zone
+- Multi-zone serves garage + bonus room from one outdoor unit
+- For [single vs multi-zone mini splits](/heat-pump/types/mini-split/single-vs-multi-zone/) tradeoffs, the dedicated article covers selection
+
+**Sheds and outbuildings** are smaller cousins; see [BTU sizing for sheds](/ac/btu/for-shed/) for the equivalent guide.
+
+## Cost and Installation
+
+Garage mini split installation cost varies widely by DIY vs professional, equipment tier, climate, and electrical complexity.
+
+<GarageMinisplitInstallDecision />
+
+**Equipment cost (2024 US, equipment only)**:
+- 9,000-12,000 BTU: $1,000-1,800 (major brands), $700-1,200 (DIY pre-charged)
+- 18,000-24,000 BTU: $1,500-2,500 (major), $1,200-1,800 (DIY)
+- Multi-zone 2-3 head outdoor + heads: $3,000-5,000 (major brands)
+
+**Professional installation**:
+- Single-zone basic: $1,500-3,000 in labor and materials beyond equipment
+- Includes line set, electrical to outdoor unit (if not run), wall penetration, condensate drain, refrigerant charging and commissioning
+- Total installed cost for 18,000 BTU 2-car garage install: $3,500-7,000 typical
+
+**Diy mini split garage cost** (pre-charged unit):
+- Equipment: $1,200-1,800
+- Electrical (self if licensed, or electrician + permit): $200-600
+- Permit: $50-200
+- DIY total: $1,500-2,500
+
+The diy mini split garage option is realistic for handy homeowners willing to do drilling, sealing, electrical conduit, and low-voltage wiring. The federal legal boundary: EPA Section 608 certification is required by federal law for any work involving refrigerant in stationary air conditioning equipment.<SourceCite id="epa-section-608" number={3} /> See [EPA Section 608 certification requirement](https://www.epa.gov/section608) for the regulatory detail. Pre-charged DIY units sidestep this requirement because the refrigerant lines arrive pre-charged and don't need to be opened. Non-pre-charged units require certified work for the refrigerant portion.
+
+**Electrical** requirements for most garage mini splits: 208-240V dedicated circuit, 15-30 amps depending on unit size. Garages may have only a 120V circuit available; running new 240V from the panel to the outdoor unit is common as part of the install.
+
+**Permits**: most US jurisdictions require permits for 240V electrical work and HVAC installation. Permit costs are typically $50-200. Inspection helps catch installation errors and is usually worth the small cost.
+
+**Federal tax credits**: the 25C Energy Efficient Home Improvement Credit (effective 2023-2032) covers 30% of heat pump installation cost up to $2,000, subject to income limits and primary-residence requirements. The credit applies to ENERGY STAR Most Efficient certified heat pumps including qualifying mini splits.
+
+Estimate your specific install with our [garage mini split cost calculator](/tools/garage-mini-split-cost-calculator/) using climate, garage size, insulation, and DIY-vs-pro preferences.
+
+</article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<Sources sources={SOURCES} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-18" />
+</div>
+
+</Container>
