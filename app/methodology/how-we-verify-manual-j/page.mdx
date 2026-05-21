@@ -397,7 +397,9 @@ What we commit to:
 
 The contact methodology is documented at [report an audit issue](/methodology/contact-an-audit/). Include: your inputs as entered, our calculator's output, what you expected and why, and any third-party calculator outputs you ran for comparison.
 
-This is the alternative to unverified claims. Published methodology + bug reporting + visible accountability > "trust us." We'd rather be visibly imperfect than pretend perfection we don't have.
+What counts as a verified bug: a documented case where our calculator produces a result that violates Manual J 8th Edition methodology, ASHRAE physics, or our published reference case behavior. Examples we've fixed in past changelog entries: incorrect orientation factor lookup for west-facing windows above 40° latitude, infiltration default applied twice in some configurations, and a rounding edge case that shifted attic R-value bins by one notch. Examples we'd consider methodology differences rather than bugs: different infiltration default than another calculator (both defensible under Manual J), different solar gain factor table for the same orientation (ASHRAE publishes multiple acceptable tables), or rounded final results.
+
+This is the alternative to unverified claims. Published methodology + bug reporting + visible accountability > "trust us." We'd rather be visibly imperfect than pretend perfection we don't have. Manual j calculator accuracy is a function of methodology consistency, input quality, and ongoing maintenance, and we publish at each of those layers.
 
 </article>
 
