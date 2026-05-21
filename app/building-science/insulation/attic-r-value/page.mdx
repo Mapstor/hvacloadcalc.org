@@ -1,0 +1,442 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { Sources } from '@/components/article/Sources';
+import { SourceCite } from '@/components/article/SourceCite';
+import { AuthorByline } from '@/components/article/AuthorByline';
+import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { HeroAtticRValueComparison } from '@/components/svg/attic-r-value/HeroAtticRValueComparison';
+import { RValueThicknessByMaterial } from '@/components/svg/attic-r-value/RValueThicknessByMaterial';
+import { DoeRValueZoneMap } from '@/components/svg/attic-r-value/DoeRValueZoneMap';
+import { MeasuringExistingRValue } from '@/components/svg/attic-r-value/MeasuringExistingRValue';
+import { AirLeakVsRValue } from '@/components/svg/attic-r-value/AirLeakVsRValue';
+import { InsulationUpgradeDecisionTree } from '@/components/svg/attic-r-value/InsulationUpgradeDecisionTree';
+
+export const metadata = {
+  title: 'Attic R-Value: Recommendations by Climate Zone and Why It Matters',
+  description:
+    "Recommended attic R-values range from R-30 in warm climates to R-60 in cold climates. Here's what the numbers mean and how to verify what you actually have.",
+  openGraph: {
+    title: 'Attic R-Value: Recommendations and How to Measure Yours',
+    description:
+      "Attic insulation is the highest-impact insulation upgrade in most homes. Here's how to know what you have and what you need.",
+    type: 'article',
+    publishedTime: '2026-05-18',
+    modifiedTime: '2026-05-18',
+    authors: ['Jonathan S.'],
+  },
+};
+
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'Building Science', url: '/building-science/' },
+  { name: 'Insulation', url: '/building-science/insulation/' },
+  { name: 'Attic R-Value' },
+];
+
+export const HEADINGS = [
+  { id: 'what-r-value-actually-is', text: 'What R-Value Actually Is', level: 2 },
+  { id: 'why-attic-r-value-matters-most', text: 'Why Attic R-Value Matters Most', level: 2 },
+  { id: 'how-attic-insulation-works', text: 'How Attic Insulation Works', level: 2 },
+  { id: 'recommended-r-values-by-climate-zone', text: 'Recommended R-Values by Climate Zone', level: 2 },
+  { id: 'insulation-types-and-their-r-values', text: 'Insulation Types and Their R-Values', level: 2 },
+  { id: 'how-to-measure-existing-attic-r-value', text: 'How to Measure Existing Attic R-Value', level: 2 },
+  { id: 'air-sealing-comes-first', text: 'Air Sealing Comes First', level: 2 },
+  { id: 'cost-and-payback', text: 'Cost and Payback', level: 2 },
+  { id: 'beyond-the-attic', text: 'Beyond the Attic', level: 2 },
+];
+
+export const SOURCES = [
+  {
+    id: 'doe-insulation-guide',
+    title: 'Insulation',
+    publisher: 'US Department of Energy, Energy Saver',
+    year: 2024,
+    url: 'https://www.energy.gov/energysaver/insulation',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'doe-insulation-zip',
+    title: 'Recommended Home Insulation R-Values',
+    publisher: 'US Department of Energy / ENERGY STAR',
+    year: 2024,
+    url: 'https://www.energystar.gov/saveathome/seal_insulate/identify-problems-you-want-fix/diy-checks-inspections/insulation-rvalue-recommendations',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'iecc-2021-r402',
+    title: 'International Energy Conservation Code 2021, Section R402',
+    publisher: 'International Code Council',
+    year: 2021,
+    url: 'https://codes.iccsafe.org/content/IECC2021P1/chapter-4-re-residential-energy-efficiency',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'astm-c518',
+    title: 'ASTM C518: Standard Test Method for Steady-State Thermal Transmission Properties by Means of the Heat Flow Meter Apparatus',
+    publisher: 'ASTM International',
+    year: 2021,
+    url: 'https://www.astm.org/c0518-21.html',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'ftc-r-value-rule',
+    title: 'Labeling and Advertising of Home Insulation (R-Value Rule), 16 CFR 460',
+    publisher: 'US Federal Trade Commission',
+    year: 2023,
+    url: 'https://www.ftc.gov/legal-library/browse/rules/labeling-advertising-home-insulation-r-value-rule',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'ornl-r-value-by-temperature',
+    title: 'Effect of Aging on Long-Term R-Value of Closed-Cell Spray Foam Insulation',
+    publisher: 'Oak Ridge National Laboratory',
+    year: 2021,
+    url: 'https://www.ornl.gov/division/buildings',
+    accessed: '2026-05-18',
+    tier: 2,
+  },
+  {
+    id: 'epa-energy-star-insulation',
+    title: 'Sealing and Insulating with ENERGY STAR',
+    publisher: 'US EPA / ENERGY STAR',
+    year: 2024,
+    url: 'https://www.energystar.gov/saveathome/seal_insulate',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'rdh-attic-air-sealing',
+    title: 'Air Sealing in Vented Attics',
+    publisher: 'RDH Building Science',
+    year: 2022,
+    url: 'https://www.rdh.com/',
+    accessed: '2026-05-18',
+    tier: 2,
+  },
+];
+
+export const FAQ_ITEMS = [
+  {
+    q: 'What R-value should my attic insulation be?',
+    a: 'DOE recommends R-30 to R-49 for warmer climates (zones 1-3) and R-49 to R-60 for cooler climates (zones 4-8) for existing homes. New construction code under 2021 IECC is R-49 or R-60 in most zones. The exact recommended value for your home depends on your climate zone, current insulation level, and energy goals.',
+  },
+  {
+    q: 'How thick is R-38 attic insulation?',
+    a: "Depends on the material. R-38 in fiberglass batts is about 10.5 inches thick. R-38 in loose-fill fiberglass is about 16.5 inches. R-38 in cellulose is about 10.5 inches. R-38 in closed-cell spray foam is about 5.5 inches. R-38 in open-cell spray foam is about 10.5 inches. Always verify with the product's labeled R-value per inch.",
+  },
+  {
+    q: 'How do I measure my existing attic R-value?',
+    a: 'Three steps: (1) Measure the depth of insulation in inches with a tape measure or ruler. Take multiple measurements; settled or compressed areas read lower. (2) Identify the insulation type by appearance (fiberglass batts pink/yellow, loose fiberglass white, cellulose gray-brown, spray foam yellow/peach). (3) Multiply depth by the R-value per inch for that type (fiberglass batt ~3.0/in, loose fiberglass ~2.3/in, cellulose ~3.6/in, open-cell foam ~3.6/in, closed-cell foam ~6.5/in).',
+  },
+  {
+    q: 'Is R-30 enough attic insulation?',
+    a: "R-30 is the lower end of DOE's recommendation for the warmest US climates (zones 1-2). For zone 3 and above, R-30 is below recommended. For new construction, 2021 IECC requires R-49 in zones 2-4 and R-60 in zones 5-8. Whether R-30 is enough for an existing home depends on climate, fuel cost, and your goals.",
+  },
+  {
+    q: 'Should I add more insulation on top of what I have?',
+    a: "Usually yes. Adding insulation on top of existing insulation (called topping off) is cost-effective if the existing insulation is in good condition and the attic is air-sealed. Two cautions: (1) ensure the existing insulation isn't wet, moldy, or compressed (which would warrant removal); (2) air seal first because adding insulation over leaky areas wastes money. The new layer's R-value adds to the existing layer's R-value.",
+  },
+  {
+    q: "What's better for attic insulation: fiberglass or cellulose?",
+    a: "Both work well when installed correctly. Cellulose is denser (R-3.6/in vs R-2.3/in for loose fiberglass), settles less in the long run, and resists air movement slightly better. Fiberglass is lighter, doesn't absorb water (cellulose does, though it dries out), and is cheaper per inch. For most attic retrofits, cellulose performs slightly better in real-world conditions. For batts between joists, fiberglass is more common.",
+  },
+  {
+    q: 'Does spray foam in the attic eliminate the need for venting?',
+    a: 'It can, when the spray foam is applied to the underside of the roof deck instead of the attic floor. This creates an unvented or conditioned attic, where the attic becomes part of the conditioned space rather than vented to outdoors. This approach has design considerations (HVAC equipment must be appropriate for the new conditioned space, moisture handling matters, building code varies by jurisdiction). It is a different strategy than topping off existing insulation on the attic floor.',
+  },
+  {
+    q: 'What is R-value, exactly?',
+    a: "R-value is a material's resistance to conductive heat flow, measured in (ft²·°F·h)/BTU in the US. Higher R-value means more resistance, less heat flow. A material's R-value depends on its conductive properties, density, and thickness. R-value is tested under ASTM C518 and labeled per FTC R-Value Rule (16 CFR 460). It does not account for air leakage or radiant heat transfer separately, which is why air sealing is critical.",
+  },
+  {
+    q: 'Does insulation R-value decrease over time?',
+    a: 'Most insulation types maintain rated R-value indefinitely if kept dry and undisturbed. Two exceptions: (1) Closed-cell spray foam gradually loses some R-value over years as blowing agents diffuse out (rated R-value typically accounts for this; aged R-value is what is labeled). (2) Any insulation that gets wet loses R-value temporarily; fiberglass and mineral wool recover; cellulose can recover but is more vulnerable to mold. Settling is a separate issue: loose-fill insulation can settle 5-20% over time, reducing thickness and thus R-value.',
+  },
+  {
+    q: 'Is more insulation always better?',
+    a: "Up to a point, yes, but there's a diminishing-returns curve. Each additional R-unit saves less energy than the previous one (going from R-19 to R-38 saves a lot; going from R-49 to R-60 saves less). Most homes hit the cost-effectiveness threshold somewhere between R-38 and R-60 depending on climate, fuel cost, and labor cost. Beyond a certain R-value, the marginal cost exceeds the marginal savings, and money is better spent on windows, air sealing, or other envelope upgrades.",
+  },
+];
+
+export const RELATED = [
+  {
+    title: 'Manual J load calculation',
+    url: '/manual-j/',
+    description: 'Attic R-value is a primary input to the building heat-loss calculation that drives HVAC sizing.',
+  },
+  {
+    title: 'Heat pump sizing',
+    url: '/heat-pump/sizing/',
+    description: 'Better attic insulation cuts the design heating load and changes the right equipment size.',
+  },
+  {
+    title: 'Manual J cornerstone',
+    url: '/manual-j/',
+    description: 'The full load-calculation methodology used to design HVAC systems.',
+  },
+];
+
+export const FRONTMATTER = {
+  title: 'Attic R-Value: Recommendations by Climate Zone and Why It Matters',
+  h1: 'Attic R-Value Explained',
+  meta_description:
+    "Recommended attic R-values range from R-30 in warm climates to R-60 in cold climates. Here's what the numbers mean and how to verify what you actually have.",
+  url: '/building-science/insulation/attic-r-value/',
+  date_published: '2026-05-18',
+  last_reviewed: '2026-05-18',
+  target_keyword: 'attic r value',
+  secondary_keywords: ['attic insulation r value', 'recommended attic r value', 'iecc attic r value', 'r value by climate zone'],
+  sources: SOURCES,
+  faq: FAQ_ITEMS,
+  parent_title: 'Building Science',
+};
+
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={2700} />
+
+<JsonLdBreadcrumb items={BREADCRUMBS} />
+
+<Container>
+
+<Breadcrumbs items={BREADCRUMBS} />
+
+<HeroAtticRValueComparison />
+
+<ArticleHeader
+  h1="Attic R-Value Explained"
+  description="Recommended attic R-values range from R-30 in warm climates to R-60 in cold climates. Here's what the numbers mean and how to verify what you actually have."
+  datePublished="2026-05-18"
+  lastReviewed="2026-05-18"
+  readingTimeMinutes={11}
+/>
+
+<KeyTakeaways
+  items={[
+    'DOE recommends attic R-values from R-30 to R-49 in warm climates (zones 1-3) and R-49 to R-60 in cooler climates (zones 4-8). 2021 IECC code minimums are R-30 (zone 1), R-49 (zones 2-4), and R-60 (zones 5-8).',
+    'Existing R-value = depth in inches × R-per-inch for the material type. Cellulose is R-3.6/in, loose-fill fiberglass R-2.3/in, closed-cell spray foam R-6.5/in.',
+    'Air sealing comes before adding insulation. R-49 with air leaks performs like R-20 to R-30. Caulk, foam, and gaskets are cheap relative to insulation cost.',
+    'Below R-19, upgrading almost always pays back in 3-7 years. Above R-38, marginal returns drop sharply except in cold climates or with broader envelope work.',
+    'R-value testing follows ASTM C518; labeling is regulated under the FTC R-Value Rule (16 CFR 460), so the product label is trustworthy.',
+  ]}
+/>
+
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
+
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+Attic insulation is the most cost-effective insulation upgrade in most American homes. The reasons are simple: the attic is the top of your envelope, heat rises, and the area is large and accessible. Adding insulation to attic floors typically costs less per square foot than any other envelope improvement and saves more energy per dollar spent.
+
+R-value is how we measure insulation's resistance to heat flow. Higher R-value means less heat loss. The Department of Energy recommends attic R-values ranging from R-30 in the warmest US climates to R-60 in the coldest. But the number alone doesn't tell you anything useful without knowing your current R-value, your climate zone, and whether your attic is actually air-sealed.
+
+This article covers what R-value is, how to measure what you already have, what's recommended where, which insulation types make sense in which situations, and why air sealing matters at least as much as adding more insulation on top. For broader context, the [insulation fundamentals](/building-science/insulation/) hub covers the rest of the envelope.
+
+## What R-Value Actually Is
+
+R-value measures a material's resistance to conductive heat flow.<SourceCite id="doe-insulation-guide" number={1} /> In US units it carries the formula R = ΔT × A × hr / Q, expressed as (ft²·°F·h)/BTU. In SI units, R-value is expressed as (m²·K)/W, often called RSI. The conversion: a US R-30 attic insulation equals SI RSI-5.3.
+
+Higher R-value means more resistance to heat flow and less heat loss for a given temperature difference. R-value also adds linearly when layers are stacked. Two R-19 batts laid on top of each other deliver R-38 (assuming both are installed without gaps and without compression).
+
+R-value testing follows ASTM C518, the steady-state heat-flow-meter method that the entire industry uses for comparable measurements.<SourceCite id="astm-c518" number={4} /> Labels are regulated under the [FTC R-Value Rule (16 CFR 460)](https://www.ftc.gov/legal-library/browse/rules/labeling-advertising-home-insulation-r-value-rule), which requires manufacturers to publish accurate, comparable R-values per inch and per package on every product sold in the US.<SourceCite id="ftc-r-value-rule" number={5} /> You can trust insulation labels because they are federally regulated.
+
+A distinction worth making once: R-value is a material property. U-factor (the closely related metric used for windows) is the inverse (U = 1/R) and applies to a whole assembly. For [window U-factor (R-value's cousin)](/building-science/windows/u-factor/), the dedicated article covers the difference and how to read window labels.
+
+R-value of attic insulation does not account for air leakage. Two attics with identical R-49 insulation can perform very differently if one is well air-sealed and the other is not. Section 7 covers this in detail.
+
+## Why Attic R-Value Matters Most
+
+Heat rises. The attic is the top of the building envelope and (in single-story and most two-story homes) the largest single surface separating conditioned space from the outside. In a typical 2,000 sq ft single-story home, the ceiling represents 2,000 square feet of envelope. Walls add up to about 1,400 square feet net of windows, and windows about 200-300 square feet. Pound for pound, ceiling losses dominate.
+
+Ceiling heat loss runs 15-30% of total winter heat loss in most US homes, with the higher end in poorly insulated older houses. The percentage is high not because attic insulation is bad but because the area is large. Upgrading attic insulation from R-19 to R-49 cuts that ceiling heat loss fraction roughly in half. The same investment in wall insulation (much harder to retrofit) often costs 3-5× per square foot.
+
+Manual J load calculations explicitly use attic R-value as a heat-loss-and-gain input.<SourceCite id="doe-insulation-guide" number={1} /> For [how home heat loss works](/building-science/heat-loss/) at the whole-envelope scale, the dedicated article walks through the math. For sizing implications, [Manual J load calculation](/manual-j/) covers the methodology, and our [Manual J-style load calculator](/tools/manual-j-calculator/) factors attic R-value into the heat loss equation.
+
+Ducted HVAC systems with ductwork in the attic compound the importance. If your duct system runs through unconditioned attic space, duct losses add to ceiling losses. Insulating the attic floor improves both (because duct losses go to the attic, and a colder/warmer attic worsens duct conditions). [Heat pump sizing considerations](/heat-pump/sizing/) interact directly: a properly insulated attic reduces design loads, which changes which heat pump size is correct.
+
+The cost-effectiveness argument is straightforward. Square foot for square foot, attic insulation is the cheapest envelope upgrade. Existing access (just a hatch or pull-down stair), no aesthetic disruption (you don't see it), and minimal interference with daily life (a day's work, sometimes less). Wall insulation often requires removing drywall or drilling holes for blown-in fill. Window upgrades disrupt the building's appearance and are expensive per square foot.
+
+## How Attic Insulation Works
+
+All insulation traps air or low-conductivity gas in tiny pockets. Still air is a poor thermal conductor. The more air the insulation can trap, and the more it can prevent that trapped air from circulating, the higher the R-value.
+
+Different insulation types use different physical mechanisms:
+
+- **Fiberglass and mineral wool**: thin glass or mineral fibers create a tangled web with millions of small air spaces. Air is trapped between the fibers, not in sealed cells.
+- **Cellulose**: shredded recycled paper (typically newsprint) treated with borate fire retardant, packed densely enough to limit air movement within the material.
+- **Open-cell spray foam**: a soft foam matrix with interconnected cells; the cells contain air.
+- **Closed-cell spray foam**: a rigid foam with sealed cells; the cells contain low-conductivity blowing agent gas (typically a hydrofluorocarbon).
+- **Rigid foam boards** (polyiso, XPS, EPS): closed-cell foams with sealed cells containing trapped gas.
+
+R-value rates the resistance of any of these mechanisms equally. The ASTM C518 test method measures heat flow under a controlled temperature gradient; it doesn't care whether the air is in fibers, paper, foam cells, or any other matrix.
+
+The labeled R-value reflects the material in its installed condition. Compression reduces R-value because it squeezes the trapped air out. Settling does the same to loose-fill products over time. Closed-cell foam and polyiso labels use the "aged" R-value, since the blowing agents slowly diffuse out and the initial higher R-value isn't maintained.<SourceCite id="ornl-r-value-by-temperature" number={6} />
+
+## Recommended R-Values by Climate Zone
+
+What R-value for attic? It depends on your climate zone and what's already there. DOE publishes recommendations by IECC climate zone for existing homes, and IECC publishes code minimums for new construction.<SourceCite id="doe-insulation-zip" number={2} /><SourceCite id="iecc-2021-r402" number={3} /> See the [DOE insulation guide](https://www.energy.gov/energysaver/insulation) and [ENERGY STAR R-value recommendations](https://www.energystar.gov/saveathome/seal_insulate/identify-problems-you-want-fix/diy-checks-inspections/insulation-rvalue-recommendations) for the authoritative tables.
+
+<DoeRValueZoneMap />
+
+The attic R-value chart, by zone:
+
+| Zone | DOE recommended (existing) | IECC 2021 code minimum (new) | Typical location |
+|---|---|---|---|
+| 1 | R-30 to R-49 | R-30 | South FL, Hawaii |
+| 2 | R-30 to R-60 | R-49 | Gulf Coast, lower south |
+| 3 | R-30 to R-60 | R-49 | Mid-south, parts of CA |
+| 4 | R-38 to R-60 | R-49 | Mid-Atlantic, Ohio Valley |
+| 5 | R-49 to R-60 | R-60 | Northern states, mountain west |
+| 6 | R-49 to R-60 | R-60 | Northern Midwest, NE, Rockies |
+| 7-8 | R-49 to R-60 | R-60 | Northern MN, Alaska |
+
+Some specifics:
+- R-30 attic insulation is the lower bound for zone 1 (south Florida, Hawaii) and the lower end of the DOE recommendation for zones 2-3. Below R-30 is below recommended in any climate zone.
+- R-38 attic insulation was the common pre-2021 IECC requirement for zones 2-4 and represents a reasonable floor for moderate climates.
+- R-49 attic insulation is the most common current IECC code minimum (zones 2-8 under 2021 IECC) and the lower end of DOE recommendation for cooler zones.
+- R-60 attic insulation is required by 2021 IECC in zones 5-8 (new construction) and is the upper recommendation across most zones.
+
+The IECC attic R-value requirements apply to new construction and most additions. Existing homes are typically grandfathered to the code in effect when built. Many jurisdictions amend IECC; check with your local building department. Department of energy attic insulation guidance treats the IECC code minimum as a floor and the DOE upper range as a target for cost-effectiveness.
+
+Wall R-value differs from attic. [Wall R-value recommendations](/building-science/insulation/wall-r-value/) typically range R-13 to R-21 in modern construction, reflecting both code minimums and the practical limit of 2x6 stud walls. The full per-state breakdown of [attic R-value by US climate zone](/building-science/insulation/attic-r-value/by-zone/) covers local code amendments and regional norms.
+
+## Insulation Types and Their R-Values
+
+Major attic insulation types and their R-per-inch:
+
+| Type | R per inch | Notes |
+|---|---|---|
+| Fiberglass batt | 3.0-3.5 | Pre-cut for between joists |
+| Loose-fill fiberglass | 2.3-2.7 | Blown in; may settle |
+| Loose-fill cellulose | 3.5-3.7 | Blown in; dense |
+| Mineral wool batt | 3.3-4.0 | Denser than fiberglass |
+| Open-cell spray foam | 3.5-3.7 | Sprayed; also air-seals |
+| Closed-cell spray foam | 6.0-7.0 | Aged value; highest R/in |
+| Polyiso rigid foam | 6.0-6.5 | Aged; for rafter/cathedral |
+| XPS rigid foam | 5.0 | For rim joists, basements |
+| EPS rigid foam | 3.8-4.2 | Cheapest rigid foam |
+
+<RValueThicknessByMaterial />
+
+How thick attic insulation R-38 requires depends on the type. R-38 in fiberglass batt = 10.5 inches. R-38 in loose-fill fiberglass = 16.5 inches. R-38 in cellulose = 10.5 inches. R-38 in closed-cell spray foam = 5.5 inches.
+
+Blown in attic insulation R-value depends on settled density. Loose-fill cellulose at typical blown density delivers ~R-3.6 per inch immediately and settles 5-20% over the first few years, reducing both depth and R-value. Loose-fill fiberglass settles less but starts at a lower R-per-inch (~R-2.3). For long-term performance, cellulose typically outperforms loose-fill fiberglass by 20-30%.
+
+Spray foam attic R-value (closed-cell at R-6.5/in) is the highest R-per-inch widely available. Open-cell foam delivers R-3.6/in, comparable to cellulose. Both also air-seal, which can be more valuable than the raw R-value in many attics. Closed-cell foam costs $3-7 per square foot installed; open-cell runs $1.50-3.50.
+
+Fiberglass vs cellulose attic choice: both work when installed correctly. Cellulose is denser, resists air movement somewhat better, and gives more R-per-inch. Fiberglass is lighter, doesn't absorb water (cellulose absorbs and dries; it's safe but more vulnerable to extended wet conditions), and is cheaper per inch. For most retrofits, cellulose performs slightly better in real-world conditions; for between-joist batts, fiberglass dominates by availability.
+
+For the full [fiberglass vs cellulose attic insulation](/building-science/insulation/types/fiberglass-vs-cellulose/) comparison, the dedicated article covers cost, performance, and installation differences. [Spray foam attic insulation](/building-science/insulation/types/spray-foam-attic/) has its own design considerations (unvented vs vented assemblies, moisture handling). [Blown-in cellulose specifications](/building-science/insulation/types/blown-in-cellulose/) cover density, R-per-inch by depth, and installation practices.
+
+## How to Measure Existing Attic R-Value
+
+How to measure attic R-value comes down to three steps: measure depth, identify type, multiply.<SourceCite id="doe-insulation-zip" number={2} />
+
+<MeasuringExistingRValue />
+
+**Step 1: Measure depth.** Take a tape measure or yardstick into the attic. Insert it vertically into the insulation until it touches the ceiling drywall or top of joist. Note the depth in inches. Measure at multiple spots; coverage and settling cause significant variation in real attics. Note both the minimum and a typical value.
+
+**Step 2: Identify type.** Look at color and texture:
+- Pink, yellow, or white fluffy batts between joists: fiberglass batt
+- White to pale yellow loose fill: loose-fill fiberglass
+- Gray-brown loose fill (looks like newspaper bits): cellulose
+- Yellow or peach surface covering the floor or roof deck: spray foam
+- Stone-gray dense batts: mineral wool
+
+**Step 3: Multiply.** Depth × R-per-inch = R-value. Sample calculation: 12 inches of loose-fill cellulose × R-3.6/in = R-43. Our [attic R-value calculator](/tools/attic-r-value-calculator/) runs this calculation for you and handles mixed materials.
+
+Common pitfalls:
+- Only insulation depth counts; the joist height below the insulation contributes some R-value but is not the labeled value
+- Compressed insulation (e.g., where someone walked on batts) is worth less than the nominal R-value; compression reduces R-value proportionally
+- Wet insulation is worth approximately zero until dried out; fiberglass and mineral wool recover, cellulose mostly recovers
+- Areas with no insulation (uncovered penetrations, gaps along eaves) count as R-0 and create thermal bridges
+- Settling reduces loose-fill depth 5-20% over years; measure the current depth, not what the contractor reported
+
+For the full DIY procedure with attic safety considerations, see [how to measure existing attic insulation](/building-science/insulation/attic-r-value/measurement/) in the dedicated guide.
+
+## Air Sealing Comes First
+
+Insulation slows conductive heat flow. It does not stop air movement. If your attic has unsealed penetrations — recessed lights, plumbing chases, top plates, the attic hatch — warm air escapes through those holes and cold air enters through other ones, and the R-49 insulation you just paid for sits there watching it happen. Field studies routinely find that attics with code-level insulation but no specific air sealing perform like attics with 50-70% of the rated R-value.<SourceCite id="rdh-attic-air-sealing" number={8} /> The fix is cheap (caulk, foam, gasket) and almost always more cost-effective than adding more insulation on top of a leaky attic.
+
+<AirLeakVsRValue />
+
+The physics: warm air rises in winter (the stack effect). Rising warm air creates negative pressure at the floor level, pulling cold air in through windows, doors, and other low penetrations. The cycle pulls heat out of the home regardless of how thick the insulation is. Insulation slows conduction but does nothing for convection through holes.
+
+The common attic air leak paths:
+- **Recessed light fixtures** (especially non-airtight "can lights"): each fixture is a 4-6 inch hole in the ceiling, often with mechanical ventilation through the housing
+- **Plumbing penetrations**: pipes through the top plate or ceiling create gaps
+- **Top plates of interior walls**: the gap between the top of the wall framing and the drywall (often a continuous 1/4-1/2 inch crack along every interior wall)
+- **Attic access hatch**: typically uninsulated and ungasketted; substantial air leak
+- **Ductwork seams**: when ductwork runs through the attic, leaky joints leak conditioned air directly into the attic
+- **Bath fans and dryer vents**: intended to vent outside but often vent into the attic or leak around the duct
+
+Air sealing methods range from cheap to moderately expensive:
+- **Caulk**: for gaps under 1/4 inch
+- **Spray foam (can)**: for gaps 1/4 to 2 inches
+- **Rigid air dam + foam**: for larger penetrations (chimneys, large ducts)
+- **Airtight recessed light retrofits**: replacement housings or covers that block airflow
+- **Gasket + insulation**: for attic hatches
+
+Air sealing should happen before insulation, period. Adding loose-fill on top of unsealed penetrations buries the problem without solving it. ENERGY STAR's [Sealing and Insulating with ENERGY STAR](https://www.energystar.gov/saveathome/seal_insulate) program emphasizes air sealing as the first step in any envelope upgrade.<SourceCite id="epa-energy-star-insulation" number={7} /> For the full air-sealing procedure, see [air sealing before insulation](/building-science/insulation/air-sealing/) in detail.
+
+## Cost and Payback
+
+Typical 2024 US labor + material costs for blown-in cellulose attic insulation (the most common upgrade) run $1.50-3.00 per square foot for a moderate increase (e.g., bringing an R-19 attic up to R-49). Spray foam runs significantly more ($3-7 per square foot installed) but adds air sealing and higher R-per-inch in the same depth. Fiberglass batts installed between joists cost $0.80-1.50 per square foot if accessible.
+
+DIY labor savings on loose-fill cellulose: most big-box stores rent the blower for free with bag purchase, dropping the cost to $0.60-1.20 per square foot. Fiberglass batt DIY runs $0.40-0.80 per square foot in materials alone. Spray foam is almost always professional installation; it requires specialized equipment, PPE, and code-compliant application.
+
+<InsulationUpgradeDecisionTree />
+
+Payback ranges by current R-value:
+- Below R-19: 3-7 years (HIGH PRIORITY)
+- R-19 to R-30: 5-10 years (MODERATE)
+- R-30 to R-38: 8-15 years (WORTH CONSIDERING if climate zone 5+, attic ductwork, or other comfort issues)
+- R-38 or higher: below typical payback threshold
+
+These ranges assume 2024 US average electricity rates and natural gas heating. Real payback varies by climate, fuel cost, and local labor cost. Cold-climate homes with electric resistance heat see shorter paybacks because the fuel cost per BTU is higher. Mild-climate homes with cheap natural gas see longer paybacks.
+
+Federal tax credits and utility rebates further shorten payback. The 25C Energy Efficient Home Improvement Credit (federal) covers up to 30% of qualified envelope improvements through 2032, capped at $1,200/year. Many state and utility programs add rebates ranging from $500-2,000 per attic insulation project.
+
+For your specific home, try our [insulation upgrade payback calculator](/tools/insulation-payback-calculator/) with climate, fuel cost, and current R-value inputs.
+
+## Beyond the Attic
+
+The attic is the most cost-effective insulation upgrade, but it's not the only insulation in your home. The envelope is only as strong as its weakest link. After the attic is taken care of (sealed and insulated to climate zone recommendations), the next priorities, in roughly cost-effectiveness order:
+
+- **Air sealing the rest of the envelope** (basement rim joists, exterior penetrations, around windows and doors)
+- **Wall insulation**: typically R-13 to R-21 in stud walls, much harder to retrofit than attic (drilling holes for blown-in fill, or removing drywall)
+- **Basement and crawlspace**: floor or wall insulation, depends on whether basement is conditioned
+- **Slab edge / perimeter**: rim joist and slab edge insulation reduce a surprisingly large heat loss path
+- **Windows**: high U-factor windows leak significant heat; replacement is expensive but sometimes worthwhile for whole-house comfort
+
+The attic r value vs wall r value comparison: attic R-49 to R-60 is much higher than wall R-13 to R-21 because attics are easier to insulate deeply, and because heat loss through walls is partly mitigated by the lower temperature differential (interior walls share temperature with adjacent rooms; only exterior walls face full outdoor temperature).
+
+For [wall R-value recommendations](/building-science/insulation/wall-r-value/) by climate zone and the practical limits of retrofitting walls, see the dedicated article. [Basement and slab R-value](/building-science/insulation/basement-r-value/) rounds out the envelope from below.
+
+</article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<Sources sources={SOURCES} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-18" />
+</div>
+
+</Container>
