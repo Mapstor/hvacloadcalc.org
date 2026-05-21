@@ -1,0 +1,360 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { Sources } from '@/components/article/Sources';
+import { SourceCite } from '@/components/article/SourceCite';
+import { AuthorByline } from '@/components/article/AuthorByline';
+import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { HeroThermostatAuxHeatDisplay } from '@/components/svg/aux-heat-meaning/HeroThermostatAuxHeatDisplay';
+import { AuxHeatWhenItFires } from '@/components/svg/aux-heat-meaning/AuxHeatWhenItFires';
+import { AuxHeatCostVsHeatPump } from '@/components/svg/aux-heat-meaning/AuxHeatCostVsHeatPump';
+import { AuxVsEmergencyComparison } from '@/components/svg/aux-heat-meaning/AuxVsEmergencyComparison';
+import { AuxHeatTroubleshootDecision } from '@/components/svg/aux-heat-meaning/AuxHeatTroubleshootDecision';
+import { AuxHeatByThermostatBrand } from '@/components/svg/aux-heat-meaning/AuxHeatByThermostatBrand';
+
+export const metadata = {
+  title: 'What Does Aux Heat Mean on My Thermostat? Clear Answer',
+  description:
+    "Aux heat (auxiliary heat) on a thermostat means electric resistance backup heat is running to supplement the heat pump. Here's exactly what it means and when it's normal.",
+  openGraph: {
+    title: 'What Does Aux Heat Mean? Thermostat Display Explained',
+    description:
+      "Aux heat appearing on your thermostat isn't a malfunction. Here's what it means, when it should appear, and when it indicates a problem.",
+    type: 'article',
+    publishedTime: '2026-05-18',
+    modifiedTime: '2026-05-18',
+    authors: ['Jonathan S.'],
+  },
+};
+
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'Heat Pump', url: '/heat-pump/' },
+  { name: 'Aux Heat', url: '/heat-pump/aux-heat/' },
+  { name: 'Aux Heat Meaning' },
+];
+
+export const HEADINGS = [
+  { id: 'what-aux-heat-is-direct-answer', text: 'What Aux Heat Is (Direct Answer)', level: 2 },
+  { id: 'when-aux-heat-fires', text: 'When Aux Heat Fires', level: 2 },
+  { id: 'what-you-see-on-the-display', text: 'What You See on the Display', level: 2 },
+  { id: 'how-much-does-aux-heat-cost', text: 'How Much Does Aux Heat Cost?', level: 2 },
+  { id: 'is-aux-heat-a-problem', text: 'Is Aux Heat a Problem?', level: 2 },
+  { id: 'aux-heat-vs-emergency-heat', text: 'Aux Heat vs Emergency Heat', level: 2 },
+  { id: 'when-to-worry-and-what-to-do', text: 'When to Worry and What to Do', level: 2 },
+];
+
+export const SOURCES = [
+  {
+    id: 'doe-heat-pump-systems',
+    title: 'Heat Pump Systems',
+    publisher: 'US Department of Energy, Energy Saver',
+    year: 2024,
+    url: 'https://www.energy.gov/energysaver/heat-pump-systems',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'ahri-210-240',
+    title: 'ANSI/AHRI Standard 210/240-2023',
+    publisher: 'Air-Conditioning, Heating and Refrigeration Institute',
+    year: 2023,
+    url: 'https://www.ahrinet.org/search-standards/ahri-210240-2023-performance-rating-unitary-air-conditioning-air-source-heat-pump',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'nrel-cold-climate-heat-pump',
+    title: 'Cold-Climate Air-Source Heat Pump Performance',
+    publisher: 'US National Renewable Energy Laboratory',
+    year: 2022,
+    url: 'https://www.nrel.gov/buildings/cold-climate-heat-pumps.html',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'energystar-heat-pump-thermostats',
+    title: 'ENERGY STAR Smart Thermostat Guidance for Heat Pumps',
+    publisher: 'US EPA / ENERGY STAR',
+    year: 2024,
+    url: 'https://www.energystar.gov/products/heating_cooling/smart_thermostats',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+];
+
+export const FAQ_ITEMS = [
+  {
+    q: 'What does aux heat mean on a thermostat?',
+    a: "Aux heat (short for auxiliary heat) means electric resistance backup heat is running to supplement your heat pump. It typically fires when outdoor temperatures fall below the heat pump's balance point, during defrost cycles, or when the thermostat is recovering from a setback. It's normal operation in cold weather, not a malfunction.",
+  },
+  {
+    q: 'Is aux heat the same as emergency heat?',
+    a: 'No. Aux heat is automatic and runs alongside the heat pump as a helper. Emergency heat is manually selected and shuts off the heat pump entirely, leaving only the electric resistance strips to heat your home. Aux heat is for normal cold weather; emergency heat is for when the heat pump has failed or in extreme conditions.',
+  },
+  {
+    q: "Why is aux heat on when it's not that cold outside?",
+    a: 'Common reasons: (1) thermostat is recovering from a setback (you raised the temperature 3°F or more, and the system is using aux to catch up faster); (2) a heat pump defrost cycle is in progress (aux runs briefly to maintain comfort while the outdoor coil melts ice); (3) thermostat is misconfigured (aux threshold set too aggressively); (4) the heat pump itself is struggling (low refrigerant, dirty coil, undersized).',
+  },
+  {
+    q: 'Is aux heat expensive?',
+    a: "Yes, relatively. Aux heat is electric resistance heating with COP = 1 — every watt of electricity becomes one watt of heat. The heat pump operates at COP 2-4 in heating mode, so the same heat costs 2-4x less. Brief aux heat during defrost or cold snaps is fine; constant aux heat indicates a problem that's costing real money.",
+  },
+  {
+    q: 'Should aux heat always be on in winter?',
+    a: "No. Aux heat should fire only when the heat pump can't keep up alone, typically below the balance point (around 25-35°F for standard heat pumps, lower for cold-climate models). If aux is on continuously even in mild winter weather (above 40°F), the system is misconfigured or the heat pump is failing.",
+  },
+  {
+    q: 'How do I know if aux heat is on?',
+    a: "Look at your thermostat display. Most smart thermostats show an Aux Heat, Auxiliary Heat, or AUX indicator when aux is active. Many also show this in their mobile app's history or energy reports. Older thermostats may just show a light or small icon. If you have an electric meter, you can also tell by the spike in usage when aux fires (3-10x higher than heat pump alone).",
+  },
+  {
+    q: 'Will aux heat damage my heat pump?',
+    a: "No. Aux heat is part of the system design and is intended to help during cold weather. It doesn't damage the heat pump in any way. The cost (electricity) is the only downside of running aux. Damage concerns come from running the heat pump in cold weather without aux backup (compressor can be stressed), not from running aux itself.",
+  },
+  {
+    q: 'Can I turn aux heat off completely?',
+    a: "You can on most thermostats, but it's usually a bad idea. Aux heat is there as protection: if your heat pump fails, gets restricted, or just can't keep up on a record cold day, aux heat prevents your home from freezing. Some smart thermostats offer heat-pump-only or no-aux modes for energy savings, but they usually allow aux for emergencies. Verify your specific thermostat's behavior before disabling.",
+  },
+  {
+    q: "Why is aux heat called 'auxiliary' or 'second stage'?",
+    a: "The terms refer to the same thing. Auxiliary emphasizes the helper role. Second stage or Stage 2 heat emphasizes the staging order: the heat pump is stage 1, aux is stage 2. Some thermostats use one term, some the other, some both. Same hardware (electric resistance strips downstream of the indoor coil), same function.",
+  },
+  {
+    q: 'Is my thermostat showing aux heat because the heat pump is broken?',
+    a: "Not necessarily. Aux heat firing is normal in cold weather and during defrost. It could indicate a problem if: (1) aux is on continuously in warm winter weather, (2) the outdoor unit isn't running at all when aux is on (and you're not in emergency heat mode), (3) the heat pump runs but aux always fires alongside even in mild weather. Use the troubleshooting decision tree in the article to diagnose.",
+  },
+];
+
+export const RELATED = [
+  {
+    title: 'Auxiliary heat (full hub)',
+    url: '/heat-pump/aux-heat/',
+    description: 'The comprehensive aux heat article covering sizing, electrical, and operating cost in depth.',
+  },
+  {
+    title: 'Heat pump defrost cycle',
+    url: '/heat-pump/cold-climate/defrost-cycle/',
+    description: 'Aux heat fires during defrost; this article explains the defrost mechanism itself.',
+  },
+  {
+    title: 'Heat pump sizing',
+    url: '/heat-pump/sizing/',
+    description: 'Undersized heat pumps trigger aux heat more often. This article covers sizing.',
+  },
+];
+
+export const FRONTMATTER = {
+  title: 'What Does Aux Heat Mean on My Thermostat? Clear Answer',
+  h1: 'What Aux Heat Means on Your Thermostat',
+  meta_description:
+    "Aux heat (auxiliary heat) on a thermostat means electric resistance backup heat is running to supplement the heat pump. Here's exactly what it means and when it's normal.",
+  url: '/heat-pump/aux-heat/meaning/',
+  date_published: '2026-05-18',
+  last_reviewed: '2026-05-18',
+  target_keyword: 'aux heat meaning',
+  secondary_keywords: ['what does aux heat mean', 'aux heat on thermostat', 'aux vs emergency heat'],
+  sources: SOURCES,
+  faq: FAQ_ITEMS,
+  parent_title: 'Heat Pump',
+};
+
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={2000} />
+
+<JsonLdBreadcrumb items={BREADCRUMBS} />
+
+<Container>
+
+<Breadcrumbs items={BREADCRUMBS} />
+
+<HeroThermostatAuxHeatDisplay />
+
+<ArticleHeader
+  h1="What Aux Heat Means on Your Thermostat"
+  description="Aux heat (auxiliary heat) on a thermostat means electric resistance backup heat is running to supplement the heat pump. Here's exactly what it means and when it's normal."
+  datePublished="2026-05-18"
+  lastReviewed="2026-05-18"
+  readingTimeMinutes={9}
+/>
+
+<KeyTakeaways
+  items={[
+    'Aux heat = auxiliary heat = electric resistance backup heat that runs alongside the heat pump. It is normal operation, not a malfunction.',
+    'Fires when: outdoor temperature is below the heat pump balance point (typically 25-35°F), during defrost cycles, or when recovering from a thermostat setback.',
+    'Aux heat costs 2-4× more per BTU than the heat pump (COP 1.0 vs 2-4). Brief aux is fine; constant aux is expensive.',
+    'Aux heat (automatic, helper) is different from Emergency Heat (manual, replaces the heat pump). Same hardware, different control logic.',
+    "Indicates a problem only if: aux runs continuously in mild winter weather, the heat pump isn't running and you're not in Em Heat mode, or aux always fires alongside the heat pump in mild conditions.",
+  ]}
+/>
+
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
+
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+Aux heat on your thermostat means auxiliary heat — electric resistance backup heat that supplements your heat pump. When you see "Aux Heat," "Auxiliary Heat," "AUX," or "Stage 2 Heat" on your thermostat, it means electric strip heaters are running alongside the heat pump to help warm your home.
+
+This is normal. It happens when the outdoor temperature falls below your heat pump's capability, during defrost cycles, or when you raise the setpoint and the system is catching up. Heat pumps in the US are almost always installed with electric resistance backup heat specifically for these situations.
+
+This article explains exactly when aux heat is supposed to fire, how to recognize it on your specific thermostat, what it costs to run, when it indicates a problem, and how it differs from emergency heat. For the full background, see [auxiliary heat in heat pumps](/heat-pump/aux-heat/) for the comprehensive treatment.
+
+## What Aux Heat Is (Direct Answer)
+
+What does aux heat mean on a thermostat: aux heat is electric resistance backup heat, installed downstream of the heat pump's indoor coil, that runs alongside the heat pump when it can't fully keep up with heating demand. What does auxiliary heat mean is the same thing: aux is short for auxiliary.<SourceCite id="doe-heat-pump-systems" number={1} /> See [DOE heat pump systems guide](https://www.energy.gov/energysaver/heat-pump-systems) for background on the underlying heat pump technology.
+
+What is aux heat on thermostat: it's a small indicator (label or icon) that lights up when the auxiliary heat strips are active. It is NOT a malfunction. Almost every US heat pump installation includes 5-20 kW of electric resistance heat strips as backup; aux heat firing is the normal, expected behavior of that backup engaging.
+
+How aux heat works: when the thermostat detects that the heat pump alone isn't keeping up (indoor temperature drifting away from setpoint, or outdoor temperature below a configured threshold), it commands the electric strips to turn on. Both the heat pump and the strips run simultaneously, with the strips providing the gap-filling heat the heat pump can't supply.
+
+Aux heat is automatic. The thermostat decides when to turn it on and off based on temperature differences, configured aux-lockout thresholds, and recovery from setbacks. You don't need to do anything to make aux work; the thermostat handles it.
+
+Aux heat is different from Emergency Heat (covered in section 6). Don't confuse them.
+
+## When Aux Heat Fires
+
+The aux heat indicator on your thermostat lights up in three main scenarios.<SourceCite id="ahri-210-240" number={2} />
+
+<AuxHeatWhenItFires />
+
+**Below the balance point.** Every heat pump has a "balance point": the outdoor temperature at which the heat pump's heating capacity equals the home's heating load. Above the balance point, the heat pump alone handles the load. Below it, aux heat fills the gap.
+
+For standard heat pumps, the balance point is typically 25-35°F. For cold-climate certified (CCASHP) heat pumps, the balance point shifts down to 5-15°F because these systems maintain capacity at lower temperatures. The exact balance point depends on equipment selection and home insulation. See [heat pump balance point](/heat-pump/cold-climate/balance-point/) for the calculation.
+
+**During defrost cycles.** Heat pumps periodically reverse for 5-15 minutes to melt ice off the outdoor coil. During defrost, the heat pump is briefly producing no useful heat indoors. Most installations engage aux heat during defrost to maintain comfort. [Heat pump defrost cycles](/heat-pump/cold-climate/defrost-cycle/) run aux heat briefly to maintain indoor comfort. Defrost happens every 30-90 minutes in cold humid weather.
+
+**During thermostat setback recovery.** When you raise the setpoint by 3°F or more (e.g., from 65°F nighttime to 70°F morning), many smart thermostats fire aux heat to reach the new setpoint faster. The aux turns off automatically when within 1-2°F of setpoint.<SourceCite id="energystar-heat-pump-thermostats" number={4} /> ENERGY STAR smart thermostat guidance covers this behavior.
+
+Aux heat firing in any of these three scenarios is normal operation. Aux fires for some other reason in section 5.
+
+## What You See on the Display
+
+Aux heat on thermostat displays differs by brand, but every modern smart thermostat indicates aux heat in some way.
+
+<AuxHeatByThermostatBrand />
+
+**Aux heat on Nest**: the display shows "Aux Heat" with an orange flame icon. Also visible in the Nest mobile app under Energy History, where you can see how much aux ran by hour or day. For Nest-specific details, see [aux heat on Nest thermostats](/heat-pump/aux-heat/by-thermostat/nest/).
+
+**Aux heat on Ecobee**: the display shows "Auxiliary Heat" with a thermometer-and-flame icon. Visible in HomeIQ reports in the Ecobee app, with detailed runtime statistics. For more, see [aux heat on Ecobee thermostats](/heat-pump/aux-heat/by-thermostat/ecobee/).
+
+**Aux heat on Honeywell**: the display shows "Aux Heat" or "AUX" with a red indicator. Display details vary by model (T6, T9, Vision Pro, etc.). The Resideo app shows runtime for newer models. See [aux heat on Honeywell thermostats](/heat-pump/aux-heat/by-thermostat/honeywell/) for model-specific guidance.
+
+Older non-smart thermostats may show only a small indicator light or "AUX" letters when aux is active. Some show "Stage 2" or "Heat 2" instead — these labels mean the same thing as aux heat; the heat pump is stage 1, aux is stage 2.
+
+If you can't tell whether aux is on from the display, smart thermostats with energy history are the easiest check. The energy log shows when aux ran. Older thermostats may require checking the indoor air handler for a glowing strip heater (don't open the panel unless you know what you're doing).
+
+## How Much Does Aux Heat Cost?
+
+Aux heat is electric resistance heating. Every watt of electricity becomes one watt of heat. Engineers call this COP (coefficient of performance) = 1.0. By contrast, heat pumps deliver COP 2-4 in heating mode — every watt of electricity produces 2-4 watts of useful heat. The implication: aux heat costs 2-4× more per BTU of heating delivered than the heat pump.<SourceCite id="nrel-cold-climate-heat-pump" number={3} />
+
+<AuxHeatCostVsHeatPump />
+
+Worked example for 10 kW (about 34,000 BTU/hr) of heating delivered to the indoor air for one hour:
+
+| Source | Electric input | COP | Heat output | Cost at $0.16/kWh |
+|---|---|---|---|---|
+| Heat pump | 4 kWh | 2.5 | 10 kW | $0.64 |
+| Aux heat | 10 kWh | 1.0 | 10 kW | $1.60 |
+| Both running | 7-9 kWh combined | ~1.5 | 10 kW combined | $1.10-1.45 |
+
+Heat pump alone delivers the same 10 kW heating for 40% the cost of aux heat alone. In normal operation, the heat pump handles the bulk of the load and aux fills the rest, so the cost is the weighted mix.
+
+Aux heat cost in practice:
+- **Brief aux during defrost** (8-15 minutes per cycle, 4-6 cycles per cold evening): cents per night
+- **Aux during setback recovery** (15-30 minutes once or twice per day): a few cents per day
+- **Continuous aux on the coldest design days** (8+ hours overnight): $10-15 per night on a 5kW strip drawing full power
+- **Heating-season total** if aux fires often: $50-150 added to typical winter electric bills depending on climate and heat pump efficiency
+
+For more granular cost modeling, see [aux heat cost](/heat-pump/aux-heat/cost/) and our [aux heat cost calculator](/tools/aux-heat-cost-calculator/) which takes your equipment, climate, and electricity rate. The [seasonal performance factor](/heat-pump/performance/seasonal-performance-factor/) captures how aux runtime affects overall efficiency over a full heating season.
+
+## Is Aux Heat a Problem?
+
+Most of the time, aux heat on your thermostat means the system is working as designed. It's cold outside, or a defrost cycle is running, or you raised the temperature and the heat pump needs help getting there. None of those are problems. They're features. Aux heat becomes a problem when the conditions don't match the firing — when it runs constantly in mild winter weather, or when the heat pump itself isn't running and you haven't switched to emergency heat mode. Those situations warrant investigation. The decision tree later in this article helps tell the difference.
+
+Is aux heat bad? No, not by itself. Aux heat is part of the system design. The hardware is engineered to be there. The thermostat is configured to use it. Aux heat doesn't damage anything; it just costs more than the heat pump for each BTU delivered.
+
+Should aux heat always be on? No. If aux is on continuously even in mild winter weather (above 40°F outdoor), one of these things is going wrong:
+- Thermostat aux threshold is misconfigured (set to trigger aux at too-warm an outdoor temperature)
+- Heat pump capacity is inadequate (oversized house or undersized equipment)
+- Heat pump is mechanically degraded (low refrigerant, dirty coil, failing compressor)
+- The thermostat is in Emergency Heat mode by accident (heat pump disabled, aux is the only source)
+
+Aux heat on when it's warm outside is one sign of a problem. If your outdoor temperature is comfortably above the balance point and aux is still firing, something is misconfigured or broken. The decision tree in section 7 walks through the diagnosis.
+
+## Aux Heat vs Emergency Heat
+
+Aux heat vs emergency heat is the most common confusion in this article. They use the same hardware (electric resistance strips) but very different control logic.
+
+<AuxVsEmergencyComparison />
+
+**Aux heat** is automatic. The thermostat decides when to fire aux based on heat pump performance, outdoor temperature, and recovery from setbacks. The heat pump runs alongside the aux strips. Both contribute to heating; aux fills the gap the heat pump can't cover. Aux heat vs heat: when you see just "Heat" on the thermostat, the heat pump is running alone; when you see "Aux Heat" or "AUX" too, both are running.
+
+**Emergency heat (Em Heat)** is manual. You set the thermostat to Em Heat mode explicitly. The heat pump is turned OFF entirely. Only the aux strips run, doing all the heating work alone. Em Heat is for when:
+- The heat pump has mechanically failed (compressor down, refrigerant leak, etc.)
+- The outdoor temperature is below the heat pump's operating range (rare on cold-climate models)
+- The outdoor unit is iced over or physically damaged
+- You manually want to bypass the heat pump for some reason
+
+Em Heat should NOT be the default mode in normal cold weather. Running Em Heat all winter costs 2-4× more than letting aux work alongside the heat pump. Some homeowners switch to Em Heat thinking it's "more reliable"; it just costs more.
+
+For the comprehensive [aux heat vs emergency heat](/heat-pump/aux-heat/vs-emergency-heat/) comparison with worked cost examples, see the dedicated article.
+
+## When to Worry and What to Do
+
+Aux heat appearing on your thermostat is rarely cause for concern. Aux heat indicates a problem when conditions don't match the firing pattern. Use the decision tree to diagnose.
+
+<AuxHeatTroubleshootDecision />
+
+**Step 1: Is it cold outside?** Below ~35°F (or below your heat pump's balance point), aux heat is supposed to assist. This is normal operation; no action needed unless cost concerns you.
+
+**Step 2: Is the thermostat recovering from a setback?** If you raised the setpoint 3°F or more recently, aux heat fires during recovery to reach the new setpoint faster. Wait 20-30 minutes; aux should turn off once within 1-2°F of setpoint.
+
+**Step 3: Is the outdoor unit running?** Step outside and check the heat pump's outdoor unit. If you hear the fan and feel air movement, the heat pump is running. If not, check:
+- Is the thermostat in "Heat" mode (not "Em Heat")? Em Heat disables the heat pump deliberately
+- Is the outdoor unit's breaker tripped? Reset and observe
+- Is the outdoor unit iced over or blocked? Clear debris, schedule defrost diagnostic if persistent
+- Is the outdoor unit power switch off? Verify on
+
+**Specific scenarios beyond the decision tree:**
+
+- **Aux heat won't turn off**: continuous aux in mild weather suggests misconfigured threshold, failing heat pump, or thermostat issue. See [aux heat won't turn off](/heat-pump/aux-heat/troubleshooting/wont-turn-off/) for detailed diagnostics
+- **Aux fires but heat pump never runs**: check Em Heat mode first (most common cause). Then check outdoor unit power, breaker, and physical condition
+- **Aux runs whenever the heat pump runs**: thermostat aux threshold may be set too aggressively, or the heat pump may be undersized. See [aux heat on when it's warm outside](/heat-pump/aux-heat/troubleshooting/on-when-warm/) for cause analysis
+- **Sudden increase in aux runtime** month over month: heat pump performance declining; schedule HVAC diagnostic for refrigerant level and coil condition
+
+**DIY checks before calling a pro:**
+- Verify thermostat mode is "Heat" or "Auto" (not "Em Heat")
+- Check outdoor unit for ice, debris, blocked airflow, fallen branches
+- Verify outdoor unit's breaker hasn't tripped (look for the breaker in the labeled "Heat Pump" or "Outdoor Unit" slot)
+- Check thermostat aux heat threshold setting (most smart thermostats let you set the outdoor temperature below which aux is allowed)
+
+**When to call HVAC pro:**
+- Continuous aux with the heat pump running, in mild winter weather (above 40°F outdoor)
+- Sudden increase in aux runtime without an obvious cause
+- Outdoor unit not running, not in Em Heat mode, and DIY checks don't identify the issue
+- Heat pump short-cycling (turning on and off rapidly) regardless of aux
+
+A correctly sized heat pump and properly configured thermostat should keep aux runtime to a small fraction of total heating runtime. Excessive aux is often a sizing issue; see [heat pump sizing](/heat-pump/sizing/) for the broader sizing methodology.
+
+</article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<Sources sources={SOURCES} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-18" />
+</div>
+
+</Container>
