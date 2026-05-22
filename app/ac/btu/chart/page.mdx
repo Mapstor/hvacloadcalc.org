@@ -1,0 +1,468 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { Sources } from '@/components/article/Sources';
+import { SourceCite } from '@/components/article/SourceCite';
+import { AuthorByline } from '@/components/article/AuthorByline';
+import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { HeroAcBtuChartVisual } from '@/components/svg/ac-btu-chart/HeroAcBtuChartVisual';
+import { AdjustmentFactorsStacked } from '@/components/svg/ac-btu-chart/AdjustmentFactorsStacked';
+import { BtuByClimateZoneMap } from '@/components/svg/ac-btu-chart/BtuByClimateZoneMap';
+import { BtuBySpaceType } from '@/components/svg/ac-btu-chart/BtuBySpaceType';
+import { WindowVsPortableVsMiniSplit } from '@/components/svg/ac-btu-chart/WindowVsPortableVsMiniSplit';
+import { OversizingVsUndersizing } from '@/components/svg/ac-btu-chart/OversizingVsUndersizing';
+
+export const metadata = {
+  title: 'AC BTU Chart: BTU Needed by Square Footage with Adjustments',
+  description:
+    'AC BTU chart by square footage from 100 to 3,000+ sq ft, with adjustments for ceiling height, climate, sun exposure, occupancy, and insulation. Updated for 2024.',
+  openGraph: {
+    title: 'AC BTU Chart: How Many BTU for Each Room Size',
+    description:
+      'A reference chart pairing square footage with required AC BTU, plus adjustment factors for climate, ceiling height, sun, and occupancy.',
+    type: 'article',
+    publishedTime: '2026-05-18',
+    modifiedTime: '2026-05-18',
+    authors: ['Jonathan S.'],
+  },
+};
+
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'AC', url: '/ac/' },
+  { name: 'BTU Sizing', url: '/ac/btu/' },
+  { name: 'BTU Chart' },
+];
+
+export const HEADINGS = [
+  { id: 'the-btu-chart', text: 'The BTU Chart', level: 2 },
+  { id: 'how-to-use-this-chart', text: 'How to Use This Chart', level: 2 },
+  { id: 'adjustment-factors', text: 'Adjustment Factors', level: 2 },
+  { id: 'climate-zone-adjustments', text: 'Climate Zone Adjustments', level: 2 },
+  { id: 'practical-examples', text: 'Practical Examples', level: 2 },
+  { id: 'oversize-undersize-tradeoffs', text: 'Oversize / Undersize Tradeoffs', level: 2 },
+  { id: 'specific-space-types', text: 'Specific Space Types', level: 2 },
+  { id: 'equipment-type-matters', text: 'Equipment Type Matters', level: 2 },
+  { id: 'when-charts-arent-enough', text: "When Charts Aren't Enough", level: 2 },
+];
+
+export const SOURCES = [
+  {
+    id: 'energystar-room-ac',
+    title: 'ENERGY STAR Room Air Conditioner Sizing Guide',
+    publisher: 'US EPA / ENERGY STAR',
+    year: 2024,
+    url: 'https://www.energystar.gov/products/room_air_conditioners',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'doe-energy-saver-ac',
+    title: 'Choosing a Room Air Conditioner',
+    publisher: 'US Department of Energy, Energy Saver',
+    year: 2024,
+    url: 'https://www.energy.gov/energysaver/room-air-conditioners',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'acca-manual-j-8',
+    title: 'Manual J: Residential Load Calculation, 8th Edition',
+    publisher: 'Air Conditioning Contractors of America',
+    year: 2016,
+    url: 'https://www.acca.org/standards/technical-manuals/manual-j',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'ahri-210-240',
+    title: 'ANSI/AHRI Standard 210/240-2023',
+    publisher: 'AHRI',
+    year: 2023,
+    url: 'https://www.ahrinet.org/search-standards/ahri-210240-2023-performance-rating-unitary-air-conditioning-air-source-heat-pump',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+  {
+    id: 'ashrae-fundamentals-2021-cz',
+    title: 'ASHRAE Handbook of Fundamentals 2021, Chapter 14 (Climate)',
+    publisher: 'ASHRAE',
+    year: 2021,
+    url: 'https://www.ashrae.org/technical-resources/ashrae-handbook',
+    accessed: '2026-05-18',
+    tier: 1,
+  },
+];
+
+export const FAQ_ITEMS = [
+  {
+    q: 'How many BTU do I need for 1,000 square feet?',
+    a: 'For a typical 1,000 sq ft space with standard 8-foot ceilings, moderate climate, and normal occupancy, plan for around 18,000-21,000 BTU (1.5-1.75 tons of cooling). Adjust up for hot climates (zone 1-2: add 30%), high ceilings, sun-exposed spaces, or poor insulation. Adjust down for cool climates (zones 5-8) or well-insulated spaces.',
+  },
+  {
+    q: 'How many BTU per square foot do I need for an AC?',
+    a: "Rule of thumb for cooling: 20-30 BTU per square foot in moderate climates. Hot/humid climates (zones 1-2) push higher (30-35 BTU/sq ft). Cooler climates (zones 5-7) can use less (15-20 BTU/sq ft). For windowed rooms with sun exposure or higher ceilings, adjust upward. These rules are starting points, not final answers; a Manual J load calculation gives a more precise answer for whole-house central AC.",
+  },
+  {
+    q: 'Is 5,000 BTU enough for a bedroom?',
+    a: 'Yes, for a typical bedroom of 100-150 sq ft with one or two occupants, standard ceiling, and moderate climate. For larger bedrooms (200+ sq ft), go up to 6,000-8,000 BTU. For master bedrooms with attached bathrooms or walk-in closets, treat as 200-300 sq ft total. Window unit 5,000 BTU is the most common entry-level size; 8,000 BTU is the common second tier.',
+  },
+  {
+    q: 'How many tons of AC for 2,000 sq ft?',
+    a: 'For a typical 2,000 sq ft single-family home with standard insulation in a moderate climate, plan for 3 tons (36,000 BTU) of cooling capacity. Adjust up for hot climates, poor insulation, or many windows; adjust down for excellent insulation, cool climates, or modest occupancy. Get a Manual J for the final answer before installing equipment.',
+  },
+  {
+    q: "What's the difference between BTU and tonnage?",
+    a: 'Tonnage is a way of expressing BTU/hr capacity for air conditioners. 1 ton of AC = 12,000 BTU/hr of cooling capacity. So a 2-ton AC is 24,000 BTU/hr; a 3-ton AC is 36,000 BTU/hr; a 5-ton AC is 60,000 BTU/hr. Window and portable units are usually rated in BTU; central AC and heat pumps are usually rated in tons. The underlying capacity is the same; different conventions for different equipment classes.',
+  },
+  {
+    q: "What happens if I get an AC that's too big?",
+    a: "Oversized ACs short-cycle: they cool the air temperature down quickly but don't run long enough to remove humidity. The result is a cold, clammy feeling indoor environment and higher energy use from startup losses. Compressor life is also reduced because of the frequent starts. Variable-speed (inverter) ACs tolerate moderate oversizing better than single-stage units.",
+  },
+  {
+    q: "Can I use a portable AC's BTU rating the same as a window AC's?",
+    a: 'Not directly. Portable ACs are rated using outdated DOE standards that often overstate real-world performance, especially for single-hose designs (which exhaust hot air using conditioned indoor air, reducing effective cooling). Real-world cooling output of a single-hose portable AC is typically 20-30% less than its nameplate BTU rating. Plan to size up by one tier when choosing portable over window AC.',
+  },
+  {
+    q: 'How do high ceilings affect BTU needs?',
+    a: "Higher ceilings = more volume to cool. Standard 8-foot ceiling is the baseline. 9-foot ceilings need ~10% more BTU. 10-foot ceilings need ~20% more. Cathedral ceilings (12+ ft) need 25-40% more. The relationship isn't perfectly linear because heat rises and the upper volume is less occupant-affected.",
+  },
+  {
+    q: 'Does insulation affect the right BTU?',
+    a: 'Yes, substantially. Poor insulation (below current code) increases cooling load by 20-40%. Excellent insulation (above current code, modern construction) can reduce cooling load by 10-15%. Both insulation and air sealing matter; leaky homes need more cooling capacity to handle infiltration loads.',
+  },
+  {
+    q: 'Is this chart good enough for buying central AC?',
+    a: 'For initial planning and comparison, yes. For actually buying central AC, no: get a Manual J load calculation from your installer or hire one independently. Central AC installations are expensive and a Manual J is much more accurate than any chart. Window units and portable ACs are cheaper, so the cost of being wrong is lower; charts are usually fine for those.',
+  },
+];
+
+export const RELATED = [
+  {
+    title: 'Manual J load calculation',
+    url: '/manual-j/',
+    description: 'The permit-grade methodology behind the chart values for whole-house central AC.',
+  },
+  {
+    title: 'AC short cycling',
+    url: '/ac/short-cycling/',
+    description: 'Oversized AC short cycles; this article covers the cooling-mode consequences.',
+  },
+  {
+    title: 'Mini split for garage',
+    url: '/ac/btu/garage-mini-split/',
+    description: 'Specific BTU sizing methodology for garages, an outlier space type.',
+  },
+];
+
+export const FRONTMATTER = {
+  title: 'AC BTU Chart: BTU Needed by Square Footage with Adjustments',
+  h1: 'AC BTU Chart by Square Footage',
+  meta_description:
+    'AC BTU chart by square footage from 100 to 3,000+ sq ft, with adjustments for ceiling height, climate, sun exposure, occupancy, and insulation. Updated for 2024.',
+  url: '/ac/btu/chart/',
+  date_published: '2026-05-18',
+  last_reviewed: '2026-05-18',
+  target_keyword: 'ac btu chart',
+  secondary_keywords: ['btu per square foot ac', 'how many btu do i need', 'ac sizing chart', 'ac tonnage chart'],
+  sources: SOURCES,
+  faq: FAQ_ITEMS,
+  parent_title: 'AC',
+};
+
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={2400} />
+
+<JsonLdBreadcrumb items={BREADCRUMBS} />
+
+<Container>
+
+<Breadcrumbs items={BREADCRUMBS} />
+
+<HeroAcBtuChartVisual />
+
+<ArticleHeader
+  h1="AC BTU Chart by Square Footage"
+  description="AC BTU chart by square footage from 100 to 3,000+ sq ft, with adjustments for ceiling height, climate, sun exposure, occupancy, and insulation. Updated for 2024."
+  datePublished="2026-05-18"
+  lastReviewed="2026-05-18"
+  readingTimeMinutes={10}
+/>
+
+<KeyTakeaways
+  items={[
+    'Baseline: 20-30 BTU per square foot in moderate climates. 1 ton AC = 12,000 BTU/hr. A 200 sq ft bedroom needs ~6,000 BTU; a 2,000 sq ft home needs ~36,000 BTU (3 tons).',
+    'Apply six adjustments to the chart baseline: ceiling height, climate zone, sun exposure, occupancy, kitchen heat gain, insulation level. Combine multiplicatively.',
+    'Climate matters most: zones 1-2 (hot/humid) add 20-30% to the baseline; zones 7-8 (very cold) subtract 20-25%.',
+    'Real-world portable AC delivers 20-30% less than its nameplate BTU due to single-hose vent design. Size up one tier vs window AC.',
+    'Use this chart for window, portable, and single-zone mini split sizing. For central AC final equipment specification, get a Manual J load calculation.',
+  ]}
+/>
+
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
+
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+An AC BTU chart pairs the size of your room with the cooling capacity you need. For a 200 square foot bedroom, you need around 6,000 BTU. For a 1,000 square foot space, around 18,000 BTU. For a 2,000 square foot whole-house central AC, around 36,000 BTU or three tons. The chart below covers room sizes from 100 to 3,000-plus square feet.
+
+Chart values are starting points calibrated to standard 8-foot ceilings, moderate climate, normal occupancy, and average insulation. Your room is probably different from at least one of those baselines. The sections after the chart cover how to adjust for high ceilings, hot or cool climates, sun exposure, kitchens, more or fewer occupants, and better or worse insulation. Apply the relevant adjustments and you'll have a sizing recommendation that's good enough for buying a window or portable AC. For central AC installation, the chart gives you a planning estimate; the actual sizing should come from a Manual J load calculation done by your installer or independent rater.
+
+For [AC BTU sizing fundamentals](/ac/btu/) at the hub level, that article covers the underlying methodology. This article is the reference chart with adjustments.
+
+## The BTU Chart
+
+The chart below pairs square footage with recommended BTU and tonnage equivalent.<SourceCite id="energystar-room-ac" number={1} /> See the [ENERGY STAR room AC sizing guide](https://www.energystar.gov/products/room_air_conditioners) for the source data.
+
+The btu chart for ac unit values cover the most common residential sizes:
+
+| Square footage | BTU | Tons | Equipment class |
+|---|---|---|---|
+| 100-150 | 5,000 | N/A | Window unit |
+| 150-250 | 6,000 | N/A | Window unit |
+| 250-300 | 7,000 | N/A | Window unit |
+| 300-350 | 8,000 | N/A | Window or portable |
+| 350-400 | 9,000 | N/A | Window or portable |
+| 400-450 | 10,000 | N/A | Window or portable |
+| 450-550 | 12,000 | 1 | Window, portable, or mini split |
+| 550-700 | 14,000 | 1.17 | Window or mini split |
+| 700-1,000 | 18,000 | 1.5 | Mini split or window |
+| 1,000-1,200 | 21,000 | 1.75 | Mini split |
+| 1,200-1,400 | 24,000 | 2 | Central or mini split |
+| 1,400-1,800 | 30,000 | 2.5 | Central |
+| 1,800-2,200 | 36,000 | 3 | Central |
+| 2,200-2,800 | 42,000 | 3.5 | Central |
+| 2,800-3,200 | 48,000 | 4 | Central |
+| 3,200+ | 60,000 | 5 | Central |
+
+**BTU vs tonnage** quick reference per AHRI standards.<SourceCite id="ahri-210-240" number={4} /> 1 ton of AC equals 12,000 BTU/hr. Window and portable units are usually rated directly in BTU; central AC and ductless mini splits are usually rated in tons. The underlying capacity is the same. For more detail on the conversion, see [AC tonnage explained](/ac/tonnage/).
+
+Specific square-footage queries map directly to chart rows:
+- **BTU for 200 sq ft** = 6,000 BTU (chart row 150-250 sq ft)
+- **BTU for 300 sq ft** = 7,000-8,000 BTU (rows 250-300 and 300-350)
+- **BTU for 400 sq ft** = 9,000-10,000 BTU (rows 350-400 and 400-450)
+- **BTU for 500 sq ft** = 12,000 BTU (row 450-550)
+- **BTU for 1000 sq ft** = 18,000-21,000 BTU
+- **BTU for 1500 sq ft** = 30,000 BTU (1,400-1,800 row)
+- **BTU for 2000 sq ft** = 36,000 BTU (3 tons)
+
+Specific BTU-to-square-footage queries also map directly:
+- **5000 BTU ac square footage**: 100-150 sq ft (small bedroom)
+- **8000 BTU ac square footage**: 300-350 sq ft (large bedroom)
+- **10000 BTU ac square footage**: 400-450 sq ft
+- **12000 BTU ac square footage**: 450-550 sq ft (1-ton equivalent)
+- **14000 BTU ac square footage**: 550-700 sq ft
+- **18000 BTU ac square footage**: 700-1,000 sq ft (1.5-ton)
+- **24000 BTU ac square footage**: 1,200-1,400 sq ft (2-ton)
+
+This ac tonnage chart and BTU chart are equivalent expressions; the conversion is multiplication by 12,000.
+
+## How to Use This Chart
+
+Five-step process to go from square footage to final equipment size:
+
+1. **Look up your square footage** in the chart for the baseline BTU
+2. **Apply climate adjustment** from section 4 (zone-by-zone)
+3. **Apply ceiling height multiplier** from section 3
+4. **Apply space-type multiplier** from section 7 (kitchen, sun room, basement, etc.)
+5. **Round to a standard equipment size** (5K, 6K, 8K, 10K, 12K, 14K, 18K, 24K, 30K, 36K, 42K, 48K, 60K BTU are typical)
+
+The ac size by square footage starting point is just step 1; steps 2-5 refine the answer for your specific room.
+
+For more precision than this chart provides, two automated tools handle the adjustments:
+- The [BTU calculator](/tools/btu-calculator/) accepts square footage, climate, ceiling height, and insulation; returns adjusted BTU
+- The [AC size calculator](/tools/ac-size-calculator/) combines the chart values with adjustment factors for window, portable, and mini split sizing
+
+For central AC final equipment specification, the chart gets you a planning estimate; section 9 covers when you need a full Manual J instead. The how many btu do i need question is answered well by the chart for single-room equipment and adequately for central AC planning.
+
+## Adjustment Factors
+
+The chart values assume specific baseline conditions. Real rooms deviate from those baselines, and the deviations stack multiplicatively.
+
+<AdjustmentFactorsStacked />
+
+Six adjustment factors apply to the chart baseline:
+
+**1. Ceiling height.** Higher ceiling = more volume to cool. Standard 8 ft is baseline (1.0×). 9 ft adds ~10%. 10 ft adds ~20%. Cathedral ceilings 12 ft and above add 25-40% depending on the geometry.
+
+**2. Climate zone.** Detailed in section 4. Hot/humid zones (1-2) add 20-30%. Cool/dry zones (5-8) subtract 10-25%.
+
+**3. Sun exposure.** Rooms with heavy south or west window exposure add 10-20% to the cooling load (solar gain through glass). Heavily shaded rooms subtract ~10%. Most rooms are mixed and use the baseline.
+
+**4. Occupancy.** Each person adds ~600 BTU of sensible-plus-latent load. Baseline assumes 1-2 occupants. Add 600 BTU per additional regular occupant above 2.
+
+**5. Kitchen heat gain.** Cooking adds substantial sensible and latent load. Add 4,000 BTU to the room baseline if the cooled space is a kitchen. Commercial-grade ranges or frequent multi-burner use can push this to 6,000+ BTU.
+
+**6. Insulation level.** Envelope quality drives the entire load up or down. Older homes below current code add 20-40%. Above-code modern construction subtracts 10-15%. Air sealing matters as much as insulation R-value.
+
+Btu per square foot ac varies with these adjustments. The baseline 20-25 BTU/sq ft for moderate climates becomes 30-35 BTU/sq ft in zone 1 with a kitchen and high ceilings, or 12-15 BTU/sq ft in zone 7 with above-code insulation and full shading.
+
+The chart × adjustments approach gets you to a planning-grade number. For the math behind specific examples, see section 5.
+
+## Climate Zone Adjustments
+
+Climate is the largest single adjustment factor. The same 1,500 sq ft home needs 1.5× more cooling capacity in Miami than in Minneapolis.<SourceCite id="ashrae-fundamentals-2021-cz" number={5} />
+
+<BtuByClimateZoneMap />
+
+By IECC zone (per ASHRAE Standard 169 climate data):
+
+| Zone | Cooling adjustment | Typical location |
+|---|---|---|
+| 1 (tropical) | +30% | Miami, Honolulu |
+| 2 (hot/humid) | +15-20% | Houston, Phoenix |
+| 3 (mixed/warm) | +5-10% | Atlanta, Memphis |
+| 4 (mid-US) | baseline | Mid-Atlantic, Ohio Valley |
+| 5 (cool) | -10% | Northern states |
+| 6 (cold) | -15% | Northern MW, NE, Rockies |
+| 7-8 (very cold) | -20-25% | Northern MN, Alaska |
+
+Why hot/humid zones need more cooling per square foot:
+- **Higher design temperatures**: ASHRAE 1% cooling design temp in Miami is 91°F vs 84°F in Atlanta, so the cooling load differential is larger
+- **Latent (humidity) load**: hot humid air carries significant moisture that the AC must remove
+- **Solar load**: tropical and subtropical zones have higher solar intensity, increasing window heat gain
+- **Less night cooling**: cool zones recover overnight; tropical zones don't
+
+For per-state climate adjustment detail with city-level breakdowns, see [AC BTU by climate zone](/ac/btu/by-climate-zone/). The zone-level adjustments in this article are accurate within 5% for most US metro areas; small adjustments may be needed for coastal vs inland or high-altitude locations within a zone.
+
+## Practical Examples
+
+Three worked examples to apply the chart and adjustments.
+
+**Example A: 300 sq ft master bedroom, zone 4, 9 ft ceiling, two occupants.**
+- Chart baseline for 300 sq ft: 8,000 BTU
+- Climate (zone 4): ×1.0
+- Ceiling (9 ft): ×1.1
+- Space type (bedroom): ×1.0
+- Adjusted: 8,000 × 1.1 = 8,800 BTU
+- Round to nearest standard: **8,000 BTU** window unit (or 10,000 if you want headroom)
+
+**Example B: 1,500 sq ft single-story home, zone 2, 10 ft ceiling, family of 4.**
+- Chart baseline for 1,500 sq ft (in 1,400-1,800 row): 30,000 BTU
+- Climate (zone 2): ×1.18
+- Ceiling (10 ft): ×1.20
+- Occupancy (4 people = +2 above baseline): +1,200 BTU
+- Adjusted: 30,000 × 1.18 × 1.20 + 1,200 = 43,680 BTU
+- Round to standard equipment: **42,000 BTU (3.5 tons)** central AC, or **48,000 BTU (4 tons)** if you want some margin
+- Verify with [Manual J-style load calculator](/tools/manual-j-calculator/) before purchase
+
+**Example C: 200 sq ft sun room with five windows, zone 6, 8 ft ceiling.**
+- Chart baseline for 200 sq ft (in 150-250 row): 6,000 BTU
+- Climate (zone 6): ×0.85
+- Ceiling (8 ft): ×1.0
+- Space type (sun room): ×1.6 (middle of 1.5-2.0 range)
+- Sun exposure (heavy): ×1.15
+- Adjusted: 6,000 × 0.85 × 1.6 × 1.15 = 9,384 BTU
+- Round to standard: **10,000 BTU** unit, possibly a small mini split if year-round use
+
+The math is straightforward: chart × climate × ceiling × space-type × sun-exposure × insulation_correction = adjusted BTU. The pattern holds for any room. For the underlying Manual J methodology when chart-plus-adjustments isn't enough, see section 9.
+
+## Oversize / Undersize Tradeoffs
+
+Both extremes hurt. Right-sizing matches output to load with a modest tolerance.
+
+<OversizingVsUndersizing />
+
+**Oversize problems:**
+- **Short cycling**: oversized ACs cool the air down quickly but don't run long enough to dehumidify. The result is cold, clammy indoor air
+- **Compressor wear**: frequent on/off cycles wear the compressor faster than continuous run
+- **Wasted purchase price**: bigger equipment costs more
+- **Higher installation cost**: larger ducts, larger refrigerant lines for central AC
+
+**Undersize problems:**
+- **Can't keep up** on the hottest design days; indoor temperature climbs above setpoint
+- **Constant runtime**: the unit runs all the time without ever reaching setpoint on extreme days
+- **No comfort margin**: hot evenings, hot weeks, hot stretches catch up to undersized units
+- **Compressor wear** from continuous operation (different failure mode than oversizing, but real)
+
+The [AC short cycling from oversizing](/ac/short-cycling/) article covers the cooling-mode short-cycle dynamics in detail. The variable-speed (inverter) AC class tolerates moderate oversizing better than single-stage because inverter compressors modulate down to 20-40% of rated capacity. Single-stage units cycle full-on or full-off; oversizing them is more painful.
+
+The "Goldilocks zone" is the chart value adjusted for your room conditions. A 10-20% margin over the target is fine and gives some headroom for hotter-than-typical days. 30%+ oversizing starts costing money and comfort.
+
+## Specific Space Types
+
+Beyond the climate and ceiling adjustments, the type of space affects the BTU multiplier.
+
+<BtuBySpaceType />
+
+Space-type multipliers (applied to climate-adjusted baseline):
+
+- **Bedroom**: 1.0× (the chart baseline)
+- **Living room**: 1.0-1.2× (more occupancy, larger windows)
+- **Kitchen**: 1.2-1.4× (cooking heat gain)
+- **Home office**: 1.0-1.1× (one person plus computer heat)
+- **Sun room or conservatory**: 1.5-2.0× (heavy solar gain through large glass area)
+- **Above-grade basement**: 0.7-0.9× (cooler from ground contact)
+- **Below-grade basement**: 0.5-0.7× (much cooler from full ground contact)
+- **Attic or 2nd floor**: 1.2-1.4× (heat rising from below + roof gain)
+
+For dedicated guides by space:
+- [Bedroom AC BTU sizing](/ac/btu/for-bedroom/) covers the most common single-room scenario
+- [Living room AC BTU sizing](/ac/btu/for-living-room/) covers larger open spaces with mixed occupancy
+- [Garage mini split sizing](/ac/btu/garage-mini-split/) covers garages (a 2-3× outlier vs interior space)
+- [BTU sizing for workshops](/ac/btu/for-workshop/) covers continuous-occupancy work spaces
+- [BTU sizing for sheds](/ac/btu/for-shed/) covers small outbuildings
+
+The space-type multiplier multiplies the climate-adjusted baseline. A 200 sq ft sun room in zone 4 with 8 ft ceilings: 6,000 BTU × 1.0 (climate) × 1.0 (ceiling) × 1.75 (sun room mid-range) = 10,500 BTU. Different rooms in the same home need different sizes for the same square footage.
+
+## Equipment Type Matters
+
+Same nominal BTU doesn't mean same real cooling across equipment types.<SourceCite id="doe-energy-saver-ac" number={2} /> See [DOE room AC sizing guidance](https://www.energy.gov/energysaver/room-air-conditioners) for the federal position.
+
+<WindowVsPortableVsMiniSplit />
+
+**Window AC.** Capacity 5,000-25,000 BTU. CEER 10-12 typical efficiency. $200-700 cost range. Best for single rooms, renters, and cooling-only use cases. Nameplate BTU is reasonably accurate; the window ac btu chart values translate well to real delivered cooling.
+
+**Portable AC.** Capacity 8,000-14,000 BTU nameplate. Lower CEER (8-10) than window units. $300-800 cost range. Best for rooms where window units can't be installed (HOAs that prohibit them, casement-only windows, unusual layouts). The portable ac btu chart caveat: real-world cooling output of single-hose portable ACs is typically 20-30% lower than nameplate, because single-hose designs exhaust hot air using conditioned indoor air. Dual-hose portable ACs avoid this and deliver closer to nameplate, but they're rarer and more expensive. Plan to size up one tier vs an equivalent window AC.
+
+**Ductless mini split.** Capacity 6,000-48,000+ BTU per zone. SEER2 17-30+ (much more efficient than window or portable). $1,500-5,000 cost range. Best for permanent installations, heat pump dual-use (heating and cooling), single zones in larger homes, or homes without ducts. AHRI 210/240 rated, accurate to within 5%.
+
+**Central AC.** Capacity 24,000-60,000 BTU typically (2-5 tons). Best for whole-house comfort in homes with existing ductwork. Requires Manual J for proper sizing (covered in section 9).
+
+For [portable AC vs window AC sizing](/ac/btu/portable-vs-window/) comparison in detail, including dual-hose portable specifics and real-world cooling output measurements, the dedicated article covers tradeoffs.
+
+## When Charts Aren't Enough
+
+For a window unit going in a single room, this chart is plenty. For a portable AC bound for the same single room, this chart works too. For a ductless mini split serving one zone, also fine. For a central AC system that's going to be installed in your home for the next 15 to 20 years and cost you five to ten thousand dollars, this chart is a starting point, not a finishing one. The right tool for central AC sizing is a Manual J load calculation, which accounts for things this chart cannot capture: orientation, room-by-room loads, ductwork, infiltration tested with a blower door, internal gains from specific equipment. The chart will get you within 20 to 30 percent. Manual J gets you within 5 to 10. For an expensive permanent installation, the difference matters.<SourceCite id="acca-manual-j-8" number={3} />
+
+When to upgrade from chart to full Manual J:
+- **Central AC purchase**: equipment cost is high enough that a 20-30% size error costs real money over the equipment's life
+- **Permit submission**: most jurisdictions adopting IECC code require Manual J documentation for new central AC installs
+- **Insurance or warranty**: some manufacturer warranties require Manual J sizing
+- **Heat pump installation**: heat pumps are even more sizing-sensitive than AC; see [heat pump sizing methodology](/heat-pump/sizing/) for the additional considerations
+- **Renovations or additions**: changing the house envelope changes the load; a fresh Manual J reflects the new house
+
+What Manual J does that the chart doesn't:
+- Room-by-room load (not just whole-house average)
+- Orientation effects (south-facing vs north-facing rooms have different loads)
+- Window-specific solar gain factors per orientation and SHGC
+- Duct losses for ducts in unconditioned space
+- Infiltration based on blower-door measurement when available
+- Internal gains from specific equipment (electronics, lighting load)
+
+Our [Manual J load calculation methodology](/manual-j/) article covers the full methodology. Our [Manual J-style load calculator](/tools/manual-j-calculator/) implements it with planning-grade inputs; for actual permit-grade Manual J, use ACCA-approved software (Wrightsoft, Cool Calc, Elite) or a certified contractor.
+
+Chart values plus adjustments are the right level of detail for window AC, portable AC, and single-zone mini split purchases. For everything else, the chart is the starting point, not the finish.
+
+</article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<Sources sources={SOURCES} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-18" />
+</div>
+
+</Container>
