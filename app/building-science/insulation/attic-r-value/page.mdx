@@ -10,6 +10,7 @@ import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
 import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { JsonLdHowTo } from '@/components/seo/JsonLdHowTo';
 import { HeroAtticRValueComparison } from '@/components/svg/attic-r-value/HeroAtticRValueComparison';
 import { RValueThicknessByMaterial } from '@/components/svg/attic-r-value/RValueThicknessByMaterial';
 import { DoeRValueZoneMap } from '@/components/svg/attic-r-value/DoeRValueZoneMap';
@@ -205,6 +206,20 @@ export const FRONTMATTER = {
 <JsonLdArticle frontmatter={FRONTMATTER} wordCount={2700} />
 
 <JsonLdBreadcrumb items={BREADCRUMBS} />
+
+<JsonLdHowTo
+  howTo={{
+    name: 'Measure existing attic insulation R-value',
+    description: 'A safe homeowner check to determine the R-value of your existing attic insulation.',
+    steps: [
+      { name: 'Measure depth', text: 'Use a tape measure or ruler to measure the depth of insulation at several spots. Note the minimum, maximum, and a typical value.' },
+      { name: 'Identify the insulation type', text: 'Look at color and texture. Pink or yellow batts = fiberglass. White or light yellow loose-fill = loose-fill fiberglass. Gray-brown loose-fill = cellulose. Yellow/peach surface = spray foam.' },
+      { name: 'Look up R-per-inch', text: 'Fiberglass batt approximately R-3.0/in. Loose-fill fiberglass approximately R-2.3/in. Cellulose approximately R-3.6/in. Open-cell foam approximately R-3.6/in. Closed-cell foam approximately R-6.5/in.' },
+      { name: 'Multiply', text: 'Multiply the depth in inches by the R-per-inch for your insulation type. Example: 12 inches of cellulose × 3.6 = approximately R-43.' },
+      { name: 'Note uneven coverage', text: 'If insulation is compressed, wet, or noticeably thin in some areas, the effective R-value is lower than the calculated value. Areas with no insulation count as R-0.' },
+    ],
+  }}
+/>
 
 <Container>
 

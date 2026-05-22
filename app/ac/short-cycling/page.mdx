@@ -10,6 +10,7 @@ import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
 import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { JsonLdHowTo } from '@/components/seo/JsonLdHowTo';
 import { HeroShortCyclingRuntime } from '@/components/svg/short-cycling/HeroShortCyclingRuntime';
 import { ShortCyclingCausesRanked } from '@/components/svg/short-cycling/ShortCyclingCausesRanked';
 import { OversizedCyclingComparison } from '@/components/svg/short-cycling/OversizedCyclingComparison';
@@ -196,6 +197,20 @@ export const FRONTMATTER = {
 <JsonLdArticle frontmatter={FRONTMATTER} wordCount={2600} />
 
 <JsonLdBreadcrumb items={BREADCRUMBS} />
+
+<JsonLdHowTo
+  howTo={{
+    name: 'Diagnose an AC that is short cycling',
+    description: 'Step-by-step checks to identify why your AC is short cycling before calling a professional.',
+    steps: [
+      { name: 'Check the air filter', text: 'Pull the filter and inspect. If gray and matted, replace it.' },
+      { name: 'Inspect the outdoor unit', text: 'Look for debris, leaves, or matted fins on the condenser coil. Clean if needed.' },
+      { name: 'Verify thermostat', text: 'Check batteries, placement (not in direct sun, not above a vent), and that the differential setting is at least 1°F.' },
+      { name: 'Look for ice on the indoor coil', text: 'If ice is visible on the indoor coil or refrigerant lines, turn the system off and let it melt completely.' },
+      { name: 'Call a professional if short cycling continues', text: "If steps 1-4 don't resolve the issue, the cause likely involves refrigerant or electrical components. Refrigerant work specifically requires EPA Section 608 certification." },
+    ],
+  }}
+/>
 
 <Container>
 

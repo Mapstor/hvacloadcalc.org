@@ -10,6 +10,7 @@ import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
 import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { JsonLdHowTo } from '@/components/seo/JsonLdHowTo';
 import { HeroDefrostCycleFlow } from '@/components/svg/defrost-cycle/HeroDefrostCycleFlow';
 import { FrostFormationTempHumidity } from '@/components/svg/defrost-cycle/FrostFormationTempHumidity';
 import { RefrigerantCircuitDefrost } from '@/components/svg/defrost-cycle/RefrigerantCircuitDefrost';
@@ -187,6 +188,21 @@ export const FRONTMATTER = {
 <JsonLdArticle frontmatter={FRONTMATTER} wordCount={2700} />
 
 <JsonLdBreadcrumb items={BREADCRUMBS} />
+
+<JsonLdHowTo
+  howTo={{
+    name: 'Check whether your heat pump defrost cycle is working normally',
+    description: 'A homeowner-safe check to distinguish a normal defrost cycle from a defrost problem.',
+    steps: [
+      { name: 'Watch for steam', text: 'If your outdoor unit briefly produces steam during cold weather, that is normal defrost. Steam lasts a few minutes.' },
+      { name: 'Time the cycle', text: 'Note when defrost starts and ends. Normal cycles last 5-15 minutes.' },
+      { name: 'Check frequency', text: 'Note how often defrost happens. Normal frequency is every 30-90 minutes in cold humid weather, less in dry cold.' },
+      { name: 'Inspect the coil after defrost', text: 'After defrost completes, the outdoor coil should be mostly clear. If heavy ice persists, defrost is not working correctly.' },
+      { name: 'Verify clearance and debris', text: 'Check the outdoor unit has at least 24 inches of clearance on all sides and is free of leaves, debris, or vegetation.' },
+      { name: 'Call a professional if abnormal', text: 'If defrost runs every 10-20 minutes, longer than 15 minutes, or heavy ice persists, schedule a service call. Refrigerant or defrost board issues are not DIY-territory.' },
+    ],
+  }}
+/>
 
 <Container>
 
