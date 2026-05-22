@@ -1,0 +1,32 @@
+import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+
+export const metadata = {
+  title: 'Window Reference: U-Factor, SHGC, NFRC Labels | hvacloadcalc.org',
+  description:
+    'Residential window reference: U-factor by climate zone, SHGC, visible transmittance, NFRC label reading, double vs triple pane, and Low-E coatings.',
+};
+
+<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Building science', url: '/building-science/' }, { name: 'Windows' }]} />
+
+<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Building science', url: '/building-science/' }, { name: 'Windows' }]} />
+
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+# Window Reference
+
+A window is a hole in your insulated envelope. Even the best windows let through more heat per square foot than the walls around them. U-factor rates how much; SHGC rates solar gain; visible transmittance rates daylight; air leakage rates infiltration around the assembly. The NFRC label puts all four ratings on every certified window sold in the US.
+
+This section covers what each rating measures, how to read an NFRC label, recommended values by climate zone, and which features (double-pane, Low-E, argon fill, triple-pane) drive U-factor down.
+
+## Articles in this section
+
+- [Window U-factor](/building-science/windows/u-factor/) — what U-factor measures, NFRC label reading, recommended values by zone, what features lower U-factor
+
+## Related topics
+
+- [Attic R-value](/building-science/insulation/attic-r-value/) — U-factor's R-value cousin for insulation
+- [HERS Index](/building-science/hers-index/) — whole-home energy performance including windows
+- [Manual J load calculation](/manual-j/) — uses window U-factor and SHGC as inputs
+
+</article>

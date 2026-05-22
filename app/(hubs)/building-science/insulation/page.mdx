@@ -1,0 +1,36 @@
+import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+
+export const metadata = {
+  title: 'Insulation Reference: R-Value, Climate Zones, and Methodology | hvacloadcalc.org',
+  description:
+    'Residential insulation reference: attic, wall, and basement R-value by climate zone, material R-per-inch, air-sealing primacy, and DOE/IECC recommendations.',
+};
+
+<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Building science', url: '/building-science/' }, { name: 'Insulation' }]} />
+
+<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Building science', url: '/building-science/' }, { name: 'Insulation' }]} />
+
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+# Insulation Reference
+
+Insulation slows conductive heat flow through the building envelope. R-value rates that slowing on a steady-state basis: higher R = more resistance, less heat flow. The envelope's overall thermal performance is the weighted sum of every surface's R-value, plus the air leakage that bypasses insulation entirely.
+
+This section covers insulation R-values by climate zone, the major insulation types and their R-per-inch, and the air-sealing work that must accompany any insulation upgrade.
+
+## Articles in this section
+
+- [Attic R-value](/building-science/insulation/attic-r-value/) — DOE recommendations by zone, insulation types, how to measure, why air sealing matters
+
+## Calculators
+
+- [Attic R-value calculator](/tools/attic-r-value-calculator/) — multi-layer R-value computation with zone-specific upgrade recommendations
+
+## Related topics
+
+- [Window U-factor](/building-science/windows/u-factor/) — the closely related fenestration metric
+- [HERS Index](/building-science/hers-index/) — whole-home performance score
+- [Manual J load calculation](/manual-j/) — uses R-values as primary input
+
+</article>

@@ -4,7 +4,7 @@ import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
 export const metadata = {
   title: 'HVAC Calculators and Sizing Tools | hvacloadcalc.org',
   description:
-    'Free HVAC calculators with documented methodology — BTU, heat pump sizing, balance point, Manual J, duct sizing, fuel-use load, and more.',
+    'Free HVAC calculators with documented methodology — BTU, heat pump sizing, AC sizing, attic R-value, and Manual J load calculation. No signup. Math shown.',
 };
 
 <JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Tools' }]} />
@@ -17,22 +17,29 @@ export const metadata = {
 
 This is the calculator hub. Every calculator on the site shows its math, cites its sources, and states its limits. The default state of each calculator opens with a worked example using reasonable defaults, so the methodology is visible before any input is changed. No account, no signup, no email gate — just inputs in, outputs out, formula shown.
 
-Calculators ship over Wave 2 of the build. The categories below show what's in scope.
+Each calculator carries a planning-grade disclaimer above the fold. Results are educational; permit-grade load calculations require ACCA-approved software or a licensed HVAC contractor.
 
-## What this section covers
+## Sizing calculators
 
-- **Load calculators** — Manual J-style room and home load calculation
-- **Sizing calculators** — heat pump, AC, furnace, mini split capacity
-- **Performance calculators** — balance point, SEER savings, fuel-use load
-- **Duct calculators** — Manual D-style duct sizing, return air grille sizing
-- **Reference calculators** — R-value, ACH, CFM, degree days, wet bulb
+- [Manual J load calculator](/tools/manual-j-calculator/) — whole-house heating and cooling loads with envelope math (conductive + infiltration + solar + internal gains)
+- [Heat pump size calculator](/tools/heat-pump-size-calculator/) — dual-load sizing with balance point estimate and cold-climate (CCASHP) toggle
+- [AC size calculator](/tools/ac-size-calculator/) — AC equipment sizing with window/portable/mini split/central recommendations
+- [BTU calculator](/tools/btu-calculator/) — general-purpose BTU sizing for any room or space
 
-Each calculator carries a planning-grade disclaimer above the fold. Results are educational; permit-grade load calculations require a licensed HVAC contractor.
+## Envelope and insulation calculators
+
+- [Attic R-value calculator](/tools/attic-r-value-calculator/) — depth × R-per-inch with multi-layer support, DOE zone targets, and upgrade depth recommendations
+
+## How our calculators work
+
+All calculators use pure-JavaScript front-end math. No server-side computation, no opaque transformations, no AI. Same inputs always produce same outputs. Each calculator's source formulas are documented inline, and we verify our Manual J calculator against ACCA reference cases.
+
+See our [Manual J verification methodology](/methodology/how-we-verify-manual-j/) for the accuracy bands we claim and how we test against ACCA's published reference cases.
 
 ## Related topics
 
 - [Methodology](/methodology/) — how every calculator computes
-- [Manual J load calculation](/manual-j/) — methodology behind sizing calculators
+- [Manual J load calculation](/manual-j/) — methodology behind the sizing calculators
 - [Manual D duct design](/manual-d/) — methodology behind duct calculators
 - [Building science](/building-science/) — the inputs driving every load calc
 
