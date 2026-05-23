@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { SITE } from '@/lib/seo/site';
+import { btuExamples } from './tools/btu-calculator/examples-manifest';
 
 type Freq = MetadataRoute.Sitemap[number]['changeFrequency'];
 
@@ -71,11 +72,18 @@ const LEGAL: PageEntry[] = [
   { path: '/disclaimer/', priority: 0.3, changeFrequency: 'yearly' },
 ];
 
+const CALCULATOR_EXAMPLES: PageEntry[] = btuExamples.map(({ slug }) => ({
+  path: `/tools/btu-calculator/examples/${slug}/`,
+  priority: 0.7,
+  changeFrequency: 'monthly',
+}));
+
 const ALL_PAGES: PageEntry[] = [
   HOMEPAGE,
   ...HUBS,
   ...ARTICLES,
   ...CALCULATORS,
+  ...CALCULATOR_EXAMPLES,
   ...META,
   ...LEGAL,
 ];
