@@ -4,7 +4,7 @@
   "runArgs": ["--cap-add=NET_ADMIN", "--cap-add=NET_RAW", "-p", "3001:3000"],
   "remoteUser": "node",
   "workspaceFolder": "/workspace",
-  "forwardPorts": [3000, 3007],
+  "forwardPorts": [3000, 3007, 3008],
   "containerEnv": {
     "NODE_OPTIONS": "--max-old-space-size=4096",
     "CLAUDE_CONFIG_DIR": "/home/node/.claude"
