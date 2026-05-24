@@ -1,6 +1,10 @@
 import type { MetadataRoute } from 'next';
 import { SITE } from '@/lib/seo/site';
 import { btuExamples } from './tools/btu-calculator/examples-manifest';
+import { acSizeExamples } from './tools/ac-size-calculator/examples-manifest';
+import { heatPumpExamples } from './tools/heat-pump-size-calculator/examples-manifest';
+import { atticRValueExamples } from './tools/attic-r-value-calculator/examples-manifest';
+import { manualJExamples } from './tools/manual-j-calculator/examples-manifest';
 
 type Freq = MetadataRoute.Sitemap[number]['changeFrequency'];
 
@@ -72,11 +76,33 @@ const LEGAL: PageEntry[] = [
   { path: '/disclaimer/', priority: 0.3, changeFrequency: 'yearly' },
 ];
 
-const CALCULATOR_EXAMPLES: PageEntry[] = btuExamples.map(({ slug }) => ({
-  path: `/tools/btu-calculator/examples/${slug}/`,
-  priority: 0.7,
-  changeFrequency: 'monthly',
-}));
+const CALCULATOR_EXAMPLES: PageEntry[] = [
+  ...btuExamples.map(({ slug }) => ({
+    path: `/tools/btu-calculator/examples/${slug}/`,
+    priority: 0.7,
+    changeFrequency: 'monthly' as const,
+  })),
+  ...acSizeExamples.map(({ slug }) => ({
+    path: `/tools/ac-size-calculator/examples/${slug}/`,
+    priority: 0.7,
+    changeFrequency: 'monthly' as const,
+  })),
+  ...heatPumpExamples.map(({ slug }) => ({
+    path: `/tools/heat-pump-size-calculator/examples/${slug}/`,
+    priority: 0.7,
+    changeFrequency: 'monthly' as const,
+  })),
+  ...atticRValueExamples.map(({ slug }) => ({
+    path: `/tools/attic-r-value-calculator/examples/${slug}/`,
+    priority: 0.7,
+    changeFrequency: 'monthly' as const,
+  })),
+  ...manualJExamples.map(({ slug }) => ({
+    path: `/tools/manual-j-calculator/examples/${slug}/`,
+    priority: 0.7,
+    changeFrequency: 'monthly' as const,
+  })),
+];
 
 const ALL_PAGES: PageEntry[] = [
   HOMEPAGE,

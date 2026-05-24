@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { Container } from '@/components/layout/Container';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
 import { Callout } from '@/components/article/Callout';
@@ -9,6 +10,7 @@ import {
   type AtticRValueInputs,
 } from '@/lib/calculators/attic-r-value';
 import { AtticRValueCalculatorClient } from './AtticRValueCalculatorClient';
+import { atticRValueExamples } from './examples-manifest';
 
 export const metadata: Metadata = {
   title: 'Attic R-Value Calculator: Depth × R-per-Inch by Insulation Type',
@@ -169,6 +171,35 @@ export default function Page() {
           <strong>Moisture damage.</strong> Wet insulation is approximately R-0 until dried. Visible
           water staining or mold indicates the layer may need removal, not just top-off.
         </p>
+      </section>
+
+      <section className="not-prose mt-12 border-t border-ink-300 pt-8">
+        <h2 className="text-2xl font-bold text-ink-900">Common scenarios</h2>
+        <p className="mt-2 max-w-prose text-ink-700">
+          Pre-computed R-value calculations for typical attic insulation scenarios across climate
+          zones. Each example shows total R-value, DOE comparison, and upgrade recommendation.
+        </p>
+        <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {atticRValueExamples.map((ex) => {
+            const exResult = calculateAtticRValue(ex.inputs);
+            return (
+              <li
+                key={ex.slug}
+                className="rounded-lg border border-ink-300 bg-white p-4 hover:border-brand"
+              >
+                <Link
+                  href={`/tools/attic-r-value-calculator/examples/${ex.slug}/`}
+                  className="block text-base font-semibold text-ink-900 hover:text-brand"
+                >
+                  {ex.title}
+                </Link>
+                <p className="mt-1 text-sm text-ink-600">
+                  R-{exResult.totalRValue.toFixed(1)} · zone {ex.inputs.climateZone}
+                </p>
+              </li>
+            );
+          })}
+        </ul>
       </section>
 
       <RelatedArticles items={RELATED} />

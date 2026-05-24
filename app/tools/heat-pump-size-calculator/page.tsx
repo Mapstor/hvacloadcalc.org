@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { Container } from '@/components/layout/Container';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
 import { Callout } from '@/components/article/Callout';
@@ -9,6 +10,7 @@ import {
   type HeatPumpInputs,
 } from '@/lib/calculators/heat-pump-size';
 import { HeatPumpSizeCalculatorClient } from './HeatPumpSizeCalculatorClient';
+import { heatPumpExamples } from './examples-manifest';
 
 export const metadata: Metadata = {
   title: 'Heat Pump Size Calculator: Tonnage by Climate and Square Footage',
@@ -175,6 +177,35 @@ export default function Page() {
           </a>{' '}
           for what that involves.
         </p>
+      </section>
+
+      <section className="not-prose mt-12 border-t border-ink-300 pt-8">
+        <h2 className="text-2xl font-bold text-ink-900">Common scenarios</h2>
+        <p className="mt-2 max-w-prose text-ink-700">
+          Pre-computed heat pump sizing for typical home sizes across climate zones, with and without
+          cold-climate equipment. Each example shows tonnage, balance point, and aux heat requirements.
+        </p>
+        <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {heatPumpExamples.map((ex) => {
+            const exResult = calculateHeatPumpSize(ex.inputs);
+            return (
+              <li
+                key={ex.slug}
+                className="rounded-lg border border-ink-300 bg-white p-4 hover:border-brand"
+              >
+                <Link
+                  href={`/tools/heat-pump-size-calculator/examples/${ex.slug}/`}
+                  className="block text-base font-semibold text-ink-900 hover:text-brand"
+                >
+                  {ex.title}
+                </Link>
+                <p className="mt-1 text-sm text-ink-600">
+                  {exResult.recommendedTons} tons, balance point {exResult.balancePointF}°F
+                </p>
+              </li>
+            );
+          })}
+        </ul>
       </section>
 
       <RelatedArticles items={RELATED} />

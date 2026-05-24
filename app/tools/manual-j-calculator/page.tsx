@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { Container } from '@/components/layout/Container';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
 import { Callout } from '@/components/article/Callout';
@@ -9,6 +10,7 @@ import {
   type ManualJInputs,
 } from '@/lib/calculators/manual-j';
 import { ManualJCalculatorClient } from './ManualJCalculatorClient';
+import { manualJExamples } from './examples-manifest';
 
 export const metadata: Metadata = {
   title: 'Manual J Load Calculator: Heating & Cooling Loads by Envelope',
@@ -188,6 +190,36 @@ export default function Page() {
           </a>{' '}
           for the accuracy claims this calculator makes and how we test against ACCA reference cases.
         </p>
+      </section>
+
+      <section className="not-prose mt-12 border-t border-ink-300 pt-8">
+        <h2 className="text-2xl font-bold text-ink-900">Common scenarios</h2>
+        <p className="mt-2 max-w-prose text-ink-700">
+          Pre-computed Manual J load calculations for typical home sizes, climate zones, and
+          construction eras. Each example shows the recommended equipment size and load breakdown.
+        </p>
+        <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {manualJExamples.map((ex) => {
+            const exResult = calculateManualJ(ex.inputs);
+            return (
+              <li
+                key={ex.slug}
+                className="rounded-lg border border-ink-300 bg-white p-4 hover:border-brand"
+              >
+                <Link
+                  href={`/tools/manual-j-calculator/examples/${ex.slug}/`}
+                  className="block text-base font-semibold text-ink-900 hover:text-brand"
+                >
+                  {ex.title}
+                </Link>
+                <p className="mt-1 text-sm text-ink-600">
+                  {exResult.recommendedCoolingTons} tons · heat {exResult.heatingLoadBtu.toLocaleString()}{' '}
+                  / cool {exResult.coolingLoadTotalBtu.toLocaleString()} BTU
+                </p>
+              </li>
+            );
+          })}
+        </ul>
       </section>
 
       <RelatedArticles items={RELATED} />

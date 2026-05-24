@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { Container } from '@/components/layout/Container';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
 import { Callout } from '@/components/article/Callout';
@@ -6,6 +7,7 @@ import { AuthorByline } from '@/components/article/AuthorByline';
 import { RelatedArticles } from '@/components/article/RelatedArticles';
 import { calculateBtu, type BtuInputs } from '@/lib/calculators/btu';
 import { BtuCalculatorClient } from '../btu-calculator/BtuCalculatorClient';
+import { acSizeExamples } from './examples-manifest';
 
 export const metadata: Metadata = {
   title: 'AC Size Calculator: Pick the Right BTU and Tonnage',
@@ -187,6 +189,36 @@ export default function Page() {
           </a>{' '}
           for the underlying calculation.
         </p>
+      </section>
+
+      <section className="not-prose mt-12 border-t border-ink-300 pt-8">
+        <h2 className="text-2xl font-bold text-ink-900">Common scenarios</h2>
+        <p className="mt-2 max-w-prose text-ink-700">
+          Pre-computed AC sizing for typical rooms, apartments, and houses. Each example shows the
+          recommended tonnage, equipment class, and full BTU calculation.
+        </p>
+        <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {acSizeExamples.map((ex) => {
+            const exResult = calculateBtu(ex.inputs);
+            return (
+              <li
+                key={ex.slug}
+                className="rounded-lg border border-ink-300 bg-white p-4 hover:border-brand"
+              >
+                <Link
+                  href={`/tools/ac-size-calculator/examples/${ex.slug}/`}
+                  className="block text-base font-semibold text-ink-900 hover:text-brand"
+                >
+                  {ex.title}
+                </Link>
+                <p className="mt-1 text-sm text-ink-600">
+                  {exResult.recommendedTons} ton{exResult.recommendedTons === 1 ? '' : 's'} (
+                  {exResult.recommendedBtu.toLocaleString()} BTU)
+                </p>
+              </li>
+            );
+          })}
+        </ul>
       </section>
 
       <RelatedArticles items={RELATED} />
