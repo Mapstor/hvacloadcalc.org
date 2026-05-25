@@ -206,10 +206,38 @@ export default async function ExamplePage({ params }: Props) {
           </>
         ) : null}
 
+        {example.insulationImpact ? (
+          <>
+            <h2>How insulation quality changes the answer</h2>
+            <p>{example.insulationImpact}</p>
+          </>
+        ) : null}
+
+        {example.occupancyImpact ? (
+          <>
+            <h2>How occupancy and lifestyle change the answer</h2>
+            <p>{example.occupancyImpact}</p>
+          </>
+        ) : null}
+
         {example.realWorldNotes ? (
           <>
             <h2>What the calculator does not capture</h2>
             <p>{example.realWorldNotes}</p>
+          </>
+        ) : null}
+
+        {example.commonMistakes ? (
+          <>
+            <h2>Common mistakes when sizing AC at this scale</h2>
+            <p>{example.commonMistakes}</p>
+          </>
+        ) : null}
+
+        {example.whenToUpgrade ? (
+          <>
+            <h2>When this calculator is enough — and when to upgrade to Manual J</h2>
+            <p>{example.whenToUpgrade}</p>
           </>
         ) : null}
 
@@ -237,6 +265,75 @@ export default async function ExamplePage({ params }: Props) {
           and does not include duct losses to unconditioned spaces.
         </p>
       </section>
+
+      {example.scenarios && example.scenarios.length > 0 ? (
+        <section className="mt-12 border-t border-ink-300 pt-8">
+          <h2 className="text-2xl font-bold text-ink-900">
+            {example.scenarios.length} worked scenarios for this size
+          </h2>
+          <p className="mt-2 max-w-prose text-ink-700">
+            Real-world scenarios showing how climate zone, insulation, sun exposure, occupancy, and
+            house type shift the recommendation. Each scenario corresponds to a region or
+            construction archetype where the calculator should be applied differently.
+          </p>
+          <div className="mt-8 space-y-10">
+            {example.scenarios.map((s, i) => {
+              const sResult = calculateBtu(s.inputs);
+              const sSpaceLabel = SPACE_LABELS[s.inputs.spaceType ?? 'bedroom'];
+              const sClimateLabel = CLIMATE_DESCRIPTIONS[s.inputs.climateZone];
+              const sInsulationLabel = INSULATION_LABELS[s.inputs.insulationLevel];
+              const sSunLabel = SUN_LABELS[s.inputs.sunExposure];
+              return (
+                <article key={i} className="rounded-lg border border-ink-300 bg-white p-6">
+                  <h3 className="text-xl font-semibold text-ink-900">{s.title}</h3>
+                  <p className="mt-1 text-sm font-medium text-ink-500">Common in: {s.location}</p>
+
+                  <dl className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2 text-sm md:grid-cols-3">
+                    <div>
+                      <dt className="font-medium text-ink-500">Square footage</dt>
+                      <dd className="text-ink-900">{s.inputs.squareFootage.toLocaleString()} sqft</dd>
+                    </div>
+                    <div>
+                      <dt className="font-medium text-ink-500">Climate</dt>
+                      <dd className="text-ink-900">{sClimateLabel}</dd>
+                    </div>
+                    <div>
+                      <dt className="font-medium text-ink-500">Space type</dt>
+                      <dd className="text-ink-900">{sSpaceLabel}</dd>
+                    </div>
+                    <div>
+                      <dt className="font-medium text-ink-500">Insulation</dt>
+                      <dd className="text-ink-900">{sInsulationLabel}</dd>
+                    </div>
+                    <div>
+                      <dt className="font-medium text-ink-500">Sun exposure</dt>
+                      <dd className="text-ink-900">{sSunLabel}</dd>
+                    </div>
+                    <div>
+                      <dt className="font-medium text-ink-500">Occupants</dt>
+                      <dd className="text-ink-900">{s.inputs.occupants}</dd>
+                    </div>
+                  </dl>
+
+                  <div className="mt-4 rounded-md border border-brand bg-brand/5 p-4">
+                    <p className="text-xs font-medium uppercase tracking-wide text-ink-500">
+                      Recommended
+                    </p>
+                    <p className="mt-1 text-2xl font-bold text-brand">
+                      {sResult.recommendedBtu.toLocaleString()} BTU
+                      <span className="ml-2 text-base font-medium text-ink-700">
+                        (≈ {sResult.recommendedTons} ton{sResult.recommendedTons === 1 ? '' : 's'})
+                      </span>
+                    </p>
+                  </div>
+
+                  <p className="mt-4 text-ink-700">{s.takeaway}</p>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      ) : null}
 
       {example.faq && example.faq.length > 0 ? <FAQ items={example.faq} /> : null}
 

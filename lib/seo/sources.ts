@@ -95,6 +95,36 @@ export const SOURCE_REGISTRY: Record<string, Source> = {
     year: '2023',
     url: 'https://www.energy.gov/energysaver/insulation-materials',
   },
+  'energy-star-central-ac-buying': {
+    id: 'energy-star-central-ac-buying',
+    title: 'Central Air Conditioner Buying Guide',
+    publisher: 'ENERGY STAR (US EPA / DOE)',
+    year: '2023',
+  },
+  'nrel-resstock': {
+    id: 'nrel-resstock',
+    title: 'ResStock: US Residential Building Stock Characterization',
+    publisher: 'National Renewable Energy Laboratory (NREL)',
+    year: '2024',
+  },
+  'doe-building-america': {
+    id: 'doe-building-america',
+    title: 'Building America Solution Center — HVAC Equipment Sizing',
+    publisher: 'US Department of Energy — Office of Energy Efficiency and Renewable Energy',
+    year: '2023',
+  },
+  'lbnl-air-leakage': {
+    id: 'lbnl-air-leakage',
+    title: 'Residential Air Leakage Diagnostics and Measurement',
+    publisher: 'Lawrence Berkeley National Laboratory — Indoor Environment Group',
+    year: '2022',
+  },
+  'bpi-1200': {
+    id: 'bpi-1200',
+    title: 'BPI-1200: Standard for Home Energy Audits',
+    publisher: 'Building Performance Institute',
+    year: '2023',
+  },
 };
 
 export function getSources(ids: readonly string[]): Source[] {
