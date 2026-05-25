@@ -5,8 +5,11 @@ import { Container } from '@/components/layout/Container';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
 import { Callout } from '@/components/article/Callout';
 import { AuthorByline } from '@/components/article/AuthorByline';
+import { FAQ } from '@/components/article/FAQ';
+import { Sources } from '@/components/article/Sources';
 import { calculateBtu } from '@/lib/calculators/btu';
 import { SITE } from '@/lib/seo/site';
+import { getSources } from '@/lib/seo/sources';
 import { BtuCalculatorClient } from '../../BtuCalculatorClient';
 import {
   btuExamples,
@@ -85,6 +88,7 @@ export default async function ExamplePage({ params }: Props) {
 
   const result = calculateBtu(example.inputs);
   const related = getRelatedExamples(slug, 5);
+  const sources = example.sourceIds ? getSources(example.sourceIds) : [];
   const spaceLabel = SPACE_LABELS[example.inputs.spaceType ?? 'bedroom'];
   const insulationLabel = INSULATION_LABELS[example.inputs.insulationLevel];
   const sunLabel = SUN_LABELS[example.inputs.sunExposure];
@@ -121,36 +125,35 @@ export default async function ExamplePage({ params }: Props) {
         For permit-grade central AC installation, get a Manual J from a licensed contractor.
       </Callout>
 
+      <section className="not-prose mt-8 rounded-lg border-2 border-brand bg-brand/5 p-6">
+        <p className="text-xs font-medium uppercase tracking-wide text-ink-500">Recommended</p>
+        <p className="mt-2 text-3xl font-bold text-brand">
+          {result.recommendedBtu.toLocaleString()}
+          <span className="ml-2 text-xl font-medium text-ink-700">BTU/hr</span>
+        </p>
+        <p className="mt-1 text-base text-ink-700">
+          ≈ {result.recommendedTons} ton{result.recommendedTons === 1 ? '' : 's'} cooling capacity
+        </p>
+        <p className="mt-2 text-sm text-ink-600">
+          Acceptable range: {result.acceptableRange.low.toLocaleString()}–
+          {result.acceptableRange.high.toLocaleString()} BTU/hr
+        </p>
+      </section>
+
       <section className="mt-8">
         <BtuCalculatorClient defaults={example.inputs} />
       </section>
 
       <section className="prose prose-slate mt-10 max-w-prose">
-        <h2>What this calculation is</h2>
-        <p>{example.scenario}</p>
+        <h2>{example.intro ? 'Overview' : 'What this calculation is'}</h2>
+        <p>{example.intro ?? example.scenario}</p>
 
-        <h2>The result</h2>
-        <ul>
-          <li>
-            Recommended capacity:{' '}
-            <strong>{result.recommendedBtu.toLocaleString()} BTU/hr</strong> (≈{' '}
-            {result.recommendedTons} ton{result.recommendedTons === 1 ? '' : 's'})
-          </li>
-          <li>
-            Acceptable range: {result.acceptableRange.low.toLocaleString()}–
-            {result.acceptableRange.high.toLocaleString()} BTU/hr
-          </li>
-          <li>
-            Equipment class:{' '}
-            {result.suggestedEquipmentClass === 'window'
-              ? 'window AC unit'
-              : result.suggestedEquipmentClass === 'window-or-portable'
-                ? 'window or portable AC'
-                : result.suggestedEquipmentClass === 'mini-split-or-window'
-                  ? 'mini split or large window unit'
-                  : 'central AC or mini split system'}
-          </li>
-        </ul>
+        {example.houseContext ? (
+          <>
+            <h2>Where this size comes up</h2>
+            <p>{example.houseContext}</p>
+          </>
+        ) : null}
 
         <h2>How this calculation was reached</h2>
         <p>
@@ -189,12 +192,33 @@ export default async function ExamplePage({ params }: Props) {
           </li>
         </ul>
 
+        {example.equipmentNotes ? (
+          <>
+            <h2>Equipment options at this size</h2>
+            <p>{example.equipmentNotes}</p>
+          </>
+        ) : null}
+
+        {example.climateVariation ? (
+          <>
+            <h2>How climate zone shifts the result</h2>
+            <p>{example.climateVariation}</p>
+          </>
+        ) : null}
+
+        {example.realWorldNotes ? (
+          <>
+            <h2>What the calculator does not capture</h2>
+            <p>{example.realWorldNotes}</p>
+          </>
+        ) : null}
+
         <h2>Adjust the inputs</h2>
         <p>
           The calculator above is interactive. Change any input — square footage, climate zone,
           ceiling, insulation, sun exposure, space type, occupants, or kitchen flag — and the result
-          updates live. Use the &ldquo;Reset to defaults&rdquo; link to return to the values shown on
-          this page.
+          updates live. Use &ldquo;Reset to defaults&rdquo; to return to the values shown on this
+          page.
         </p>
 
         <h2>Methodology</h2>
@@ -209,10 +233,12 @@ export default async function ExamplePage({ params }: Props) {
           <Link className="text-brand underline" href="/methodology/how-we-verify-manual-j/">
             our verification methodology
           </Link>
-          . Limitations: whole-room estimate only, does not perform room-by-room load calculation, and
-          does not include duct losses to unconditioned spaces.
+          . Limitations: whole-room estimate only, does not perform room-by-room load calculation,
+          and does not include duct losses to unconditioned spaces.
         </p>
       </section>
+
+      {example.faq && example.faq.length > 0 ? <FAQ items={example.faq} /> : null}
 
       <section className="not-prose mt-12 border-t border-ink-300 pt-8">
         <h2 className="text-2xl font-bold text-ink-900">Try other examples</h2>
@@ -246,6 +272,8 @@ export default async function ExamplePage({ params }: Props) {
           </Link>
         </p>
       </section>
+
+      {sources.length > 0 ? <Sources sources={sources} /> : null}
 
       <div className="mt-12 border-t border-ink-300 pt-8">
         <AuthorByline lastReviewed="2026-05-22" />

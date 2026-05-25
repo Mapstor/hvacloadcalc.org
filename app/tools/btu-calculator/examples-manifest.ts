@@ -1,4 +1,5 @@
 import type { BtuInputs } from '@/lib/calculators/btu';
+import type { FaqItem } from '@/components/seo/types';
 
 export interface BtuExample {
   slug: string;
@@ -7,6 +8,14 @@ export interface BtuExample {
   metaDescription: string;
   scenario: string;
   inputs: BtuInputs;
+  /** Optional expanded content fields. When present, the example page renders the deeper layout. */
+  intro?: string;
+  houseContext?: string;
+  equipmentNotes?: string;
+  climateVariation?: string;
+  realWorldNotes?: string;
+  faq?: FaqItem[];
+  sourceIds?: readonly string[];
 }
 
 export const btuExamples: readonly BtuExample[] = [
@@ -167,9 +176,9 @@ export const btuExamples: readonly BtuExample[] = [
     title: '1,500 Sq Ft House AC BTU',
     metaTitle: 'BTU for 1,500 Sq Ft House: AC Size and Worked Calculation',
     metaDescription:
-      'How many BTU does a 1,500 square foot house need? Worked calculation showing every factor that goes into AC sizing.',
+      'How many BTU does a 1,500 sq ft house need? 30,000 to 36,000 BTU (2.5 to 3 tons) for climate zone 4. Full worked calculation, equipment options, and climate-zone variation.',
     scenario:
-      'A 1,500 square foot home is the US median single-family house size, making this the most-searched BTU calculation. With average insulation in climate zone 4, expect a 2.5 to 3-ton (30,000 to 36,000 BTU) central AC. The calculation below uses living-room space type, 8-foot ceilings, and four occupants.',
+      'A 1,500 square foot home is the US median single-family house size, making this the most-searched BTU calculation.',
     inputs: {
       squareFootage: 1500,
       climateZone: '4',
@@ -180,6 +189,47 @@ export const btuExamples: readonly BtuExample[] = [
       isKitchen: false,
       spaceType: 'living-room',
     },
+    intro:
+      "A 1,500 square foot home is the most-searched size when homeowners look up AC sizing — and for good reason. The US Census American Community Survey shows the median single-family detached home falls between 1,500 and 2,200 square feet, with three-bedroom houses concentrated near the lower end of that range. The short answer for climate zone 4 (Mid-Atlantic, Ohio Valley): the calculator recommends 30,000 to 36,000 BTU, or 2.5 to 3 tons of cooling capacity. The longer answer — why the range, what shifts the number, which equipment to pick — is what this page works through.",
+    houseContext:
+      "Homes at the 1,500 sqft mark come in a few common archetypes. The most frequent is the three-bedroom ranch: single-story, 1,400 to 1,600 sqft, typically built between 1955 and 1985, with an attached garage that may or may not be cooled. Second most common is the small two-story Colonial or Cape Cod, 1,500 to 1,700 sqft total, where the bedrooms are upstairs and need to be cooled despite being naturally warmer than the lower level. A third archetype is the newer townhome (post-2000), typically 1,400 to 1,600 sqft with party walls on one or both sides — these have meaningfully lower cooling loads per square foot because shared walls do not contribute to envelope load. The calculator above assumes a free-standing single-family home, which is the worst case of the three. Townhome owners can typically size 10 to 15% smaller than the default recommendation.",
+    equipmentNotes:
+      "At 30,000 to 36,000 BTU, the equipment class is central AC or a multi-zone mini-split system. Window AC and portable units max out around 14,000 BTU and cannot reach this capacity from a single unit. Within central AC, the choice is between 2.5-ton and 3-ton equipment, with the right answer depending on three things: insulation quality, sun exposure, and the cost of being slightly oversized versus slightly undersized. For homes with average insulation and mixed sun exposure, 2.5-ton single-stage equipment hits the lower bound of the acceptable range and runs efficiently. For homes with heavy west-facing sun, poor insulation, or a partially-cooled basement that needs to be included, 3-ton is the better fit. Variable-speed (inverter) condensers handle either size more gracefully — they modulate output to match the actual load rather than cycling on and off — and tolerate slight oversizing better than single-stage units. SEER2 ratings of 15.2 or higher are the federal minimum for new central AC installations as of 2023 per the DOE SEER2 rule.",
+    climateVariation:
+      "The 1,500 sqft figure alone does not determine the AC size — climate zone shifts the result substantially. The same home in climate zone 2 (Gulf Coast) needs approximately 36,000 BTU (3 tons) because the higher cooling design temperature drives a larger sensible load and humidity is a much bigger fraction of total cooling demand. In climate zone 5 (northern states), the same home needs about 28,000 BTU (2.5 tons or slightly smaller). In climate zone 6 or 7, where cooling design temperatures sit in the mid-80s, a properly-sized AC for a 1,500 sqft home can be as small as 24,000 BTU (2 tons) — though most installs in those climates pair AC with heat pump or use a heat pump for both heating and cooling, where the heating load drives equipment size. Climate zone matters more than minor envelope variation; if you only know one input precisely, get the climate zone right.",
+    realWorldNotes:
+      "The calculator captures the major variables (size, climate, ceiling, insulation, sun, occupancy, space type), but several real-world factors affect actual cooling demand and equipment selection. Window orientation is one: a 1,500 sqft home with most windows on the south and west faces has a substantially higher peak cooling load than the same square footage with north-and-east-facing windows, even at the same total window area. Ductwork condition is another: homes with attic ductwork that is poorly insulated or leaky can lose 20 to 30% of cooling capacity to the unconditioned attic, effectively requiring a larger AC than the load alone would indicate. Internal gains from specific appliances (server racks for home offices, dual ovens for home chefs, multiple large televisions) push the load up by 1,000 to 4,000 BTU each. For permit-grade sizing or a high-stakes equipment decision (the AC is a 15-year, $5,000 to $15,000 purchase), a full Manual J load calculation accounts for all of these and is worth the small extra effort.",
+    faq: [
+      {
+        q: 'What size AC do I need for a 1,500 sq ft house?',
+        a: 'In most US climates, a 1,500 sq ft house needs a 2.5 to 3-ton central AC (30,000 to 36,000 BTU). The exact number depends on climate zone, insulation quality, sun exposure, and ceiling height. Zone 4 (Mid-Atlantic) typically lands at 2.5 tons; zone 2 (Gulf Coast) typically needs 3 tons; zone 5 (northern states) often goes 2 to 2.5 tons.',
+      },
+      {
+        q: 'Is a 2-ton AC enough for a 1,500 sq ft house?',
+        a: 'A 2-ton (24,000 BTU) AC is typically undersized for a 1,500 sq ft home in climate zones 2, 3, or 4 — the unit will run continuously on the hottest days without quite reaching setpoint. A 2-ton unit can work in zone 5 or colder climates with good insulation, modest occupancy, and shaded exposure. In zone 1 or 2 with average insulation, a 2-ton AC will struggle.',
+      },
+      {
+        q: 'How many tons of AC for 1,500 sq ft?',
+        a: 'The standard answer is 2.5 to 3 tons of central AC for a 1,500 sq ft home in average US climate conditions. Multiply tons by 12,000 to get BTU per hour: 2.5 tons = 30,000 BTU, 3 tons = 36,000 BTU. The "1 ton per 600 sq ft" rule of thumb that contractors sometimes quote is a rough approximation that ignores climate and insulation — use the calculator above for a real estimate.',
+      },
+      {
+        q: 'Why does my contractor recommend a 4-ton AC for my 1,500 sq ft house?',
+        a: 'Two common reasons: (1) the contractor used a rule of thumb that overestimates by half a ton or more, especially in moderate climates, or (2) the home has poor insulation, lots of unshaded south or west glass, or attic ductwork that leaks significantly, which can legitimately push a 1,500 sq ft home into 4-ton territory. Ask the contractor for the load calculation. If they cannot show one, get a second quote. An oversized AC short-cycles, controls humidity poorly, and wears out faster.',
+      },
+      {
+        q: 'Will a 2.5-ton AC be too small for 1,500 sq ft in a hot climate?',
+        a: 'In climate zone 1 or 2 (south Florida, Gulf Coast, lower south), a 2.5-ton AC is at the small end of acceptable for 1,500 sq ft. It will work if insulation is good and sun exposure is moderate, but expect long runtimes during heat waves. 3-ton is the more comfortable pick for these climates. In zones 3 through 6, a 2.5-ton AC is well-sized for a 1,500 sq ft home with average construction.',
+      },
+    ],
+    sourceIds: [
+      'energy-star-room-ac',
+      'doe-central-ac',
+      'doe-sizing',
+      'acca-manual-j-8',
+      'us-census-acs-housing',
+      'doe-seer2-rule',
+      'ahri-210-240',
+    ],
   },
   {
     slug: '1800-sq-ft-house',
