@@ -5,8 +5,11 @@ import { Container } from '@/components/layout/Container';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
 import { Callout } from '@/components/article/Callout';
 import { AuthorByline } from '@/components/article/AuthorByline';
+import { FAQ } from '@/components/article/FAQ';
+import { Sources } from '@/components/article/Sources';
 import { calculateHeatPumpSize } from '@/lib/calculators/heat-pump-size';
 import { SITE } from '@/lib/seo/site';
+import { getSources } from '@/lib/seo/sources';
 import { HeatPumpSizeCalculatorClient } from '../../HeatPumpSizeCalculatorClient';
 import {
   heatPumpExamples,
@@ -48,6 +51,23 @@ const RECOMMENDATION_DESCRIPTION: Record<string, string> = {
   'cold-climate-required': 'Cold-climate certified (NEEP CCASHP listed) required for this zone',
 };
 
+const INSULATION_LABELS: Record<string, string> = {
+  poor: 'poor (older home, below code)',
+  average: 'average (meets current code)',
+  good: 'good (above code)',
+};
+
+const CLIMATE_DESCRIPTIONS: Record<string, string> = {
+  '1': 'zone 1',
+  '2': 'zone 2 (Gulf Coast)',
+  '3': 'zone 3 (mid-south)',
+  '4': 'zone 4 (Mid-Atlantic)',
+  '5': 'zone 5 (northern states)',
+  '6': 'zone 6 (far north)',
+  '7': 'zone 7 (very cold)',
+  '8': 'zone 8 (interior Alaska)',
+};
+
 export default async function ExamplePage({ params }: Props) {
   const { slug } = await params;
   const example = findHeatPumpExampleBySlug(slug);
@@ -57,6 +77,7 @@ export default async function ExamplePage({ params }: Props) {
 
   const result = calculateHeatPumpSize(example.inputs);
   const related = getRelatedHeatPumpExamples(slug, 5);
+  const sources = example.sourceIds ? getSources(example.sourceIds) : [];
 
   const breadcrumbs = [
     { name: 'Home', url: '/' },
@@ -73,8 +94,8 @@ export default async function ExamplePage({ params }: Props) {
         <h1 className="text-3xl font-bold text-ink-900 sm:text-4xl">{example.title}</h1>
         <p className="mt-3 max-w-prose text-lg text-ink-700">
           Worked heat pump sizing for a {example.inputs.squareFootage.toLocaleString()} square foot
-          home in IECC climate zone {example.inputs.climateZone}. Includes balance point and aux heat
-          capacity estimates.
+          home in IECC climate zone {example.inputs.climateZone}. Tonnage, balance point, and aux
+          heat capacity.
         </p>
         <div className="mt-4">
           <AuthorByline lastReviewed="2026-05-22" size="sm" />
@@ -82,8 +103,8 @@ export default async function ExamplePage({ params }: Props) {
       </header>
 
       <Callout type="planning-grade" title="Planning-grade tool">
-        Heat pump sizing handles two loads (cooling and heating). For permit-grade equipment selection,
-        get a Manual J load calculation from a licensed contractor. See{' '}
+        Heat pump sizing handles two loads (cooling and heating). For permit-grade equipment
+        selection, get a Manual J load calculation from a licensed contractor. See{' '}
         <Link className="text-brand underline" href="/heat-pump/sizing/">
           the heat pump sizing article
         </Link>{' '}
@@ -122,13 +143,18 @@ export default async function ExamplePage({ params }: Props) {
       </section>
 
       <section className="prose prose-slate mt-10 max-w-prose">
-        <h2>What this calculation is</h2>
-        <p>{example.scenario}</p>
+        <h2>{example.intro ? 'Overview' : 'What this calculation is'}</h2>
+        <p>{example.intro ?? example.scenario}</p>
+
+        {example.houseContext ? (
+          <>
+            <h2>Where this size comes up</h2>
+            <p>{example.houseContext}</p>
+          </>
+        ) : null}
 
         <h2>How this calculation was reached</h2>
-        <p>
-          Heat pump sizing must handle both cooling and heating loads. The calculator:
-        </p>
+        <p>Heat pump sizing must handle both cooling and heating loads. The calculator:</p>
         <ol>
           <li>Computes the cooling load using the BTU calculator methodology</li>
           <li>
@@ -153,13 +179,7 @@ export default async function ExamplePage({ params }: Props) {
             {result.heatingDesignTempF}°F
           </li>
           <li>
-            Driving load:{' '}
-            <strong>
-              {result.drivingLoad}{' '}
-              {result.drivingLoad === 'balanced'
-                ? '(within 15% of each other)'
-                : `(${result.drivingLoad === 'heating' ? '>15%' : '>15%'} larger)`}
-            </strong>
+            Driving load: <strong>{result.drivingLoad}</strong>
           </li>
           <li>
             Recommended equipment size:{' '}
@@ -168,8 +188,7 @@ export default async function ExamplePage({ params }: Props) {
             </strong>
           </li>
           <li>
-            Balance point: <strong>{result.balancePointF}°F</strong> — heat pump alone keeps up above
-            this temperature
+            Balance point: <strong>{result.balancePointF}°F</strong>
           </li>
           <li>
             Aux heat at design ({result.heatingDesignTempF}°F):{' '}
@@ -181,30 +200,59 @@ export default async function ExamplePage({ params }: Props) {
           </li>
         </ul>
 
-        <h2>Standard vs cold-climate equipment</h2>
-        <p>
-          Standard heat pumps lose substantial heating capacity at low temperatures: about 60% of rated
-          at 17°F. Cold-climate (NEEP CCASHP listed) models maintain about 85% at the same
-          temperature. Toggle the &ldquo;Cold-climate equipment&rdquo; checkbox above to see how the
-          balance point and aux heat capacity change.
-        </p>
-        <p>
-          For deeper discussion of cold-climate behavior, see{' '}
-          <Link className="text-brand underline" href="/heat-pump/cold-climate/defrost-cycle/">
-            heat pump defrost cycles
-          </Link>{' '}
-          and{' '}
-          <Link className="text-brand underline" href="/heat-pump/aux-heat/">
-            heat pump aux heat
-          </Link>
-          .
-        </p>
+        {example.equipmentNotes ? (
+          <>
+            <h2>Equipment options at this size</h2>
+            <p>{example.equipmentNotes}</p>
+          </>
+        ) : null}
+
+        {example.climateVariation ? (
+          <>
+            <h2>How climate zone shifts the result</h2>
+            <p>{example.climateVariation}</p>
+          </>
+        ) : null}
+
+        {example.insulationImpact ? (
+          <>
+            <h2>How insulation quality changes the answer</h2>
+            <p>{example.insulationImpact}</p>
+          </>
+        ) : null}
+
+        {example.occupancyImpact ? (
+          <>
+            <h2>How occupancy and lifestyle change the answer</h2>
+            <p>{example.occupancyImpact}</p>
+          </>
+        ) : null}
+
+        {example.realWorldNotes ? (
+          <>
+            <h2>What the calculator does not capture</h2>
+            <p>{example.realWorldNotes}</p>
+          </>
+        ) : null}
+
+        {example.commonMistakes ? (
+          <>
+            <h2>Common mistakes when sizing heat pumps at this scale</h2>
+            <p>{example.commonMistakes}</p>
+          </>
+        ) : null}
+
+        {example.whenToUpgrade ? (
+          <>
+            <h2>When this calculator is enough — and when to upgrade to Manual J</h2>
+            <p>{example.whenToUpgrade}</p>
+          </>
+        ) : null}
 
         <h2>Adjust the inputs</h2>
         <p>
           The calculator above is interactive. Change square footage, climate zone, insulation, sun
-          exposure, occupancy, or toggle cold-climate equipment to see how the result shifts. Use
-          &ldquo;Reset to defaults&rdquo; to return to this example.
+          exposure, occupancy, or toggle cold-climate equipment to see how the result shifts.
         </p>
 
         <h2>Methodology</h2>
@@ -214,10 +262,85 @@ export default async function ExamplePage({ params }: Props) {
             heat pump sizing article
           </Link>
           , using climate-zone heating factors calibrated against ASHRAE 169 design temperatures and
-          ACCA Manual J reference cases. For permit-grade equipment specification on a new install,
-          full Manual J + Manual S done by a contractor is the correct workflow.
+          ACCA Manual J reference cases.
         </p>
       </section>
+
+      {example.scenarios && example.scenarios.length > 0 ? (
+        <section className="mt-12 border-t border-ink-300 pt-8">
+          <h2 className="text-2xl font-bold text-ink-900">
+            {example.scenarios.length} worked heat pump scenarios at this house size and zone
+          </h2>
+          <p className="mt-2 max-w-prose text-ink-700">
+            Real heat pump equipment decisions showing how the size, balance point, and aux heat
+            requirement shift across equipment class, envelope, and architecture.
+          </p>
+          <div className="mt-8 space-y-10">
+            {example.scenarios.map((s, i) => {
+              const sResult = calculateHeatPumpSize(s.inputs);
+              const sClimateLabel = CLIMATE_DESCRIPTIONS[s.inputs.climateZone];
+              const sInsulationLabel = INSULATION_LABELS[s.inputs.insulationLevel];
+              return (
+                <article key={i} className="rounded-lg border border-ink-300 bg-white p-6">
+                  <h3 className="text-xl font-semibold text-ink-900">{s.title}</h3>
+                  <p className="mt-1 text-sm font-medium text-ink-500">Common in: {s.location}</p>
+
+                  <dl className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2 text-sm md:grid-cols-3">
+                    <div>
+                      <dt className="font-medium text-ink-500">Square footage</dt>
+                      <dd className="text-ink-900">{s.inputs.squareFootage.toLocaleString()} sqft</dd>
+                    </div>
+                    <div>
+                      <dt className="font-medium text-ink-500">Climate</dt>
+                      <dd className="text-ink-900">{sClimateLabel}</dd>
+                    </div>
+                    <div>
+                      <dt className="font-medium text-ink-500">Insulation</dt>
+                      <dd className="text-ink-900">{sInsulationLabel}</dd>
+                    </div>
+                    <div>
+                      <dt className="font-medium text-ink-500">Equipment class</dt>
+                      <dd className="text-ink-900">
+                        {s.inputs.coldClimateEquipment ? 'Cold-climate (CCASHP)' : 'Standard'}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="font-medium text-ink-500">Occupants</dt>
+                      <dd className="text-ink-900">{s.inputs.occupants}</dd>
+                    </div>
+                    <div>
+                      <dt className="font-medium text-ink-500">Sun exposure</dt>
+                      <dd className="text-ink-900">{s.inputs.sunExposure}</dd>
+                    </div>
+                  </dl>
+
+                  <div className="mt-4 rounded-md border border-brand bg-brand/5 p-4">
+                    <p className="text-xs font-medium uppercase tracking-wide text-ink-500">
+                      Recommended
+                    </p>
+                    <p className="mt-1 text-2xl font-bold text-brand">
+                      {sResult.recommendedTons} ton{sResult.recommendedTons === 1 ? '' : 's'}
+                      <span className="ml-2 text-base font-medium text-ink-700">
+                        ({sResult.recommendedSizeBtu.toLocaleString()} BTU)
+                      </span>
+                    </p>
+                    <p className="mt-1 text-sm text-ink-700">
+                      Balance point {sResult.balancePointF}°F · Aux at design{' '}
+                      {sResult.auxHeatAtDesignBtu === 0
+                        ? 'none'
+                        : `${sResult.auxHeatAtDesignBtu.toLocaleString()} BTU`}
+                    </p>
+                  </div>
+
+                  <p className="mt-4 text-ink-700">{s.takeaway}</p>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      ) : null}
+
+      {example.faq && example.faq.length > 0 ? <FAQ items={example.faq} /> : null}
 
       <section className="not-prose mt-12 border-t border-ink-300 pt-8">
         <h2 className="text-2xl font-bold text-ink-900">Try other heat pump sizing examples</h2>
@@ -251,6 +374,8 @@ export default async function ExamplePage({ params }: Props) {
           </Link>
         </p>
       </section>
+
+      {sources.length > 0 ? <Sources sources={sources} /> : null}
 
       <div className="mt-12 border-t border-ink-300 pt-8">
         <AuthorByline lastReviewed="2026-05-22" />
