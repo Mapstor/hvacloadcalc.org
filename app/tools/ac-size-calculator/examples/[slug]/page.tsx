@@ -5,8 +5,11 @@ import { Container } from '@/components/layout/Container';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
 import { Callout } from '@/components/article/Callout';
 import { AuthorByline } from '@/components/article/AuthorByline';
+import { FAQ } from '@/components/article/FAQ';
+import { Sources } from '@/components/article/Sources';
 import { calculateBtu } from '@/lib/calculators/btu';
 import { SITE } from '@/lib/seo/site';
+import { getSources } from '@/lib/seo/sources';
 import { BtuCalculatorClient } from '../../../btu-calculator/BtuCalculatorClient';
 import {
   acSizeExamples,
@@ -49,6 +52,40 @@ const EQUIPMENT_CLASS_DETAIL: Record<string, string> = {
   central: 'Central AC system or mini split (the calculator falls in central-AC tonnage range)',
 };
 
+const SPACE_LABELS: Record<string, string> = {
+  bedroom: 'bedroom',
+  'living-room': 'living room',
+  kitchen: 'kitchen',
+  'home-office': 'home office',
+  'sun-room': 'sun room',
+  'basement-above-grade': 'basement (above grade)',
+  'basement-below-grade': 'basement (below grade)',
+  'attic-or-second-floor': 'attic or second floor',
+};
+
+const INSULATION_LABELS: Record<string, string> = {
+  poor: 'poor (older home, below current code)',
+  average: 'average (meets current code)',
+  good: 'good (above code, recently insulated)',
+};
+
+const SUN_LABELS: Record<string, string> = {
+  heavy: 'heavy (south or west facing)',
+  mixed: 'mixed (typical)',
+  shaded: 'heavily shaded',
+};
+
+const CLIMATE_DESCRIPTIONS: Record<string, string> = {
+  '1': 'zone 1 (tropical south Florida, Hawaii)',
+  '2': 'zone 2 (Gulf Coast, lower south)',
+  '3': 'zone 3 (mid-south, parts of California)',
+  '4': 'zone 4 (Mid-Atlantic, Ohio Valley)',
+  '5': 'zone 5 (northern states)',
+  '6': 'zone 6 (northern Midwest, New England, Rockies)',
+  '7': 'zone 7 (northern Minnesota, mountain west)',
+  '8': 'zone 8 (interior Alaska)',
+};
+
 export default async function ExamplePage({ params }: Props) {
   const { slug } = await params;
   const example = findAcSizeExampleBySlug(slug);
@@ -58,6 +95,7 @@ export default async function ExamplePage({ params }: Props) {
 
   const result = calculateBtu(example.inputs);
   const related = getRelatedAcSizeExamples(slug, 5);
+  const sources = example.sourceIds ? getSources(example.sourceIds) : [];
 
   const breadcrumbs = [
     { name: 'Home', url: '/' },
@@ -113,8 +151,15 @@ export default async function ExamplePage({ params }: Props) {
       </section>
 
       <section className="prose prose-slate mt-10 max-w-prose">
-        <h2>What this calculation is</h2>
-        <p>{example.scenario}</p>
+        <h2>{example.intro ? 'Overview' : 'What this calculation is'}</h2>
+        <p>{example.intro ?? example.scenario}</p>
+
+        {example.houseContext ? (
+          <>
+            <h2>Where this size comes up</h2>
+            <p>{example.houseContext}</p>
+          </>
+        ) : null}
 
         <h2>How this calculation was reached</h2>
         <p>
@@ -155,6 +200,55 @@ export default async function ExamplePage({ params }: Props) {
           </li>
         </ul>
 
+        {example.equipmentNotes ? (
+          <>
+            <h2>Equipment options at this size</h2>
+            <p>{example.equipmentNotes}</p>
+          </>
+        ) : null}
+
+        {example.climateVariation ? (
+          <>
+            <h2>How climate zone shifts the result</h2>
+            <p>{example.climateVariation}</p>
+          </>
+        ) : null}
+
+        {example.insulationImpact ? (
+          <>
+            <h2>How insulation quality changes the answer</h2>
+            <p>{example.insulationImpact}</p>
+          </>
+        ) : null}
+
+        {example.occupancyImpact ? (
+          <>
+            <h2>How occupancy and lifestyle change the answer</h2>
+            <p>{example.occupancyImpact}</p>
+          </>
+        ) : null}
+
+        {example.realWorldNotes ? (
+          <>
+            <h2>What the calculator does not capture</h2>
+            <p>{example.realWorldNotes}</p>
+          </>
+        ) : null}
+
+        {example.commonMistakes ? (
+          <>
+            <h2>Common mistakes when sizing AC at this scale</h2>
+            <p>{example.commonMistakes}</p>
+          </>
+        ) : null}
+
+        {example.whenToUpgrade ? (
+          <>
+            <h2>When this calculator is enough — and when to upgrade to Manual J</h2>
+            <p>{example.whenToUpgrade}</p>
+          </>
+        ) : null}
+
         <h2>Right-sizing matters</h2>
         <p>
           An AC unit sized at the recommended capacity runs efficiently and controls humidity. An
@@ -190,6 +284,76 @@ export default async function ExamplePage({ params }: Props) {
         </p>
       </section>
 
+      {example.scenarios && example.scenarios.length > 0 ? (
+        <section className="mt-12 border-t border-ink-300 pt-8">
+          <h2 className="text-2xl font-bold text-ink-900">
+            {example.scenarios.length} worked AC sizing scenarios at this house size
+          </h2>
+          <p className="mt-2 max-w-prose text-ink-700">
+            Real equipment-decision scenarios showing how the AC choice shifts with situation:
+            replacement context, equipment class, efficiency tier, incentives, and zoning.
+          </p>
+          <div className="mt-8 space-y-10">
+            {example.scenarios.map((s, i) => {
+              const sResult = calculateBtu(s.inputs);
+              const sSpaceLabel = SPACE_LABELS[s.inputs.spaceType ?? 'bedroom'];
+              const sClimateLabel = CLIMATE_DESCRIPTIONS[s.inputs.climateZone];
+              const sInsulationLabel = INSULATION_LABELS[s.inputs.insulationLevel];
+              const sSunLabel = SUN_LABELS[s.inputs.sunExposure];
+              return (
+                <article key={i} className="rounded-lg border border-ink-300 bg-white p-6">
+                  <h3 className="text-xl font-semibold text-ink-900">{s.title}</h3>
+                  <p className="mt-1 text-sm font-medium text-ink-500">Common in: {s.location}</p>
+
+                  <dl className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2 text-sm md:grid-cols-3">
+                    <div>
+                      <dt className="font-medium text-ink-500">Square footage</dt>
+                      <dd className="text-ink-900">{s.inputs.squareFootage.toLocaleString()} sqft</dd>
+                    </div>
+                    <div>
+                      <dt className="font-medium text-ink-500">Climate</dt>
+                      <dd className="text-ink-900">{sClimateLabel}</dd>
+                    </div>
+                    <div>
+                      <dt className="font-medium text-ink-500">Space type</dt>
+                      <dd className="text-ink-900">{sSpaceLabel}</dd>
+                    </div>
+                    <div>
+                      <dt className="font-medium text-ink-500">Insulation</dt>
+                      <dd className="text-ink-900">{sInsulationLabel}</dd>
+                    </div>
+                    <div>
+                      <dt className="font-medium text-ink-500">Sun exposure</dt>
+                      <dd className="text-ink-900">{sSunLabel}</dd>
+                    </div>
+                    <div>
+                      <dt className="font-medium text-ink-500">Occupants</dt>
+                      <dd className="text-ink-900">{s.inputs.occupants}</dd>
+                    </div>
+                  </dl>
+
+                  <div className="mt-4 rounded-md border border-brand bg-brand/5 p-4">
+                    <p className="text-xs font-medium uppercase tracking-wide text-ink-500">
+                      Recommended
+                    </p>
+                    <p className="mt-1 text-2xl font-bold text-brand">
+                      {sResult.recommendedTons} ton{sResult.recommendedTons === 1 ? '' : 's'}
+                      <span className="ml-2 text-base font-medium text-ink-700">
+                        ({sResult.recommendedBtu.toLocaleString()} BTU)
+                      </span>
+                    </p>
+                  </div>
+
+                  <p className="mt-4 text-ink-700">{s.takeaway}</p>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      ) : null}
+
+      {example.faq && example.faq.length > 0 ? <FAQ items={example.faq} /> : null}
+
       <section className="not-prose mt-12 border-t border-ink-300 pt-8">
         <h2 className="text-2xl font-bold text-ink-900">Try other AC sizing examples</h2>
         <p className="mt-2 max-w-prose text-ink-700">
@@ -223,6 +387,8 @@ export default async function ExamplePage({ params }: Props) {
           </Link>
         </p>
       </section>
+
+      {sources.length > 0 ? <Sources sources={sources} /> : null}
 
       <div className="mt-12 border-t border-ink-300 pt-8">
         <AuthorByline lastReviewed="2026-05-22" />
