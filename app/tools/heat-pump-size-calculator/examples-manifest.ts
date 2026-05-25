@@ -8,6 +8,63 @@ export interface HeatPumpScenarioEntry {
   takeaway: string;
 }
 
+export interface Archetype {
+  title: string;
+  era: string;
+  characteristics: readonly string[];
+  loadProfile: string;
+}
+
+export interface EquipmentOption {
+  name: string;
+  tagline: string;
+  costRange: string;
+  capacity17F?: string;
+  balancePoint?: string;
+  bestFor: string;
+  pros: readonly string[];
+  cons: readonly string[];
+}
+
+export interface ClimateRow {
+  zone: string;
+  cities: string;
+  designTemp: string;
+  loadRatio: string;
+  equipment: string;
+  auxNotes: string;
+}
+
+export interface InsulationLevelDetail {
+  label: string;
+  envelope: string;
+  heatingLoad: string;
+  equipment: string;
+}
+
+export interface InsulationLevels {
+  poor: InsulationLevelDetail;
+  average: InsulationLevelDetail;
+  good: InsulationLevelDetail;
+}
+
+export interface AdditionalConsideration {
+  title: string;
+  description: string;
+  linkText?: string;
+  linkUrl?: string;
+}
+
+export interface Mistake {
+  title: string;
+  description: string;
+}
+
+export interface UpgradeDecision {
+  useThisFor: readonly string[];
+  upgradeFor: readonly string[];
+}
+
 export interface HeatPumpExample {
   slug: string;
   title: string;
@@ -16,14 +73,14 @@ export interface HeatPumpExample {
   scenario: string;
   inputs: HeatPumpInputs;
   intro?: string;
-  houseContext?: string;
-  equipmentNotes?: string;
-  climateVariation?: string;
-  insulationImpact?: string;
-  occupancyImpact?: string;
-  realWorldNotes?: string;
-  commonMistakes?: string;
-  whenToUpgrade?: string;
+  archetypes?: readonly Archetype[];
+  equipmentOptions?: readonly EquipmentOption[];
+  climateTable?: readonly ClimateRow[];
+  insulationLevels?: InsulationLevels;
+  occupancyNotes?: string;
+  additionalConsiderations?: readonly AdditionalConsideration[];
+  mistakes?: readonly Mistake[];
+  upgradeDecision?: UpgradeDecision;
   scenarios?: HeatPumpScenarioEntry[];
   faq?: FaqItem[];
   sourceIds?: readonly string[];
@@ -70,19 +127,227 @@ export const heatPumpExamples: readonly HeatPumpExample[] = [
       coldClimateEquipment: false,
     },
     intro:
-      "Heat pump sizing for a 1,500 square foot home is the most-searched heat pump sizing query because the US median single-family home falls in this range per the Census American Community Survey. The calculator's recommendation shifts substantially with climate zone: a 1,500 sqft home in IECC zone 2 (Gulf Coast) needs roughly 3 tons of equipment driven by cooling load, while the same home in zone 6 (Minneapolis, Buffalo) needs roughly 3 tons driven by heating load — same tonnage, very different operating profile. The 10 worked use cases below cover the most common climate, envelope, and equipment combinations a homeowner faces when sizing a heat pump at this house size, including cold-climate (NEEP CCASHP listed) equipment selection, dual-fuel architecture, and Inflation Reduction Act incentive stacking.",
-    houseContext:
-      "1,500 sqft homes account for roughly 18 percent of US single-family stock per NREL ResStock data, concentrated in three archetypes: three-bedroom ranches (1950s-1980s), small two-story Colonials and Cape Cods (1940s-1960s), and modern townhomes (post-2000). Each has different envelope and ductwork characteristics that affect heat pump equipment selection. The mid-century ranch typically has R-7 to R-11 walls and R-19 attic with original or first-replacement windows — heating loads in zone 5 run around 33,000 BTU at design. The small two-story has more wall area per square foot (taller envelope) — heating load can run 10 percent higher than a ranch of the same total square footage. The modern townhome has 40 percent less exterior wall area because of party walls — heating load runs about 15 percent lower than the calculator's default for a free-standing home. These archetypal differences shift heat pump tonnage by half a ton in either direction at this house size.",
-    equipmentNotes:
-      "Equipment at 2.5-ton heat pump size splits into three categories. Standard (non-CCASHP) heat pumps: $5,500-$8,500 installed, deliver about 60 percent of rated heating capacity at 17°F per ENERGY STAR data. Balance point with this equipment in zone 5: high 20s°F. Adequate for milder climates (zones 3-4) and rare-extreme zone 5 areas; in cold zone 5 areas (Minneapolis, Buffalo, Burlington), aux heat fires too frequently. Cold-climate certified (NEEP CCASHP listed) heat pumps: $8,500-$13,000 installed, deliver 85 percent at 17°F and 70 percent at 5°F. Balance point drops to low teens°F — dramatically less aux heat runtime. NEEP maintains the public CCASHP qualified products list at ashp.neep.org. Dual-fuel (heat pump + gas furnace backup): $10,000-$16,000 installed. Heat pump handles cooling and shoulder-season heating; furnace takes over below the economic crossover temperature (typically 30-35°F). Best architecture in markets with cheap natural gas and expensive electricity, but Inflation Reduction Act incentives increasingly favor all-electric heat-pump-only installs. The 25C federal tax credit pays $2,000 for qualifying heat pumps; state and utility rebates add $500-$4,000 depending on jurisdiction.",
-    climateVariation:
-      "The 1,500 sqft figure plus climate zone determines equipment selection. Per ASHRAE Standard 169-2020 design temperatures, the heating-to-cooling load ratio shifts dramatically across zones: zone 2 has heating load roughly 0.5× cooling (cooling drives equipment); zone 4 has heating about 1.0× cooling (balanced); zone 5 has heating 1.3× cooling (heating drives); zone 6 has heating 1.6× cooling; zone 7 has heating 1.9× cooling. The implication for equipment: in cooling-dominated zones (1-3), equipment sized to cooling load handles heating easily and aux heat sees minimal use. In balanced zones (4), either heating or cooling can drive sizing depending on envelope details. In heating-dominated zones (5+), heating load drives equipment selection, and the cold-temperature capacity retention of the heat pump determines aux heat runtime. NEEP CCASHP testing protocols specifically measure capacity at 47°F, 17°F, and 5°F, plus rare-extreme conditions, providing the right comparison data for cold-climate equipment decisions.",
-    realWorldNotes:
-      "The calculator captures climate zone, envelope rating, and house size but does not directly model two factors that materially affect heat pump performance. First: defrost cycle behavior. Heat pumps in cold climates periodically reverse refrigerant flow to defrost the outdoor coil; during defrost (typically 3-10 minutes every 30-90 minutes in cold weather), the unit pulls heat from the home rather than delivering it. CCASHP models manage defrost more gracefully than standard equipment per NEEP testing — fewer defrost cycles in identical conditions, shorter cycle duration, and better resistance to ice buildup. See the article on heat pump defrost cycles for the full mechanism. Second: duct losses. Per DOE Building America research, attic ductwork that's leaky or poorly insulated can lose 25 to 35 percent of delivered heating capacity in cold-weather operation — even more than in cooling mode because the temperature differential is larger. A heat pump installed in a home with leaky attic ducts delivers a fraction of its rated capacity to conditioned space, effectively requiring larger equipment. Manual D-compliant duct sealing typically pays back faster on heat pump installs than AC-only installs.",
-    commonMistakes:
-      "Five common errors when sizing heat pumps for 1,500 sqft homes. First: sizing to cooling load only. A 1,500 sqft home in zone 5 has heating load roughly 1.3× cooling; sizing to cooling leaves heating capacity short, forcing aux heat to fire frequently. Aux heat (electric resistance) costs 2-3× more per BTU than heat pump heat at typical electricity rates — significant operating cost penalty. Second: skipping the CCASHP question in zones 5+. Standard equipment works in zone 5 but produces a balance point in the high 20s°F, meaning aux heat fires for most January and February operating hours. CCASHP shifts that balance point to the teens and dramatically reduces aux runtime. The CCASHP premium typically pays back in 7-12 years through reduced electricity bills, often less with stacked incentives. Third: incorrect aux heat sizing. Aux heat strip kits come in 5kW, 10kW, 15kW, 20kW standard sizes. Sizing aux to handle the full heating load at design temperature requires 10-15kW for a 2.5-ton heat pump in this size home. Undersized aux means the unit cannot keep up on coldest design days; oversized aux unnecessarily increases electrical service load. Fourth: ignoring the electrical service. Heat pumps with aux heat strips can draw 50-80 amps continuous in heating mode at design conditions; older 100-amp services struggle. Service upgrade ($1,500-$4,000) may be required before installation. Fifth: not running the dual-load calculation. AC sizing alone gives the wrong answer for heat pumps. Use this calculator, not the BTU or AC sizing calculator, for heat pump equipment decisions.",
-    whenToUpgrade:
-      "Use this calculator's recommendation when (1) early-planning evaluation of whether a heat pump retrofit makes sense, (2) comparing contractor quotes that vary in recommended tonnage, (3) sanity-check before committing to specific equipment, or (4) DIY-ing a window or single-zone mini-split install. Step up to a full Manual J + Manual S done by a licensed contractor with ACCA-approved software when (1) installing multi-zone or whole-home equipment where matching capacity to load precisely affects both efficiency and comfort, (2) federal/state/utility incentive programs require Manual J documentation (the IRA 25C tax credit increasingly does, NYSERDA Air-to-Air program does, Mass Save does, Efficiency Vermont does), (3) the home has had significant envelope changes that invalidate prior load assumptions, (4) considering dual-fuel architecture where the heat pump/furnace crossover temperature must be precisely set, (5) cold climate (zone 6+) where wrong sizing creates unbearable comfort gaps or excessive aux runtime. Most utility heat pump rebates in zone 5+ now require Manual J documentation — check the program before committing to an installer.",
+      "The 1,500 square foot home is the most-searched heat pump sizing query because the US median single-family home falls in this range per Census ACS data. The same home needs different equipment depending on climate zone, envelope, and architecture — this page walks through the choices visually.",
+    archetypes: [
+      {
+        title: 'Mid-century ranch',
+        era: '1955–1985 — most common at this size',
+        characteristics: [
+          'R-7 to R-11 wall insulation',
+          'R-19 attic insulation',
+          'Original or first-replacement double-pane windows (U-0.6 to U-0.8)',
+          'Air leakage around ACH50 10–14 (leaky)',
+        ],
+        loadProfile: '~33,000 BTU heating load in zone 5',
+      },
+      {
+        title: 'Small two-story Colonial / Cape Cod',
+        era: '1940s–1960s',
+        characteristics: [
+          'More wall area per square foot than ranch',
+          'Bedrooms upstairs, often warmer in summer',
+          'R-11 walls, R-30 attic typical (after retrofit)',
+          'Higher stack-effect infiltration',
+        ],
+        loadProfile: '~36,000 BTU heating load in zone 5',
+      },
+      {
+        title: 'Modern townhome',
+        era: '2000s+',
+        characteristics: [
+          'Party walls on one or both sides (interior unit)',
+          '40 percent less exterior wall area than free-standing',
+          'R-13+ walls, R-38+ attic',
+          'ACH50 typically 5–7 (tighter envelope)',
+        ],
+        loadProfile: '~28,000 BTU heating load in zone 5',
+      },
+    ],
+    equipmentOptions: [
+      {
+        name: 'Standard heat pump',
+        tagline: 'Lowest upfront cost',
+        costRange: '$5,500–$8,500 installed',
+        capacity17F: '60% of rated',
+        balancePoint: 'High 20s°F (zone 5)',
+        bestFor: 'Zones 2–4, mild zone 5',
+        pros: [
+          'Wide model selection',
+          'Simpler equipment, easier service',
+          'Lower upfront cost',
+        ],
+        cons: [
+          'Aux heat fires often in zone 5+',
+          'Higher operating cost in cold climates',
+          'Smaller IRA incentive in cold climates',
+        ],
+      },
+      {
+        name: 'Cold-climate (NEEP CCASHP)',
+        tagline: 'Best for cold climates',
+        costRange: '$8,500–$13,000 installed',
+        capacity17F: '85% of rated',
+        balancePoint: 'Low teens°F (zone 5)',
+        bestFor: 'Zones 5–7, all-electric homes',
+        pros: [
+          'Minimal aux heat use through winter',
+          'Qualifies for $2,000 IRA 25C tax credit',
+          'Strong state and utility rebates available',
+        ],
+        cons: [
+          '$2,500–$4,500 premium over standard',
+          'Smaller model selection',
+          'Higher installer skill requirement',
+        ],
+      },
+      {
+        name: 'Dual-fuel (HP + gas furnace)',
+        tagline: 'Cheapest to operate with cheap gas',
+        costRange: '$10,000–$16,000 installed',
+        balancePoint: 'Crossover at 30–35°F',
+        bestFor: 'Cheap natural gas markets, transition strategy',
+        pros: [
+          'Optimized operating cost in cheap-gas regions',
+          'Furnace handles deep cold reliably',
+          'Backup heat already in place',
+        ],
+        cons: [
+          'Highest capital cost',
+          'Reduced IRA / state incentive eligibility',
+          'Two systems to maintain over time',
+        ],
+      },
+    ],
+    climateTable: [
+      {
+        zone: 'Zone 2',
+        cities: 'Houston, New Orleans, Tampa',
+        designTemp: '30°F',
+        loadRatio: '0.5×',
+        equipment: 'Standard',
+        auxNotes: 'Minimal — cooling drives sizing',
+      },
+      {
+        zone: 'Zone 3',
+        cities: 'Atlanta, Memphis, Charlotte',
+        designTemp: '22°F',
+        loadRatio: '0.7×',
+        equipment: 'Standard',
+        auxNotes: 'Low aux runtime',
+      },
+      {
+        zone: 'Zone 4',
+        cities: 'DC, Cincinnati, St Louis',
+        designTemp: '15°F',
+        loadRatio: '1.0×',
+        equipment: 'Standard or CCASHP',
+        auxNotes: 'Occasional aux on cold nights',
+      },
+      {
+        zone: 'Zone 5',
+        cities: 'Cleveland, Boston, Denver',
+        designTemp: '5°F',
+        loadRatio: '1.3×',
+        equipment: 'CCASHP recommended',
+        auxNotes: 'Frequent (standard) / Rare (CCASHP)',
+      },
+      {
+        zone: 'Zone 6',
+        cities: 'Minneapolis, Buffalo, Burlington',
+        designTemp: '-2°F',
+        loadRatio: '1.6×',
+        equipment: 'CCASHP strongly recommended',
+        auxNotes: 'Moderate even with CCASHP',
+      },
+      {
+        zone: 'Zone 7',
+        cities: 'N Minnesota, mountain west',
+        designTemp: '-10°F',
+        loadRatio: '1.9×',
+        equipment: 'CCASHP required',
+        auxNotes: 'Significant + consider dual-fuel',
+      },
+    ],
+    insulationLevels: {
+      poor: {
+        label: 'Poor envelope (pre-1980)',
+        envelope: 'R-7 walls, R-19 attic, U-1.0 windows, ACH50 ~14',
+        heatingLoad: '~42,000 BTU',
+        equipment: '3-ton CCASHP',
+      },
+      average: {
+        label: 'Average envelope (current code)',
+        envelope: 'R-13 walls, R-38 attic, U-0.55 windows, ACH50 ~7',
+        heatingLoad: '~33,000 BTU',
+        equipment: '2.5-ton standard or CCASHP',
+      },
+      good: {
+        label: 'Good envelope (above code / 2010s+)',
+        envelope: 'R-19 walls, R-49 attic, U-0.35 windows, ACH50 ~5',
+        heatingLoad: '~26,000 BTU',
+        equipment: '2-ton CCASHP',
+      },
+    },
+    occupancyNotes:
+      'Occupancy adds 250 BTU/hr per occupant of heating-season offset per Manual J convention. For 1,500 sqft, the difference between 2 and 4 occupants shifts heating load only about 500 BTU — small. Larger effect comes from internal electrical loads: home offices, electric cooking, indoor laundry contribute 2,000–5,000 BTU/hr of effective heating gain that lowers the practical heat pump runtime.',
+    additionalConsiderations: [
+      {
+        title: 'Defrost cycle behavior',
+        description:
+          'Heat pumps in cold climates periodically reverse refrigerant flow to defrost the outdoor coil (3–10 minutes every 30–90 minutes in cold weather). During defrost the unit pulls heat from the home rather than delivering it. CCASHP models manage defrost more gracefully per NEEP testing.',
+        linkText: 'Read: heat pump defrost cycles',
+        linkUrl: '/heat-pump/cold-climate/defrost-cycle/',
+      },
+      {
+        title: 'Duct losses in unconditioned space',
+        description:
+          'Per DOE Building America research, leaky or poorly-insulated attic ductwork loses 25–35 percent of delivered heating capacity in cold-weather operation. Manual D-compliant duct sealing typically pays back faster on heat pump installs than AC-only installs.',
+        linkText: 'Read: Manual D return air sizing',
+        linkUrl: '/manual-d/return-air-sizing/',
+      },
+    ],
+    mistakes: [
+      {
+        title: 'Sizing to cooling load only',
+        description:
+          'A 1,500 sqft home in zone 5 has heating load ~1.3× cooling. Sizing to cooling alone leaves heating capacity short, forcing aux heat to fire — at 2–3× the operating cost of heat pump heat.',
+      },
+      {
+        title: 'Skipping the CCASHP question in zones 5+',
+        description:
+          'Standard heat pumps work in zone 5 but produce a balance point in the high 20s°F. CCASHP shifts to the teens°F, reducing aux runtime 60–80 percent. Premium pays back in 6–12 years.',
+      },
+      {
+        title: 'Incorrect aux heat strip sizing',
+        description:
+          '10kW typically suffices for a 2.5-ton heat pump at this house size; CCASHP equipment can often use 5–10kW. Zone 7+ may need 15kW even with CCASHP. Undersized aux fails on coldest design days.',
+      },
+      {
+        title: 'Ignoring electrical service capacity',
+        description:
+          'Heat pumps with aux heat strips can draw 50–80 amps in heating mode at design conditions. Older 100-amp services may need upgrade ($1,500–$4,000) before installation.',
+      },
+      {
+        title: 'Using the wrong calculator',
+        description:
+          'AC sizing alone gives the wrong answer for heat pumps. Use this dual-load calculator, not the BTU or AC sizing calculator, for heat pump equipment decisions.',
+      },
+    ],
+    upgradeDecision: {
+      useThisFor: [
+        'Early-planning evaluation of a heat pump retrofit',
+        'Comparing contractor quotes with varying recommended tonnage',
+        'Sanity-check before committing to specific equipment',
+        'DIY-ing a window or single-zone mini-split install',
+      ],
+      upgradeFor: [
+        'Multi-zone or whole-home equipment matching',
+        'Federal IRA 25C tax credit and most state / utility rebate applications',
+        'Homes with significant envelope changes since the last load calculation',
+        'Dual-fuel architecture with precise crossover setting',
+        'Cold-climate installs (zone 6+) where wrong sizing causes excess aux runtime',
+      ],
+    },
     scenarios: [
       {
         title: '1,500 sqft in zone 2 — Gulf Coast (cooling-dominated)',

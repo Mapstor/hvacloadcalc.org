@@ -94,8 +94,8 @@ export default async function ExamplePage({ params }: Props) {
         <h1 className="text-3xl font-bold text-ink-900 sm:text-4xl">{example.title}</h1>
         <p className="mt-3 max-w-prose text-lg text-ink-700">
           Worked heat pump sizing for a {example.inputs.squareFootage.toLocaleString()} square foot
-          home in IECC climate zone {example.inputs.climateZone}. Tonnage, balance point, and aux
-          heat capacity.
+          home — tonnage, balance point, and aux heat capacity across climate zones and equipment
+          classes.
         </p>
         <div className="mt-4">
           <AuthorByline lastReviewed="2026-05-22" size="sm" />
@@ -111,228 +111,312 @@ export default async function ExamplePage({ params }: Props) {
         for full methodology.
       </Callout>
 
-      <section className="not-prose mt-8 rounded-lg border-2 border-brand bg-brand/5 p-6">
-        <p className="text-xs font-medium uppercase tracking-wide text-ink-500">Recommended equipment</p>
-        <p className="mt-2 text-3xl font-bold text-brand">
-          {result.recommendedTons} ton{result.recommendedTons === 1 ? '' : 's'}
-          <span className="ml-2 text-xl font-medium text-ink-700">
-            ({result.recommendedSizeBtu.toLocaleString()} BTU)
-          </span>
-        </p>
-        <div className="mt-3 grid grid-cols-2 gap-4 text-sm">
-          <div>
-            <p className="font-medium text-ink-900">Balance point</p>
-            <p className="text-2xl font-bold text-ink-900">{result.balancePointF}°F</p>
+      {/* Hero result panel */}
+      <section className="not-prose mt-8 overflow-hidden rounded-xl border-2 border-brand bg-gradient-to-br from-brand/10 via-brand/5 to-white">
+        <div className="grid gap-px bg-brand/20 sm:grid-cols-3">
+          <div className="bg-white p-6">
+            <p className="text-xs font-semibold uppercase tracking-wider text-ink-500">
+              Recommended size
+            </p>
+            <p className="mt-2 text-3xl font-bold text-brand">
+              {result.recommendedTons}
+              <span className="ml-1 text-xl font-medium text-ink-700">
+                ton{result.recommendedTons === 1 ? '' : 's'}
+              </span>
+            </p>
+            <p className="mt-1 text-sm text-ink-600">
+              {result.recommendedSizeBtu.toLocaleString()} BTU/hr nominal
+            </p>
           </div>
-          <div>
-            <p className="font-medium text-ink-900">Aux heat at design</p>
-            <p className="text-2xl font-bold text-ink-900">
+          <div className="bg-white p-6">
+            <p className="text-xs font-semibold uppercase tracking-wider text-ink-500">
+              Balance point
+            </p>
+            <p className="mt-2 text-3xl font-bold text-ink-900">{result.balancePointF}°F</p>
+            <p className="mt-1 text-sm text-ink-600">
+              Outdoor temp where heat pump alone keeps up
+            </p>
+          </div>
+          <div className="bg-white p-6">
+            <p className="text-xs font-semibold uppercase tracking-wider text-ink-500">
+              Aux at design
+            </p>
+            <p className="mt-2 text-3xl font-bold text-ink-900">
               {result.auxHeatAtDesignBtu === 0
-                ? 'None'
-                : `${result.auxHeatAtDesignBtu.toLocaleString()} BTU`}
+                ? '—'
+                : `${result.auxHeatAtDesignBtu.toLocaleString()}`}
+              {result.auxHeatAtDesignBtu > 0 && (
+                <span className="ml-1 text-xl font-medium text-ink-700">BTU</span>
+              )}
+            </p>
+            <p className="mt-1 text-sm text-ink-600">
+              {result.auxHeatAtDesignBtu === 0
+                ? 'No aux capacity required'
+                : `Beyond heat pump at ${result.heatingDesignTempF}°F`}
             </p>
           </div>
         </div>
-        <p className="mt-3 text-sm text-ink-700">
-          {RECOMMENDATION_DESCRIPTION[result.equipmentRecommendation]}
-        </p>
+        <div className="border-t border-brand/20 bg-brand/5 px-6 py-4">
+          <p className="text-sm font-medium text-ink-800">
+            {RECOMMENDATION_DESCRIPTION[result.equipmentRecommendation]}
+          </p>
+        </div>
       </section>
 
       <section className="mt-8">
         <HeatPumpSizeCalculatorClient defaults={example.inputs} />
       </section>
 
+      {/* Overview */}
       <section className="prose prose-slate mt-10 max-w-prose">
         <h2>{example.intro ? 'Overview' : 'What this calculation is'}</h2>
         <p>{example.intro ?? example.scenario}</p>
+      </section>
 
-        {example.houseContext ? (
-          <>
-            <h2>Where this size comes up</h2>
-            <p>{example.houseContext}</p>
-          </>
-        ) : null}
+      {/* Archetypes — 3-card grid */}
+      {example.archetypes && example.archetypes.length > 0 ? (
+        <section className="not-prose mt-12">
+          <h2 className="text-2xl font-bold text-ink-900">
+            Where this size comes up — common archetypes
+          </h2>
+          <p className="mt-2 max-w-prose text-ink-700">
+            Homes at this square footage cluster around three archetypes, each with distinct envelope
+            characteristics that shift the heat pump sizing recommendation.
+          </p>
+          <div className="mt-6 grid gap-4 md:grid-cols-3">
+            {example.archetypes.map((a) => (
+              <article
+                key={a.title}
+                className="flex flex-col rounded-xl border border-ink-300 bg-white p-5 shadow-sm"
+              >
+                <h3 className="text-base font-semibold text-ink-900">{a.title}</h3>
+                <p className="mt-1 text-xs font-medium uppercase tracking-wide text-ink-500">
+                  {a.era}
+                </p>
+                <ul className="mt-4 space-y-2 text-sm text-ink-700">
+                  {a.characteristics.map((c) => (
+                    <li key={c} className="flex gap-2">
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
+                      <span>{c}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-auto pt-4">
+                  <div className="rounded-lg bg-brand/10 px-3 py-2">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-ink-500">
+                      Load profile
+                    </p>
+                    <p className="mt-0.5 text-sm font-semibold text-brand">{a.loadProfile}</p>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
-        <h2>How this calculation was reached</h2>
-        <p>Heat pump sizing must handle both cooling and heating loads. The calculator:</p>
-        <ol>
-          <li>Computes the cooling load using the BTU calculator methodology</li>
-          <li>
-            Multiplies that by a climate-zone heating factor to get the heating load (
-            {(result.heatingLoadBtu / result.coolingLoadBtu).toFixed(2)}× in zone{' '}
-            {example.inputs.climateZone})
-          </li>
-          <li>Picks the larger of the two as the equipment size, rounded to standard tonnage</li>
-          <li>Computes the balance point — outdoor temp at which heat pump capacity equals home load</li>
-          <li>
-            Computes aux heat capacity needed at the heating design temperature (
-            {result.heatingDesignTempF}°F for zone {example.inputs.climateZone})
-          </li>
-        </ol>
-        <ul>
-          <li>
-            Cooling load: <strong>{result.coolingLoadBtu.toLocaleString()} BTU</strong> at{' '}
-            {result.coolingDesignTempF}°F
-          </li>
-          <li>
-            Heating load: <strong>{result.heatingLoadBtu.toLocaleString()} BTU</strong> at{' '}
-            {result.heatingDesignTempF}°F
-          </li>
-          <li>
-            Driving load: <strong>{result.drivingLoad}</strong>
-          </li>
-          <li>
-            Recommended equipment size:{' '}
-            <strong>
-              {result.recommendedSizeBtu.toLocaleString()} BTU ({result.recommendedTons} tons)
-            </strong>
-          </li>
-          <li>
-            Balance point: <strong>{result.balancePointF}°F</strong>
-          </li>
-          <li>
-            Aux heat at design ({result.heatingDesignTempF}°F):{' '}
-            <strong>
-              {result.auxHeatAtDesignBtu === 0
-                ? 'none required'
-                : `${result.auxHeatAtDesignBtu.toLocaleString()} BTU`}
-            </strong>
-          </li>
-        </ul>
-
-        {example.equipmentNotes ? (
-          <>
-            <h2>Equipment options at this size</h2>
-            <p>{example.equipmentNotes}</p>
-          </>
-        ) : null}
-
-        {example.climateVariation ? (
-          <>
-            <h2>How climate zone shifts the result</h2>
-            <p>{example.climateVariation}</p>
-          </>
-        ) : null}
-
-        {example.insulationImpact ? (
-          <>
-            <h2>How insulation quality changes the answer</h2>
-            <p>{example.insulationImpact}</p>
-          </>
-        ) : null}
-
-        {example.occupancyImpact ? (
-          <>
-            <h2>How occupancy and lifestyle change the answer</h2>
-            <p>{example.occupancyImpact}</p>
-          </>
-        ) : null}
-
-        {example.realWorldNotes ? (
-          <>
-            <h2>What the calculator does not capture</h2>
-            <p>{example.realWorldNotes}</p>
-          </>
-        ) : null}
-
-        {example.commonMistakes ? (
-          <>
-            <h2>Common mistakes when sizing heat pumps at this scale</h2>
-            <p>{example.commonMistakes}</p>
-          </>
-        ) : null}
-
-        {example.whenToUpgrade ? (
-          <>
-            <h2>When this calculator is enough — and when to upgrade to Manual J</h2>
-            <p>{example.whenToUpgrade}</p>
-          </>
-        ) : null}
-
-        <h2>Adjust the inputs</h2>
-        <p>
-          The calculator above is interactive. Change square footage, climate zone, insulation, sun
-          exposure, occupancy, or toggle cold-climate equipment to see how the result shifts.
+      {/* Math walkthrough — compact card */}
+      <section className="not-prose mt-12">
+        <h2 className="text-2xl font-bold text-ink-900">How this calculation was reached</h2>
+        <p className="mt-2 max-w-prose text-ink-700">
+          Heat pump sizing handles two loads. The calculator computes both and picks the larger,
+          then estimates balance point and aux heat capacity.
         </p>
-
-        <h2>Methodology</h2>
-        <p>
-          This calculation follows the dual-load methodology from the{' '}
-          <Link className="text-brand underline" href="/heat-pump/sizing/">
-            heat pump sizing article
-          </Link>
-          , using climate-zone heating factors calibrated against ASHRAE 169 design temperatures and
-          ACCA Manual J reference cases.
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-ink-300 bg-white p-5">
+            <p className="text-xs font-semibold uppercase tracking-wide text-ink-500">
+              Cooling load
+            </p>
+            <p className="mt-2 text-2xl font-bold text-ink-900">
+              {result.coolingLoadBtu.toLocaleString()}{' '}
+              <span className="text-base font-medium text-ink-600">BTU/hr</span>
+            </p>
+            <p className="mt-1 text-sm text-ink-600">at {result.coolingDesignTempF}°F design temp</p>
+          </div>
+          <div className="rounded-xl border border-ink-300 bg-white p-5">
+            <p className="text-xs font-semibold uppercase tracking-wide text-ink-500">
+              Heating load
+            </p>
+            <p className="mt-2 text-2xl font-bold text-ink-900">
+              {result.heatingLoadBtu.toLocaleString()}{' '}
+              <span className="text-base font-medium text-ink-600">BTU/hr</span>
+            </p>
+            <p className="mt-1 text-sm text-ink-600">at {result.heatingDesignTempF}°F design temp</p>
+          </div>
+        </div>
+        <p className="mt-4 max-w-prose text-sm text-ink-700">
+          Heating-to-cooling load ratio:{' '}
+          <strong>{(result.heatingLoadBtu / result.coolingLoadBtu).toFixed(2)}×</strong> —{' '}
+          {result.drivingLoad}-driven climate. Equipment sized to the larger load, rounded to standard
+          tonnage, gives <strong>{result.recommendedTons} tons</strong> (
+          {result.recommendedSizeBtu.toLocaleString()} BTU).
         </p>
       </section>
 
-      {example.scenarios && example.scenarios.length > 0 ? (
-        <section className="mt-12 border-t border-ink-300 pt-8">
+      {/* Equipment options — 3-card comparison */}
+      {example.equipmentOptions && example.equipmentOptions.length > 0 ? (
+        <section className="not-prose mt-12">
+          <h2 className="text-2xl font-bold text-ink-900">Equipment options at this size</h2>
+          <p className="mt-2 max-w-prose text-ink-700">
+            Three equipment classes serve this size range. Choose by climate severity, operating-cost
+            sensitivity, and incentive eligibility.
+          </p>
+          <div className="mt-6 grid gap-4 lg:grid-cols-3">
+            {example.equipmentOptions.map((e) => (
+              <article
+                key={e.name}
+                className="flex flex-col rounded-xl border border-ink-300 bg-white p-5 shadow-sm"
+              >
+                <div className="border-b border-ink-200 pb-4">
+                  <h3 className="text-base font-semibold text-ink-900">{e.name}</h3>
+                  <p className="mt-1 text-xs font-medium uppercase tracking-wide text-brand">
+                    {e.tagline}
+                  </p>
+                  <p className="mt-3 text-xl font-bold text-ink-900">{e.costRange}</p>
+                </div>
+                <dl className="mt-4 space-y-3 text-sm">
+                  {e.capacity17F ? (
+                    <div>
+                      <dt className="text-xs font-medium uppercase tracking-wide text-ink-500">
+                        Capacity at 17°F
+                      </dt>
+                      <dd className="mt-0.5 font-medium text-ink-900">{e.capacity17F}</dd>
+                    </div>
+                  ) : null}
+                  {e.balancePoint ? (
+                    <div>
+                      <dt className="text-xs font-medium uppercase tracking-wide text-ink-500">
+                        Balance point
+                      </dt>
+                      <dd className="mt-0.5 font-medium text-ink-900">{e.balancePoint}</dd>
+                    </div>
+                  ) : null}
+                  <div>
+                    <dt className="text-xs font-medium uppercase tracking-wide text-ink-500">
+                      Best for
+                    </dt>
+                    <dd className="mt-0.5 font-medium text-ink-900">{e.bestFor}</dd>
+                  </div>
+                </dl>
+                <div className="mt-5 space-y-3 text-sm">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-good">Pros</p>
+                    <ul className="mt-2 space-y-1.5">
+                      {e.pros.map((p) => (
+                        <li key={p} className="flex gap-2 text-ink-700">
+                          <span className="font-bold text-good">+</span>
+                          <span>{p}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-warn">
+                      Considerations
+                    </p>
+                    <ul className="mt-2 space-y-1.5">
+                      {e.cons.map((c) => (
+                        <li key={c} className="flex gap-2 text-ink-700">
+                          <span className="font-bold text-warn">−</span>
+                          <span>{c}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {/* Climate zone table */}
+      {example.climateTable && example.climateTable.length > 0 ? (
+        <section className="not-prose mt-12">
           <h2 className="text-2xl font-bold text-ink-900">
-            {example.scenarios.length} worked heat pump scenarios at this house size and zone
+            How climate zone shifts the recommendation
           </h2>
           <p className="mt-2 max-w-prose text-ink-700">
-            Real heat pump equipment decisions showing how the size, balance point, and aux heat
-            requirement shift across equipment class, envelope, and architecture.
+            Same home, different climate zones. Heating-to-cooling load ratio drives equipment
+            selection from cooling-dominated (zone 2) to heating-dominated (zone 7).
           </p>
-          <div className="mt-8 space-y-10">
-            {example.scenarios.map((s, i) => {
-              const sResult = calculateHeatPumpSize(s.inputs);
-              const sClimateLabel = CLIMATE_DESCRIPTIONS[s.inputs.climateZone];
-              const sInsulationLabel = INSULATION_LABELS[s.inputs.insulationLevel];
+          <div className="mt-6 overflow-x-auto rounded-xl border border-ink-300 bg-white shadow-sm">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b-2 border-ink-200 bg-ink-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-ink-900">Zone</th>
+                  <th className="px-4 py-3 font-semibold text-ink-900">Representative cities</th>
+                  <th className="px-4 py-3 font-semibold text-ink-900">Design temp</th>
+                  <th className="px-4 py-3 font-semibold text-ink-900">Load ratio</th>
+                  <th className="px-4 py-3 font-semibold text-ink-900">Equipment</th>
+                  <th className="px-4 py-3 font-semibold text-ink-900">Aux runtime</th>
+                </tr>
+              </thead>
+              <tbody>
+                {example.climateTable.map((row, idx) => (
+                  <tr
+                    key={row.zone}
+                    className={idx % 2 === 0 ? 'border-b border-ink-200' : 'border-b border-ink-200 bg-ink-50/50'}
+                  >
+                    <td className="px-4 py-3 font-semibold text-ink-900">{row.zone}</td>
+                    <td className="px-4 py-3 text-ink-700">{row.cities}</td>
+                    <td className="px-4 py-3 font-medium text-ink-900">{row.designTemp}</td>
+                    <td className="px-4 py-3 font-medium text-ink-900">{row.loadRatio}</td>
+                    <td className="px-4 py-3 text-ink-700">{row.equipment}</td>
+                    <td className="px-4 py-3 text-ink-700">{row.auxNotes}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      ) : null}
+
+      {/* Insulation 3-panel comparison */}
+      {example.insulationLevels ? (
+        <section className="not-prose mt-12">
+          <h2 className="text-2xl font-bold text-ink-900">
+            How envelope quality shifts the heating load
+          </h2>
+          <p className="mt-2 max-w-prose text-ink-700">
+            Envelope quality has a larger effect on heat pump sizing than on AC-only sizing because
+            heating runtimes are longer and heating losses scale strongly with envelope R-value.
+          </p>
+          <div className="mt-6 grid gap-4 md:grid-cols-3">
+            {(['poor', 'average', 'good'] as const).map((level) => {
+              const data = example.insulationLevels![level];
+              const borderClass =
+                level === 'poor'
+                  ? 'border-danger/40 bg-danger/5'
+                  : level === 'good'
+                    ? 'border-good/40 bg-good/5'
+                    : 'border-ink-300 bg-white';
+              const labelColor =
+                level === 'poor' ? 'text-danger' : level === 'good' ? 'text-good' : 'text-ink-500';
               return (
-                <article key={i} className="rounded-lg border border-ink-300 bg-white p-6">
-                  <h3 className="text-xl font-semibold text-ink-900">{s.title}</h3>
-                  <p className="mt-1 text-sm font-medium text-ink-500">Common in: {s.location}</p>
-
-                  <dl className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2 text-sm md:grid-cols-3">
+                <article
+                  key={level}
+                  className={`rounded-xl border-2 p-5 ${borderClass}`}
+                >
+                  <p
+                    className={`text-xs font-bold uppercase tracking-wider ${labelColor}`}
+                  >
+                    {data.label}
+                  </p>
+                  <p className="mt-3 text-2xl font-bold text-ink-900">{data.heatingLoad}</p>
+                  <p className="mt-0.5 text-xs text-ink-600">heating load (zone 5)</p>
+                  <div className="mt-4 space-y-2 text-xs">
                     <div>
-                      <dt className="font-medium text-ink-500">Square footage</dt>
-                      <dd className="text-ink-900">{s.inputs.squareFootage.toLocaleString()} sqft</dd>
+                      <p className="font-semibold uppercase tracking-wide text-ink-500">Envelope</p>
+                      <p className="mt-0.5 text-ink-700">{data.envelope}</p>
                     </div>
                     <div>
-                      <dt className="font-medium text-ink-500">Climate</dt>
-                      <dd className="text-ink-900">{sClimateLabel}</dd>
+                      <p className="font-semibold uppercase tracking-wide text-ink-500">
+                        Equipment
+                      </p>
+                      <p className="mt-0.5 font-semibold text-ink-900">{data.equipment}</p>
                     </div>
-                    <div>
-                      <dt className="font-medium text-ink-500">Insulation</dt>
-                      <dd className="text-ink-900">{sInsulationLabel}</dd>
-                    </div>
-                    <div>
-                      <dt className="font-medium text-ink-500">Equipment class</dt>
-                      <dd className="text-ink-900">
-                        {s.inputs.coldClimateEquipment ? 'Cold-climate (CCASHP)' : 'Standard'}
-                      </dd>
-                    </div>
-                    <div>
-                      <dt className="font-medium text-ink-500">Occupants</dt>
-                      <dd className="text-ink-900">{s.inputs.occupants}</dd>
-                    </div>
-                    <div>
-                      <dt className="font-medium text-ink-500">Sun exposure</dt>
-                      <dd className="text-ink-900">{s.inputs.sunExposure}</dd>
-                    </div>
-                  </dl>
-
-                  <div className="mt-4 rounded-md border border-brand bg-brand/5 p-4">
-                    <p className="text-xs font-medium uppercase tracking-wide text-ink-500">
-                      Recommended
-                    </p>
-                    <p className="mt-1 text-2xl font-bold text-brand">
-                      {sResult.recommendedTons} ton{sResult.recommendedTons === 1 ? '' : 's'}
-                      <span className="ml-2 text-base font-medium text-ink-700">
-                        ({sResult.recommendedSizeBtu.toLocaleString()} BTU)
-                      </span>
-                    </p>
-                    <p className="mt-1 text-sm text-ink-700">
-                      Balance point {sResult.balancePointF}°F · Aux at design{' '}
-                      {sResult.auxHeatAtDesignBtu === 0
-                        ? 'none'
-                        : `${sResult.auxHeatAtDesignBtu.toLocaleString()} BTU`}
-                    </p>
                   </div>
-
-                  <p className="mt-4 text-ink-700">{s.takeaway}</p>
                 </article>
               );
             })}
@@ -340,20 +424,235 @@ export default async function ExamplePage({ params }: Props) {
         </section>
       ) : null}
 
+      {/* Occupancy notes — short prose with callout style */}
+      {example.occupancyNotes ? (
+        <section className="not-prose mt-12">
+          <h2 className="text-2xl font-bold text-ink-900">Occupancy and lifestyle effects</h2>
+          <div className="mt-4 rounded-xl border-l-4 border-brand bg-brand/5 p-5 max-w-prose">
+            <p className="text-ink-700">{example.occupancyNotes}</p>
+          </div>
+        </section>
+      ) : null}
+
+      {/* Additional considerations — 2 callout cards */}
+      {example.additionalConsiderations && example.additionalConsiderations.length > 0 ? (
+        <section className="not-prose mt-12">
+          <h2 className="text-2xl font-bold text-ink-900">
+            What the calculator does not directly model
+          </h2>
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            {example.additionalConsiderations.map((c) => (
+              <article
+                key={c.title}
+                className="rounded-xl border border-ink-300 bg-white p-5 shadow-sm"
+              >
+                <h3 className="text-base font-semibold text-ink-900">{c.title}</h3>
+                <p className="mt-3 text-sm text-ink-700">{c.description}</p>
+                {c.linkText && c.linkUrl ? (
+                  <p className="mt-4">
+                    <Link
+                      className="text-sm font-medium text-brand hover:underline"
+                      href={c.linkUrl}
+                    >
+                      {c.linkText} →
+                    </Link>
+                  </p>
+                ) : null}
+              </article>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {/* Common mistakes — numbered alert cards */}
+      {example.mistakes && example.mistakes.length > 0 ? (
+        <section className="not-prose mt-12">
+          <h2 className="text-2xl font-bold text-ink-900">
+            {example.mistakes.length} common mistakes when sizing heat pumps at this scale
+          </h2>
+          <div className="mt-6 space-y-4">
+            {example.mistakes.map((m, i) => (
+              <article
+                key={m.title}
+                className="flex gap-4 rounded-xl border-l-4 border-warn bg-warn/5 p-5"
+              >
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-warn text-base font-bold text-white">
+                  {i + 1}
+                </div>
+                <div>
+                  <h3 className="text-base font-semibold text-ink-900">{m.title}</h3>
+                  <p className="mt-1.5 text-sm text-ink-700">{m.description}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {/* Decision matrix — 2-column */}
+      {example.upgradeDecision ? (
+        <section className="not-prose mt-12">
+          <h2 className="text-2xl font-bold text-ink-900">
+            When this calculator is enough — and when to upgrade to Manual J
+          </h2>
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            <article className="rounded-xl border-2 border-good/40 bg-good/5 p-5">
+              <p className="text-xs font-bold uppercase tracking-wider text-good">
+                Use this calculator
+              </p>
+              <p className="mt-2 text-base font-semibold text-ink-900">
+                When the calculator&apos;s recommendation is sufficient
+              </p>
+              <ul className="mt-4 space-y-2.5 text-sm">
+                {example.upgradeDecision.useThisFor.map((item) => (
+                  <li key={item} className="flex gap-2.5 text-ink-700">
+                    <span className="mt-0.5 shrink-0 font-bold text-good">✓</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+            <article className="rounded-xl border-2 border-brand/40 bg-brand/5 p-5">
+              <p className="text-xs font-bold uppercase tracking-wider text-brand">
+                Upgrade to full Manual J
+              </p>
+              <p className="mt-2 text-base font-semibold text-ink-900">
+                When higher precision is worth the extra effort
+              </p>
+              <ul className="mt-4 space-y-2.5 text-sm">
+                {example.upgradeDecision.upgradeFor.map((item) => (
+                  <li key={item} className="flex gap-2.5 text-ink-700">
+                    <span className="mt-0.5 shrink-0 font-bold text-brand">→</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          </div>
+        </section>
+      ) : null}
+
+      {/* Scenarios — already structured cards, kept as-is */}
+      {example.scenarios && example.scenarios.length > 0 ? (
+        <section className="mt-12 border-t border-ink-300 pt-8">
+          <h2 className="text-2xl font-bold text-ink-900">
+            {example.scenarios.length} worked use cases at this house size
+          </h2>
+          <p className="mt-2 max-w-prose text-ink-700">
+            Real heat pump equipment decisions showing how the size, balance point, and aux heat
+            requirement shift across climate zones, equipment classes, and architectures.
+          </p>
+          <div className="mt-8 space-y-6">
+            {example.scenarios.map((s, i) => {
+              const sResult = calculateHeatPumpSize(s.inputs);
+              const sClimateLabel = CLIMATE_DESCRIPTIONS[s.inputs.climateZone];
+              const sInsulationLabel = INSULATION_LABELS[s.inputs.insulationLevel];
+              return (
+                <article
+                  key={i}
+                  className="overflow-hidden rounded-xl border border-ink-300 bg-white shadow-sm"
+                >
+                  <div className="border-b border-ink-200 bg-ink-50 px-6 py-4">
+                    <h3 className="text-lg font-semibold text-ink-900">{s.title}</h3>
+                    <p className="mt-1 text-sm font-medium text-ink-500">
+                      Common in: {s.location}
+                    </p>
+                  </div>
+                  <div className="grid gap-px bg-ink-200 sm:grid-cols-3">
+                    <div className="bg-white px-6 py-4">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-ink-500">
+                        Recommended
+                      </p>
+                      <p className="mt-1 text-2xl font-bold text-brand">
+                        {sResult.recommendedTons} ton{sResult.recommendedTons === 1 ? '' : 's'}
+                      </p>
+                      <p className="text-xs text-ink-600">
+                        {sResult.recommendedSizeBtu.toLocaleString()} BTU
+                      </p>
+                    </div>
+                    <div className="bg-white px-6 py-4">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-ink-500">
+                        Balance point
+                      </p>
+                      <p className="mt-1 text-2xl font-bold text-ink-900">
+                        {sResult.balancePointF}°F
+                      </p>
+                    </div>
+                    <div className="bg-white px-6 py-4">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-ink-500">
+                        Aux at design
+                      </p>
+                      <p className="mt-1 text-2xl font-bold text-ink-900">
+                        {sResult.auxHeatAtDesignBtu === 0
+                          ? 'None'
+                          : `${sResult.auxHeatAtDesignBtu.toLocaleString()}`}
+                      </p>
+                      {sResult.auxHeatAtDesignBtu > 0 && (
+                        <p className="text-xs text-ink-600">BTU</p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="bg-white px-6 py-4">
+                    <dl className="grid grid-cols-2 gap-x-6 gap-y-2 text-xs md:grid-cols-4">
+                      <div>
+                        <dt className="font-medium uppercase tracking-wide text-ink-500">Climate</dt>
+                        <dd className="mt-0.5 text-ink-900">{sClimateLabel}</dd>
+                      </div>
+                      <div>
+                        <dt className="font-medium uppercase tracking-wide text-ink-500">
+                          Insulation
+                        </dt>
+                        <dd className="mt-0.5 text-ink-900">{sInsulationLabel}</dd>
+                      </div>
+                      <div>
+                        <dt className="font-medium uppercase tracking-wide text-ink-500">
+                          Equipment
+                        </dt>
+                        <dd className="mt-0.5 text-ink-900">
+                          {s.inputs.coldClimateEquipment ? 'CCASHP' : 'Standard'}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt className="font-medium uppercase tracking-wide text-ink-500">
+                          Occupants
+                        </dt>
+                        <dd className="mt-0.5 text-ink-900">{s.inputs.occupants}</dd>
+                      </div>
+                    </dl>
+                    <p className="mt-4 text-sm text-ink-700">{s.takeaway}</p>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      ) : null}
+
+      {/* Methodology — short prose */}
+      <section className="prose prose-slate mt-12 max-w-prose">
+        <h2>Methodology</h2>
+        <p>
+          This calculation follows the dual-load methodology from the{' '}
+          <Link className="text-brand underline" href="/heat-pump/sizing/">
+            heat pump sizing article
+          </Link>
+          , using climate-zone heating factors calibrated against ASHRAE Standard 169-2020 design
+          temperatures and ACCA Manual J reference cases.
+        </p>
+      </section>
+
       {example.faq && example.faq.length > 0 ? <FAQ items={example.faq} /> : null}
 
+      {/* Related examples */}
       <section className="not-prose mt-12 border-t border-ink-300 pt-8">
-        <h2 className="text-2xl font-bold text-ink-900">Try other heat pump sizing examples</h2>
-        <p className="mt-2 max-w-prose text-ink-700">
-          Compare to other house sizes, climate zones, or equipment classes.
-        </p>
+        <h2 className="text-2xl font-bold text-ink-900">Other heat pump sizing pages</h2>
         <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {related.map((r) => {
             const rResult = calculateHeatPumpSize(r.inputs);
             return (
               <li
                 key={r.slug}
-                className="rounded-lg border border-ink-300 bg-white p-4 hover:border-brand"
+                className="rounded-xl border border-ink-300 bg-white p-4 shadow-sm hover:border-brand hover:shadow-md"
               >
                 <Link
                   href={`/tools/heat-pump-size-calculator/examples/${r.slug}/`}
@@ -362,7 +661,7 @@ export default async function ExamplePage({ params }: Props) {
                   {r.title}
                 </Link>
                 <p className="mt-1 text-sm text-ink-600">
-                  {rResult.recommendedTons} tons, balance point {rResult.balancePointF}°F
+                  {rResult.recommendedTons} tons · balance point {rResult.balancePointF}°F
                 </p>
               </li>
             );
