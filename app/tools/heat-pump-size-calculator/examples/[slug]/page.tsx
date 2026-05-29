@@ -45,12 +45,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const RECOMMENDATION_DESCRIPTION: Record<string, string> = {
-  standard: 'Standard heat pump (no cold-climate certification needed in this zone)',
-  'cold-climate-recommended': 'Cold-climate certified (NEEP CCASHP listed) recommended for this zone',
-  'cold-climate-required': 'Cold-climate certified (NEEP CCASHP listed) required for this zone',
-};
-
 const INSULATION_LABELS: Record<string, string> = {
   poor: 'poor (older home, below code)',
   average: 'average (meets current code)',
@@ -110,58 +104,6 @@ export default async function ExamplePage({ params }: Props) {
         </Link>{' '}
         for full methodology.
       </Callout>
-
-      {/* Hero result panel */}
-      <section className="not-prose mt-8 overflow-hidden rounded-xl border-2 border-brand bg-gradient-to-br from-brand/10 via-brand/5 to-white">
-        <div className="grid gap-px bg-brand/20 sm:grid-cols-3">
-          <div className="bg-white p-6">
-            <p className="text-xs font-semibold uppercase tracking-wider text-ink-500">
-              Recommended size
-            </p>
-            <p className="mt-2 text-3xl font-bold text-brand">
-              {result.recommendedTons}
-              <span className="ml-1 text-xl font-medium text-ink-700">
-                ton{result.recommendedTons === 1 ? '' : 's'}
-              </span>
-            </p>
-            <p className="mt-1 text-sm text-ink-600">
-              {result.recommendedSizeBtu.toLocaleString()} BTU/hr nominal
-            </p>
-          </div>
-          <div className="bg-white p-6">
-            <p className="text-xs font-semibold uppercase tracking-wider text-ink-500">
-              Balance point
-            </p>
-            <p className="mt-2 text-3xl font-bold text-ink-900">{result.balancePointF}°F</p>
-            <p className="mt-1 text-sm text-ink-600">
-              Outdoor temp where heat pump alone keeps up
-            </p>
-          </div>
-          <div className="bg-white p-6">
-            <p className="text-xs font-semibold uppercase tracking-wider text-ink-500">
-              Aux at design
-            </p>
-            <p className="mt-2 text-3xl font-bold text-ink-900">
-              {result.auxHeatAtDesignBtu === 0
-                ? '—'
-                : `${result.auxHeatAtDesignBtu.toLocaleString()}`}
-              {result.auxHeatAtDesignBtu > 0 && (
-                <span className="ml-1 text-xl font-medium text-ink-700">BTU</span>
-              )}
-            </p>
-            <p className="mt-1 text-sm text-ink-600">
-              {result.auxHeatAtDesignBtu === 0
-                ? 'No aux capacity required'
-                : `Beyond heat pump at ${result.heatingDesignTempF}°F`}
-            </p>
-          </div>
-        </div>
-        <div className="border-t border-brand/20 bg-brand/5 px-6 py-4">
-          <p className="text-sm font-medium text-ink-800">
-            {RECOMMENDATION_DESCRIPTION[result.equipmentRecommendation]}
-          </p>
-        </div>
-      </section>
 
       <section className="mt-8">
         <HeatPumpSizeCalculatorClient defaults={example.inputs} />

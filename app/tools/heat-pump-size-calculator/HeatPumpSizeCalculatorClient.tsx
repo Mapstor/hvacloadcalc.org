@@ -1,9 +1,10 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import {
   calculateHeatPumpSize,
   type HeatPumpInputs,
+  type HeatPumpResult,
 } from '@/lib/calculators/heat-pump-size';
 import type {
   CeilingHeight,
@@ -12,6 +13,7 @@ import type {
   SpaceType,
   SunExposure,
 } from '@/lib/calculators/btu';
+import { HeatPumpResultChart } from './HeatPumpResultChart';
 
 const CLIMATE_OPTIONS: Array<{ value: ClimateZone; label: string }> = [
   { value: '1', label: 'Zone 1 — South FL, Hawaii (tropical)' },
@@ -54,39 +56,50 @@ const SPACE_OPTIONS: Array<{ value: SpaceType; label: string }> = [
   { value: 'attic-or-second-floor', label: 'Attic / second floor (+30%)' },
 ];
 
-const RECOMMENDATION_LABEL: Record<string, { label: string; color: string }> = {
-  standard: { label: 'Standard heat pump', color: 'text-good' },
-  'cold-climate-recommended': { label: 'Cold-climate recommended', color: 'text-warn' },
-  'cold-climate-required': { label: 'Cold-climate (CCASHP) required', color: 'text-danger' },
-};
-
 interface Props {
   defaults: HeatPumpInputs;
 }
 
 export function HeatPumpSizeCalculatorClient({ defaults }: Props) {
   const [inputs, setInputs] = useState<HeatPumpInputs>(defaults);
-  const [showBreakdown, setShowBreakdown] = useState(false);
-
-  const result = useMemo(() => {
-    try {
-      return calculateHeatPumpSize(inputs);
-    } catch {
-      return null;
-    }
-  }, [inputs]);
+  const [calculatedResult, setCalculatedResult] = useState<HeatPumpResult | null>(null);
+  const [resultColdClimate, setResultColdClimate] = useState<boolean>(defaults.coldClimateEquipment);
+  const [isStale, setIsStale] = useState(false);
 
   function update<K extends keyof HeatPumpInputs>(key: K, value: HeatPumpInputs[K]) {
     setInputs((prev) => ({ ...prev, [key]: value }));
+    if (calculatedResult) {
+      setIsStale(true);
+    }
+  }
+
+  function handleCalculate() {
+    try {
+      const r = calculateHeatPumpSize(inputs);
+      setCalculatedResult(r);
+      setResultColdClimate(inputs.coldClimateEquipment);
+      setIsStale(false);
+    } catch {
+      setCalculatedResult(null);
+    }
+  }
+
+  function handleReset() {
+    setInputs(defaults);
+    setCalculatedResult(null);
+    setIsStale(false);
   }
 
   return (
     <div className="not-prose">
-      <div className="grid gap-8 lg:grid-cols-[1fr_360px]">
-        {/* Inputs */}
-        <div className="space-y-5">
-          <h2 className="text-lg font-semibold text-ink-900">Your home</h2>
+      <div className="rounded-xl border border-ink-300 bg-white p-6 shadow-sm">
+        <h2 className="text-lg font-semibold text-ink-900">Your home</h2>
+        <p className="mt-1 text-sm text-ink-600">
+          Enter your home characteristics, then click Calculate to see the recommended heat pump
+          size, balance point, and aux heat capacity as a sized chart.
+        </p>
 
+        <div className="mt-6 grid gap-5 md:grid-cols-2">
           <div>
             <label htmlFor="sqft" className="block text-sm font-medium text-ink-700">
               Square footage
@@ -98,7 +111,12 @@ export function HeatPumpSizeCalculatorClient({ defaults }: Props) {
               max={6000}
               step={50}
               value={inputs.squareFootage}
-              onChange={(e) => update('squareFootage', Math.max(300, Math.min(6000, Number(e.target.value) || 300)))}
+              onChange={(e) =>
+                update(
+                  'squareFootage',
+                  Math.max(300, Math.min(6000, Number(e.target.value) || 300)),
+                )
+              }
               className="mt-1 w-full rounded-md border border-ink-300 px-3 py-2 text-base shadow-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
             />
           </div>
@@ -119,38 +137,36 @@ export function HeatPumpSizeCalculatorClient({ defaults }: Props) {
             </select>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label htmlFor="ceiling" className="block text-sm font-medium text-ink-700">
-                Ceiling height
-              </label>
-              <select
-                id="ceiling"
-                value={inputs.ceilingHeight}
-                onChange={(e) => update('ceilingHeight', e.target.value as CeilingHeight)}
-                className="mt-1 w-full rounded-md border border-ink-300 px-3 py-2 text-base shadow-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
-              >
-                {CEILING_OPTIONS.map((o) => (
-                  <option key={o.value} value={o.value}>{o.label}</option>
-                ))}
-              </select>
-            </div>
+          <div>
+            <label htmlFor="ceiling" className="block text-sm font-medium text-ink-700">
+              Ceiling height
+            </label>
+            <select
+              id="ceiling"
+              value={inputs.ceilingHeight}
+              onChange={(e) => update('ceilingHeight', e.target.value as CeilingHeight)}
+              className="mt-1 w-full rounded-md border border-ink-300 px-3 py-2 text-base shadow-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+            >
+              {CEILING_OPTIONS.map((o) => (
+                <option key={o.value} value={o.value}>{o.label}</option>
+              ))}
+            </select>
+          </div>
 
-            <div>
-              <label htmlFor="insulation" className="block text-sm font-medium text-ink-700">
-                Insulation
-              </label>
-              <select
-                id="insulation"
-                value={inputs.insulationLevel}
-                onChange={(e) => update('insulationLevel', e.target.value as InsulationLevel)}
-                className="mt-1 w-full rounded-md border border-ink-300 px-3 py-2 text-base shadow-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
-              >
-                {INSULATION_OPTIONS.map((o) => (
-                  <option key={o.value} value={o.value}>{o.label}</option>
-                ))}
-              </select>
-            </div>
+          <div>
+            <label htmlFor="insulation" className="block text-sm font-medium text-ink-700">
+              Insulation
+            </label>
+            <select
+              id="insulation"
+              value={inputs.insulationLevel}
+              onChange={(e) => update('insulationLevel', e.target.value as InsulationLevel)}
+              className="mt-1 w-full rounded-md border border-ink-300 px-3 py-2 text-base shadow-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+            >
+              {INSULATION_OPTIONS.map((o) => (
+                <option key={o.value} value={o.value}>{o.label}</option>
+              ))}
+            </select>
           </div>
 
           <div>
@@ -196,118 +212,86 @@ export function HeatPumpSizeCalculatorClient({ defaults }: Props) {
               max={20}
               step={1}
               value={inputs.occupants}
-              onChange={(e) => update('occupants', Math.max(1, Math.min(20, Number(e.target.value) || 1)))}
+              onChange={(e) =>
+                update(
+                  'occupants',
+                  Math.max(1, Math.min(20, Number(e.target.value) || 1)),
+                )
+              }
               className="mt-1 w-full rounded-md border border-ink-300 px-3 py-2 text-base shadow-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
             />
             <p className="mt-1 text-xs text-ink-500">+600 BTU per person above 2</p>
           </div>
 
-          <label className="flex items-start gap-2">
-            <input
-              type="checkbox"
-              checked={inputs.coldClimateEquipment}
-              onChange={(e) => update('coldClimateEquipment', e.target.checked)}
-              className="mt-1 h-4 w-4 rounded border-ink-300 text-brand focus:ring-brand"
-            />
-            <span className="text-sm text-ink-700">
-              <span className="font-medium">Cold-climate (CCASHP) equipment</span>
-              <span className="mt-1 block text-xs text-ink-500">
-                Toggles capacity model. Cold-climate units maintain ~85% capacity at 17°F vs ~60% for
-                standard. See <a href="/heat-pump/cold-climate/defrost-cycle/" className="text-brand underline">cold climate heat pumps</a>.
+          <div className="flex items-end">
+            <label className="flex w-full items-start gap-2 rounded-md border border-ink-300 bg-ink-50 px-3 py-2">
+              <input
+                type="checkbox"
+                checked={inputs.coldClimateEquipment}
+                onChange={(e) => update('coldClimateEquipment', e.target.checked)}
+                className="mt-1 h-4 w-4 rounded border-ink-300 text-brand focus:ring-brand"
+              />
+              <span className="text-sm text-ink-700">
+                <span className="font-medium">Cold-climate (CCASHP) equipment</span>
+                <span className="mt-1 block text-xs text-ink-500">
+                  Toggles capacity model
+                </span>
               </span>
-            </span>
-          </label>
+            </label>
+          </div>
+        </div>
 
+        <div className="mt-6 flex flex-wrap items-center gap-3 border-t border-ink-200 pt-5">
           <button
             type="button"
-            onClick={() => setInputs(defaults)}
-            className="text-sm font-medium text-brand hover:underline"
+            onClick={handleCalculate}
+            className="rounded-md bg-brand px-6 py-2.5 text-base font-semibold text-white shadow-sm transition hover:bg-brand/90 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2"
+          >
+            {calculatedResult ? 'Recalculate' : 'Calculate'}
+          </button>
+          <button
+            type="button"
+            onClick={handleReset}
+            className="text-sm font-medium text-ink-700 hover:text-brand"
           >
             Reset to defaults
           </button>
+          {isStale ? (
+            <span className="ml-auto text-sm font-medium text-warn">
+              Inputs changed — click Recalculate
+            </span>
+          ) : null}
         </div>
-
-        {/* Result panel */}
-        <aside className="self-start rounded-lg border border-ink-300 bg-ink-50/50 p-6">
-          {result ? (
-            <>
-              <p className="text-xs font-medium uppercase tracking-wide text-ink-500">Recommended size</p>
-              <p className="mt-1 text-4xl font-bold text-brand">
-                {result.recommendedSizeBtu.toLocaleString()}
-                <span className="ml-1 text-lg font-medium text-ink-700">BTU/hr</span>
-              </p>
-              <p className="mt-1 text-sm text-ink-700">
-                ≈ {result.recommendedTons} ton{result.recommendedTons === 1 ? '' : 's'} (nominal cooling)
-              </p>
-
-              <div className="mt-4 grid grid-cols-2 gap-3 rounded-md border border-ink-300 bg-white p-3">
-                <div>
-                  <p className="text-xs font-medium uppercase tracking-wide text-ink-500">Cooling load</p>
-                  <p className="text-base font-semibold text-ink-900">
-                    {result.coolingLoadBtu.toLocaleString()}
-                  </p>
-                  <p className="text-xs text-ink-500">at {result.coolingDesignTempF}°F</p>
-                </div>
-                <div>
-                  <p className="text-xs font-medium uppercase tracking-wide text-ink-500">Heating load</p>
-                  <p className="text-base font-semibold text-ink-900">
-                    {result.heatingLoadBtu.toLocaleString()}
-                  </p>
-                  <p className="text-xs text-ink-500">at {result.heatingDesignTempF}°F</p>
-                </div>
-              </div>
-
-              <div className="mt-3 rounded-md border border-ink-300 bg-white p-3">
-                <p className="text-xs font-medium uppercase tracking-wide text-ink-500">Balance point</p>
-                <p className="mt-1 text-2xl font-bold text-ink-900">{result.balancePointF}°F</p>
-                <p className="text-xs text-ink-500">
-                  Aux heat fires when outdoor temp drops below this.
-                </p>
-              </div>
-
-              <div className="mt-3 rounded-md border border-ink-300 bg-white p-3">
-                <p className="text-xs font-medium uppercase tracking-wide text-ink-500">Aux at design</p>
-                <p className="mt-1 text-base font-semibold text-ink-900">
-                  {result.auxHeatAtDesignBtu.toLocaleString()} BTU/hr
-                </p>
-                <p className="text-xs text-ink-500">
-                  Capacity needed beyond heat pump at {result.heatingDesignTempF}°F.
-                </p>
-              </div>
-
-              <div className="mt-4 rounded-md border-l-4 border-brand bg-brand/5 p-3">
-                <p className={`text-xs font-bold uppercase tracking-wide ${RECOMMENDATION_LABEL[result.equipmentRecommendation].color}`}>
-                  {RECOMMENDATION_LABEL[result.equipmentRecommendation].label}
-                </p>
-                <p className="mt-1 text-xs text-ink-700">{result.sizingStrategy}</p>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => setShowBreakdown((v) => !v)}
-                className="mt-4 text-sm font-medium text-brand hover:underline"
-              >
-                {showBreakdown ? 'Hide' : 'Show'} sizing details
-              </button>
-
-              {showBreakdown ? (
-                <div className="mt-3 space-y-1 rounded-md border border-ink-300 bg-white p-3 text-xs text-ink-700">
-                  <p>Driving load: <strong>{result.drivingLoad}</strong></p>
-                  <p>Heating design temp (zone): {result.heatingDesignTempF}°F</p>
-                  <p>Cooling design temp (zone): {result.coolingDesignTempF}°F</p>
-                  <p>Heating-to-cooling load ratio: {(result.heatingLoadBtu / result.coolingLoadBtu).toFixed(2)}</p>
-                  <p>
-                    Aux heat at {result.heatingDesignTempF}°F:{' '}
-                    {result.auxHeatAtDesignBtu === 0 ? 'none required' : `${result.auxHeatAtDesignBtu.toLocaleString()} BTU/hr`}
-                  </p>
-                </div>
-              ) : null}
-            </>
-          ) : (
-            <p className="text-sm text-ink-500">Enter values to calculate.</p>
-          )}
-        </aside>
       </div>
+
+      {/* Result SVG */}
+      {calculatedResult ? (
+        <div
+          className={`mt-6 rounded-xl border border-ink-300 bg-white p-3 shadow-sm transition-opacity sm:p-4 ${isStale ? 'opacity-60' : 'opacity-100'}`}
+        >
+          <HeatPumpResultChart
+            result={calculatedResult}
+            coldClimateEquipment={resultColdClimate}
+          />
+          <p className="px-2 pt-2 text-xs text-ink-500">
+            Capacity curve uses{' '}
+            {resultColdClimate
+              ? 'NEEP CCASHP cold-climate'
+              : 'standard heat pump'}{' '}
+            performance model. Aux heat shaded region shows BTU capacity needed below the balance
+            point down to the heating design temperature.
+          </p>
+        </div>
+      ) : (
+        <div className="mt-6 rounded-xl border border-dashed border-ink-300 bg-ink-50/50 p-12 text-center">
+          <p className="text-base font-medium text-ink-700">
+            Enter your inputs above, then click Calculate
+          </p>
+          <p className="mt-1 text-sm text-ink-500">
+            Result will appear as a sized chart with balance point and aux heat capacity.
+          </p>
+        </div>
+      )}
     </div>
   );
 }
