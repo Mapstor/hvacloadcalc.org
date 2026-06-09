@@ -55,7 +55,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: 'What other third-party services does the site use?',
-    a: 'In addition to Google AdSense and its third-party ad partners, the site uses Vercel for hosting (standard server-request logs only) and may load Google-served fonts via the AdSense integration. No analytics platforms (Google Analytics, Plausible, Fathom, Mixpanel, etc.) are currently loaded. No social media widgets are embedded. No tracking pixels (Facebook Pixel, LinkedIn Insight Tag, etc.) are loaded.',
+    a: 'In addition to Google AdSense and its third-party ad partners, the site uses Vercel for hosting (standard server-request logs only) and Google Analytics 4 (GA4) for aggregate visitor traffic measurement. No other analytics platforms (Plausible, Fathom, Mixpanel, etc.) are loaded. No social media widgets are embedded. No tracking pixels (Facebook Pixel, LinkedIn Insight Tag, etc.) are loaded.',
   },
   {
     q: 'How can I opt out of personalized advertising?',
@@ -63,7 +63,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: 'Do you use Google Analytics or any analytics provider?',
-    a: 'No. The site does not currently load Google Analytics, Vercel Analytics, Plausible, Fathom, Matomo, or any other analytics JavaScript. The only request metadata recorded is the standard Vercel server log produced when any request is served (IP address, user-agent, request timestamp, URL). If analytics is added in the future, this policy will be updated to disclose the specific provider, the cookies set, and the opt-out mechanisms.',
+    a: 'Yes. The site uses Google Analytics 4 (GA4) to measure aggregate visitor traffic — page views, sessions, traffic sources, and approximate location at country/region level. GA4 sets the _ga and _ga_* cookies on your browser. The site does not load any other analytics provider (no Plausible, Fathom, Matomo, Mixpanel, Vercel Analytics). You can opt out of Google Analytics by installing the Google Analytics Opt-out Browser Add-on at https://tools.google.com/dlpage/gaoptout, blocking the _ga cookie in your browser, or using a browser-level Do Not Track / Global Privacy Control signal.',
   },
   {
     q: 'Do you sell personal information?',
@@ -216,8 +216,14 @@ Cookies and similar storage on this site break into two categories.
     {
       category: 'First-party site cookies',
       who: 'hvacloadcalc.org',
-      examples: 'None set as of the Last Reviewed date',
-      purpose: 'The site has no login system, no preferences store, and no first-party tracking, so no first-party cookies are written',
+      examples: 'None set directly by the site itself (no login system, no preferences store)',
+      purpose: 'The site does not write any first-party cookies of its own',
+    },
+    {
+      category: 'Analytics cookies',
+      who: 'Google Analytics 4 (GA4)',
+      examples: '_ga (visitor ID, 2-year expiry), _ga_XXXXXXXXXX (session state, 2-year expiry)',
+      purpose: 'Aggregate visitor traffic measurement — page views, sessions, traffic sources, approximate location at country/region level',
     },
     {
       category: 'Advertising cookies',
