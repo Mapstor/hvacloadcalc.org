@@ -77,7 +77,7 @@ export default function Image() {
               }}
             >
               Free calculators with documented methodology, verified against ACCA reference cases. No
-              affiliate links, no rule-of-thumb sizing.
+              rule-of-thumb sizing — every formula sourced.
             </div>
           </div>
         </div>

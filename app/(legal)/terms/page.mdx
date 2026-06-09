@@ -1,63 +1,311 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { Callout } from '@/components/article/Callout';
+import { DataTable } from '@/components/data/DataTable';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
 
 export const metadata = {
-  title: 'Terms of Use',
+  alternates: { canonical: "/terms/" },
+  title: 'Terms of Use: Acceptable Use, Intellectual Property, and Liability',
   description:
-    'Terms of use for hvacloadcalc.org. Acceptable use, intellectual property, and limitations.',
+    'Terms of use for hvacloadcalc.org — acceptable use, intellectual property, calculator output license, warranty disclaimer, limitation of liability, indemnification, governing law, and dispute resolution.',
+  openGraph: {
+    title: 'hvacloadcalc.org Terms of Use',
+    description:
+      'Acceptable use, intellectual property, calculator output license, warranty disclaimer, limitation of liability, governing law.',
+    type: 'article',
+    publishedTime: '2026-05-30',
+    modifiedTime: '2026-06-03',
+    authors: ['Jonathan Stowe'],
+    images: ['/opengraph-image'],
+  },
 };
 
-<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Terms' }]} />
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'Terms' },
+];
 
-<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Terms' }]} />
+export const HEADINGS = [
+  { id: 'acceptance', text: 'Acceptance of Terms', level: 2 },
+  { id: 'acceptable-use', text: 'Acceptable Use', level: 2 },
+  { id: 'prohibited-use', text: 'Prohibited Use', level: 2 },
+  { id: 'intellectual-property', text: 'Intellectual Property', level: 2 },
+  { id: 'calculator-output', text: 'Calculator Output License', level: 2 },
+  { id: 'third-party-content', text: 'Third-Party Content and Links', level: 2 },
+  { id: 'advertising', text: 'Advertising on the Site', level: 2 },
+  { id: 'disclaimer-of-warranty', text: 'Disclaimer of Warranty', level: 2 },
+  { id: 'limitation-of-liability', text: 'Limitation of Liability', level: 2 },
+  { id: 'indemnification', text: 'Indemnification', level: 2 },
+  { id: 'governing-law', text: 'Governing Law and Dispute Resolution', level: 2 },
+  { id: 'severability', text: 'Severability and Entire Agreement', level: 2 },
+  { id: 'changes', text: 'Changes to These Terms', level: 2 },
+  { id: 'contact', text: 'Contact', level: 2 },
+];
 
-# Terms of Use
+export const FAQ_ITEMS = [
+  {
+    q: 'Can I quote articles from this site in my own writing?',
+    a: 'Yes, brief excerpts (one or two paragraphs) with attribution to hvacloadcalc.org and a link back are permitted under fair use and the terms of this site. Republishing full articles, calculator outputs in bulk, or substantial portions of multiple articles requires permission — email info@hvacloadcalc.org with the proposed use and we will respond. Translation, derivative works, and republication in print or other media also require permission.',
+  },
+  {
+    q: 'Can I use the calculator outputs for commercial purposes?',
+    a: 'Calculator outputs (the numeric results for specific inputs) are not copyrighted and you can use them freely, including for commercial purposes. The underlying calculator code, methodology explanation, and surrounding article content remain copyrighted. If you want to build a derivative tool using the methodology, the source citation requirements still apply: every claim sourced to the same primary publications cited on this site.',
+  },
+  {
+    q: 'Can AI models or LLMs train on this site\'s content?',
+    a: 'Commercial AI model training on this site\'s content is not permitted without permission. Educational and personal use of content for individual learning, research, and reference is fine. AI-assisted reading (asking an LLM to summarize an article you are reading) is fine. Crawling and ingesting the site as part of a commercial AI training dataset is not. Email info@hvacloadcalc.org with use case if your use is borderline.',
+  },
+  {
+    q: 'What happens if I disagree with these terms?',
+    a: 'Do not use the site. Continued use of the site after these terms are updated constitutes acceptance of the updated version. The Last Reviewed date at the bottom of this page indicates the version currently in effect.',
+  },
+  {
+    q: 'What jurisdiction governs disputes?',
+    a: 'These terms are governed by the laws of the United States. Disputes are resolved in the appropriate US jurisdiction. Where a user\'s local law provides stronger consumer protections than these terms (for example, EU GDPR, California consumer law, UK consumer law), the local law applies to the extent the protections cannot be waived by contract.',
+  },
+  {
+    q: 'Do you offer a service-level agreement (SLA) on site availability?',
+    a: 'No. The site is hosted on a commercial CDN (Vercel) with strong but not contractually guaranteed availability. There is no service-level agreement, uptime guarantee, or reliability commitment. The site is offered "as is" — see the warranty disclaimer below.',
+  },
+];
 
-By using hvacloadcalc.org you agree to these terms.
+export const RELATED = [
+  {
+    title: 'Privacy policy',
+    url: '/privacy/',
+    description:
+      'What data is collected, how Google AdSense and third-party advertising vendors use cookies, and how to exercise privacy rights.',
+  },
+  {
+    title: 'Disclaimer',
+    url: '/disclaimer/',
+    description:
+      'Educational scope, planning-grade content disclosure, safety-critical work boundary, and warranty disclaimer.',
+  },
+  {
+    title: 'Editorial standards',
+    url: '/editorial-standards/',
+    description:
+      'How content is researched, reviewed, and updated — including independence disclosures.',
+  },
+  {
+    title: 'Contact',
+    url: '/contact/',
+    description:
+      'How to email the site for corrections, methodology questions, permission requests, and disputes.',
+  },
+];
 
-## Use of the site
+export const FRONTMATTER = {
+  title: 'Terms of Use: Acceptable Use, Intellectual Property, and Liability',
+  h1: 'Terms of Use',
+  meta_description:
+    'Terms of use for hvacloadcalc.org. Acceptable use, intellectual property, calculator output license, warranty disclaimer, limitation of liability, indemnification, governing law, and dispute resolution.',
+  url: '/terms/',
+  date_published: '2026-05-30',
+  last_reviewed: '2026-06-03',
+  target_keyword: 'hvacloadcalc.org terms of use',
+  secondary_keywords: ['hvac calculator terms of use', 'acceptable use policy', 'warranty disclaimer'],
+  sources: [],
+  faq: FAQ_ITEMS,
+  parent_title: 'Home',
+};
 
-The site is provided for educational purposes. You may:
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={1800} />
 
-- Read, share, and link to content on the site
-- Use calculator outputs for personal, non-commercial decision-making
-- Quote brief excerpts of articles with attribution to hvacloadcalc.org
+<JsonLdBreadcrumb items={BREADCRUMBS} />
 
-You may not:
+<Container>
 
-- Scrape the site at industrial scale or in a way that disrupts service
-- Republish full articles or calculator outputs without permission
-- Use the site's content to train commercial AI models without permission
-- Use the site for any unlawful purpose
-- Attempt to access non-public parts of the system
-- Spam the contact form
+<Breadcrumbs items={BREADCRUMBS} />
 
-## Intellectual property
+<ArticleHeader
+  h1="Terms of Use"
+  description="Acceptable use, intellectual property, calculator output licensing, warranty disclaimer, limitation of liability, indemnification, and governing law for hvacloadcalc.org. Last reviewed 2026-06-03."
+  datePublished="2026-05-30"
+  lastReviewed="2026-06-03"
+  readingTimeMinutes={7}
+/>
 
-Content on hvacloadcalc.org is © 2026 hvacloadcalc.org unless otherwise noted. Authoritative standards cited from ACCA, ASHRAE, AHRI, IECC, and similar organizations remain the property of those organizations and are referenced under fair use.
+<KeyTakeaways
+  items={[
+    'By using hvacloadcalc.org you agree to these terms. If you do not agree, do not use the site. Continued use after these terms are updated constitutes acceptance of the updated version.',
+    'Content is © 2026 hvacloadcalc.org. Brief excerpts with attribution are permitted under fair use; bulk republication or commercial AI training require written permission via info@hvacloadcalc.org.',
+    'Calculator numeric outputs (the result for your specific inputs) are not copyrighted and can be used freely, including commercially. The underlying methodology explanation and surrounding article content remain copyrighted.',
+    'The site is provided "as is" with no warranty. The site, its author, and operators are not liable for any damages arising from use of the content. The full warranty disclaimer and limitation of liability are below.',
+    'Disputes are governed by US law. Where local consumer-protection law (GDPR, CCPA, UK consumer law) provides stronger protections than these terms, the local law applies to the extent it cannot be waived by contract.',
+  ]}
+/>
 
-Calculator outputs (the numeric result for your specific inputs) are not copyrighted; you may use them freely.
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
 
-## Disclaimer of warranty
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
 
-See the [disclaimer](/disclaimer/). Information is provided "as is" without warranty. Calculator outputs are planning-grade estimates, not engineering specifications.
+## Acceptance of Terms
 
-## Limitation of liability
+By accessing or using hvacloadcalc.org (the "Site"), you agree to be bound by these Terms of Use ("Terms"). If you do not agree to these Terms, do not access or use the Site.
 
-In no event shall hvacloadcalc.org, its author, or its operators be liable for any damages arising from use of the site, including direct, indirect, incidental, consequential, or special damages.
+These Terms apply to all visitors, users, and others who access the Site. The Terms are a binding agreement between you and hvacloadcalc.org governing your use of the Site. Use of specific features (calculators, articles, the email contact channel) is subject both to these Terms and to any additional terms or policies that may apply to those features (for example, the [Privacy Policy](/privacy/) and [Disclaimer](/disclaimer/)).
+
+Continued use of the Site after these Terms are updated constitutes acceptance of the updated version. The "Last Reviewed" date at the bottom of this page indicates the version currently in effect.
+
+## Acceptable Use
+
+You may use the Site for educational, research, and personal decision-making purposes. Permitted uses include:
+
+- **Reading and bookmarking** articles, reference hubs, calculator pages, and methodology documentation.
+- **Sharing links** to specific pages with colleagues, family, contractors, or in online discussions.
+- **Using the calculators** to produce planning-grade output for evaluating contractor quotes, budgeting equipment purchases, and understanding magnitudes.
+- **Quoting brief excerpts** (one or two paragraphs) of articles with attribution to hvacloadcalc.org and a link back to the source page, under fair use.
+- **Using calculator numeric outputs** (the result for specific inputs) for personal or commercial purposes — these outputs are not copyrighted.
+- **Citing the Site** in academic work, professional reports, or other publications, with standard attribution.
+
+## Prohibited Use
+
+The following uses are not permitted. Engaging in any of them is a breach of these Terms and grounds for blocking access:
+
+- **Scraping** the Site at industrial scale, or in a manner that disrupts service for other users.
+- **Republishing** full articles, calculator pages, or substantial portions of the content without prior written permission.
+- **Using content to train commercial AI models** without prior written permission. Personal AI-assisted reading (asking an LLM to summarize an article you are reading) is fine; ingesting the Site as part of a commercial training dataset is not.
+- **Reverse-engineering** the calculator code in a way that violates the open-source spirit of the methodology while removing attribution.
+- **Misrepresenting** Site content as the work of a credentialed professional engineer, ACCA-approved Manual J software, or licensed HVAC contractor.
+- **Using the Site for any unlawful purpose** or in violation of any applicable law or regulation.
+- **Attempting to access non-public** parts of the system (administrative routes, build artifacts, server infrastructure).
+- **Spamming the contact email** at info@hvacloadcalc.org with promotional, malicious, or automated content.
+- **Interfering** with security or operational features (rate-limiting, abuse detection, robots.txt directives) of the Site.
+
+<Callout type="warn" title="Why commercial AI training is prohibited without permission">
+The Site invests substantial editorial effort (primary-source research, methodology documentation, custom data tables) to produce content that is well-cited and quote-extractable. That work has economic value to commercial AI training programs. Without a licensing arrangement, ingesting the Site for that purpose extracts the value without compensating the production effort. Email info@hvacloadcalc.org if your use case is non-commercial research or personal learning — those uses are generally permitted.
+</Callout>
+
+## Intellectual Property
+
+All content on hvacloadcalc.org — articles, methodology explanations, custom SVG diagrams, data tables, calculator code, and the overall Site design — is © 2026 hvacloadcalc.org unless explicitly attributed otherwise. Original content is protected by US and international copyright law.
+
+Authoritative standards cited from third parties (ACCA, ASHRAE, AHRI, NEEP, NFRC, RESNET, DOE, EPA, IRS, EIA, IECC, ASTM, and similar organizations) remain the property of those organizations and are referenced under fair use for educational commentary, criticism, and review. The cited sources are identified inline via the SourceCite component and listed in the SOURCES section of each article.
+
+Manufacturer references (Trane, Carrier, Lennox, Mitsubishi, Daikin, and similar) are nominative — used to identify the equipment or company being discussed. No endorsement, affiliation, or operational relationship is implied by these references.
+
+The "hvacloadcalc.org" name and the Site design are not registered trademarks but are claimed as common-law trademarks of the Site. Use of the name or visually similar Site design in commercial contexts without permission is not permitted.
+
+## Calculator Output License
+
+Calculator numeric outputs — the specific BTU/hr, ton, R-value, or load number that the calculator returns for your specific inputs — are not copyrighted and you may use them freely for any purpose, including commercial.
+
+This carve-out exists because numeric outputs of mathematical calculations are generally not copyrightable under US law, and because the Site's mission is to make planning-grade numbers freely available. If you want to incorporate a planning-grade calculator output into a contractor quote evaluation, a permit-grade Manual J cross-check, a research project, or a downstream tool, you can do so without attribution.
+
+The methodology explanation, the surrounding article content, the SVG diagrams, and the calculator source code remain copyrighted. If you want to build a derivative tool using the methodology, attribution and primary-source citation requirements apply to the methodology layer.
+
+## Third-Party Content and Links
+
+The Site links to third-party resources (government publications, standards organization websites, manufacturer documentation, research lab publications, professional society resources) for educational purposes. hvacloadcalc.org is not responsible for the content, accuracy, or availability of any third-party site linked from the Site.
+
+Third-party content embedded on the Site (Google AdSense advertisements, advertising creative served by Google's ad partners) is provided by those third parties and subject to their own terms. The Site does not endorse, control, or take responsibility for the specific ad creative shown on any page.
+
+When a third-party source moves, updates, or changes its URL structure, the Site updates links on a quarterly review cycle. Broken or moved links can be reported to info@hvacloadcalc.org and are usually fixed within 14 days.
+
+A link to a third-party source represents the editorial judgment that the cited information existed at the cited URL on the cited date; it does not represent any ongoing endorsement of the third-party site's overall content or business practices.
+
+## Advertising on the Site
+
+The Site is funded by display advertising served through Google AdSense and its third-party advertising partners. Advertising is subject to the Google publisher policies, the [Privacy Policy](/privacy/), and applicable advertising law. The Site itself does not control the specific advertisements shown to any individual user — selection is performed by Google and its partners based on context, user signals, and ad inventory.
+
+Engaging with advertisements (clicking, viewing, completing a conversion) is governed by the third-party advertiser's terms, not by these Site Terms. The Site is not responsible for transactions or outcomes resulting from advertisement engagement.
+
+If you encounter advertising that appears to violate Google's advertising policies (deceptive, malicious, or otherwise objectionable), report it to Google through the "Why this ad?" / AdChoices controls served with each ad, and optionally also to info@hvacloadcalc.org so the Site can flag the pattern for review.
+
+## Disclaimer of Warranty
+
+THE SITE AND ALL CONTENT ON IT ARE PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, AND ACCURACY.
+
+The Site does not guarantee that calculator output, article content, or referenced data will be accurate, complete, current, or suitable for any specific purpose. Planning-grade calculator output is explicitly NOT a substitute for permit-grade Manual J performed by a credentialed party using ACCA-approved software — see the [Disclaimer](/disclaimer/) for the full educational-scope disclosure.
+
+The Site does not warrant uninterrupted availability. There is no service-level agreement, uptime commitment, or reliability guarantee. Hosting is provided by Vercel under its own terms; outages, latency, or platform changes are outside the Site's control.
+
+The Site does not warrant that third-party content embedded on or linked from the Site is accurate, safe, or otherwise free of defect. Use of any third-party content is at your own risk.
+
+## Limitation of Liability
+
+To the maximum extent permitted by applicable law, in no event shall hvacloadcalc.org, its author, or its operators be liable for any direct, indirect, incidental, consequential, special, exemplary, or punitive damages arising out of or in connection with the use of, or inability to use, the Site or its content.
+
+This includes but is not limited to damages for:
+
+- **Equipment sizing errors** leading to undersized or oversized HVAC installations.
+- **Installation outcomes** including comfort issues, equipment failures, or ductwork problems.
+- **Energy costs** higher or lower than predicted by Site calculators.
+- **Humidity, air quality, or comfort issues** following installation.
+- **Safety incidents** related to refrigerant handling, electrical work, or gas connections.
+- **Permit or rebate-program denials** following submission of planning-grade calculator output where permit-grade software output was required.
+- **Warranty rejections** by manufacturers or contractors.
+- **Lost profits, lost data, or business interruption** of any kind.
+- **Any other consequence** of relying on educational content from the Site.
+
+The limitation of liability applies regardless of the legal theory under which damages are sought (contract, tort, negligence, strict liability, or otherwise) and regardless of whether the Site has been advised of the possibility of such damages.
+
+Where applicable law prohibits the exclusion or limitation of certain damages (for example, certain consumer-protection laws limit warranty disclaimers), this section applies to the maximum extent permitted by law, and any non-excludable damages are limited to the lesser of (a) US $100 or (b) the amount you have paid to use the Site (which is zero, because the Site is free to use).
 
 ## Indemnification
 
-You agree to indemnify and hold harmless hvacloadcalc.org from any claims arising out of your use of the site or any violation of these terms.
+You agree to indemnify, defend, and hold harmless hvacloadcalc.org, its author, and its operators from and against any claims, damages, losses, liabilities, costs, and expenses (including reasonable attorneys' fees) arising out of or related to:
 
-## Governing law
+(a) Your use of the Site in violation of these Terms.
 
-These terms are governed by US law. Disputes shall be resolved in the appropriate jurisdiction.
+(b) Your violation of any applicable law or regulation in connection with your use of the Site.
 
-## Changes to these terms
+(c) Your infringement of any third-party intellectual property, privacy, or other right.
 
-Terms may be updated. The "Last reviewed" date indicates the current version. Continued use of the site after a change constitutes acceptance.
+(d) Any claim that your use of Site content (including calculator output) in your own work or decisions resulted in injury, financial loss, or other damage to a third party.
 
----
+This indemnification obligation survives termination of your use of the Site.
 
-**Last reviewed**: May 18, 2026
+## Governing Law and Dispute Resolution
+
+These Terms are governed by the laws of the United States, without regard to conflict-of-law principles. Any dispute arising out of or related to these Terms or your use of the Site shall be resolved in the appropriate US jurisdiction.
+
+Where applicable consumer-protection law in your jurisdiction provides protections that cannot be waived by contract (for example, EU GDPR, California consumer law, UK consumer law, Brazilian LGPD), those protections apply notwithstanding these Terms, to the extent the protections cannot be waived.
+
+Before filing a formal dispute, you are encouraged to email info@hvacloadcalc.org with subject "Dispute" and describe the issue. Most disputes can be resolved through informal communication, and the Site responds to substantive disputes within 30 days.
+
+## Severability and Entire Agreement
+
+If any provision of these Terms is held to be invalid, illegal, or unenforceable by a court of competent jurisdiction, that provision shall be modified to the minimum extent necessary to make it enforceable, or severed from these Terms if modification is not possible. The remaining provisions shall continue in full force and effect.
+
+These Terms, together with the [Privacy Policy](/privacy/), the [Disclaimer](/disclaimer/), and any additional policies linked from the Site, constitute the entire agreement between you and hvacloadcalc.org regarding your use of the Site. Any prior agreements, communications, or understandings on the same subject matter are superseded.
+
+No waiver of any provision of these Terms shall be deemed a further or continuing waiver of that provision or any other provision. The Site's failure to enforce any right or provision of these Terms shall not be deemed a waiver of that right or provision.
+
+## Changes to These Terms
+
+These Terms may be updated to reflect changes in Site practice, applicable law, or business model. Material changes are noted with an updated "Last Reviewed" date at the top of the page and a summary entry on the [corrections log](/corrections/). Where a change materially reduces user rights, advance notice will be provided via the corrections log at least 30 days before the change takes effect.
+
+By continuing to use the Site after these Terms are updated, you accept the updated version. If you do not accept the updated version, your remedy is to stop using the Site.
+
+## Contact
+
+For any question about these Terms — interpretation, permission requests, disputes, or anything else — email **info@hvacloadcalc.org**. Substantive responses are provided within 30 days. There is no other channel for Terms-related communication.
+
+</article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-06-03" />
+</div>
+
+</Container>

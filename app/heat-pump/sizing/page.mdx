@@ -18,6 +18,7 @@ import { RuleOfThumbVsManualJ } from '@/components/svg/heat-pump-sizing/RuleOfTh
 import { ColdClimateBalancePointStrategy } from '@/components/svg/heat-pump-sizing/ColdClimateBalancePointStrategy';
 
 export const metadata = {
+  alternates: { canonical: "/heat-pump/sizing/" },
   title: "Heat Pump Sizing: How to Get It Right (and Why Most Don't)",
   description:
     "Heat pump sizing differs from AC sizing because heat pumps must handle both heating and cooling loads. Here's how to size correctly without oversizing.",
@@ -28,7 +29,7 @@ export const metadata = {
     type: 'article',
     publishedTime: '2026-05-18',
     modifiedTime: '2026-05-18',
-    authors: ['Jonathan S.'],
+    authors: ['Jonathan Stowe'],
     images: ['/opengraph-image'],
   },
 };
@@ -275,7 +276,9 @@ The classic rule of thumb: 1 ton per 600 sq ft for cooling-dominant climates. Va
 
 <RuleOfThumbVsManualJ />
 
-What rule of thumb ignores: insulation R-values, window U-factors and area, air infiltration rate, building orientation, internal gains from people and equipment, ductwork condition (leaky ducts add 15-25% to the load), and climate severity. Each of these can shift the load by 10-25%, and they compound. A modern tight 2,000 sq ft home in Atlanta may have a Manual J cooling load of 24,000 BTU/hr (2 tons), while a leaky 1970s 2,000 sq ft home in Houston may show 42,000 BTU/hr (3.5 tons). Rule of thumb gives both the same answer.
+What rule of thumb ignores: insulation R-values, window U-factors and area, air infiltration rate, building orientation, internal gains from people and equipment, ductwork condition (leaky ducts add 15-25% to the load), and climate severity.
+
+Each of these can shift the load by 10-25%, and they compound. A modern tight 2,000 sq ft home in Atlanta may have a Manual J cooling load of 24,000 BTU/hr (2 tons), while a leaky 1970s 2,000 sq ft home in Houston may show 42,000 BTU/hr (3.5 tons). Rule of thumb gives both the same answer.
 
 Heat pump size charts that scale by square footage typically assume 1970s-era construction with R-13 walls, single-pane windows, and 10 ACH50 infiltration. Modern homes are 2-4× tighter, with better windows and insulation. The same rule produces 30-50% oversized equipment for modern construction.<SourceCite id="acca-manual-s" number={2} />
 
@@ -308,7 +311,9 @@ Heat pump sizing manual j workflows pair the load calc with equipment selection:
 
 ## Balance Point Sizing Approach
 
-The balance point is the outdoor temperature at which your heat pump's heating capacity exactly equals your home's heating load. Above it, the heat pump alone keeps you warm. Below it, auxiliary heat fills the gap. This is the single most important concept in heat pump sizing, because it determines both how much aux heat you'll run and how much you'll spend on the equipment itself. A higher balance point (say 35°F) means a smaller, cheaper heat pump that needs aux help any time it's below freezing. A lower balance point (say 10°F) means a larger, pricier heat pump (often a cold-climate certified one) that rarely needs aux. Neither is universally right. The choice depends on the cost of aux fuel where you live, how often it actually gets cold, and your budget.<SourceCite id="neep-ccashp-sizing-guide" number={3} />
+The balance point is the outdoor temperature at which your heat pump's heating capacity exactly equals your home's heating load. Above it, the heat pump alone keeps you warm. Below it, auxiliary heat fills the gap. This is the single most important concept in heat pump sizing, because it determines both how much aux heat you'll run and how much you'll spend on the equipment itself.
+
+A higher balance point (say 35°F) means a smaller, cheaper heat pump that needs aux help any time it's below freezing. A lower balance point (say 10°F) means a larger, pricier heat pump (often a cold-climate certified one) that rarely needs aux. Neither is universally right. The choice depends on the cost of aux fuel where you live, how often it actually gets cold, and your budget.<SourceCite id="neep-ccashp-sizing-guide" number={3} />
 
 <CapacityVsOutdoorTemperature />
 
@@ -380,7 +385,9 @@ Multi-zone sizing introduces diversity. You rarely heat or cool every zone at fu
 
 Don't oversize the outdoor unit on a multi-zone system. Modulating multi-zone units have a minimum capacity (typically 30-40% of nominal); below that, they cycle. An oversized outdoor unit cycles instead of modulating, defeating the efficiency advantage of variable-speed equipment. The mini split sizing calculator below handles per-zone sizing with diversity.
 
-DIY mini-split installs have grown rapidly. A 12k-36k BTU DIY-friendly mini-split (pre-charged refrigerant lines, plug-and-play indoor units) is within reach for moderately handy homeowners. Sizing is the same as for professionally installed units: per-zone Manual J or equivalent calculator output. The big difference is that the DIY installer carries the sizing risk personally; there is no contractor to blame for a wrong-sized unit. EPA Section 608 still applies to any refrigerant work beyond connecting pre-charged lines.
+DIY mini-split installs have grown rapidly. A 12k-36k BTU DIY-friendly mini-split (pre-charged refrigerant lines, plug-and-play indoor units) is within reach for moderately handy homeowners. Sizing is the same as for professionally installed units: per-zone Manual J or equivalent calculator output.
+
+The big difference is that the DIY installer carries the sizing risk personally; there is no contractor to blame for a wrong-sized unit. EPA Section 608 still applies to any refrigerant work beyond connecting pre-charged lines.
 
 For [ducted vs ductless heat pump sizing](/heat-pump/sizing/ducted-vs-ductless/) tradeoffs in detail (whole-house duct loss, zone control, duct condition), the dedicated article covers the comparison. Our [mini split sizing calculator](/tools/mini-split-sizing-calculator/) handles per-zone sizing with diversity factors for multi-zone systems.
 

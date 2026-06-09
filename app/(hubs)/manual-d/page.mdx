@@ -1,38 +1,525 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { Sources } from '@/components/article/Sources';
+import { SourceCite } from '@/components/article/SourceCite';
+import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { Callout } from '@/components/article/Callout';
+import { DataTable } from '@/components/data/DataTable';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { StaticPressureBudget } from '@/components/svg/manual-d/StaticPressureBudget';
+import { ClimateZonesQuickReference } from '@/components/svg/shared/ClimateZonesQuickReference';
 
 export const metadata = {
-  title: 'Manual D Residential Duct Design | hvacloadcalc.org',
+  alternates: { canonical: "/manual-d/" },
+  title: 'Manual D Duct Design: Friction Rate & Static Pressure',
   description:
-    'ACCA Manual D duct design methodology for residential HVAC. Friction rate, equivalent length, static pressure, and flex vs metal duct trade-offs.',
+    'ACCA Manual D residential duct design — friction rate, equivalent length, static pressure budget, trunk and branch sizing, flex vs metal trade-offs.',
+  openGraph: {
+    title: 'Manual D Duct Design: A Reference Built on ACCA Methodology',
+    description:
+      'Friction rate, equivalent length, static pressure budget, trunk vs branch sizing, and the duct system errors that waste 20-30% of HVAC capacity.',
+    type: 'article',
+    publishedTime: '2026-05-30',
+    modifiedTime: '2026-05-30',
+    authors: ['Jonathan Stowe'],
+    images: ['/opengraph-image'],
+  },
 };
 
-<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Manual D' }]} />
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'Manual D' },
+];
 
-<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Manual D' }]} />
+export const HEADINGS = [
+  { id: 'what-manual-d-is', text: 'What Manual D Is and Why It Matters', level: 2 },
+  { id: 'available-static-pressure-budget', text: 'Available Static Pressure: The Budget Duct Design Must Live Within', level: 2 },
+  { id: 'friction-rate-the-design-target', text: 'Friction Rate: The Design Target Behind Every Duct Sizing Decision', level: 2 },
+  { id: 'equivalent-length-for-fittings', text: 'Equivalent Length: How Fittings Eat the Budget', level: 2 },
+  { id: 'velocity-limits-and-noise', text: 'Velocity Limits, Noise, and Pressure Drop', level: 2 },
+  { id: 'trunk-and-branch-sizing', text: 'Trunk and Branch Sizing in Practice', level: 2 },
+  { id: 'return-air-systems', text: 'Return Air Systems: Often the Failure Point', level: 2 },
+  { id: 'flex-vs-metal', text: 'Flex Duct vs Metal Duct: Real Trade-Offs', level: 2 },
+  { id: 'common-manual-d-failures', text: 'The Most Common Manual D Failures in Field Inspections', level: 2 },
+  { id: 'what-this-cluster-covers', text: 'What This Cluster Covers', level: 2 },
+];
+
+export const SOURCES = [
+  {
+    id: 'acca-manual-d',
+    title: 'Manual D — Residential Duct Systems (ANSI/ACCA 1 Manual D - 2016)',
+    publisher: 'Air Conditioning Contractors of America (ACCA)',
+    year: 2016,
+    url: 'https://www.acca.org/standards/technical-manuals/manual-d',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'acca-manual-j-8',
+    title: 'Manual J — Residential Load Calculation, 8th Edition (ANSI/ACCA 2 Manual J - 2016)',
+    publisher: 'Air Conditioning Contractors of America',
+    year: 2016,
+    url: 'https://www.acca.org/standards/technical-manuals/manual-j',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'acca-manual-s',
+    title: 'Manual S — Residential Equipment Selection (ANSI/ACCA 3 Manual S - 2014)',
+    publisher: 'Air Conditioning Contractors of America',
+    year: 2014,
+    url: 'https://www.acca.org/standards/technical-manuals/manual-s',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'acca-manual-t',
+    title: 'Manual T — Air Distribution Basics for Residential and Small Commercial Buildings',
+    publisher: 'Air Conditioning Contractors of America',
+    year: 2010,
+    url: 'https://www.acca.org/standards/technical-manuals/manual-t',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'ashrae-fundamentals-duct',
+    title: 'ASHRAE Handbook of Fundamentals 2021, Chapter 21 (Duct Design)',
+    publisher: 'American Society of Heating, Refrigerating and Air-Conditioning Engineers',
+    year: 2021,
+    url: 'https://www.ashrae.org/technical-resources/ashrae-handbook',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'smacna-residential',
+    title: 'SMACNA Residential Sheet Metal Guidelines (4th Edition)',
+    publisher: 'Sheet Metal and Air Conditioning Contractors\' National Association',
+    year: 2019,
+    url: 'https://www.smacna.org/technical/technical-publications',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'iecc-2021-duct',
+    title: 'International Energy Conservation Code (IECC) 2021, Section R403.3 (Duct Sealing and Insulation)',
+    publisher: 'International Code Council',
+    year: 2021,
+    url: 'https://codes.iccsafe.org/content/IECC2021P2',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'doe-duct-sealing',
+    title: 'Ducts in the Attic: A Builder\'s Guide to Duct Systems in Conditioned Spaces',
+    publisher: 'US Department of Energy, Building America program',
+    year: 2018,
+    url: 'https://www.energy.gov/eere/buildings/articles/ducts-attic-builders-guide-duct-systems-conditioned-spaces',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'astm-e1554',
+    title: 'ASTM E1554-22 — Standard Test Method for Determining Air Leakage of Air Distribution Systems',
+    publisher: 'ASTM International',
+    year: 2022,
+    url: 'https://www.astm.org/e1554-22.html',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+];
+
+export const FAQ_ITEMS = [
+  {
+    q: 'What is Manual D in plain terms?',
+    a: "Manual D is the ACCA methodology for designing residential duct systems. It answers two questions: what size should each duct be (so it carries the right CFM at the right pressure), and where should the ducts run (so total static pressure stays within the air handler's tolerance). The output is a duct layout diagram with every supply and return labeled by size, length, and CFM. Without Manual D, duct systems get sized by guesswork — usually too small in return runs and too long in trunk paths.",
+  },
+  {
+    q: 'What is friction rate and why does it matter?',
+    a: 'Friction rate is the design target for pressure drop per 100 feet of duct, expressed in inches of water column (in. wc). A typical residential friction rate is 0.08 to 0.10 in. wc per 100 feet. Lower friction rate means larger ducts (more material cost, slower air velocity, quieter operation); higher friction rate means smaller ducts (less material, faster air, potential noise issues). Manual D walks you through the friction rate calculation by dividing the available static pressure budget by the total equivalent length of the duct path.',
+  },
+  {
+    q: 'What is "available static pressure" and how do I calculate it?',
+    a: "Available static pressure is the pressure the air handler's blower can deliver, minus all the fixed losses in the system (filter, coil, register, grille). A typical residential blower rated at 0.50 in. wc external static pressure has about 0.50 in. wc to work with. After subtracting 0.10 for a filter, 0.10-0.20 for the cooling coil, 0.03 for the supply register, and 0.03 for the return grille, you have roughly 0.17-0.27 in. wc left for the duct system itself. That's the budget Manual D must allocate across all the supply and return runs.",
+  },
+  {
+    q: 'How does equivalent length work for fittings?',
+    a: "Every fitting (elbow, tee, takeoff, transition) adds turbulence to the airflow, producing pressure drop. Manual D quantifies this by assigning each fitting an 'equivalent length' — the length of straight duct that would produce the same pressure drop. A standard 90° elbow in flexible duct adds roughly 15-30 feet of equivalent length; a 45° elbow adds 5-15 feet; a tee on a trunk line adds 25-50 feet. Total equivalent length = sum of straight duct lengths + sum of fitting equivalent lengths. The total goes into the friction rate calculation.",
+  },
+  {
+    q: 'What CFM per ton should I size for?',
+    a: 'The conventional residential design target is 350-400 CFM per ton of cooling capacity (where one ton = 12,000 BTU/hr). A 3-ton system targets 1,050-1,200 CFM nominal blower output. Modern variable-speed equipment can ramp down to 250-280 CFM per ton at low stage for dehumidification, but Manual D sizing must support full design CFM on high stage. The CFM per ton target varies slightly by climate and equipment; check the AHRI-published expanded performance data for the specific equipment being installed.',
+  },
+  {
+    q: 'Why does duct sealing matter so much?',
+    a: "Typical unsealed residential duct systems leak 20-30% of their conditioned air to unconditioned space (attic, crawlspace, garage). A 4-ton AC delivering 1,400 CFM at the air handler may deliver only 1,000-1,100 CFM at the registers if ducts leak heavily. The wasted air is the most expensive air the AC produces — fully cooled and dehumidified, then dumped outside. IECC 2021 requires total duct leakage testing for new construction, with limits of 4 CFM per 100 sq ft conditioned floor area (rough) and 8 CFM per 100 sq ft (postfinish). Most existing-home retrofits exceed those limits by 3-5x.",
+  },
+  {
+    q: 'Are flex ducts okay or do I need metal?',
+    a: 'Flex ducts work fine if installed straight, supported at proper intervals (4-foot spacing minimum per SMACNA), and not kinked or compressed. The problem is field installation: a flex duct laid casually over ceiling joists with sags and 90° kinks can deliver 30-50% less CFM than the same size metal duct in the same run. Metal duct is more forgiving of installation quality and has lower friction loss per foot. A good rule: metal for trunk lines, flex for branch runs of less than 25 feet straight. Avoid flex on trunks and on branches longer than 25 feet.',
+  },
+  {
+    q: 'How do I tell if my duct system is sized correctly?',
+    a: 'Three field measurements give a clear answer. (1) Measure total external static pressure (TESP) across the air handler with a manometer; it should be at or below the equipment\'s rated TESP (typically 0.50 in. wc for residential furnaces, 0.40-0.60 for AC). High TESP means undersized ducts. (2) Measure room-by-room temperatures at supply registers; uniform temperatures within 2-3°F across rooms indicates balanced distribution. (3) Measure CFM at each register with an anemometer or balometer; actual CFM should match design CFM within 10-15%. Significant deviations point to specific duct problems.',
+  },
+];
+
+export const RELATED = [
+  {
+    title: 'Return air sizing',
+    url: '/manual-d/return-air-sizing/',
+    description:
+      'CFM by tonnage, grille velocity targets, manometer diagnostics, transfer grilles, and code requirements.',
+  },
+  {
+    title: 'Manual J load calculation',
+    url: '/manual-j/',
+    description:
+      'Produces the per-room cooling and heating loads that Manual D uses to size individual duct runs.',
+  },
+  {
+    title: 'Manual S equipment selection',
+    url: '/manual-s/',
+    description:
+      'Sets the air handler CFM target Manual D must deliver and the available static pressure Manual D must work within.',
+  },
+  {
+    title: 'Manual T air distribution',
+    url: '/manual-t/',
+    description:
+      'Register and grille selection — downstream of Manual D ducts, upstream of room comfort.',
+  },
+];
+
+export const FRONTMATTER = {
+  title: 'Manual D Duct Design: Friction Rate & Static Pressure',
+  h1: 'Manual D Residential Duct Design: A Sourced Reference',
+  meta_description:
+    'A reference hub for ACCA Manual D residential duct design methodology — friction rate budgets, equivalent length for fittings, static pressure tolerances, trunk and branch sizing, flex vs metal trade-offs, and how duct system errors waste 20-30% of HVAC capacity.',
+  url: '/manual-d/',
+  date_published: '2026-05-30',
+  last_reviewed: '2026-05-30',
+  target_keyword: 'manual d',
+  secondary_keywords: ['duct design', 'friction rate', 'static pressure', 'equivalent length hvac', 'cfm per ton', 'flex duct vs metal'],
+  sources: SOURCES,
+  faq: FAQ_ITEMS,
+  parent_title: 'Home',
+};
+
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={2700} />
+
+<JsonLdBreadcrumb items={BREADCRUMBS} />
+
+<Container>
+
+<Breadcrumbs items={BREADCRUMBS} />
+
+<ArticleHeader
+  h1="Manual D Residential Duct Design: A Sourced Reference"
+  description="ACCA Manual D methodology — friction rate budgets, equivalent length for fittings, static pressure tolerances, trunk and branch sizing, flex vs metal trade-offs — every figure on this page traces to ACCA, ASHRAE, SMACNA, IECC, ASTM, or DOE publications."
+  datePublished="2026-05-30"
+  lastReviewed="2026-05-30"
+  readingTimeMinutes={12}
+/>
+
+<KeyTakeaways
+  items={[
+    'Manual D answers two questions about every residential duct system: what size each duct should be (so it delivers the right CFM at the right pressure), and what total path it must follow (so the system static pressure stays within the air handler\'s rated tolerance).',
+    'Typical residential friction rate target is 0.08-0.10 in. wc per 100 feet of duct, computed as available static pressure divided by total equivalent length — the same equation every Manual D calculation reduces to.',
+    'Common-fitting equivalent lengths add up faster than expected: a single 90° elbow in flex adds 15-30 feet, a tee on a trunk adds 25-50 feet, a 45° transition adds 5-15 feet. A typical residential run with 4 elbows and a tee can exceed 100 feet of equivalent length on a 30-foot straight path.',
+    'IECC 2021 limits new-construction duct leakage to 4 CFM per 100 sq ft (rough-in test) and 8 CFM per 100 sq ft (post-finish) — typical existing-home duct systems leak 3-5× those limits and waste 20-30% of HVAC capacity to unconditioned space.',
+    'Most residential duct system failures trace to four root causes: undersized return air (one return for the whole house), excessive flex duct length and sag, transitions with insufficient turning radius, and runs through unconditioned space without insulation or sealing.',
+  ]}
+/>
+
+<ClimateZonesQuickReference />
+
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
 
 <article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
 
-# Manual D Residential Duct Design
+## What Manual D Is and Why It Matters
 
-ACCA Manual D is the methodology for designing residential duct systems. The goal is delivering the design airflow to each room within the static pressure budget the equipment can sustain, while keeping noise, leakage, and balance within reasonable limits. Done correctly, the result is even temperatures across the home, low noise, and equipment that can actually hit its rated performance.
+ACCA Manual D is the methodology for designing residential duct systems — the network of supply and return ducts that distributes air between the air handler and each room.<SourceCite id="acca-manual-d" number={1} /> The methodology produces a duct layout diagram showing every run sized by length, fitting count, and design CFM, plus the friction rate target that holds the whole system within the air handler's static pressure budget.
 
-This section covers the friction-rate worksheet at the core of Manual D, equivalent length calculations for fittings, static pressure budgets, the practical differences between flex and metal duct, and what to look for in a contractor's duct design.
+<Callout type="info" title="Where Manual D fits in the ACCA stack">
+Manual J calculates room-by-room heating and cooling loads. Manual S picks equipment matching those loads. Manual D sizes the duct system to deliver each room's calculated CFM at the right pressure within the air handler's tolerance. Manual T picks the registers and grilles at each end of the duct. The four manuals are a sequence — you cannot skip Manual D and expect Manual S equipment to deliver the comfort Manual J promised.
+</Callout>
 
-## Articles in this section
+The cost of skipping Manual D is concrete and large. A duct system designed by rule of thumb (typically: pick a trunk size from a chart, route branches as needed, install whatever fits in the available space) routinely fails in three ways: rooms farthest from the air handler get inadequate CFM, total external static pressure exceeds the air handler's rated maximum, and the blower runs at higher RPM than design (consuming more power, producing more noise, wearing faster).<SourceCite id="doe-duct-sealing" number={8} />
+
+The cost of doing Manual D correctly is small. A complete Manual D for a typical 2,000 sq ft single-family home takes a credentialed practitioner about 4-8 hours and produces a layout diagram, equivalent-length table, friction rate calculation, and per-room CFM verification. Professional Manual D software (Wrightsoft Right-D, Elite Software Ductsize, EnergyGauge USA) costs the contractor about $300-$1,500 per seat per year — small relative to the savings on returns and callbacks.
+
+## Available Static Pressure: The Budget Duct Design Must Live Within
+
+The single most important number in any Manual D calculation is the available static pressure — the pressure budget the duct system has to work with after accounting for fixed losses in the equipment itself.
+
+<StaticPressureBudget />
+
+<DataTable
+  caption="Typical static pressure losses across a residential air handler (source: SMACNA Residential Sheet Metal Guidelines, ASHRAE Fundamentals Ch. 21)"
+  columns={[
+    { key: 'component', label: 'Component' },
+    { key: 'typicalLoss', label: 'Typical pressure loss (in. wc)', align: 'right' },
+    { key: 'notes', label: 'Notes' },
+  ]}
+  rows={[
+    { component: 'Air handler rated external static pressure (TESP)', typicalLoss: '0.50', notes: 'The pressure the blower can deliver above the unit\'s internal losses; this is the total budget' },
+    { component: 'Filter (MERV 8 1" pleated, clean)', typicalLoss: '0.05–0.10', notes: 'Doubles when dirty; MERV 13+ filters add 0.15-0.25' },
+    { component: 'Cooling coil (3-ton, clean)', typicalLoss: '0.10–0.20', notes: 'Iced or dirty coil drops capacity and raises pressure 2-3x' },
+    { component: 'Supply register (residential, design CFM)', typicalLoss: '0.03–0.05', notes: 'Varies by face area and throw pattern' },
+    { component: 'Return grille (one large return)', typicalLoss: '0.02–0.04', notes: 'Multiple small returns or undersized grille raises this 3-5x' },
+    { component: 'Available for duct system (typical)', typicalLoss: '0.17–0.27', notes: 'What remains for supply ducts + return ducts + all fittings' },
+  ]}
+/>
+
+Air handler manufacturers publish blower performance curves (CFM vs external static pressure) in the spec sheet — the air handler can deliver design CFM only within its rated pressure range. Above that range, CFM drops, registers underperform, and the system fails to deliver the loads Manual J calculated.<SourceCite id="acca-manual-d" number={1} />
+
+The available pressure budget for the duct system itself is the air handler rated TESP minus all the fixed equipment losses. For a typical residential system with 0.50 in. wc rated TESP, a MERV 8 filter, a clean cooling coil, and standard registers and returns, the duct system has roughly 0.20 in. wc to work with. Manual D then divides that budget across the supply and return paths.
+
+## Friction Rate: The Design Target Behind Every Duct Sizing Decision
+
+Friction rate is the design pressure drop per 100 feet of duct, expressed in inches of water column. It is the single number that ties available static pressure to duct sizing: at a given friction rate, each duct diameter delivers a specific CFM.
+
+<DataTable
+  caption="Friction rate calculation example: 2,000 sq ft house with one supply trunk and two return paths"
+  columns={[
+    { key: 'item', label: 'Item' },
+    { key: 'value', label: 'Value', align: 'right' },
+    { key: 'note', label: 'Note' },
+  ]}
+  rows={[
+    { item: 'Available static pressure (after equipment losses)', value: '0.20 in. wc', note: 'Half supply, half return convention' },
+    { item: 'Pressure budget for supply side', value: '0.10 in. wc', note: '50% of available' },
+    { item: 'Pressure budget for return side', value: '0.10 in. wc', note: '50% of available' },
+    { item: 'Longest supply path total equivalent length', value: '125 feet', note: '60 ft straight + 4 elbows at ~12 ft each + 1 tee at ~17 ft' },
+    { item: 'Longest return path total equivalent length', value: '75 feet', note: '40 ft straight + 2 elbows at ~12 ft each + return boot ~11 ft' },
+    { item: 'Supply friction rate target', value: '0.080 in. wc per 100 ft', note: '0.10 budget ÷ 125 ft × 100' },
+    { item: 'Return friction rate target', value: '0.133 in. wc per 100 ft', note: '0.10 budget ÷ 75 ft × 100' },
+  ]}
+/>
+
+Once friction rate is fixed, every duct in the system is sized to deliver its required CFM at that pressure drop. Manual D ductulator slide rules and digital equivalents (DuctSize, DuctZone) provide the size-CFM-friction relationship for round galvanized duct, rectangular sheet metal, and flexible duct at standard internal roughness.<SourceCite id="ashrae-fundamentals-duct" number={5} />
+
+<DataTable
+  caption="Approximate galvanized round duct capacity at common friction rates and CFM targets (source: SMACNA Residential Sheet Metal Guidelines tables)"
+  columns={[
+    { key: 'diameter', label: 'Diameter', align: 'right' },
+    { key: 'area', label: 'Cross section (sq in)', align: 'right' },
+    { key: 'cfmAt06', label: 'CFM @ 0.06 fric', align: 'right' },
+    { key: 'cfmAt08', label: 'CFM @ 0.08 fric', align: 'right' },
+    { key: 'cfmAt10', label: 'CFM @ 0.10 fric', align: 'right' },
+    { key: 'velocityAt08', label: 'Velocity @ 0.08 (fpm)', align: 'right' },
+  ]}
+  rows={[
+    { diameter: '5"', area: '20', cfmAt06: '50', cfmAt08: '60', cfmAt10: '70', velocityAt08: '440' },
+    { diameter: '6"', area: '28', cfmAt06: '80', cfmAt08: '95', cfmAt10: '110', velocityAt08: '480' },
+    { diameter: '7"', area: '38', cfmAt06: '120', cfmAt08: '140', cfmAt10: '160', velocityAt08: '530' },
+    { diameter: '8"', area: '50', cfmAt06: '170', cfmAt08: '200', cfmAt10: '230', velocityAt08: '570' },
+    { diameter: '9"', area: '64', cfmAt06: '230', cfmAt08: '270', cfmAt10: '310', velocityAt08: '610' },
+    { diameter: '10"', area: '79', cfmAt06: '300', cfmAt08: '360', cfmAt10: '410', velocityAt08: '660' },
+    { diameter: '12"', area: '113', cfmAt06: '480', cfmAt08: '570', cfmAt10: '650', velocityAt08: '730' },
+    { diameter: '14"', area: '154', cfmAt06: '710', cfmAt08: '840', cfmAt10: '960', velocityAt08: '780' },
+    { diameter: '16"', area: '201', cfmAt06: '1,000', cfmAt08: '1,180', cfmAt10: '1,350', velocityAt08: '850' },
+    { diameter: '18"', area: '254', cfmAt06: '1,330', cfmAt08: '1,570', cfmAt10: '1,800', velocityAt08: '890' },
+  ]}
+/>
+
+**Reading the table:** a 3-ton system delivering 1,200 CFM through a single trunk needs a 16" round galvanized at 0.10 friction rate or a 18" round at 0.06 friction rate. The size goes up as friction rate goes down. For flex duct, capacity drops roughly 10-20% at the same diameter (because flex has higher internal roughness than smooth galvanized).<SourceCite id="acca-manual-d" number={1} />
+
+## Equivalent Length: How Fittings Eat the Budget
+
+Every direction change, every diameter transition, and every takeoff in the duct system produces turbulence and pressure drop. Manual D quantifies this by assigning each fitting an "equivalent length" — the length of straight duct that produces the same pressure loss.
+
+<DataTable
+  caption="Approximate equivalent length for common residential duct fittings (source: ACCA Manual D, ASHRAE Fundamentals 2021 Ch. 21)"
+  columns={[
+    { key: 'fitting', label: 'Fitting' },
+    { key: 'galvanized', label: 'Galvanized (ft)', align: 'right' },
+    { key: 'flex', label: 'Flex (ft)', align: 'right' },
+    { key: 'notes', label: 'Notes' },
+  ]}
+  rows={[
+    { fitting: '90° elbow (smooth)', galvanized: '10–15', flex: '15–25', notes: 'Larger for sharp bend radius; smaller for wide-radius elbow' },
+    { fitting: '90° elbow (hard, R/D = 0.75)', galvanized: '20–30', flex: '25–40', notes: 'Common in tight spaces; eats budget fast' },
+    { fitting: '45° elbow', galvanized: '5–10', flex: '10–15', notes: 'About half a 90° equivalent' },
+    { fitting: 'Tee on trunk (with takeoff)', galvanized: '25–50', flex: '30–60', notes: 'Depends on takeoff angle and air split ratio' },
+    { fitting: 'Wye junction', galvanized: '15–30', flex: '20–40', notes: 'Lower loss than tee when angle is < 45°' },
+    { fitting: 'Trunk-to-branch takeoff (90°)', galvanized: '20–40', flex: '25–50', notes: 'Higher loss with abrupt entry' },
+    { fitting: 'Boot (transition to register)', galvanized: '10–25', flex: '15–30', notes: 'Higher loss with abrupt or undersized transition' },
+    { fitting: 'Damper (open)', galvanized: '5–10', flex: '5–15', notes: 'Modest when fully open; partial close adds 20-50 ft' },
+    { fitting: 'Square-to-round transition', galvanized: '5–15', flex: 'N/A', notes: 'Modest loss; common at trunk-to-branch transitions' },
+    { fitting: 'Coil mounted in duct', galvanized: '40–80', flex: 'N/A', notes: 'Very high loss; often not separately counted because it\'s an equipment loss' },
+  ]}
+/>
+
+A "30-foot run with 4 elbows and a tee" can produce 100-150 feet of total equivalent length, which changes the friction-rate target substantially. Designers who count only straight-duct lengths size ducts to the wrong target — typically 30-50% smaller than they should be — and the resulting system runs at higher static pressure than designed.
+
+<Callout type="warn" title="The flex duct field-installation penalty">
+A perfectly straight, well-supported, fully stretched length of insulated flex duct performs roughly to its catalog rating. A sagging, partly compressed, repeatedly bent flex run in an attic performs 30-50% worse than the catalog number.
+
+Manual D assumes catalog performance; field installations rarely achieve it. SMACNA installation guidelines call for:
+
+- Flex support every 4 feet.
+- No compression greater than 4% of diameter.
+- No kinks tighter than 1× duct diameter radius.
+- No sag deeper than 1/2 inch per foot of unsupported length.
+
+These are routinely violated in real installations.
+</Callout>
+
+## Velocity Limits, Noise, and Pressure Drop
+
+Air velocity matters in duct design for three reasons: noise, pressure drop, and dust/condensation behavior. Higher velocity produces more pressure drop, more turbulence-induced noise, and more potential to entrain dust or condense water on cold surfaces. Lower velocity produces quieter, lower-pressure systems but requires larger ducts.
+
+<DataTable
+  caption="Recommended maximum air velocity in residential duct systems (source: ACCA Manual T, ASHRAE Fundamentals Ch. 21)"
+  columns={[
+    { key: 'location', label: 'Location' },
+    { key: 'maxVelocity', label: 'Max velocity (fpm)', align: 'right' },
+    { key: 'rationale', label: 'Rationale' },
+  ]}
+  rows={[
+    { location: 'Supply main trunk', maxVelocity: '800–1,000', rationale: 'Highest acceptable; above 1,000 fpm produces audible noise' },
+    { location: 'Supply branch duct', maxVelocity: '600–700', rationale: 'Branches feed living spaces directly; quieter target' },
+    { location: 'Supply register (face velocity)', maxVelocity: '500–700', rationale: 'Throw and spread targets in Manual T' },
+    { location: 'Return main trunk', maxVelocity: '700–900', rationale: 'Returns can run slightly faster than supplies' },
+    { location: 'Return grille (face velocity)', maxVelocity: '500–700', rationale: 'Above this is audibly noisy in quiet rooms' },
+    { location: 'Filter grille (large face area)', maxVelocity: '300–400', rationale: 'Higher velocity dramatically reduces filter efficiency and life' },
+  ]}
+/>
+
+**The velocity-pressure relationship:** doubling velocity quadruples pressure drop (because pressure drop scales with velocity squared in turbulent flow). A duct sized to 500 fpm produces 1/4 the pressure drop of the same duct at 1,000 fpm carrying double the CFM. This is why undersized ducts produce disproportionately high static pressure — the velocity-pressure relationship is nonlinear.<SourceCite id="ashrae-fundamentals-duct" number={5} />
+
+Noise becomes an issue above ~700 fpm in branch ducts and ~1,000 fpm in trunks. Modern residential expectations are quieter than 1990s standards, partly because variable-speed equipment makes low-noise operation possible. A duct system designed for 800 fpm trunk velocity is now considered moderately loud; high-end residential favors 700 fpm trunk maximum.
+
+## Trunk and Branch Sizing in Practice
+
+The canonical residential duct system is trunk-and-branch: one or two main trunks emerge from the air handler, branches tap off the trunk to feed individual rooms. Manual D sizes the trunk to carry total system CFM at the design friction rate, then sizes each branch to carry its room's design CFM at the same (or slightly higher) friction rate.
+
+The reducing trunk concept matters when the longest branch path is much longer than the shortest. If the trunk maintains constant diameter through the run, the first branch sees high pressure and the last branch sees low pressure — air distribution becomes uneven. A reducing trunk shrinks in diameter as branches tap off, holding velocity (and therefore pressure profile) more uniform along the length.<SourceCite id="acca-manual-d" number={1} />
+
+<DataTable
+  caption="Example reducing trunk sizing for a 3-ton system (1,200 CFM nominal at 0.08 friction rate)"
+  columns={[
+    { key: 'segment', label: 'Trunk segment' },
+    { key: 'cfm', label: 'CFM carried', align: 'right' },
+    { key: 'sized', label: 'Sized to', align: 'right' },
+    { key: 'velocity', label: 'Velocity (fpm)', align: 'right' },
+  ]}
+  rows={[
+    { segment: 'AHU to first takeoff', cfm: '1,200', sized: '16" round', velocity: '860' },
+    { segment: 'After 200 CFM bedroom takeoff', cfm: '1,000', sized: '14" round', velocity: '935' },
+    { segment: 'After 350 CFM living room takeoff', cfm: '650', sized: '12" round', velocity: '830' },
+    { segment: 'After 300 CFM kitchen takeoff', cfm: '350', sized: '10" round', velocity: '640' },
+    { segment: 'Terminal branch to master bedroom', cfm: '350', sized: '10" round', velocity: '640' },
+  ]}
+/>
+
+Reducing each trunk segment as CFM drops keeps velocity in the 600-950 fpm band across the entire run — within the maximum velocity targets and producing a more uniform pressure profile. A non-reducing 16" trunk through this whole path would see velocity drop to 280 fpm at the end (causing dust drop-out and reducing branch takeoff efficiency).
+
+Branch sizing follows the same friction-rate target. A 100 CFM bedroom branch at 0.08 friction rate needs about a 6" diameter (catalog 95 CFM at 0.08); a 200 CFM living room branch needs 8" (200 CFM); a 300 CFM kitchen branch needs 9-10" (270-360 CFM range depending on flex vs metal).
+
+## Return Air Systems: Often the Failure Point
+
+Return air design is the single most common failure point in residential duct systems. The 1990s convention of "one big return in the central hallway" produces several problems: bedrooms with closed doors become disconnected from the return path, the central return must move all the air at high velocity, and the air handler's TESP often exceeds rated maximum because the single return path is too restrictive.<SourceCite id="acca-manual-d" number={1} />
+
+Best practice (and increasingly common code): a return air path in every conditioned room, either via a dedicated duct or via a transfer grille / jump duct to a central return. The total return path system should be sized for the same CFM as the supply (within 10%), with face velocity at return grilles below 700 fpm.
+
+<Callout type="info" title="The closed-door problem">
+Close every bedroom door in a typical 1990s-built house with one central return. Measure the pressure difference between each bedroom and the central hallway.
+
+Bedrooms typically pressurize 2-8 Pa above the hallway, which:
+
+- Restricts supply CFM to those rooms.
+- Drives infiltration through every penetration in the bedroom walls (exterior air leaks in, conditioned air leaks out).
+- Forces the central return to handle all return CFM at well above design velocity.
+
+The fix is either per-room returns or transfer grilles between each bedroom and the hallway.
+</Callout>
+
+The [return air sizing article](/manual-d/return-air-sizing/) covers the CFM-by-tonnage table, the grille velocity targets, the manometer-based diagnostic procedure for existing systems, and the IECC code requirements for new construction.
+
+## Flex Duct vs Metal Duct: Real Trade-Offs
+
+The flex-versus-metal decision is rarely binary in practice. Most modern residential systems use sheet metal trunks (lower friction, better acoustical performance, longer service life) with flex branches (faster installation, easier routing in irregular spaces, naturally insulated).
+
+<DataTable
+  caption="Side-by-side comparison of flex duct and galvanized sheet metal duct (typical residential application)"
+  columns={[
+    { key: 'attribute', label: 'Attribute' },
+    { key: 'flex', label: 'Flex duct' },
+    { key: 'galvanized', label: 'Galvanized sheet metal' },
+  ]}
+  rows={[
+    { attribute: 'Friction (R per 100 ft straight)', flex: 'Higher: 0.02-0.05 in. wc above metal', galvanized: 'Lower baseline' },
+    { attribute: 'Internal roughness coefficient', flex: '~0.003-0.012 (varies with stretch)', galvanized: '~0.0005' },
+    { attribute: 'Installation labor', flex: '50-70% of metal labor cost', galvanized: 'Higher; skilled fabrication needed' },
+    { attribute: 'Material cost (per foot)', flex: '$2-$4 (R-6 insulated)', galvanized: '$5-$12 (with separate insulation)' },
+    { attribute: 'R-value (insulation)', flex: 'Built-in R-4.2 to R-8', galvanized: 'Requires external duct wrap' },
+    { attribute: 'Service life (typical residential)', flex: '15-20 years', galvanized: '30-50 years' },
+    { attribute: 'Field installation forgiveness', flex: 'Low: sag/kink/compression hurts performance 30-50%', galvanized: 'High: shapes are fixed at fabrication' },
+    { attribute: 'Best use', flex: 'Branch runs, irregular routing, short straight paths', galvanized: 'Trunks, long straight runs, high-CFM applications' },
+  ]}
+/>
+
+The IECC 2021 minimum insulation for ducts in unconditioned space is R-8 (changed from R-6 in earlier editions).<SourceCite id="iecc-2021-duct" number={7} /> Flex duct catalogs typically offer R-4.2, R-6, and R-8 options; the R-8 variant is now standard for attic and crawlspace runs in new construction. Metal duct in unconditioned space requires external wrap meeting the same minimum.
+
+Most failures attributed to flex duct in field inspections are actually installation failures: sags from inadequate support, kinks at tight turning radii, compression at supports that pinch the duct closed, and excessive bend counts in short runs. SMACNA installation standards (4-foot support spacing, 1× diameter minimum bend radius, no more than 4% compression at supports) prevent most of these failures.<SourceCite id="smacna-residential" number={6} />
+
+## The Most Common Manual D Failures in Field Inspections
+
+Field auditors performing post-installation inspections find four root causes account for the majority of underperforming residential duct systems.
+
+1. Inadequate return air. Single central return for a multi-bedroom house with bedroom doors closed during sleep hours. The return grille face velocity exceeds 800-1,200 fpm (loud, restrictive). Per-room returns or transfer grilles needed.
+
+2. Flex duct sags and kinks. Branches longer than 20 feet installed with no center support, allowing 2-4 inches of sag per 10 feet. Combined with one or more sharp bends. Effective CFM delivery drops 30-50% from catalog values.
+
+3. Static pressure exceeding equipment rating. Total external static pressure measured at the air handler exceeds rated maximum (typically 0.50 in. wc for residential). The blower must work harder than designed, CFM drops, comfort suffers, and the blower motor wears faster.
+
+4. Ducts in unconditioned space without sealing or adequate insulation. Attic ducts at 130°F (in cooling mode, summer afternoon) or 30°F (in heating mode, winter morning) leak roughly 20-30% of conditioned air to the attic. Sealing with mastic or UL 181 tape (not residential cloth duct tape, which fails within 5 years) plus R-8 insulation cuts the loss to 5-10%.<SourceCite id="doe-duct-sealing" number={8} />
+
+**The fix for each failure is small.** Adding transfer grilles is $300-$800 per house. Re-supporting flex duct is half a day of labor. Sealing duct joints is $300-$1,500 for a typical house. Each fix produces 5-15% HVAC capacity improvement, comfort improvement, and energy savings — far better return than equipment upgrades on a system whose ducts are still failing.
+
+## What This Cluster Covers
+
+### Sizing and methodology
 
 - [Return air sizing](/manual-d/return-air-sizing/) — CFM by tonnage, grille velocity, manometer diagnostics, transfer grilles, code requirements
 
-## Calculators
+### Related load and equipment topics
 
-- [Manual J load calculator](/tools/manual-j-calculator/) — produces the per-home loads that feed Manual D
-- [Heat pump size calculator](/tools/heat-pump-size-calculator/) — determines equipment CFM target for duct sizing
-- [BTU calculator](/tools/btu-calculator/) — per-room or whole-house BTU planning
+- [Manual J load calculation](/manual-j/) — produces the per-room CFM targets Manual D delivers to
+- [Manual S equipment selection](/manual-s/) — sets the static pressure budget Manual D must work within
+- [Manual T air distribution](/manual-t/) — register and grille selection downstream of Manual D
+- [Building science fundamentals](/building-science/) — duct losses to unconditioned space are part of the envelope load
 
-## Related topics
+### Calculators
 
-- [Manual J load calculation](/manual-j/) — provides the per-room CFM targets
-- [Manual S equipment selection](/manual-s/) — sets the static pressure budget
-- [Manual T air distribution](/manual-t/) — register selection downstream of Manual D
+- [Manual J load calculator](/tools/manual-j-calculator/) — produces the per-home loads that drive Manual D inputs
+- [BTU calculator](/tools/btu-calculator/) — coarser whole-house BTU planning
 
 </article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<Sources sources={SOURCES} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-30" />
+</div>
+
+</Container>

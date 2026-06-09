@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Container } from '@/components/layout/Container';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { JsonLdSoftwareApplication } from '@/components/seo/JsonLdSoftwareApplication';
+import { JsonLdHowTo } from '@/components/seo/JsonLdHowTo';
 import { Callout } from '@/components/article/Callout';
 import { AuthorByline } from '@/components/article/AuthorByline';
 import { RelatedArticles } from '@/components/article/RelatedArticles';
@@ -14,11 +17,21 @@ import {
 import { HeatPumpSizeCalculatorClient } from './HeatPumpSizeCalculatorClient';
 import { heatPumpExamples } from './examples-manifest';
 import { getSources } from '@/lib/seo/sources';
+import { CapacityVsOutdoorTemperature } from '@/components/svg/heat-pump-sizing/CapacityVsOutdoorTemperature';
+import { ClimateZonesQuickReference } from '@/components/svg/shared/ClimateZonesQuickReference';
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/tools/heat-pump-size-calculator/" },
   title: 'Heat Pump Size Calculator: Tonnage by Climate and Square Footage',
   description:
     'Free heat pump sizing calculator with dual-load (cooling + heating) math, balance point estimate, aux heat capacity, and standard vs cold-climate (CCASHP) equipment comparison. 60+ worked use cases across home sizes and climate zones.',
+  openGraph: {
+    title: 'Heat Pump Size Calculator: Tonnage by Climate and Square Footage',
+    description:
+      'Heat pump sizing with dual-load (cooling + heating) math, balance point, aux heat capacity, and standard vs cold-climate (NEEP CCASHP) equipment comparison.',
+    type: 'website',
+    images: ['/opengraph-image'],
+  },
 };
 
 const DEFAULTS: HeatPumpInputs = {
@@ -38,6 +51,57 @@ const BREADCRUMBS = [
   { name: 'Tools', url: '/tools/' },
   { name: 'Heat Pump Size Calculator' },
 ];
+
+const SOFTWARE_APP = {
+  name: 'Heat Pump Size Calculator',
+  description:
+    'Free planning-grade heat pump sizing calculator with dual-load (cooling + heating) math, climate-zone-aware design temperatures, NEEP CCASHP cold-climate equipment model, balance point estimation, and aux heat capacity sizing. Built on ACCA Manual J/S and NEEP CCASHP v4.0 specifications.',
+  url: '/tools/heat-pump-size-calculator/',
+  featureList: [
+    'Dual-load sizing: cooling and heating computed separately',
+    'NEEP CCASHP cold-climate equipment toggle (capacity retention at 17°F and 5°F)',
+    'Balance-point estimate (temperature where HP capacity equals heating load)',
+    'Aux heat capacity sizing at design temperature',
+    'Capacity-vs-temperature SVG chart visualizing both equipment classes',
+    'Climate-aware sizing strategy recommendations (standard / CCASHP recommended / CCASHP required)',
+    'Annual operating cost comparison vs gas furnace, oil furnace, electric resistance',
+    'Federal 25C tax credit and HEEHRA rebate eligibility documented',
+    '6 worked-example URLs by home size (1000-3000 sq ft)',
+  ],
+};
+
+const HOW_TO = {
+  name: 'How to size a heat pump for any home',
+  description:
+    'Determine the right heat pump tonnage by computing both cooling and heating loads, picking the larger as the equipment sizing target, and identifying whether standard or cold-climate-certified (NEEP CCASHP) equipment is needed.',
+  totalTime: 'PT4M',
+  steps: [
+    {
+      name: 'Enter total conditioned square footage',
+      text: 'Use total conditioned floor area for whole-house sizing. For single-zone mini-split applications, use just the zone being served. Range supported: 300-6,000 sq ft.',
+    },
+    {
+      name: 'Pick climate zone',
+      text: 'Climate zone drives both the cooling design temperature (zone 1 around 90°F to zone 8 around 70°F) and the heating design temperature (zone 1 around 47°F to zone 8 around -20°F). The heating-to-cooling load ratio shifts from 0.3 in zone 1 to 2.2 in zone 8.',
+    },
+    {
+      name: 'Set envelope inputs',
+      text: 'Ceiling height, insulation quality, sun exposure, space type, occupancy, and kitchen flag are the same as the BTU calculator. These determine both cooling and heating loads.',
+    },
+    {
+      name: 'Decide whether to toggle Cold-Climate (CCASHP) equipment',
+      text: 'CCASHP equipment maintains 70% of 47°F capacity at 17°F and 58% at 5°F per the NEEP v4.0 spec. Standard heat pumps drop to about 60% at 17°F and 33% at 5°F. In zones 1-3 standard is sufficient. In zones 5-8 CCASHP is recommended or required.',
+    },
+    {
+      name: 'Click Calculate',
+      text: 'Result shows: recommended tonnage, cooling load, heating load, balance point (temperature where heat pump capacity equals home heating load), aux heat capacity needed at design temperature, equipment recommendation, and a sized capacity-vs-temperature chart.',
+    },
+    {
+      name: 'Verify the recommendation matches your contractor proposal',
+      text: 'A heat pump quote should reference both cooling and heating loads (not just "X tons"). Compare the proposed AHRI 47°F nameplate against the calculated cooling load; it should fall within Manual S tolerance (15-25% above Manual J cooling load). Check that the proposed equipment\'s 17°F and 5°F capacity (from AHRI directory) covers heating load at design temperature with the aux strip size recommended.',
+    },
+  ],
+};
 
 const RELATED = [
   {
@@ -337,6 +401,9 @@ export default function Page() {
 
   return (
     <Container>
+      <JsonLdBreadcrumb items={BREADCRUMBS} />
+      <JsonLdSoftwareApplication application={SOFTWARE_APP} />
+      <JsonLdHowTo howTo={HOW_TO} />
       <Breadcrumbs items={BREADCRUMBS} />
 
       <header className="not-prose mb-6 mt-4">
@@ -365,6 +432,47 @@ export default function Page() {
 
       <section className="mt-8">
         <HeatPumpSizeCalculatorClient defaults={DEFAULTS} />
+      </section>
+
+
+      <section className="mt-12">
+        <h2 className="text-2xl font-bold text-ink-900">Find your climate zone first</h2>
+        <p className="mt-2 max-w-prose text-ink-700">
+          Climate zone is the single most important input in any HVAC sizing decision —
+          it drives both heating and cooling design temperatures and the
+          equipment-class recommendation. The reference card below covers all eight
+          US climate zones with sample cities and design temperatures.
+        </p>
+        <ClimateZonesQuickReference />
+      </section>
+
+      {/* Capacity vs outdoor temperature visualization */}
+      <section className="prose prose-slate mt-12 max-w-prose">
+        <h2>Why outdoor temperature is the central variable</h2>
+        <p>
+          The single concept that separates heat pump sizing from AC sizing is that heat
+          pump heating capacity drops with outdoor temperature. The chart below shows the
+          standard residential heat pump curve, the cold-climate (CCASHP) curve, and a
+          typical home heating-load line. The intersection of the capacity curve and the
+          load line is the balance point — the temperature below which aux heat must
+          supplement the heat pump.
+        </p>
+      </section>
+
+      <CapacityVsOutdoorTemperature />
+
+      <section className="prose prose-slate mt-6 max-w-prose">
+        <p>
+          The CCASHP curve sits well above the standard curve at low temperatures, which is
+          why the same nominal tonnage produces a much lower balance point with CCASHP
+          equipment. In zones 5-8 that difference reduces aux heat runtime by 60-80% across
+          a heating season — typically translating to $200-$600 per year of avoided
+          electric-resistance operating cost. See the{' '}
+          <a className="text-brand underline" href="/heat-pump/sizing/">heat pump sizing article</a>
+          {' '}for the full balance-point math and the{' '}
+          <a className="text-brand underline" href="/heat-pump/aux-heat/">aux heat article</a>
+          {' '}for the resistance-strip sizing rules.
+        </p>
       </section>
 
       {/* Overview */}

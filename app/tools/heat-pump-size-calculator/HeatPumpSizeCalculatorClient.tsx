@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   calculateHeatPumpSize,
   type HeatPumpInputs,
@@ -13,7 +13,8 @@ import type {
   SpaceType,
   SunExposure,
 } from '@/lib/calculators/btu';
-import { HeatPumpResultChart } from './HeatPumpResultChart';
+import { NumberInput } from '@/components/forms/NumberInput';
+import { HeatPumpResult as HeatPumpResultPanel } from './HeatPumpResult';
 
 const CLIMATE_OPTIONS: Array<{ value: ClimateZone; label: string }> = [
   { value: '1', label: 'Zone 1 — South FL, Hawaii (tropical)' },
@@ -58,13 +59,28 @@ const SPACE_OPTIONS: Array<{ value: SpaceType; label: string }> = [
 
 interface Props {
   defaults: HeatPumpInputs;
+  autoCalculate?: boolean;
 }
 
-export function HeatPumpSizeCalculatorClient({ defaults }: Props) {
+export function HeatPumpSizeCalculatorClient({ defaults, autoCalculate = false }: Props) {
   const [inputs, setInputs] = useState<HeatPumpInputs>(defaults);
-  const [calculatedResult, setCalculatedResult] = useState<HeatPumpResult | null>(null);
-  const [resultColdClimate, setResultColdClimate] = useState<boolean>(defaults.coldClimateEquipment);
+  const [calculatedResult, setCalculatedResult] = useState<HeatPumpResult | null>(
+    autoCalculate ? calculateHeatPumpSize(defaults) : null,
+  );
+  const [resultInputs, setResultInputs] = useState<HeatPumpInputs | null>(
+    autoCalculate ? defaults : null,
+  );
   const [isStale, setIsStale] = useState(false);
+
+  useEffect(() => {
+    if (autoCalculate && !calculatedResult) {
+      try {
+        setCalculatedResult(calculateHeatPumpSize(defaults));
+        setResultInputs(defaults);
+      } catch {}
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function update<K extends keyof HeatPumpInputs>(key: K, value: HeatPumpInputs[K]) {
     setInputs((prev) => ({ ...prev, [key]: value }));
@@ -77,8 +93,14 @@ export function HeatPumpSizeCalculatorClient({ defaults }: Props) {
     try {
       const r = calculateHeatPumpSize(inputs);
       setCalculatedResult(r);
-      setResultColdClimate(inputs.coldClimateEquipment);
+      setResultInputs({ ...inputs });
       setIsStale(false);
+      window.requestAnimationFrame(() => {
+        document.getElementById('hp-result')?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      });
     } catch {
       setCalculatedResult(null);
     }
@@ -87,6 +109,7 @@ export function HeatPumpSizeCalculatorClient({ defaults }: Props) {
   function handleReset() {
     setInputs(defaults);
     setCalculatedResult(null);
+    setResultInputs(null);
     setIsStale(false);
   }
 
@@ -104,19 +127,13 @@ export function HeatPumpSizeCalculatorClient({ defaults }: Props) {
             <label htmlFor="sqft" className="block text-sm font-medium text-ink-700">
               Square footage
             </label>
-            <input
+            <NumberInput
               id="sqft"
-              type="number"
               min={300}
               max={6000}
               step={50}
               value={inputs.squareFootage}
-              onChange={(e) =>
-                update(
-                  'squareFootage',
-                  Math.max(300, Math.min(6000, Number(e.target.value) || 300)),
-                )
-              }
+              onChange={(n) => update('squareFootage', n)}
               className="mt-1 w-full rounded-md border border-ink-300 px-3 py-2 text-base shadow-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
             />
           </div>
@@ -205,19 +222,13 @@ export function HeatPumpSizeCalculatorClient({ defaults }: Props) {
             <label htmlFor="occupants" className="block text-sm font-medium text-ink-700">
               Regular occupants
             </label>
-            <input
+            <NumberInput
               id="occupants"
-              type="number"
               min={1}
               max={20}
               step={1}
               value={inputs.occupants}
-              onChange={(e) =>
-                update(
-                  'occupants',
-                  Math.max(1, Math.min(20, Number(e.target.value) || 1)),
-                )
-              }
+              onChange={(n) => update('occupants', n)}
               className="mt-1 w-full rounded-md border border-ink-300 px-3 py-2 text-base shadow-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
             />
             <p className="mt-1 text-xs text-ink-500">+600 BTU per person above 2</p>
@@ -264,34 +275,22 @@ export function HeatPumpSizeCalculatorClient({ defaults }: Props) {
         </div>
       </div>
 
-      {/* Result SVG */}
-      {calculatedResult ? (
-        <div
-          className={`mt-6 rounded-xl border border-ink-300 bg-white p-3 shadow-sm transition-opacity sm:p-4 ${isStale ? 'opacity-60' : 'opacity-100'}`}
-        >
-          <HeatPumpResultChart
-            result={calculatedResult}
-            coldClimateEquipment={resultColdClimate}
-          />
-          <p className="px-2 pt-2 text-xs text-ink-500">
-            Capacity curve uses{' '}
-            {resultColdClimate
-              ? 'NEEP CCASHP cold-climate'
-              : 'standard heat pump'}{' '}
-            performance model. Aux heat shaded region shows BTU capacity needed below the balance
-            point down to the heating design temperature.
-          </p>
-        </div>
-      ) : (
-        <div className="mt-6 rounded-xl border border-dashed border-ink-300 bg-ink-50/50 p-12 text-center">
-          <p className="text-base font-medium text-ink-700">
-            Enter your inputs above, then click Calculate
-          </p>
-          <p className="mt-1 text-sm text-ink-500">
-            Result will appear as a sized chart with balance point and aux heat capacity.
-          </p>
-        </div>
-      )}
+      <div id="hp-result" className={`mt-8 transition-opacity ${isStale ? 'opacity-60' : 'opacity-100'}`}>
+        {calculatedResult && resultInputs ? (
+          <HeatPumpResultPanel result={calculatedResult} inputs={resultInputs} />
+        ) : (
+          <div className="rounded-xl border border-dashed border-ink-300 bg-ink-50/50 p-12 text-center">
+            <p className="text-base font-medium text-ink-700">
+              Enter your inputs above, then click Calculate
+            </p>
+            <p className="mt-1 text-sm text-ink-500">
+              Result will appear here with the recommended size, capacity-vs-temperature chart,
+              balance point, aux heat sizing, operating cost comparison, and federal incentive
+              eligibility.
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

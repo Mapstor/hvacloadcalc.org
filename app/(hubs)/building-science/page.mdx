@@ -1,57 +1,664 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { Sources } from '@/components/article/Sources';
+import { SourceCite } from '@/components/article/SourceCite';
+import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { Callout } from '@/components/article/Callout';
+import { DataTable } from '@/components/data/DataTable';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { HeatLossByComponent } from '@/components/svg/building-science/HeatLossByComponent';
+import { ClimateZonesQuickReference } from '@/components/svg/shared/ClimateZonesQuickReference';
 
 export const metadata = {
-  title: 'Building Science Reference for HVAC Sizing | hvacloadcalc.org',
+  alternates: { canonical: "/building-science/" },
+  title: 'Building Science for HVAC: R-Values, U-Factors, Infiltration, Climate',
   description:
-    'Building envelope, R-values, U-factors, psychrometrics, infiltration, climate zones, and design temperatures — building science fundamentals for HVAC sizing.',
+    'Building science for HVAC sizing — R-values, U-factors, ACH50, IECC climate zones, psychrometrics, HERS. Sourced to ASHRAE, DOE, IECC, NFRC, RESNET.',
+  openGraph: {
+    title: 'Building Science for HVAC Sizing: A Sourced Reference Hub',
+    description:
+      'R-values, U-factors, air infiltration, climate zones, psychrometrics, design temperatures, and energy audit metrics — every figure traced to a primary source.',
+    type: 'article',
+    publishedTime: '2026-05-30',
+    modifiedTime: '2026-05-30',
+    authors: ['Jonathan Stowe'],
+    images: ['/opengraph-image'],
+  },
 };
 
-<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Building science' }]} />
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'Building Science' },
+];
 
-<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Building science' }]} />
+export const HEADINGS = [
+  { id: 'why-building-science-drives-hvac-sizing', text: 'Why Building Science Drives HVAC Sizing', level: 2 },
+  { id: 'r-value-the-thermal-resistance-metric', text: 'R-Value: The Thermal Resistance Metric', level: 2 },
+  { id: 'u-factor-and-window-performance', text: 'U-Factor and Window Performance', level: 2 },
+  { id: 'air-infiltration-and-ach50', text: 'Air Infiltration and ACH50: How Tight Is Your House', level: 2 },
+  { id: 'climate-zones-iecc-and-ashrae', text: 'Climate Zones (IECC and ASHRAE 169)', level: 2 },
+  { id: 'design-temperatures', text: 'Design Temperatures: The Outdoor Condition Manual J Assumes', level: 2 },
+  { id: 'psychrometrics-essentials', text: 'Psychrometric Essentials: Dry Bulb, Wet Bulb, Dew Point, Enthalpy', level: 2 },
+  { id: 'energy-audit-metrics', text: 'Energy Audit Metrics: HERS, BPI, RESNET, and ENERGY STAR', level: 2 },
+  { id: 'how-envelope-changes-shift-hvac-load', text: 'How Envelope Improvements Shift HVAC Load', level: 2 },
+  { id: 'what-this-cluster-covers', text: 'What This Cluster Covers', level: 2 },
+];
+
+export const SOURCES = [
+  {
+    id: 'ashrae-fundamentals-2021',
+    title: 'ASHRAE Handbook of Fundamentals 2021 (psychrometrics Ch. 1, climatic design Ch. 14, fenestration Ch. 15, infiltration Ch. 16)',
+    publisher: 'American Society of Heating, Refrigerating and Air-Conditioning Engineers',
+    year: 2021,
+    url: 'https://www.ashrae.org/technical-resources/ashrae-handbook',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'ashrae-169-2021',
+    title: 'ANSI/ASHRAE Standard 169-2021, Climatic Data for Building Design Standards',
+    publisher: 'ASHRAE',
+    year: 2021,
+    url: 'https://www.ashrae.org/technical-resources/standards-and-guidelines',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'iecc-2021',
+    title: 'International Energy Conservation Code (IECC) 2021, Chapter 4 (Residential Energy Efficiency)',
+    publisher: 'International Code Council',
+    year: 2021,
+    url: 'https://codes.iccsafe.org/content/IECC2021P2',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'doe-recommended-r-values',
+    title: 'Insulation: Recommended R-Values for Existing Homes by ZIP Code',
+    publisher: 'US Department of Energy, ENERGY STAR program',
+    year: 2024,
+    url: 'https://www.energystar.gov/saveathome/seal_insulate/methodology',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'doe-air-sealing',
+    title: 'Air Sealing Your Home (consumer guide)',
+    publisher: 'US Department of Energy, Office of Energy Efficiency and Renewable Energy',
+    year: 2024,
+    url: 'https://www.energy.gov/energysaver/air-sealing-your-home',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'nfrc-label',
+    title: 'NFRC Energy Performance Label (U-Factor, SHGC, VT, AL, CR)',
+    publisher: 'National Fenestration Rating Council',
+    year: 2024,
+    url: 'https://www.nfrc.org/energy-performance-labels/',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'resnet-hers',
+    title: 'RESNET HERS Index Standard (ANSI/RESNET/ICC 301-2022)',
+    publisher: 'Residential Energy Services Network (RESNET)',
+    year: 2022,
+    url: 'https://www.resnet.us/hers-index/',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'bpi-standards',
+    title: 'Building Performance Institute (BPI) Building Analyst and Envelope Professional Standards',
+    publisher: 'Building Performance Institute',
+    year: 2024,
+    url: 'https://www.bpi.org/standards',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'astm-e779',
+    title: 'ASTM E779-19 — Standard Test Method for Determining Air Leakage Rate by Fan Pressurization',
+    publisher: 'ASTM International',
+    year: 2019,
+    url: 'https://www.astm.org/e0779-19.html',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'passivhaus-institut',
+    title: 'Passive House Building Criteria',
+    publisher: 'Passive House Institute (PHI)',
+    year: 2024,
+    url: 'https://passiv.de/en/02_informations/02_passive-house-requirements/02_passive-house-requirements.htm',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'doe-blower-door',
+    title: 'Energy Audits Step-by-Step (Blower Door Test guidance)',
+    publisher: 'US Department of Energy, Office of Energy Efficiency and Renewable Energy',
+    year: 2024,
+    url: 'https://www.energy.gov/energysaver/energy-assessments',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+];
+
+export const FAQ_ITEMS = [
+  {
+    q: 'What R-value should my attic insulation have?',
+    a: 'The US Department of Energy recommends R-30 to R-60 for residential attic insulation depending on climate zone. Zone 1-3 (southern US): R-30 to R-49. Zone 4 (mixed): R-38 to R-60. Zone 5-7 (cold): R-49 to R-60. Zone 8 (very cold, Alaska): R-60. Existing homes with less than R-30 in the attic almost always benefit financially from added insulation in the heating-dominated zones; the payback in cooling-dominated zones is slower but still positive over 15-20 years.',
+  },
+  {
+    q: 'What is the difference between R-value and U-factor?',
+    a: 'R-value measures thermal resistance — how strongly a material resists heat flow. Higher R is better. R-value is used for opaque envelope elements (walls, ceilings, floors, doors). U-factor measures thermal conductance — the inverse of R, in BTU/h·ft²·°F. Lower U is better. U-factor is the standard metric for windows and glazing because window assemblies have complex parallel heat-flow paths (glass, frame, edge of glass) that average to one whole-window U. For walls, R-value of all layers is summed; for windows, the whole-assembly U-factor on the NFRC label is the relevant number.',
+  },
+  {
+    q: 'What is ACH50 and how tight should my house be?',
+    a: 'ACH50 is Air Changes per Hour at 50 Pascals — the result of a blower door test that pressurizes or depressurizes the house to 50 Pa and measures how much air flows through the building envelope. New IECC 2021 construction requires ≤3.0 ACH50 in most climate zones (≤5.0 in zones 1-2). A typical 1970s-1980s home tests 7-15 ACH50; a tight 2010+ home tests 1-3 ACH50; Passive House certification requires ≤0.6 ACH50. The "right" target depends on construction vintage and climate, but anything above 7 ACH50 is leaking enough to significantly inflate HVAC loads.',
+  },
+  {
+    q: 'What climate zone am I in?',
+    a: 'The US is divided into 8 IECC climate zones based on annual heating-degree-days and cooling-degree-days, with sub-classifications for moisture (A humid, B dry, C marine). Zone 1 (Miami, southern FL): hot/humid year-round. Zone 2 (Houston, Phoenix, Tampa): hot, cooling-dominant. Zone 3 (Atlanta, Memphis, San Diego): warm, mixed. Zone 4 (Kansas City, Washington DC, San Francisco): mixed heating + cooling. Zone 5 (Chicago, Denver, Boston): cool, heating-dominant. Zone 6 (Minneapolis, Burlington VT): cold. Zone 7 (Duluth, International Falls): very cold. Zone 8 (Fairbanks, Anchorage): subarctic. The county-by-county assignments are published in ASHRAE 169 and IECC Chapter 4.',
+  },
+  {
+    q: 'What is a HERS Index?',
+    a: 'The Home Energy Rating System (HERS) Index is a 0-to-150+ scale published by RESNET that scores a home\'s energy efficiency relative to a 2006 IECC reference home (which scores 100). A score of 0 represents a net-zero-energy home. A score of 50 means the home uses 50% as much energy as the 2006 reference. A score of 130 means 30% more energy. New ENERGY STAR-certified homes typically score 55-60; Passive House and DOE Zero Energy Ready Homes typically score under 50. The score is set by an independent HERS-rater certified by RESNET; it is required documentation for many state and utility incentive programs.',
+  },
+  {
+    q: 'How much does insulation reduce HVAC load?',
+    a: "Adding attic insulation from R-19 to R-49 in a 2,000 sq ft house typically reduces design heating load by 4,000-7,000 BTU/hr and cooling load by 2,000-4,000 BTU/hr, depending on climate. In cold climates the heating reduction dominates and the payback in fuel savings is 5-10 years at current fuel prices. In hot climates the cooling reduction dominates and the payback is 7-15 years at current electricity prices. Air sealing typically produces 10-25% load reduction at lower cost than insulation, which is why most retrofits start with sealing the leaks first.",
+  },
+  {
+    q: 'What is a blower door test and do I need one?',
+    a: "A blower door test measures envelope air-leakage by pressurizing or depressurizing the house to a fixed pressure (50 Pascals is standard for residential per ASTM E779) and measuring the airflow required to maintain that pressure. The result is reported as either CFM50 (cubic feet per minute at 50 Pa) or ACH50 (air changes per hour at 50 Pa). You don't 'need' one for HVAC sizing, but a Manual J calculation that uses estimated infiltration (rather than measured) can be off by 20-30%. For permit-grade Manual J or HERS rating documentation, a blower door test is typically required.",
+  },
+  {
+    q: 'What is wet bulb temperature and why does it matter?',
+    a: 'Wet bulb temperature is the temperature of a wet thermometer in moving air, which reads the equilibrium between evaporative cooling and air temperature. It is always lower than dry bulb when humidity is below 100%. AHRI 210/240 rates AC cooling capacity at 67°F indoor wet bulb because that condition combines a typical 80°F dry bulb temperature with 50% relative humidity. In hot-humid climates the cooling load includes a substantial latent component (removing water vapor), which is quantified through the wet bulb depression — the difference between dry bulb and wet bulb temperatures.',
+  },
+];
+
+export const RELATED = [
+  {
+    title: 'Attic R-value reference',
+    url: '/building-science/insulation/attic-r-value/',
+    description:
+      'Recommended R-values by climate zone, insulation types, measurement methodology, and air-sealing primacy.',
+  },
+  {
+    title: 'Window U-factor reference',
+    url: '/building-science/windows/u-factor/',
+    description:
+      'What U-factor measures, NFRC label reading, recommended values by zone, and what features actually lower window U.',
+  },
+  {
+    title: 'Wet bulb temperature',
+    url: '/building-science/psychrometrics/wet-bulb/',
+    description:
+      'Measurement, calculation, psychrometric chart interpretation, WBGT, and survivability research.',
+  },
+  {
+    title: 'HERS Index',
+    url: '/building-science/hers-index/',
+    description:
+      'What the HERS score means, how it is calculated, typical scores, and how to lower it.',
+  },
+  {
+    title: 'Manual J load calculation',
+    url: '/manual-j/',
+    description:
+      'The ACCA methodology that takes building science inputs and produces HVAC equipment sizing loads.',
+  },
+];
+
+export const FRONTMATTER = {
+  title: 'Building Science for HVAC: R-Values, U-Factors, Infiltration, Climate',
+  h1: 'Building Science for HVAC Sizing: A Sourced Reference',
+  meta_description:
+    'A reference hub for the building science that drives HVAC sizing — R-values and U-factors by climate zone, air infiltration measurement, psychrometric basics, design temperatures, and energy audit metrics. Every figure sourced to ASHRAE, DOE, IECC, NFRC, or RESNET.',
+  url: '/building-science/',
+  date_published: '2026-05-30',
+  last_reviewed: '2026-05-30',
+  target_keyword: 'building science',
+  secondary_keywords: ['r-value by climate zone', 'u-factor windows', 'ach50', 'iecc climate zones', 'design temperature', 'psychrometrics'],
+  sources: SOURCES,
+  faq: FAQ_ITEMS,
+  parent_title: 'Home',
+};
+
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={3000} />
+
+<JsonLdBreadcrumb items={BREADCRUMBS} />
+
+<Container>
+
+<Breadcrumbs items={BREADCRUMBS} />
+
+<ArticleHeader
+  h1="Building Science for HVAC Sizing: A Sourced Reference"
+  description="The four envelope drivers (R-values, U-factors, air infiltration, climate) and the metrics that quantify them — every figure on this page traces to ASHRAE Handbook of Fundamentals, IECC 2021, NFRC, RESNET, BPI, or DOE/ENERGY STAR publications."
+  datePublished="2026-05-30"
+  lastReviewed="2026-05-30"
+  readingTimeMinutes={13}
+/>
+
+<KeyTakeaways
+  items={[
+    'HVAC sizing accuracy is bounded by envelope characterization quality — R-value (insulation), U-factor (windows), infiltration rate (air leakage), and climate (design temperatures) drive 80-90% of the heating and cooling load math.',
+    'IECC 2021 climate zones split the US into 8 numbered bands (1 hot/humid through 8 subarctic) with moisture subdivisions (A humid, B dry, C marine) — each zone has its own DOE-recommended R-values and ASHRAE design temperatures.',
+    'New construction airtightness targets per IECC 2021 are ≤3.0 ACH50 in most zones (≤5.0 in zones 1-2); Passive House certification requires ≤0.6 ACH50. Typical pre-1990 housing stock measures 7-15 ACH50, which can inflate HVAC load by 20-40% over a tight envelope.',
+    'Window U-factor on a NFRC label is the single most useful number for window comparison: 0.27 (triple-pane low-E) to 1.20 (single-pane aluminum frame) at typical sizes. Doubling the U-factor doubles the conductive heat-loss/gain through the glazing.',
+    'A HERS Index of 100 represents a 2006 IECC reference home; a typical ENERGY STAR home scores 55-60, and a Passive House or DOE Zero Energy Ready home scores under 50 — the score is set by an independent RESNET-certified rater.',
+  ]}
+/>
+
+<ClimateZonesQuickReference />
+
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
 
 <article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
 
-# Building Science Reference for HVAC Sizing
+## Why Building Science Drives HVAC Sizing
 
-HVAC sizing decisions are downstream of the building. R-values, U-factors, air leakage rate, climate zone, and design temperatures all flow into the Manual J load calculation. Treat the envelope as a black box and the sizing math has nowhere to anchor. Treat it transparently and the load calc becomes auditable.
+The cooling and heating load a house imposes on an HVAC system is driven by four physical phenomena, all of which fall under the umbrella of building science: conductive heat flow through walls, ceiling, floors, and glass; air infiltration carrying outside conditions into and inside conditions out of the building envelope; solar heat gain through glazing; and internal heat generation from people, lights, and appliances.<SourceCite id="ashrae-fundamentals-2021" number={1} />
 
-This section covers the building science fundamentals that drive HVAC sizing: assembly R-values by climate, fenestration U-factors and SHGC, psychrometric properties, infiltration measurement, climate zones, and the design temperatures that anchor any load calculation.
+<Callout type="info" title="What 'load' actually is">
+The HVAC "design load" is the rate at which the equipment must transfer heat at the design outdoor condition to hold the indoor setpoint.
 
-## Articles in this section
+A heating load of 50,000 BTU/hr at a design temperature of 5°F means the building loses 50,000 BTU per hour when it is 5°F outside and 70°F inside, and the heating equipment must replace that energy at that rate to maintain temperature. Every Manual J calculation reports both a heating and cooling load, and the equipment is sized to handle both.
+</Callout>
+
+The four phenomena are quantified by four metrics. R-value characterizes the thermal resistance of opaque elements (walls, ceilings, floors). U-factor characterizes the thermal conductance of glazing (windows, doors, skylights). ACH50 (or its equivalent CFM50) characterizes envelope air-tightness as measured by a blower door.<SourceCite id="astm-e779" number={9} /> Climate zone determines the design temperatures that turn the metrics into a heat-flow rate.
+
+Improvements in any of the four metrics shift HVAC load. Air sealing a leaky house from 12 ACH50 to 4 ACH50 typically cuts the design load by 15-25%. Adding attic insulation from R-19 to R-49 cuts attic-component load by 60-70%. Replacing single-pane windows with double-pane low-E typically cuts window-component load by 50-60%. The savings compound, and Manual J accurately captures the combined effect when the envelope characterization inputs are accurate.
+
+<HeatLossByComponent />
+
+## R-Value: The Thermal Resistance Metric
+
+R-value is the thermal resistance of a material expressed in hours·square feet·°F per BTU (h·ft²·°F/BTU in US customary units). A material with R-1 lets one BTU through one square foot per hour when the temperature difference across it is one Fahrenheit degree. Higher R-value is better — the material slows down heat flow more strongly.<SourceCite id="ashrae-fundamentals-2021" number={1} />
+
+R-values add for layers in series. A wall with R-13 batt insulation in the cavity plus R-5 continuous foam on the outside has an effective center-of-cavity R of 18, before adjusting for thermal bridging through wood studs (which reduces the effective whole-wall R to roughly 13-15 in typical 16-inch on-center construction).
+
+<DataTable
+  caption="R-values per inch for common residential insulation materials (source: ASHRAE Fundamentals 2021 Ch. 26)"
+  columns={[
+    { key: 'material', label: 'Material' },
+    { key: 'rPerInch', label: 'R per inch', align: 'right' },
+    { key: 'typicalUse', label: 'Typical use' },
+    { key: 'notes', label: 'Notes' },
+  ]}
+  rows={[
+    { material: 'Fiberglass batt', rPerInch: '3.1–3.7', typicalUse: 'Wall cavities, attic floors', notes: 'Performance degrades if compressed' },
+    { material: 'Blown cellulose', rPerInch: '3.2–3.8', typicalUse: 'Attic floors, dense-pack walls', notes: 'Settles 10-20% over time, recycled paper base' },
+    { material: 'Open-cell spray foam', rPerInch: '3.5–3.8', typicalUse: 'Walls, ceilings, rim joists', notes: 'Vapor-permeable, air-impermeable above 3" thickness' },
+    { material: 'Closed-cell spray foam', rPerInch: '6.0–7.0', typicalUse: 'Where thickness is limited or moisture control matters', notes: 'Highest R per inch, but highest cost; class II vapor retarder' },
+    { material: 'Expanded polystyrene (EPS)', rPerInch: '3.6–4.2', typicalUse: 'Rigid foam under slabs, exterior continuous insulation', notes: 'Lower cost than XPS, similar performance' },
+    { material: 'Extruded polystyrene (XPS)', rPerInch: '5.0', typicalUse: 'Foundation walls, below-grade applications', notes: 'Higher GWP blowing agent (being phased to lower-GWP)' },
+    { material: 'Polyiso (polyisocyanurate)', rPerInch: '5.7–6.5', typicalUse: 'Roof board, exterior wall sheathing', notes: 'R drops at low temperatures (R-5 at 25°F)' },
+    { material: 'Mineral wool (rock wool)', rPerInch: '3.0–3.7', typicalUse: 'Walls, ceilings, exterior continuous insulation', notes: 'Fire-resistant, water-drainable, denser than fiberglass' },
+    { material: 'Loose-fill rockwool', rPerInch: '2.8–3.7', typicalUse: 'Attic floors', notes: 'Heavier than cellulose; may exceed ceiling load limits' },
+  ]}
+/>
+
+The DOE publishes climate-zone-specific recommended R-values for attic, wall, floor, and foundation insulation. These are the targets every retrofit should compare against.
+
+<DataTable
+  caption="DOE / ENERGY STAR recommended R-values for existing homes by IECC climate zone (uninsulated wood-frame attic, source: ENERGY STAR seal_insulate methodology)"
+  columns={[
+    { key: 'zone', label: 'Climate zone' },
+    { key: 'attic', label: 'Attic', align: 'right' },
+    { key: 'wall', label: 'Wall (cavity + continuous)', align: 'right' },
+    { key: 'floor', label: 'Floor over unconditioned', align: 'right' },
+    { key: 'foundation', label: 'Foundation wall', align: 'right' },
+  ]}
+  rows={[
+    { zone: '1 (Miami, FL)', attic: 'R-30 to R-49', wall: 'R-13 to R-15', floor: 'R-13', foundation: 'R-0 to R-5' },
+    { zone: '2 (Houston, TX)', attic: 'R-30 to R-60', wall: 'R-13 to R-15', floor: 'R-13', foundation: 'R-0 to R-5' },
+    { zone: '3 (Atlanta, GA)', attic: 'R-30 to R-60', wall: 'R-13 to R-20', floor: 'R-19 to R-25', foundation: 'R-5 to R-13' },
+    { zone: '4 (Kansas City, MO)', attic: 'R-38 to R-60', wall: 'R-13 to R-20 + R-5 c.i.', floor: 'R-25 to R-30', foundation: 'R-10 to R-13' },
+    { zone: '5 (Chicago, IL)', attic: 'R-38 to R-60', wall: 'R-13 to R-21 + R-5 c.i.', floor: 'R-25 to R-30', foundation: 'R-15' },
+    { zone: '6 (Minneapolis, MN)', attic: 'R-49 to R-60', wall: 'R-20 + R-5 c.i.', floor: 'R-25 to R-30', foundation: 'R-15' },
+    { zone: '7 (Duluth, MN)', attic: 'R-49 to R-60', wall: 'R-20 + R-7.5 c.i.', floor: 'R-30 to R-38', foundation: 'R-15 to R-19' },
+    { zone: '8 (Fairbanks, AK)', attic: 'R-60', wall: 'R-30+ assembly', floor: 'R-30 to R-38', foundation: 'R-19+' },
+  ]}
+/>
+
+The R-values in the table are practical targets, not regulatory requirements. New construction must meet IECC 2021 minimums (which are slightly lower than the DOE recommendations for existing-home retrofits in most zones).<SourceCite id="iecc-2021" number={3} /> Existing-home upgrades should aim for the DOE recommendation when accessible insulation depth allows; in older houses with limited attic depth, getting from R-19 to R-30 may be more practical than getting from R-19 to R-49.
+
+## U-Factor and Window Performance
+
+Windows are characterized by U-factor rather than R-value because the assembly has parallel heat-flow paths (through glass, through frame, around the edge of glass) that combine into a whole-window average. U-factor is the inverse of R-value and is measured in BTU per hour per square foot per °F (BTU/h·ft²·°F).<SourceCite id="ashrae-fundamentals-2021" number={1} /> Lower U-factor is better.
+
+<DataTable
+  caption="Typical window U-factor and SHGC by glazing type (whole-window NFRC values for residential casement, source: NFRC certified product directory)"
+  columns={[
+    { key: 'glazing', label: 'Glazing type' },
+    { key: 'uFactor', label: 'U-factor', align: 'right' },
+    { key: 'shgc', label: 'SHGC', align: 'right' },
+    { key: 'vt', label: 'Visible transmittance', align: 'right' },
+    { key: 'typicalCost', label: 'Cost vs single-pane', align: 'right' },
+  ]}
+  rows={[
+    { glazing: 'Single-pane, aluminum frame', uFactor: '1.1–1.3', shgc: '0.75–0.85', vt: '0.85', typicalCost: 'Baseline' },
+    { glazing: 'Single-pane, wood frame', uFactor: '0.85–1.10', shgc: '0.65–0.80', vt: '0.80', typicalCost: '+10–20%' },
+    { glazing: 'Double-pane, clear', uFactor: '0.45–0.55', shgc: '0.55–0.70', vt: '0.75', typicalCost: '+50–100%' },
+    { glazing: 'Double-pane, low-E (heating-optimized)', uFactor: '0.28–0.34', shgc: '0.45–0.60', vt: '0.55–0.65', typicalCost: '+80–150%' },
+    { glazing: 'Double-pane, low-E (cooling-optimized)', uFactor: '0.28–0.34', shgc: '0.18–0.30', vt: '0.40–0.55', typicalCost: '+80–150%' },
+    { glazing: 'Triple-pane, low-E argon', uFactor: '0.17–0.22', shgc: '0.18–0.40', vt: '0.40–0.60', typicalCost: '+150–250%' },
+    { glazing: 'Quad-pane (high-performance)', uFactor: '0.10–0.15', shgc: '0.20–0.40', vt: '0.35–0.55', typicalCost: '+250–400%' },
+  ]}
+/>
+
+The NFRC label is the universal US standard for window comparison. Each label shows U-factor, SHGC (solar heat gain coefficient, 0-1 range — higher means more solar admitted), VT (visible transmittance, 0-1 range — higher means brighter daylight), AL (air leakage rate, lower better), and CR (condensation resistance, higher better).<SourceCite id="nfrc-label" number={6} /> The NFRC certification ensures the values are independently tested; "energy efficient" windows without NFRC labels often perform worse than the manufacturer's marketing claims.
+
+<Callout type="warn" title="SHGC matters as much as U-factor in cooling-dominated climates">
+A south-facing window with U-factor 0.30 and SHGC 0.60 admits roughly 230 BTU/hr per square foot of solar gain on a clear summer day at peak sun. A 4×6 foot south window (24 sq ft) contributes about 5,500 BTU/hr peak solar gain on top of its conductive heat transfer.
+
+The same window with low-SHGC glazing (0.25) cuts solar gain to about 2,300 BTU/hr — a 3,200 BTU/hr reduction at peak from the SHGC choice alone. In cooling-dominated climates, SHGC selection often matters more than U-factor for the cooling load.
+</Callout>
+
+**Energy Star window minimums by climate zone are tiered:**
+
+- **Zone 1-2** (cooling-dominated southern US): U ≤ 0.40, SHGC ≤ 0.25.
+- **Zone 3:** U ≤ 0.30, SHGC ≤ 0.25.
+- **Zone 4** (central US): U ≤ 0.30, SHGC ≤ 0.40.
+- **Zone 5-8** (heating-dominated northern US): U ≤ 0.27 (more stringent), SHGC any value (solar gain is welcomed in winter).
+
+The geographic logic: hot climates need the SHGC restriction more than the U-factor restriction; cold climates need the opposite.
+
+The [window U-factor article](/building-science/windows/u-factor/) walks through the NFRC label in detail, what each field means, and how to read the small print on the rating.
+
+## Air Infiltration and ACH50: How Tight Is Your House
+
+Air leakage through the building envelope is the most variable and least visible component of HVAC load. Two identical houses with the same insulation and windows can have HVAC loads differing by 25% because one was carefully air-sealed and the other was not.<SourceCite id="doe-air-sealing" number={5} />
+
+ACH50 is the standard tightness metric in US residential construction. A blower door pressurizes (or depressurizes) the house to 50 Pascals — about the wind pressure on the building from a 20 mph breeze — and measures how much air the fan must move to maintain that pressure.<SourceCite id="astm-e779" number={9} /> The result is reported as air changes per hour at 50 Pa, computed as airflow (CFM) × 60 / building volume (cubic feet).
+
+<DataTable
+  caption="ACH50 ranges by construction era and tightness standard (source: DOE building energy databook, RESNET infiltration guidance, Passive House Institute)"
+  columns={[
+    { key: 'category', label: 'Category' },
+    { key: 'ach50', label: 'ACH50 range', align: 'right' },
+    { key: 'description', label: 'Description' },
+  ]}
+  rows={[
+    { category: 'Passive House certification', ach50: '≤ 0.6', description: 'Tightest standard in residential construction; requires continuous air barrier' },
+    { category: 'DOE Zero Energy Ready Home', ach50: '≤ 2.0 (zones 1-2) / ≤ 1.5 (zones 3-8)', description: 'Federal high-performance home program standard' },
+    { category: 'IECC 2021 new construction', ach50: '≤ 5.0 (zones 1-2) / ≤ 3.0 (zones 3-8)', description: 'Federal energy code minimum for new builds' },
+    { category: 'Typical 2010+ new construction', ach50: '3 to 5', description: 'Average new home built to current code' },
+    { category: 'Typical 1990s new construction', ach50: '5 to 8', description: 'Era when housewrap and modern caulks became standard' },
+    { category: 'Typical 1970s-1980s construction', ach50: '7 to 15', description: 'Pre-housewrap, polyethylene vapor barriers common' },
+    { category: 'Older pre-1970s housing', ach50: '15 to 30+', description: 'No air-sealing strategy; balloon framing, plaster cracks, leaky windows' },
+  ]}
+/>
+
+The conversion from ACH50 to "natural" ACH at typical conditions (what the house actually leaks at average wind and temperature) is approximately ACH50 ÷ 20 in most US climates.
+
+A 10 ACH50 house has about 0.5 natural ACH, which means the house exchanges half its air volume with outdoor air every hour even when no one runs a fan or opens a window. The Manual J infiltration formulas use a more sophisticated climate-adjusted multiplier, but the rough rule is useful for intuition.<SourceCite id="ashrae-fundamentals-2021" number={1} />
+
+Air sealing is typically the highest-return envelope improvement available because the cost is low (a few hundred dollars for caulk, foam, weatherstripping, and rim-joist sealing) and the load reduction is substantial (10-25% typical). The [DOE air sealing guide](https://www.energy.gov/energysaver/air-sealing-your-home) covers the major leak locations: attic penetrations, rim joists, dropped ceilings over showers, recessed lights, plumbing chases, and window/door perimeters.
+
+## Climate Zones (IECC and ASHRAE 169)
+
+The IECC 2021 climate zone map divides the US into 8 numbered zones plus moisture subdivisions (A humid, B dry, C marine).<SourceCite id="iecc-2021" number={3} /> Each zone has its own HVAC sizing implications via design temperatures and recommended envelope assemblies.
+
+<DataTable
+  caption="The 8 IECC climate zones with example US cities and design-temperature characteristics (source: ASHRAE 169-2021)"
+  columns={[
+    { key: 'zone', label: 'Zone' },
+    { key: 'designation', label: 'Designation' },
+    { key: 'examples', label: 'Example cities' },
+    { key: 'heatingDays', label: 'HDD (base 65°F)', align: 'right' },
+    { key: 'coolingDays', label: 'CDD (base 65°F)', align: 'right' },
+  ]}
+  rows={[
+    { zone: '1', designation: 'Very hot / humid', examples: 'Miami FL, Key West FL', heatingDays: '<2,000', coolingDays: '>4,500' },
+    { zone: '2', designation: 'Hot (1A humid, 1B dry)', examples: 'Houston TX, Phoenix AZ, Tampa FL', heatingDays: '2,000–3,000', coolingDays: '2,500–4,500' },
+    { zone: '3', designation: 'Warm', examples: 'Atlanta GA, Memphis TN, San Diego CA, Las Vegas NV', heatingDays: '3,000–4,000', coolingDays: '1,200–2,500' },
+    { zone: '4', designation: 'Mixed', examples: 'Kansas City MO, Washington DC, San Francisco CA', heatingDays: '4,000–5,500', coolingDays: '500–1,500' },
+    { zone: '5', designation: 'Cool', examples: 'Chicago IL, Denver CO, Boston MA', heatingDays: '5,500–7,500', coolingDays: '< 1,000' },
+    { zone: '6', designation: 'Cold', examples: 'Minneapolis MN, Burlington VT, Portland ME', heatingDays: '7,500–9,000', coolingDays: '< 600' },
+    { zone: '7', designation: 'Very cold', examples: 'Duluth MN, International Falls MN', heatingDays: '9,000–12,500', coolingDays: '< 300' },
+    { zone: '8', designation: 'Subarctic', examples: 'Fairbanks AK, Anchorage AK, Barrow AK', heatingDays: '> 12,500', coolingDays: '< 100' },
+  ]}
+/>
+
+The county-by-county zone assignment matrix is published in IECC Chapter 4 and matches ASHRAE Standard 169-2021. The ASHRAE list is more granular and is the source most professional Manual J software uses. The IECC list groups counties into 8 zones with sub-letters for the moisture classification (A humid, B dry, C marine) that affects ventilation and dehumidification design but not the basic heating/cooling load math.
+
+**Climate zone determines a great deal of the HVAC design conversation:**
+
+- **Zones 1-2** are cooling-dominated: equipment selection prioritizes high SEER2 cooling, latent capacity matters, and heat pump aux heat is rarely engaged.
+- **Zones 5-8** are heating-dominated: high HSPF2 matters, balance point design becomes critical, and aux heat strategy drives operating cost.
+- **Zones 3-4** are mixed, and equipment selection has to balance both seasons explicitly — this is where heat pumps tend to outperform single-purpose AC and furnace systems most clearly.
+
+## Design Temperatures: The Outdoor Condition Manual J Assumes
+
+Design temperatures are the outdoor temperatures Manual J assumes when calculating the peak heating and cooling loads. They are statistical extremes — not the all-time records, but conditions exceeded only a small percentage of typical-year hours.<SourceCite id="ashrae-fundamentals-2021" number={1} />
+
+The 99% heating design temperature is the outdoor temperature exceeded 99% of typical-year hours (about 87 hours per year are colder). The 1% cooling design temperature is the outdoor temperature exceeded 1% of typical-year hours (about 87 hours per year are hotter). ASHRAE Handbook of Fundamentals Chapter 14 publishes both for thousands of US locations.<SourceCite id="ashrae-fundamentals-2021" number={1} />
+
+<DataTable
+  caption="ASHRAE Handbook of Fundamentals 2021 design temperatures for representative US cities (source: Chapter 14, climatic design conditions)"
+  columns={[
+    { key: 'city', label: 'City' },
+    { key: 'zone', label: 'Zone', align: 'right' },
+    { key: 'heating99', label: '99% heating', align: 'right' },
+    { key: 'cooling1', label: '1% cooling DB', align: 'right' },
+    { key: 'coolingWB', label: '1% cooling WB', align: 'right' },
+  ]}
+  rows={[
+    { city: 'Miami, FL', zone: '1A', heating99: '47°F', cooling1: '90°F', coolingWB: '79°F' },
+    { city: 'Houston, TX', zone: '2A', heating99: '32°F', cooling1: '95°F', coolingWB: '79°F' },
+    { city: 'Phoenix, AZ', zone: '2B', heating99: '33°F', cooling1: '108°F', coolingWB: '72°F' },
+    { city: 'Atlanta, GA', zone: '3A', heating99: '22°F', cooling1: '92°F', coolingWB: '76°F' },
+    { city: 'Las Vegas, NV', zone: '3B', heating99: '30°F', cooling1: '106°F', coolingWB: '70°F' },
+    { city: 'San Diego, CA', zone: '3C', heating99: '42°F', cooling1: '83°F', coolingWB: '69°F' },
+    { city: 'Kansas City, MO', zone: '4A', heating99: '5°F', cooling1: '94°F', coolingWB: '76°F' },
+    { city: 'San Francisco, CA', zone: '4C', heating99: '37°F', cooling1: '83°F', coolingWB: '64°F' },
+    { city: 'Denver, CO', zone: '5B', heating99: '4°F', cooling1: '91°F', coolingWB: '64°F' },
+    { city: 'Chicago, IL', zone: '5A', heating99: '-2°F', cooling1: '91°F', coolingWB: '74°F' },
+    { city: 'Minneapolis, MN', zone: '6A', heating99: '-11°F', cooling1: '88°F', coolingWB: '73°F' },
+    { city: 'Duluth, MN', zone: '7', heating99: '-16°F', cooling1: '83°F', coolingWB: '68°F' },
+    { city: 'Anchorage, AK', zone: '8', heating99: '-19°F', cooling1: '70°F', coolingWB: '59°F' },
+  ]}
+/>
+
+**The wet bulb design temperature matters for AC sizing** because it determines the latent load — how much water vapor the AC has to condense out of indoor air entering the coil.
+
+A 95°F dry bulb / 79°F wet bulb day in Houston is much harder to cool to a comfortable indoor condition than a 95°F dry bulb / 66°F wet bulb day in Phoenix at the same total dry-bulb cooling load, because the Houston condition includes significant latent capacity demand.<SourceCite id="ashrae-fundamentals-2021" number={1} />
+
+Some jurisdictions specify their own design temperatures in local code, often slightly more conservative than ASHRAE. Check the local building department before sizing for permit-grade Manual J; the calculator on this site uses ASHRAE values, which is the right default for planning-grade work but may not match what a permit office in (for example) Chicago expects.
+
+## Psychrometric Essentials: Dry Bulb, Wet Bulb, Dew Point, Enthalpy
+
+Psychrometrics is the science of moist air properties. Four interrelated metrics describe any given indoor or outdoor condition.
+
+Dry bulb temperature is what a regular thermometer reads — the temperature of the air with no consideration for moisture.<SourceCite id="ashrae-fundamentals-2021" number={1} /> Indoor design dry bulb for cooling is typically 75°F; for heating, 70°F.
+
+Wet bulb temperature is the temperature a thermometer reads with a wet wick around the bulb in moving air, where evaporative cooling balances air temperature. Wet bulb is always ≤ dry bulb; the gap (wet bulb depression) is larger in dry air and smaller in humid air. AHRI 210/240 cooling rating uses 67°F wet bulb indoor as a standard humid condition. At 100% relative humidity, wet bulb equals dry bulb.
+
+Dew point is the temperature at which water vapor in the air would condense. Indoor comfort range is roughly 50-60°F dew point; above that, the indoor air feels muggy regardless of temperature. Below 50°F dew point in winter, the indoor air feels dry and human skin/respiratory comfort suffers.
+
+Enthalpy is the total energy content of moist air — sensible (temperature) + latent (water vapor) — measured in BTU per pound of dry air. Enthalpy is the right metric when calculating the total cooling work an AC has to do, because temperature alone misses the moisture removal component.
+
+<DataTable
+  caption="Properties of moist air at common indoor conditions (source: ASHRAE Fundamentals 2021 Ch. 1)"
+  columns={[
+    { key: 'condition', label: 'Condition' },
+    { key: 'db', label: 'Dry bulb', align: 'right' },
+    { key: 'rh', label: 'RH', align: 'right' },
+    { key: 'wb', label: 'Wet bulb', align: 'right' },
+    { key: 'dp', label: 'Dew point', align: 'right' },
+    { key: 'enthalpy', label: 'Enthalpy', align: 'right' },
+  ]}
+  rows={[
+    { condition: 'Comfortable winter indoor', db: '70°F', rh: '35%', wb: '57°F', dp: '41°F', enthalpy: '24.4 BTU/lb' },
+    { condition: 'Comfortable summer indoor', db: '75°F', rh: '50%', wb: '63°F', dp: '55°F', enthalpy: '28.3 BTU/lb' },
+    { condition: 'AHRI cooling rating point', db: '80°F', rh: '51%', wb: '67°F', dp: '60°F', enthalpy: '31.5 BTU/lb' },
+    { condition: 'Hot/humid outdoor (Houston)', db: '95°F', rh: '40%', wb: '76°F', dp: '67°F', enthalpy: '39.6 BTU/lb' },
+    { condition: 'Hot/dry outdoor (Phoenix)', db: '108°F', rh: '12%', wb: '72°F', dp: '50°F', enthalpy: '35.5 BTU/lb' },
+  ]}
+/>
+
+**The Houston-versus-Phoenix comparison illustrates the psychrometric subtlety.** The Phoenix outdoor condition is 13°F hotter than Houston (108 vs 95) but has lower total energy content (35.5 vs 39.6 BTU/lb) because the Houston air carries much more water vapor.
+
+An AC in Houston has to do more cooling work to bring outdoor air down to indoor comfort than an AC in Phoenix at the same nominal tonnage, even though Phoenix's dry-bulb load is higher. This is why dry-only climates support smaller AC tonnage than humid climates with similar dry-bulb design conditions.
+
+The [wet bulb temperature article](/building-science/psychrometrics/wet-bulb/) walks through psychrometric chart construction, the WBGT (wet bulb globe temperature) used in heat stress research, and the survivability boundary at 35°C wet bulb that has begun appearing in academic studies of climate impacts on human physiology.
+
+## Energy Audit Metrics: HERS, BPI, RESNET, and ENERGY STAR
+
+Three credentialing organizations define the US residential energy audit landscape.
+
+**RESNET** (Residential Energy Services Network) publishes the HERS Index methodology and certifies HERS raters.<SourceCite id="resnet-hers" number={7} />
+
+A HERS rating is a whole-home performance score: the home is modeled against the 2006 IECC reference home (which scores 100), with scores below 100 representing better-than-2006 performance. New ENERGY STAR-certified homes typically score 55-65, DOE Zero Energy Ready Homes typically score under 50, and net-zero-energy homes score 0.
+
+The rating requires a blower door test, duct leakage test, and detailed envelope and equipment inventory.
+
+BPI (Building Performance Institute) certifies energy auditors for existing-home retrofits.<SourceCite id="bpi-standards" number={8} /> A BPI Building Analyst can perform the blower-door test, duct leakage test, combustion safety audit, and envelope inspection that go into a comprehensive home energy assessment. BPI is more common for existing-home audits and federal weatherization assistance work; RESNET HERS is more common for new construction and high-performance program qualification.
+
+ENERGY STAR is the federal labeling program for certified homes and equipment.<SourceCite id="resnet-hers" number={7} /> ENERGY STAR Certified Home requires the home to meet specific HERS, envelope, and equipment thresholds, verified by a third-party rater. The label is recognized by lenders (some offer ENERGY STAR mortgages with lower interest rates) and many state and utility incentive programs require ENERGY STAR equivalence for participation.
+
+<DataTable
+  caption="Comparison of US residential energy audit and certification frameworks"
+  columns={[
+    { key: 'framework', label: 'Framework' },
+    { key: 'primaryUse', label: 'Primary use' },
+    { key: 'output', label: 'Output' },
+    { key: 'typicalCost', label: 'Typical cost', align: 'right' },
+  ]}
+  rows={[
+    { framework: 'HERS (RESNET)', primaryUse: 'New construction; high-performance home certification', output: '0-150+ HERS Index score', typicalCost: '$400-$800' },
+    { framework: 'BPI Building Analyst audit', primaryUse: 'Existing home retrofit assessment', output: 'Detailed audit report with recommended improvements', typicalCost: '$300-$600' },
+    { framework: 'ENERGY STAR Certified Home', primaryUse: 'New construction certification', output: 'ENERGY STAR label + 3rd party verification', typicalCost: '$500-$1,000 incremental' },
+    { framework: 'DOE Zero Energy Ready Home', primaryUse: 'Very high-performance new construction', output: 'DOE ZERH certification + HERS ≤ 50', typicalCost: '$700-$1,500 incremental' },
+    { framework: 'Passive House (PHIUS / PHI)', primaryUse: 'Highest-performance certification', output: 'PHIUS or PHI passive house certification', typicalCost: '$2,000-$5,000 incremental' },
+    { framework: 'Home Energy Score (DOE)', primaryUse: 'Comparative score for existing homes', output: '1-10 score (10 best)', typicalCost: '$100-$300' },
+  ]}
+/>
+
+The [HERS Index article](/building-science/hers-index/) covers the methodology, typical scores by construction era, and how to interpret a rater report.
+
+## How Envelope Improvements Shift HVAC Load
+
+The headline result of building-science work is HVAC load reduction. Quantifying it explicitly helps homeowners decide which envelope upgrades produce the best return.
+
+<DataTable
+  caption="Typical HVAC load reduction from envelope improvements (2,000 sq ft house, climate zone 4, baseline = 1980s construction; source: Manual J modeling against ENERGY STAR retrofit case studies)"
+  columns={[
+    { key: 'improvement', label: 'Improvement' },
+    { key: 'heatingReduction', label: 'Heating load reduction', align: 'right' },
+    { key: 'coolingReduction', label: 'Cooling load reduction', align: 'right' },
+    { key: 'typicalCost', label: 'Typical cost', align: 'right' },
+    { key: 'paybackYears', label: 'Typical payback', align: 'right' },
+  ]}
+  rows={[
+    {
+      improvement: 'Attic air sealing + add R-30 over existing R-19',
+      heatingReduction: '5,000–8,000 BTU/hr',
+      coolingReduction: '2,000–4,000 BTU/hr',
+      typicalCost: '$1,500–$3,000',
+      paybackYears: '5–9 years',
+    },
+    {
+      improvement: 'Whole-house air sealing (12 → 5 ACH50)',
+      heatingReduction: '6,000–10,000 BTU/hr',
+      coolingReduction: '2,500–4,500 BTU/hr',
+      typicalCost: '$800–$2,500',
+      paybackYears: '3–7 years',
+    },
+    {
+      improvement: 'Window upgrade (single to double-pane low-E)',
+      heatingReduction: '3,000–6,000 BTU/hr',
+      coolingReduction: '4,000–8,000 BTU/hr',
+      typicalCost: '$10,000–$25,000',
+      paybackYears: '15–30 years',
+    },
+    {
+      improvement: 'Foundation/rim joist insulation + sealing',
+      heatingReduction: '2,500–5,000 BTU/hr',
+      coolingReduction: '500–1,500 BTU/hr',
+      typicalCost: '$2,000–$5,000',
+      paybackYears: '7–15 years',
+    },
+    {
+      improvement: 'Duct sealing (typical leaky → tight)',
+      heatingReduction: '2,000–5,000 BTU/hr equivalent (efficiency gain)',
+      coolingReduction: '2,000–5,000 BTU/hr equivalent',
+      typicalCost: '$500–$1,500',
+      paybackYears: '2–5 years',
+    },
+    {
+      improvement: 'Wall insulation upgrade (R-13 cavity → R-21 + R-5 c.i.)',
+      heatingReduction: '4,000–7,000 BTU/hr',
+      coolingReduction: '1,500–3,500 BTU/hr',
+      typicalCost: '$8,000–$20,000',
+      paybackYears: '20–40 years',
+    },
+  ]}
+/>
+
+The ranking that emerges from these numbers: air sealing and duct sealing produce the best return per dollar spent. Attic insulation is typically next. Window replacement is high-cost and slow-payback (do it when the windows are dying for other reasons, not as an energy investment alone). Wall insulation upgrades are the slowest-payback envelope improvement unless the house is having walls opened up for other reasons (siding replacement, addition).
+
+**The HVAC sizing implication is direct.** Any house considering envelope improvements should re-run the Manual J calculation after the improvements are complete; the equipment sizing recommendation can shift by 25-50% in either direction. A house that needs a 4-ton AC pre-retrofit may need only a 2.5-ton AC post-retrofit, and installing the larger unit because the Manual J was done first locks in 15-20 years of oversized-equipment penalties.
+
+## What This Cluster Covers
+
+The building science cluster is organized into four sub-topics, each with its own depth of coverage.
 
 ### Insulation
 
-- [Attic R-value](/building-science/insulation/attic-r-value/) — DOE recommended R-values by climate zone, insulation types, measurement methodology, air-sealing primacy
+- [Attic R-value reference](/building-science/insulation/attic-r-value/) — DOE recommended R-values by zone, material comparison, depth measurement, air-sealing primacy
 
 ### Windows
 
-- [Window U-factor](/building-science/windows/u-factor/) — what U-factor measures, NFRC labels, recommended values by zone, what features lower U-factor
+- [Window U-factor reference](/building-science/windows/u-factor/) — NFRC label decoding, U-factor and SHGC by glazing type, climate-zone targets
 
 ### Psychrometrics
 
-- [Wet bulb temperature](/building-science/psychrometrics/wet-bulb/) — measurement, calculation, psychrometric chart interpretation, WBGT, survivability research
+- [Wet bulb temperature](/building-science/psychrometrics/wet-bulb/) — measurement methodology, psychrometric chart, WBGT, survivability research
 
 ### Whole-home performance
 
-- [HERS Index](/building-science/hers-index/) — what the score means, how it's calculated, typical scores, how to lower it, vs ENERGY STAR and ZERH
+- [HERS Index](/building-science/hers-index/) — what the score means, methodology, typical scores by construction era, how to lower it
 
-## Sub-hubs
+### Sub-hubs
 
-- [Insulation](/building-science/insulation/) — attic, wall, basement R-value reference
-- [Windows](/building-science/windows/) — U-factor, SHGC, NFRC label reading
+- [Insulation sub-hub](/building-science/insulation/) — attic, wall, basement R-value references
+- [Windows sub-hub](/building-science/windows/) — U-factor, SHGC, NFRC label reading
 
-## Calculators
+### Calculators
 
 - [Attic R-value calculator](/tools/attic-r-value-calculator/) — depth × R-per-inch with multi-layer support and zone targets
-- [BTU calculator](/tools/btu-calculator/) — uses envelope inputs to compute cooling load
-- [Manual J load calculator](/tools/manual-j-calculator/) — full whole-house load math
-
-## Related topics
-
-- [Manual J load calculation](/manual-j/) — uses building science inputs
-- [Heat pump reference](/heat-pump/) — performance is climate-driven
-- [Air conditioner reference](/ac/) — cooling load is envelope-driven
+- [Manual J load calculator](/tools/manual-j-calculator/) — full envelope load math that takes building science inputs and produces HVAC sizing
 
 </article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<Sources sources={SOURCES} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-30" />
+</div>
+
+</Container>

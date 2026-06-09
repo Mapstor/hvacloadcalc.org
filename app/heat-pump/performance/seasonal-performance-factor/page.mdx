@@ -18,6 +18,7 @@ import { SpfHspfComparisonTable } from '@/components/svg/spf/SpfHspfComparisonTa
 import { SpfByClimateChart } from '@/components/svg/spf/SpfByClimateChart';
 
 export const metadata = {
+  alternates: { canonical: "/heat-pump/performance/seasonal-performance-factor/" },
   title: "Seasonal Performance Factor (SPF): What It Means and How It's Used",
   description:
     "Seasonal Performance Factor is the heating-season average efficiency of a heat pump, expressed as heat delivered divided by electricity consumed. Here's how SPF works.",
@@ -28,7 +29,7 @@ export const metadata = {
     type: 'article',
     publishedTime: '2026-05-18',
     modifiedTime: '2026-05-18',
-    authors: ['Jonathan S.'],
+    authors: ['Jonathan Stowe'],
     images: ['/opengraph-image'],
   },
 };
@@ -252,7 +253,9 @@ The European version is SCOP, or Seasonal Coefficient of Performance, defined un
 
 COP is a snapshot. SPF is a film.
 
-A heat pump's COP at 47°F might be 3.5, meaning it delivers 3.5 units of heat for every unit of electricity at that exact operating point. But during your heating season, the outdoor temperature isn't a constant 47°F. It varies from 50°F on mild fall days to single digits on the coldest nights. The heat pump's instantaneous COP varies with it — high in mild weather, low in cold weather. SPF averages all of those moments together, weighted by how many hours each occurred, and folds in defrost cycles and any aux heat that ran along the way. The result is one number that describes the whole season instead of one instant.
+A heat pump's COP at 47°F might be 3.5, meaning it delivers 3.5 units of heat for every unit of electricity at that exact operating point. But during your heating season, the outdoor temperature isn't a constant 47°F. It varies from 50°F on mild fall days to single digits on the coldest nights.
+
+The heat pump's instantaneous COP varies with it — high in mild weather, low in cold weather. SPF averages all of those moments together, weighted by how many hours each occurred, and folds in defrost cycles and any aux heat that ran along the way. The result is one number that describes the whole season instead of one instant.
 
 That same heat pump rated COP 3.5 at 47°F might have a real SPF of 2.8 in a Zone 5 home. The math hasn't changed; the conditions have. The seasonal performance factor heat pump researchers measure in the field rolls hours of mild operation, hours of cold operation, defrost penalty time, and aux heat consumption into one ratio.<SourceCite id="iea-hpt-annex-49" number={3} />
 
@@ -280,7 +283,9 @@ Distribution losses round out the list. Leaky ducts to unconditioned spaces deli
 
 HSPF2 (heating seasonal performance factor, version 2) is the rating number on a heat pump brochure. SPF is what the heat pump actually delivers. They are related but not the same.
 
-HSPF2 is computed under ANSI/AHRI Standard 210/240-2023, which defines a standardized climate profile and a test methodology that incorporates several outdoor temperatures, defrost, and a representative aux heat usage.<SourceCite id="ahri-210-240" number={2} /> The result is a number that compares equipment models head-to-head under matched conditions. HSPF2 replaced the older HSPF starting with the 2023 rating year; the [HSPF vs HSPF2](/heat-pump/performance/hspf-vs-hspf2/) explainer covers the methodology change. The cooling-side equivalent is covered in [SEER and SEER2 explained](/heat-pump/performance/seer-vs-seer2/). The [HSPF2](/glossary/hspf2/) glossary entry summarizes the metric in one sentence.
+HSPF2 is computed under ANSI/AHRI Standard 210/240-2023, which defines a standardized climate profile and a test methodology that incorporates several outdoor temperatures, defrost, and a representative aux heat usage.<SourceCite id="ahri-210-240" number={2} /> The result is a number that compares equipment models head-to-head under matched conditions.
+
+HSPF2 replaced the older HSPF starting with the 2023 rating year; the [HSPF vs HSPF2](/heat-pump/performance/hspf-vs-hspf2/) explainer covers the methodology change. The cooling-side equivalent is covered in [SEER and SEER2 explained](/heat-pump/performance/seer-vs-seer2/). The [HSPF2](/glossary/hspf2/) glossary entry summarizes the metric in one sentence.
 
 SPF (the topic of this article) is the measurement of that same ratio in a specific installation. It uses your home's actual envelope, your actual thermostat schedule, your aux heat lockout settings, your duct leakage rate, and the actual weather your region had during the heating season. HSPF2 says "if you average across our reference profile, this is the efficiency." SPF says "in your actual situation, this is what happened."
 
@@ -356,7 +361,9 @@ Real-world SPF is almost always lower than rated HSPF2 would suggest. Your insta
 
 If you want to influence your own SPF, the aux heat lockout temperature setting on your thermostat is the single biggest lever you control. Most thermostats default to a low lockout (or none), which means aux heat engages more freely than necessary. Raising the lockout to 35-40°F in most climates pays for itself within one heating season.
 
-SPF is a useful concept, not a daily dashboard. You don't need to monitor it weekly. You need to understand what it measures so you can evaluate equipment, troubleshoot performance, and compare quotes. If you're evaluating a heat pump for purchase, focus on HSPF2 for comparison and expect real SPF to be 70-85% of the implied rating. If you have a heat pump installed already and aux heat seems to run more than it should, start with the diagnostics above; replacement is a last resort.
+SPF is a useful concept, not a daily dashboard. You don't need to monitor it weekly. You need to understand what it measures so you can evaluate equipment, troubleshoot performance, and compare quotes.
+
+If you're evaluating a heat pump for purchase, focus on HSPF2 for comparison and expect real SPF to be 70-85% of the implied rating. If you have a heat pump installed already and aux heat seems to run more than it should, start with the diagnostics above; replacement is a last resort.
 
 </article>
 

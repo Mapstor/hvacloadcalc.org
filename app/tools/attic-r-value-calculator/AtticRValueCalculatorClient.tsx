@@ -1,14 +1,17 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   calculateAtticRValue,
   INSULATION_DISPLAY_NAMES,
   type AtticRValueInputs,
+  type AtticRValueResult as AtticResultType,
   type InsulationLayer,
   type InsulationType,
 } from '@/lib/calculators/attic-r-value';
 import type { ClimateZone } from '@/lib/calculators/btu';
+import { NumberInput } from '@/components/forms/NumberInput';
+import { AtticRValueResult } from './AtticRValueResult';
 
 const CLIMATE_OPTIONS: Array<{ value: ClimateZone; label: string }> = [
   { value: '1', label: 'Zone 1 — South FL, Hawaii' },
@@ -33,75 +36,89 @@ const INSULATION_OPTIONS: InsulationType[] = [
   'eps-rigid-foam',
 ];
 
-const STATUS_COLORS: Record<string, { bg: string; border: string; text: string; label: string }> = {
-  'below-doe-low': {
-    bg: 'bg-danger/10',
-    border: 'border-danger',
-    text: 'text-danger',
-    label: 'Below DOE recommendation',
-  },
-  'meets-iecc-only': {
-    bg: 'bg-warn/10',
-    border: 'border-warn',
-    text: 'text-warn',
-    label: 'Meets IECC code only',
-  },
-  'in-doe-range': {
-    bg: 'bg-good/10',
-    border: 'border-good',
-    text: 'text-good',
-    label: 'Within DOE recommended range',
-  },
-  'at-or-above-doe-high': {
-    bg: 'bg-good/15',
-    border: 'border-good',
-    text: 'text-good',
-    label: 'At or above DOE recommended high',
-  },
-};
-
 interface Props {
   defaults: AtticRValueInputs;
+  autoCalculate?: boolean;
 }
 
-export function AtticRValueCalculatorClient({ defaults }: Props) {
+export function AtticRValueCalculatorClient({ defaults, autoCalculate = false }: Props) {
   const [layers, setLayers] = useState<InsulationLayer[]>(defaults.layers);
   const [climateZone, setClimateZone] = useState<ClimateZone>(defaults.climateZone);
+  const [result, setResult] = useState<AtticResultType | null>(
+    autoCalculate ? calculateAtticRValue(defaults) : null,
+  );
+  const [resultInputs, setResultInputs] = useState<AtticRValueInputs | null>(
+    autoCalculate ? defaults : null,
+  );
+  const [isStale, setIsStale] = useState(false);
 
-  const result = useMemo(() => {
-    try {
-      return calculateAtticRValue({ layers, climateZone });
-    } catch {
-      return null;
+  useEffect(() => {
+    if (autoCalculate && !result) {
+      try {
+        setResult(calculateAtticRValue(defaults));
+        setResultInputs(defaults);
+      } catch {}
     }
-  }, [layers, climateZone]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function updateLayer(idx: number, key: keyof InsulationLayer, value: InsulationLayer[keyof InsulationLayer]) {
     setLayers((prev) => prev.map((l, i) => (i === idx ? { ...l, [key]: value } : l)));
+    if (result) setIsStale(true);
   }
 
   function addLayer() {
     setLayers((prev) => [...prev, { type: 'loose-fill-cellulose', depthInches: 6 }]);
+    if (result) setIsStale(true);
   }
 
   function removeLayer(idx: number) {
     setLayers((prev) => prev.filter((_, i) => i !== idx));
+    if (result) setIsStale(true);
   }
 
-  function reset() {
+  function updateZone(z: ClimateZone) {
+    setClimateZone(z);
+    if (result) setIsStale(true);
+  }
+
+  function handleCalculate() {
+    try {
+      const r = calculateAtticRValue({ layers, climateZone });
+      setResult(r);
+      setResultInputs({ layers: [...layers], climateZone });
+      setIsStale(false);
+      window.requestAnimationFrame(() => {
+        document.getElementById('attic-result')?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      });
+    } catch {
+      setResult(null);
+    }
+  }
+
+  function handleReset() {
     setLayers(defaults.layers);
     setClimateZone(defaults.climateZone);
+    setResult(null);
+    setResultInputs(null);
+    setIsStale(false);
   }
-
-  const statusStyle = result ? STATUS_COLORS[result.status] : null;
 
   return (
     <div className="not-prose">
-      <div className="grid gap-8 lg:grid-cols-[1fr_360px]">
-        {/* Inputs */}
-        <div className="space-y-5">
-          <h2 className="text-lg font-semibold text-ink-900">Your attic</h2>
+      <div className="rounded-xl border border-ink-300 bg-white p-6 shadow-sm">
+        <h2 className="text-lg font-semibold text-ink-900">Your attic insulation</h2>
+        <p className="mt-1 text-sm text-ink-600">
+          Add one layer per distinct material in your attic (e.g., original fiberglass batts plus
+          newer blown-in cellulose). Measure depth in inches at multiple points and use a typical
+          value. Click Calculate to see your total R-value, status against DOE recommendations, an
+          R-value gauge, and upgrade depth by material if needed.
+        </p>
 
+        <div className="mt-6 grid gap-5">
           <div>
             <label htmlFor="zone" className="block text-sm font-medium text-ink-700">
               Climate zone
@@ -109,7 +126,7 @@ export function AtticRValueCalculatorClient({ defaults }: Props) {
             <select
               id="zone"
               value={climateZone}
-              onChange={(e) => setClimateZone(e.target.value as ClimateZone)}
+              onChange={(e) => updateZone(e.target.value as ClimateZone)}
               className="mt-1 w-full rounded-md border border-ink-300 px-3 py-2 text-base shadow-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
             >
               {CLIMATE_OPTIONS.map((o) => (
@@ -120,14 +137,9 @@ export function AtticRValueCalculatorClient({ defaults }: Props) {
 
           <div>
             <p className="text-sm font-medium text-ink-700">Insulation layers</p>
-            <p className="mt-1 text-xs text-ink-500">
-              Measure depth in inches at multiple spots in the attic; use a typical value. Add a layer
-              for each distinct material (e.g., original fiberglass + newer blown-in cellulose).
-            </p>
-
             <div className="mt-3 space-y-3">
               {layers.map((layer, idx) => (
-                <div key={idx} className="rounded-md border border-ink-300 bg-white p-3">
+                <div key={idx} className="rounded-md border border-ink-300 bg-ink-50 p-3">
                   <div className="flex items-center justify-between">
                     <p className="text-sm font-medium text-ink-900">Layer {idx + 1}</p>
                     {layers.length > 1 ? (
@@ -140,7 +152,7 @@ export function AtticRValueCalculatorClient({ defaults }: Props) {
                       </button>
                     ) : null}
                   </div>
-                  <div className="mt-2 grid grid-cols-[1fr_120px] gap-3">
+                  <div className="mt-2 grid grid-cols-1 gap-3 sm:grid-cols-[1fr_140px]">
                     <select
                       value={layer.type}
                       onChange={(e) => updateLayer(idx, 'type', e.target.value as InsulationType)}
@@ -151,14 +163,14 @@ export function AtticRValueCalculatorClient({ defaults }: Props) {
                       ))}
                     </select>
                     <div>
-                      <input
-                        type="number"
+                      <NumberInput
                         min={0}
                         max={48}
                         step={0.5}
                         value={layer.depthInches}
-                        onChange={(e) => updateLayer(idx, 'depthInches', Math.max(0, Math.min(48, Number(e.target.value) || 0)))}
+                        onChange={(n) => updateLayer(idx, 'depthInches', n)}
                         className="w-full rounded-md border border-ink-300 px-3 py-2 text-sm shadow-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+                        aria-label={`Layer ${idx + 1} inches deep`}
                       />
                       <p className="mt-1 text-xs text-ink-500">inches deep</p>
                     </div>
@@ -166,7 +178,6 @@ export function AtticRValueCalculatorClient({ defaults }: Props) {
                 </div>
               ))}
             </div>
-
             <button
               type="button"
               onClick={addLayer}
@@ -175,74 +186,45 @@ export function AtticRValueCalculatorClient({ defaults }: Props) {
               + Add another layer
             </button>
           </div>
+        </div>
 
+        <div className="mt-6 flex flex-wrap items-center gap-3 border-t border-ink-200 pt-5">
           <button
             type="button"
-            onClick={reset}
-            className="text-sm font-medium text-brand hover:underline"
+            onClick={handleCalculate}
+            className="rounded-md bg-brand px-6 py-2.5 text-base font-semibold text-white shadow-sm transition hover:bg-brand/90 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2"
+          >
+            {result ? 'Recalculate' : 'Calculate'}
+          </button>
+          <button
+            type="button"
+            onClick={handleReset}
+            className="text-sm font-medium text-ink-700 hover:text-brand"
           >
             Reset to defaults
           </button>
+          {isStale ? (
+            <span className="ml-auto text-sm font-medium text-warn">
+              Inputs changed — click Recalculate
+            </span>
+          ) : null}
         </div>
+      </div>
 
-        {/* Result panel */}
-        <aside className="self-start space-y-4">
-          {result ? (
-            <>
-              <div className="rounded-lg border border-ink-300 bg-ink-50/50 p-6">
-                <p className="text-xs font-medium uppercase tracking-wide text-ink-500">Total R-value</p>
-                <p className="mt-1 text-4xl font-bold text-brand">R-{result.totalRValue.toFixed(1)}</p>
-
-                {statusStyle ? (
-                  <div className={`mt-4 rounded-md border-l-4 ${statusStyle.border} ${statusStyle.bg} p-3`}>
-                    <p className={`text-xs font-bold uppercase tracking-wide ${statusStyle.text}`}>
-                      {statusStyle.label}
-                    </p>
-                    <p className="mt-1 text-xs text-ink-700">
-                      DOE recommended: R-{result.doeRecommendedRange.low} to R-{result.doeRecommendedRange.high}.
-                      IECC 2021 code minimum: R-{result.ieccCodeMinimum}.
-                    </p>
-                  </div>
-                ) : null}
-
-                {result.perLayerRValues.length > 0 ? (
-                  <div className="mt-4 rounded-md border border-ink-300 bg-white p-3">
-                    <p className="text-xs font-medium uppercase tracking-wide text-ink-500">By layer</p>
-                    <ul className="mt-2 space-y-1 text-xs text-ink-700">
-                      {result.perLayerRValues.map((l, i) => (
-                        <li key={i}>
-                          {l.depthInches}″ {INSULATION_DISPLAY_NAMES[l.type]} = R-{l.rValue.toFixed(1)}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : null}
-              </div>
-
-              {result.upgradeRecommendation ? (
-                <div className="rounded-lg border border-warn bg-warn/5 p-6">
-                  <p className="text-xs font-bold uppercase tracking-wide text-warn">Upgrade to reach R-{result.upgradeRecommendation.targetR}</p>
-                  <p className="mt-2 text-sm text-ink-700">
-                    Add R-{result.upgradeRecommendation.additionalRNeeded.toFixed(1)} on top of existing.
-                    Required depth by material:
-                  </p>
-                  <ul className="mt-2 space-y-1 text-xs text-ink-700">
-                    {result.upgradeRecommendation.depthsByMaterial.map((d) => (
-                      <li key={d.type}>
-                        <strong>{d.depthInches}″</strong> of {INSULATION_DISPLAY_NAMES[d.type]}
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="mt-3 text-xs text-ink-500">
-                    Air seal first; insulation over leaky penetrations underperforms.
-                  </p>
-                </div>
-              ) : null}
-            </>
-          ) : (
-            <p className="text-sm text-ink-500">Enter insulation layers to calculate.</p>
-          )}
-        </aside>
+      <div id="attic-result" className={`mt-8 transition-opacity ${isStale ? 'opacity-60' : 'opacity-100'}`}>
+        {result && resultInputs ? (
+          <AtticRValueResult result={result} inputs={resultInputs} />
+        ) : (
+          <div className="rounded-xl border border-dashed border-ink-300 bg-ink-50/50 p-12 text-center">
+            <p className="text-base font-medium text-ink-700">
+              Enter your insulation layers above, then click Calculate
+            </p>
+            <p className="mt-1 text-sm text-ink-500">
+              Result will appear here with the total R-value, R-value gauge, layer breakdown,
+              upgrade material options, and energy savings estimate.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

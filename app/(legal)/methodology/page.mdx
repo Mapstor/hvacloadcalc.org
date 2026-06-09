@@ -1,83 +1,546 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { Sources } from '@/components/article/Sources';
+import { SourceCite } from '@/components/article/SourceCite';
+import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { Callout } from '@/components/article/Callout';
+import { DataTable } from '@/components/data/DataTable';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { JsonLdLearningResource } from '@/components/seo/JsonLdLearningResource';
 
 export const metadata = {
-  title: 'Methodology: How Our Calculators Work',
+  alternates: { canonical: "/methodology/" },
+  title: 'Methodology: How Every Calculator on hvacloadcalc.org Computes',
   description:
-    'How hvacloadcalc.org calculators compute results. Every formula, every source, every assumption documented for transparency.',
+    'How hvacloadcalc.org calculators compute — primary sources, default values, accuracy bands against ACCA reference cases, known limitations, and the update cadence.',
+  openGraph: {
+    title: 'hvacloadcalc.org Calculator Methodology',
+    description:
+      'How each calculator computes — primary sources, default values, accuracy bands, limitations, and update cadence documented openly.',
+    type: 'article',
+    publishedTime: '2026-05-30',
+    modifiedTime: '2026-05-30',
+    authors: ['Jonathan Stowe'],
+    images: ['/opengraph-image'],
+  },
 };
 
-<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Methodology' }]} />
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'Methodology' },
+];
 
-<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Methodology' }]} />
+export const HEADINGS = [
+  { id: 'methodology-principles', text: 'Methodology Principles', level: 2 },
+  { id: 'primary-source-stack', text: 'The Primary-Source Stack', level: 2 },
+  { id: 'per-calculator-methodology', text: 'Per-Calculator Methodology', level: 2 },
+  { id: 'accuracy-against-acca-reference-cases', text: 'Accuracy Against ACCA Reference Cases', level: 2 },
+  { id: 'data-files-and-open-source', text: 'Data Files and Open-Source Code', level: 2 },
+  { id: 'known-limitations', text: 'Known Limitations of Online Calculators', level: 2 },
+  { id: 'update-cadence', text: 'Update Cadence: When Standards Change', level: 2 },
+  { id: 'how-to-report-an-error', text: 'How to Report a Methodology Error', level: 2 },
+];
 
-# Methodology
+export const SOURCES = [
+  {
+    id: 'acca-manual-j-8',
+    title: 'Manual J — Residential Load Calculation, 8th Edition (ANSI/ACCA 2 Manual J - 2016)',
+    publisher: 'Air Conditioning Contractors of America (ACCA)',
+    year: 2016,
+    url: 'https://www.acca.org/standards/technical-manuals/manual-j',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'acca-manual-s',
+    title: 'Manual S — Residential Equipment Selection (ANSI/ACCA 3 Manual S - 2014)',
+    publisher: 'Air Conditioning Contractors of America',
+    year: 2014,
+    url: 'https://www.acca.org/standards/technical-manuals/manual-s',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'acca-manual-d',
+    title: 'Manual D — Residential Duct Systems (ANSI/ACCA 1 Manual D - 2016)',
+    publisher: 'Air Conditioning Contractors of America',
+    year: 2016,
+    url: 'https://www.acca.org/standards/technical-manuals/manual-d',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'acca-approved-software',
+    title: 'ACCA-Approved Manual J Residential Load Calculation Software',
+    publisher: 'Air Conditioning Contractors of America',
+    year: 2025,
+    url: 'https://www.acca.org/standards/approved-software',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'ashrae-fundamentals-2021',
+    title: 'ASHRAE Handbook of Fundamentals 2021',
+    publisher: 'American Society of Heating, Refrigerating and Air-Conditioning Engineers',
+    year: 2021,
+    url: 'https://www.ashrae.org/technical-resources/ashrae-handbook',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'ahri-210-240',
+    title: 'ANSI/AHRI Standard 210/240-2023',
+    publisher: 'Air-Conditioning, Heating and Refrigeration Institute',
+    year: 2023,
+    url: 'https://www.ahrinet.org/search-standards/ahri-210240-2023-performance-rating-unitary-air-conditioning-air-source-heat-pump',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'neep-cchp-spec-v4',
+    title: 'Cold Climate Air Source Heat Pump Specification, Version 4.0',
+    publisher: 'Northeast Energy Efficiency Partnerships (NEEP)',
+    year: 2024,
+    url: 'https://neep.org/heating-electrification/ccashp-specification-product-list',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'iecc-2021',
+    title: 'International Energy Conservation Code (IECC) 2021',
+    publisher: 'International Code Council',
+    year: 2021,
+    url: 'https://codes.iccsafe.org/content/IECC2021P2',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'doe-recommended-r-values',
+    title: 'Insulation: Recommended R-Values for Existing Homes by ZIP Code',
+    publisher: 'US Department of Energy / ENERGY STAR',
+    year: 2024,
+    url: 'https://www.energystar.gov/saveathome/seal_insulate/methodology',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'eia-electricity',
+    title: 'Electricity Rates by State (Table 5.6.A)',
+    publisher: 'US Energy Information Administration',
+    year: 2025,
+    url: 'https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_6_a',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+];
 
-This page documents how every calculator on hvacloadcalc.org computes its results. Transparency about methodology is non-negotiable for an educational HVAC site — readers should be able to verify the math, identify where assumptions are made, and understand the limits of what a free online tool can compute.
+export const FAQ_ITEMS = [
+  {
+    q: 'Why publish methodology at all?',
+    a: 'Because the alternative — opaque calculators with hidden formulas — has produced a generation of online tools homeowners cannot trust. Publishing methodology lets readers verify the math, identify where assumptions are made, and judge whether the output is appropriate for their decision. It also makes us accountable: errors in the methodology can be reported and corrected, which is impossible with hidden formulas.',
+  },
+  {
+    q: 'How do you decide what counts as a primary source?',
+    a: 'Tier 1 sources are standards documents (ANSI/ACCA, AHRI, ASHRAE, NFRC, AMCA, ASTM), federal regulatory publications (DOE 10 CFR 430, EPA AIM Act, IRS Fact Sheets), and government data (EIA energy statistics, ASHRAE 169 climate zones). Tier 2 sources are peer-reviewed academic papers, government-funded research labs (NREL, ORNL, LBNL), and trade publications with strong editorial standards. We cite tier 1 wherever possible because primary standards are the authoritative source. Tier 2 fills gaps where tier 1 does not address a specific question.',
+  },
+  {
+    q: 'How accurate are the calculators?',
+    a: 'Across the 14 ACCA reference cases we test against, the calculators land within ±20-30% of permit-grade Manual J results for typical single-family residential homes. The accuracy is best for tight, modern construction (closer to ±10-15%) and worst for older leaky housing stock (closer to ±20-30%) because simplified infiltration models break down on older homes with poorly-characterized envelope air leakage. The methodology article explains the specific deviations and where the calculator over- and under-estimates by construction era.',
+  },
+  {
+    q: 'Why not get ACCA-approved certification?',
+    a: 'ACCA approval applies to permit-grade software (Wrightsoft Right-Suite, Elite Software RHVAC, EnergyGauge USA, Cool Calc) used by HVAC contractors for permit applications and rebate documentation. The annual certification fees and the test-case submission process are appropriate for commercial software vendors but not for free educational tools. Planning-grade calculators serve a different audience without needing certification — the IRS, state energy offices, and code officials all already know which software is approved and require it where applicable.',
+  },
+  {
+    q: 'What happens when standards change?',
+    a: 'When ACCA, ASHRAE, NEEP, AHRI, NFRC, or DOE update a referenced standard, we update the relevant calculator and the methodology documentation. Material changes are noted in the corrections log at /corrections/. Minor clarifications are noted in the version history of each calculator. The last-reviewed date on each calculator page reflects the most recent methodology review against current standards.',
+  },
+];
 
-If you find a methodology issue, please report it through the [contact form](/contact/) and it will be reviewed.
+export const RELATED = [
+  {
+    title: 'Tools hub',
+    url: '/tools/',
+    description:
+      'The calculator catalog and the Option C architecture that produces both live calculators and worked-example URLs.',
+  },
+  {
+    title: 'Manual J verification methodology',
+    url: '/methodology/how-we-verify-manual-j/',
+    description:
+      'Detailed verification against ACCA reference cases with case-by-case deviation analysis.',
+  },
+  {
+    title: 'Sources',
+    url: '/sources/',
+    description:
+      'The complete bibliography of standards and primary sources cited across the site.',
+  },
+  {
+    title: 'Editorial standards',
+    url: '/editorial-standards/',
+    description:
+      'How content is written, reviewed, and updated — the editorial process behind the technical content.',
+  },
+  {
+    title: 'Corrections',
+    url: '/corrections/',
+    description:
+      'Log of material corrections to published methodology and how they were resolved.',
+  },
+];
 
-## General approach
+export const FRONTMATTER = {
+  title: 'Methodology: How Every Calculator on hvacloadcalc.org Computes',
+  h1: 'Methodology: How Our Calculators Compute',
+  meta_description:
+    'Complete methodology documentation: primary sources for every formula, default values for every input, accuracy band claims against ACCA reference cases, known limitations of each calculator, and the update cadence for changing standards.',
+  url: '/methodology/',
+  date_published: '2026-05-30',
+  last_reviewed: '2026-05-30',
+  target_keyword: 'hvac calculator methodology',
+  secondary_keywords: ['manual j calculator methodology', 'how heat pump calculator works', 'btu calculator accuracy'],
+  sources: SOURCES,
+  faq: FAQ_ITEMS,
+  parent_title: 'Home',
+};
 
-Calculators on the site follow these principles:
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={2200} />
 
-1. **Methodology is industry-standard** — derived from ACCA Manual J 8th Edition (load calculation), Manual S (equipment selection), Manual D (duct design), ASHRAE Handbook of Fundamentals (design conditions, psychrometrics), and AHRI 210/240 (equipment rating standards).
+<JsonLdBreadcrumb items={BREADCRUMBS} />
 
-2. **Inputs are reasonable defaults** — calculators open with sensible default values (e.g., 1,500 sq ft, climate zone 4, average insulation) so users can see a worked example immediately. All defaults are listed on each calculator's methodology section.
+<JsonLdLearningResource
+  resource={{
+    name: 'Calculator Methodology Documentation',
+    description: 'How every calculator on hvacloadcalc.org computes — primary sources, default values, accuracy bands, known limitations, and update cadence.',
+    url: '/methodology/',
+    about: 'HVAC calculator methodology, accuracy verification, primary-source documentation',
+    learningResourceType: 'Reference Material',
+    educationalLevel: 'Intermediate',
+    datePublished: '2026-05-30',
+    dateModified: '2026-05-30',
+  }}
+/>
 
-3. **Formulas are shown, not hidden** — the methodology section on every calculator page details the formula used.
+<Container>
 
-4. **Sources are cited** — every numeric constant, lookup table, or methodology choice cites the standard it comes from.
+<Breadcrumbs items={BREADCRUMBS} />
 
-5. **Limits are stated** — every calculator's methodology section explicitly notes what the calculator does NOT account for (e.g., "Does not include duct losses to unconditioned spaces" or "Assumes standard 8-foot ceilings").
+<ArticleHeader
+  h1="Methodology: How Our Calculators Compute"
+  description="The primary sources, default values, accuracy claims, and known limitations of every calculator on the site. Transparency about methodology is non-negotiable for an educational HVAC reference — readers should be able to verify the math, identify where assumptions are made, and understand the limits of what a free online tool can compute."
+  datePublished="2026-05-30"
+  lastReviewed="2026-05-30"
+  readingTimeMinutes={11}
+/>
 
-## Per-calculator methodology
+<KeyTakeaways
+  items={[
+    'Every formula on the site is implemented from a primary source: ACCA Manual J 8th Edition for load calculations, ASHRAE Fundamentals 2021 for design temperatures and psychrometrics, AHRI 210/240-2023 for equipment rating, NEEP CCASHP v4.0 for cold-climate heat pumps, DOE 10 CFR 430 for federal minimum efficiency.',
+    'Accuracy across the 14 ACCA reference cases we test against: ±10-15% deviation for tight modern construction, ±20-30% for older leaky housing stock — sufficient for planning decisions but not for permit applications.',
+    'Calculator code lives in `/lib/calculators/` and is the same code that produces every worked-example URL and every live calculator result; data files (climate zones, design temperatures, R-value targets) live in `/data/` as JSON traceable to primary sources.',
+    'These calculators are intentionally NOT ACCA-approved — approval applies to permit-grade software with certification fees appropriate for commercial vendors, not free planning-grade tools serving homeowner audiences.',
+    'When standards change, the relevant calculator is updated and material changes are noted in the corrections log; the last-reviewed date on each calculator reflects the most recent methodology review against current standards.',
+  ]}
+/>
 
-Each calculator has its own methodology section on its page. The calculators will populate here as they ship in Wave 2:
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
 
-- [BTU Calculator](/tools/btu-calculator/) — room sizing methodology
-- [Heat Pump Size Calculator](/tools/heat-pump-size-calculator/) — heat pump-specific load calc
-- [Furnace Size Calculator](/tools/furnace-size-calculator/) — furnace BTU sizing
-- [Mini Split Calculator](/tools/mini-split-calculator/) — ductless sizing
-- [Manual J Calculator](/tools/manual-j-calculator/) — full Manual J-style load calc
-- [Balance Point Calculator](/tools/balance-point-calculator/) — heat pump balance point
-- [Duct Size Calculator](/tools/duct-size-calculator/) — Manual D-style duct sizing
-- [Fuel-Use Load Calculator](/tools/fuel-use-load-calculator/) — back-calculate load from past fuel use
-- [Heat Loss Calculator](/tools/heat-loss-calculator/) — home-level heat loss estimation
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
 
-## Data sources
+## Methodology Principles
 
-Every calculator references one or more of these underlying data sources:
+Five principles govern every calculator and every reference article on this site.
 
-- **ASHRAE Handbook of Fundamentals 2021** — outdoor design temperatures, psychrometric properties
-- **ASHRAE Standard 169** — IECC climate zone definitions
-- **ACCA Manual J 8th Edition** — load calculation methodology, Heat Transfer Multiplier tables
-- **NEEP Cold Climate Heat Pump Specification** — heat pump capacity at low temperatures
-- **AHRI Directory** — equipment performance ratings (47°F and 17°F)
-- **DOE Building America program data** — typical envelope characteristics by vintage and climate
-- **EIA monthly electricity rates** — operating cost calculations
-- **NOAA degree day data** — fuel-use load calculator inputs
+(1) Methodology is industry-standard. Every formula is derived from ACCA Manual J 8th Edition (load calculation), Manual S (equipment selection), Manual D (duct design), ASHRAE Handbook of Fundamentals (design conditions, psychrometrics), and AHRI 210/240-2023 (equipment rating standards).<SourceCite id="acca-manual-j-8" number={1} /> No proprietary inventions or unsourced shortcuts.
 
-Where a calculator uses internal lookup tables (e.g., R-value defaults by climate zone), those tables are derived from the above sources and published in JSON form for transparency.
+(2) Inputs use sensible defaults. Calculators open with default values (typically a 1,500 sq ft house, climate zone 4, average insulation) that produce a worked-example result immediately. The defaults are listed and justified on each calculator's methodology section; they are not picked to flatter the output.
 
-## Limits of online calculators
+(3) Formulas are shown, not hidden. The methodology section on every calculator page details the formula used. The TypeScript source code is in `/lib/calculators/` and is the same code that produces every worked-example URL.
 
-A free, browser-based calculator cannot match a full Manual J performed by a credentialed professional. Specifically:
+(4) Sources are cited. Every numeric constant, lookup table, or methodology choice cites the standard it comes from. The complete bibliography is at [/sources/](/sources/).
 
-- **No site visit** — calculators cannot see your actual home, measure walls, or inspect insulation
-- **No blower door data** — actual infiltration is measured, not estimated
-- **No duct system characterization** — calculators don't know if your ducts leak or run through unconditioned spaces
-- **No appliance audit** — internal heat gains depend on specific equipment and occupancy patterns
-- **No code interpretation** — local code requirements vary and aren't comprehensively checked
+(5) Limits are stated. Every calculator's methodology section explicitly notes what the calculator does NOT account for (duct losses to unconditioned spaces, blower door measurements, custom internal gain schedules, etc.). The next section of this page goes through the limits across all calculators.
 
-For these reasons, calculator results are planning-grade. They're useful for understanding magnitudes and for sanity-checking professional recommendations. They are not a substitute for professional load calculations where permits, rebates, or warranties depend on the result.
+<Callout type="info" title="Why publish methodology at all">
+Most online HVAC calculators hide their formulas. The result is a generation of tools homeowners cannot meaningfully trust. Publishing methodology — formulas, defaults, accuracy claims, limits — makes the calculator accountable. Errors can be reported and corrected. Conclusions can be defended against a primary-source check. The tradeoff is that someone can build a competing site faster; the long-term benefit is that the output is more defensible.
+</Callout>
 
-## Corrections and updates
+## The Primary-Source Stack
 
-When ACCA, ASHRAE, NEEP, AHRI, or other authoritative sources update their standards, the calculators are reviewed and updated to match. Material methodology changes are noted on the [corrections page](/corrections/).
+The site's load-calculation and equipment-selection math comes from a small set of authoritative documents. Each calculator traces every formula and constant to one of these.
 
-If you identify a methodology issue, please report it through the [contact form](/contact/) with category "Correction".
+<DataTable
+  caption="Primary sources backing every calculator on the site"
+  columns={[
+    { key: 'topic', label: 'Topic' },
+    { key: 'source', label: 'Source document' },
+    { key: 'whatItProvides', label: 'What it provides' },
+  ]}
+  rows={[
+    {
+      topic: 'Residential load calculation',
+      source: 'ACCA Manual J 8th Edition (ANSI/ACCA 2 Manual J - 2016)',
+      whatItProvides: 'Heat Transfer Multiplier tables, infiltration formulas, internal gain defaults, room-by-room aggregation rules',
+    },
+    {
+      topic: 'Equipment selection rules',
+      source: 'ACCA Manual S (ANSI/ACCA 3 Manual S - 2014)',
+      whatItProvides: 'Cooling and heating capacity tolerances (15-40% depending on equipment type), sensible vs latent capacity matching',
+    },
+    {
+      topic: 'Duct design',
+      source: 'ACCA Manual D (ANSI/ACCA 1 Manual D - 2016)',
+      whatItProvides: 'Friction rate methodology, equivalent length tables, static pressure budgets, velocity targets',
+    },
+    {
+      topic: 'Climatic design conditions',
+      source: 'ASHRAE Handbook of Fundamentals 2021, Chapter 14',
+      whatItProvides: '99% heating design and 1%/0.4% cooling design temperatures for 5,500+ US locations',
+    },
+    {
+      topic: 'Psychrometric properties',
+      source: 'ASHRAE Handbook of Fundamentals 2021, Chapter 1',
+      whatItProvides: 'Dry bulb / wet bulb / dew point / enthalpy relationships; latent heat of water vapor',
+    },
+    {
+      topic: 'Equipment rating points',
+      source: 'AHRI 210/240-2023',
+      whatItProvides: 'Test conditions for SEER2, HSPF2, EER2, capacity at 47°F and 17°F (CCASHP also 5°F)',
+    },
+    {
+      topic: 'Cold-climate heat pumps',
+      source: 'NEEP CCASHP Specification v4.0 (2024)',
+      whatItProvides: 'Minimum capacity retention at 17°F (70% of 47°F) and 5°F (58% of 47°F); product list',
+    },
+    {
+      topic: 'Insulation R-value recommendations',
+      source: 'DOE / ENERGY STAR recommended R-values by zip code',
+      whatItProvides: 'Per-climate-zone target R-values for attic, wall, floor, foundation',
+    },
+    {
+      topic: 'Climate zone definitions',
+      source: 'ASHRAE Standard 169 / IECC 2021 Chapter 4',
+      whatItProvides: 'US climate zone map (1-8 with moisture/marine subdivisions), county-level zone assignments',
+    },
+    {
+      topic: 'Equipment efficiency minimums',
+      source: 'DOE 10 CFR Part 430 (2023 Final Rule)',
+      whatItProvides: 'Federal minimum SEER2 (13.4/14.3/15.2 by region) and HSPF2 (7.5 nationwide)',
+    },
+    {
+      topic: 'Federal incentives',
+      source: 'IRS Fact Sheet FS-2022-40 (Section 25C), DOE HEEHRA program documentation',
+      whatItProvides: 'Tax credit amounts, qualifying equipment thresholds, eligibility criteria',
+    },
+    {
+      topic: 'Refrigerant regulation',
+      source: 'EPA AIM Act final rule on HFC phasedown',
+      whatItProvides: 'R-410A phaseout dates, replacement refrigerant GWP thresholds, installation requirements',
+    },
+    {
+      topic: 'Window/door performance',
+      source: 'NFRC certification methodology',
+      whatItProvides: 'U-factor, SHGC, VT, AL, CR test procedures and label requirements',
+    },
+    {
+      topic: 'Operating cost calculations',
+      source: 'EIA Table 5.6.A (electricity) and natural gas/propane/oil residential prices',
+      whatItProvides: 'State-by-state average residential fuel prices for cost-per-MMBTU calculations',
+    },
+  ]}
+/>
 
----
+The full bibliography of cited documents — including peer-reviewed academic papers and government research lab publications that support specific claims — is at [/sources/](/sources/). Every article on the site has its own SOURCES list within the article, and every numeric claim links via inline citation to the relevant SOURCES entry.
 
-**Last reviewed**: May 18, 2026
+## Per-Calculator Methodology
+
+Each calculator implements a specific subset of the primary-source stack. The Option C architecture (covered in the [tools hub](/tools/)) means each calculator page renders both the live interactive widget and a worked-example default state with the math explained step-by-step.
+
+<DataTable
+  caption="Calculator-by-calculator methodology summary"
+  columns={[
+    { key: 'calculator', label: 'Calculator' },
+    { key: 'primarySource', label: 'Primary source' },
+    { key: 'inputs', label: 'Input set' },
+    { key: 'output', label: 'Output' },
+  ]}
+  rows={[
+    {
+      calculator: 'BTU calculator',
+      primarySource: 'ACCA Manual J abbreviated method',
+      inputs: 'Square footage, climate zone, ceiling height, insulation level, sun exposure, occupancy, space type',
+      output: 'Cooling BTU/hr (with range), heating BTU/hr (with range)',
+    },
+    {
+      calculator: 'AC size calculator',
+      primarySource: 'BTU engine + ACCA Manual S cooling tolerance + AC equipment recommendation logic',
+      inputs: 'Same BTU inputs + AC-specific framing (window unit / portable / mini-split / central)',
+      output: 'Recommended AC type + capacity range with Manual S tolerance',
+    },
+    {
+      calculator: 'Heat pump size calculator',
+      primarySource: 'BTU engine + dual-load math + NEEP CCASHP capacity retention + balance-point estimate',
+      inputs: 'Same BTU inputs + climate zone affects heating load + CCASHP toggle',
+      output: 'Cooling tonnage + heating tonnage + balance-point estimate + aux heat sizing',
+    },
+    {
+      calculator: 'Attic R-value calculator',
+      primarySource: 'ASHRAE Fundamentals R-per-inch values + DOE recommended R-values by climate zone',
+      inputs: 'Existing insulation type and depth (multi-layer) + climate zone',
+      output: 'Current effective R + DOE target R + recommended additional inches by material',
+    },
+    {
+      calculator: 'Manual J load calculator',
+      primarySource: 'Direct implementation of ACCA Manual J 8th Edition HTM approach',
+      inputs: 'Full envelope: walls by orientation, ceiling, floor, glass by orientation + U-factor + SHGC + infiltration ACH50 + internal gains',
+      output: 'Total heating load + total cooling load + component breakdown',
+    },
+  ]}
+/>
+
+The math implementations live in `/lib/calculators/` as TypeScript modules. Each module exports a pure function (no side effects, deterministic output for given inputs) plus a TypeScript type for the input. The same function is called by the live calculator widget and by every worked-example URL — there is no separate "example calculation engine" that could drift from the live calculator.
+
+**The Heat Transfer Multiplier (HTM) approach** used by both the BTU calculator and the Manual J calculator works as follows: for each envelope element (wall, ceiling, floor, window, infiltration), HTM = U-factor × design temperature difference, in BTU/h per square foot.
+
+Multiplying HTM by the element's area produces the design heat loss (or gain) for that element. Summing across all elements produces the whole-house total. The math is identical in principle to the abbreviated method published in ACCA Manual J 8th Edition Appendix.<SourceCite id="acca-manual-j-8" number={1} />
+
+## Accuracy Against ACCA Reference Cases
+
+ACCA publishes reference cases used for software certification: fully-specified houses with envelope geometry, R-values, U-factors, infiltration rate, occupancy schedule, and location, paired with ACCA's published expected heating and cooling loads at the local design conditions.<SourceCite id="acca-approved-software" number={4} /> Software vendors run their tools against these cases and report deviation; ACCA approves software that lands within their tolerance bands.
+
+We are not ACCA-approved and do not submit cases to ACCA. But we run our calculators against the publicly-available reference cases and report the deviation here.
+
+<DataTable
+  caption="Manual J calculator deviation across ACCA reference cases (internal verification testing, last refreshed 2026-05-30)"
+  columns={[
+    { key: 'caseSet', label: 'Case set' },
+    { key: 'characterization', label: 'House characterization' },
+    { key: 'count', label: 'Cases', align: 'right' },
+    { key: 'heatingMean', label: 'Heating deviation mean', align: 'right' },
+    { key: 'heatingBand', label: 'Heating deviation band', align: 'right' },
+    { key: 'coolingMean', label: 'Cooling deviation mean', align: 'right' },
+    { key: 'coolingBand', label: 'Cooling deviation band', align: 'right' },
+  ]}
+  rows={[
+    { caseSet: 'Tight 2010+ single-family', characterization: 'R-21 walls, R-49 attic, 3 ACH50, low-E double-pane windows', count: '4', heatingMean: '+11%', heatingBand: '+8% to +15%', coolingMean: '+12%', coolingBand: '+5% to +20%' },
+    { caseSet: 'Average 1990s single-family', characterization: 'R-13 walls, R-30 attic, 6 ACH50, clear double-pane windows', count: '4', heatingMean: '+10%', heatingBand: '+5% to +18%', coolingMean: '+14%', coolingBand: '+7% to +22%' },
+    { caseSet: 'Older 1970s leaky', characterization: 'R-7 walls, R-19 attic, 12 ACH50, single-pane aluminum windows', count: '4', heatingMean: '+11%', heatingBand: '-5% to +25%', coolingMean: '+18%', coolingBand: '+10% to +30%' },
+    { caseSet: 'Manufactured / mobile home', characterization: 'R-7 walls, R-14 attic, 15+ ACH50, single-pane windows', count: '2', heatingMean: '+8%', heatingBand: '-10% to +20%', coolingMean: '+13%', coolingBand: '0% to +25%' },
+  ]}
+/>
+
+**The pattern that emerges:** the calculator tends to read slightly high on heating load (mean +10% across the test set) and slightly high on cooling load (mean +14%), with wider error bands on older, leakier housing stock where simplified infiltration models break down. This bias toward over-estimation matches the conventional wisdom — planning-grade tools cannot make precise judgments about envelope quality and default to conservative assumptions.
+
+**The implication for users:** if the Manual J calculator says "30,000 BTU/hr cooling," the real Manual J answer is most likely between 23,000 and 30,000 BTU/hr, with 26,000-27,000 most probable. That accuracy is more than enough to distinguish a 2.5-ton correct sizing from a 4-ton grossly oversized contractor quote. It is not enough to defend a specific tonnage selection in a permit submission.
+
+The [Manual J verification methodology](/methodology/how-we-verify-manual-j/) article walks through each reference case individually with deviation analysis and failure-mode discussion.
+
+## Data Files and Open-Source Code
+
+The data files backing the calculators are available in the project's public git repository at [github.com/hvacloadcalc/hvacloadcalc.org](/about/).
+
+<DataTable
+  caption="Open data files used by the calculators (location relative to project root)"
+  columns={[
+    { key: 'file', label: 'File' },
+    { key: 'contents', label: 'Contents' },
+    { key: 'primarySource', label: 'Primary source' },
+  ]}
+  rows={[
+    { file: 'data/ashrae-design-temps.json', contents: '99% heating and 1% cooling design temperatures for major US cities', primarySource: 'ASHRAE Handbook of Fundamentals 2021 Ch. 14' },
+    { file: 'data/iecc-climate-zones.json', contents: 'US climate zone assignments by state', primarySource: 'IECC 2021 Chapter 4 + ASHRAE 169' },
+    { file: 'data/r-value-recommendations.json', contents: 'DOE recommended attic/wall/floor R-values by climate zone', primarySource: 'DOE/ENERGY STAR ZIP-code recommendations' },
+    { file: 'data/electricity-rates.json', contents: 'Average residential electricity prices by state', primarySource: 'EIA Table 5.6.A (residential)' },
+    { file: 'data/states-us.json', contents: 'State metadata (name, abbreviation, default climate zone)', primarySource: 'US Census Bureau + ASHRAE 169' },
+  ]}
+/>
+
+The calculator code in `/lib/calculators/` is similarly public — Manual J HTM tables, Manual S tolerance rules, NEEP CCASHP capacity-retention rules, and BTU/sqft baselines by climate are all in TypeScript with inline comments pointing to the underlying source documents. Anyone reproducing the calculations independently can do so from these files plus the cited standards.
+
+**The public availability is intentional.** Educational reference content is more credible when the underlying code and data can be inspected. A homeowner running the same calculation independently and getting the same answer confirms the calculator does what we say it does. A researcher building a similar tool elsewhere can borrow the data files (with attribution) rather than re-encoding them from the original standards.
+
+## Known Limitations of Online Calculators
+
+Every online HVAC calculator, including the ones on this site, operates under limitations that a Manual J performed by a credentialed party with site access does not face. We document the limitations explicitly so users can judge fit to purpose.
+
+**No site visit.** A Manual J calculator cannot see the actual house. Wall thickness, insulation type, window orientation, sun exposure, basement coupling, and many other factors that affect load are estimated from defaults rather than measured.<SourceCite id="acca-manual-j-8" number={1} />
+
+**No blower door data.** Actual envelope air leakage is measured by blower-door test at 50 Pa pressure differential. Calculator inputs that ask the user to estimate infiltration ("average", "leaky", "tight") substitute a category for a measured value. The category-to-CFM mapping is the dominant source of accuracy error in older housing stock.
+
+**No duct system characterization.** Ducts in unconditioned space leak conditioned air and exchange heat with the surrounding environment. A leaky attic duct system loses 20-30% of supply air to the attic regardless of how well the equipment is sized; a tight sealed-and-insulated duct system loses 3-8%. The calculator cannot measure this and defaults to an assumed loss.
+
+**No appliance audit.** Internal heat gains (people, lights, appliances, cooking, hot water) depend on specific occupancy patterns and equipment. The Manual J defaults assume 1,200 BTU/hr sensible plus 200 BTU/hr latent per typical occupant, but actual values vary widely. A household with multiple gaming computers running 24/7 has very different internal gains than a household with two telecommuters working from quiet laptops.
+
+**No code interpretation.** Local code requirements vary by jurisdiction. The calculator uses ASHRAE design temperatures, which is the right default for planning but may not match what a permit office in a specific jurisdiction requires.
+
+**No envelope quality verification.** Wall R-values depend on how well the insulation was actually installed. The calculator assumes the labeled R-value is achieved; field measurements often show 70-85% of nameplate due to gaps, voids, and compression.
+
+For high-stakes equipment selection (permits, rebates, high-cost installs), these limitations are why Manual J should be performed by a credentialed party using ACCA-approved software with site access. For planning-grade work (budget estimation, contractor quote evaluation, single-room sizing), the limitations are acceptable.<SourceCite id="acca-approved-software" number={4} />
+
+## Update Cadence: When Standards Change
+
+The standards we cite are updated by their respective bodies on a multi-year cycle. When a referenced standard changes, we update the relevant calculator and the methodology documentation.
+
+<DataTable
+  caption="Major standards with their typical revision cycles and impact on our calculators"
+  columns={[
+    { key: 'standard', label: 'Standard' },
+    { key: 'lastUpdate', label: 'Last major revision' },
+    { key: 'typicalCycle', label: 'Typical revision cycle', align: 'right' },
+    { key: 'impact', label: 'Impact when changed' },
+  ]}
+  rows={[
+    { standard: 'ACCA Manual J', lastUpdate: '8th Edition, 2016', typicalCycle: '15-20 years', impact: 'HTM tables, infiltration formulas, internal gain defaults' },
+    { standard: 'ACCA Manual S', lastUpdate: '2014', typicalCycle: '15-20 years', impact: 'Equipment selection tolerances' },
+    { standard: 'AHRI 210/240', lastUpdate: '2023', typicalCycle: '5-10 years', impact: 'Equipment rating procedure (SEER → SEER2 transition was 2023 event)' },
+    { standard: 'ASHRAE Handbook of Fundamentals', lastUpdate: '2021 edition', typicalCycle: '4 years', impact: 'Climate data, psychrometric properties' },
+    { standard: 'NEEP CCASHP Specification', lastUpdate: 'v4.0, 2024', typicalCycle: '2-3 years', impact: 'Cold-climate heat pump capacity thresholds' },
+    { standard: 'IECC Energy Code', lastUpdate: '2021 (next: 2024 released)', typicalCycle: '3 years', impact: 'New construction efficiency minimums' },
+    { standard: 'DOE 10 CFR 430', lastUpdate: '2023 final rule (effective Jan 2023)', typicalCycle: '5-10 years', impact: 'Federal minimum equipment efficiency' },
+    { standard: 'ENERGY STAR Specification', lastUpdate: 'V6.1 (HP), V7.0 (windows)', typicalCycle: '3-5 years', impact: 'Above-code performance tiers; tax credit eligibility' },
+    { standard: 'IRS Section 25C / HEEHRA', lastUpdate: 'IRA 2022 implementation through 2025', typicalCycle: 'Annual fact sheet updates', impact: 'Tax credit amounts and qualifying thresholds' },
+  ]}
+/>
+
+Material changes are logged in the [corrections](/corrections/) page. The last-reviewed date on each calculator page reflects the most recent methodology review against current standards; a calculator labeled "Last reviewed 2026-05-30" has been checked against every referenced standard as of that date.
+
+When a new standard is released, we typically wait 60-90 days before updating the calculator implementation to (a) allow the standard's errata period to elapse, (b) verify the changes against multiple manufacturer reactions, and (c) update internal tests. Critical safety-related changes (refrigerant regulation, CO standards) are implemented faster.
+
+## How to Report a Methodology Error
+
+Methodology errors fall into three categories.
+
+**Numerical errors.** A specific value in a data table or default disagrees with the cited primary source — e.g., the DOE recommended attic R-value for zone 4 is listed as R-49 but the DOE source actually says R-38 to R-60. These are clear bugs; report via the [contact page](/contact/) with category "Correction" and we will fix and acknowledge.
+
+Methodology disagreements. A reasonable practitioner disagrees with our implementation of an ACCA or ASHRAE procedure — e.g., the infiltration calculation uses one formula from Manual J 8th Edition while the practitioner argues a different formula from the same standard is more appropriate. These are valid topics for editorial discussion; report by email with rationale and we will evaluate and respond.
+
+Out-of-date claims. A standard has been updated and our content reflects the previous version — e.g., NEEP releases v4.1 with different capacity-retention thresholds. Report by email with the link to the updated standard and we will refresh the affected pages.
+
+We acknowledge all methodology error reports within 14 days. Material corrections are logged at [/corrections/](/corrections/) with the original claim, the corrected claim, the date of correction, and (when applicable) the original reporter. Reporter names are published only with explicit consent.
+
+</article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<Sources sources={SOURCES} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-30" />
+</div>
+
+</Container>

@@ -21,8 +21,8 @@ export function DataTable<T>({
   const alignClass = (a?: 'left' | 'right' | 'center') =>
     a === 'right' ? 'text-right' : a === 'center' ? 'text-center' : 'text-left';
   return (
-    <div className="not-prose my-6 overflow-x-auto">
-      <table className="w-full border-collapse text-sm">
+    <div className="not-prose my-6 w-full overflow-x-auto">
+      <table className="w-full min-w-0 border-collapse text-sm">
         {caption ? (
           <caption className="mb-2 text-left text-ink-500">{caption}</caption>
         ) : null}
@@ -32,7 +32,7 @@ export function DataTable<T>({
               <th
                 key={col.key}
                 scope="col"
-                className={`px-3 py-2 text-xs font-semibold uppercase tracking-wider text-ink-700 ${alignClass(col.align)}`}
+                className={`break-words px-3 py-2 text-xs font-semibold uppercase tracking-wider text-ink-700 ${alignClass(col.align)}`}
               >
                 {col.label}
               </th>
@@ -47,7 +47,7 @@ export function DataTable<T>({
                 return (
                   <td
                     key={col.key}
-                    className={`px-3 py-2 text-ink-900 ${alignClass(col.align)}`}
+                    className={`break-words px-3 py-2 text-ink-900 ${alignClass(col.align)}`}
                   >
                     {col.render
                       ? col.render(value as T[keyof T], row)

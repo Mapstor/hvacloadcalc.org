@@ -1,40 +1,479 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { Sources } from '@/components/article/Sources';
+import { SourceCite } from '@/components/article/SourceCite';
+import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { Callout } from '@/components/article/Callout';
+import { DataTable } from '@/components/data/DataTable';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { FaceVelocityTargets } from '@/components/svg/manual-t/FaceVelocityTargets';
+import { ClimateZonesQuickReference } from '@/components/svg/shared/ClimateZonesQuickReference';
 
 export const metadata = {
-  title: 'Manual T Residential Air Distribution | hvacloadcalc.org',
+  alternates: { canonical: "/manual-t/" },
+  title: 'Manual T: Throw, Spread, Face Velocity, Register Selection',
   description:
-    'ACCA Manual T air distribution methodology covering register and grille selection, throw and spread, face velocity, and return air sizing for residential HVAC.',
+    'A reference hub for ACCA Manual T residential air distribution methodology — register and grille selection, throw and spread, face velocity targets by location, ceiling vs floor vs perimeter strategies, and return air placement.',
+  openGraph: {
+    title: 'Manual T Air Distribution: A Sourced Reference',
+    description:
+      'Register selection, throw and spread, face velocity limits, ceiling vs floor strategy, and return air placement methodology.',
+    type: 'article',
+    publishedTime: '2026-05-30',
+    modifiedTime: '2026-05-30',
+    authors: ['Jonathan Stowe'],
+    images: ['/opengraph-image'],
+  },
 };
 
-<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Manual T' }]} />
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'Manual T' },
+];
 
-<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Manual T' }]} />
+export const HEADINGS = [
+  { id: 'what-manual-t-is', text: 'What Manual T Is and What It Determines', level: 2 },
+  { id: 'throw-spread-and-terminal-velocity', text: 'Throw, Spread, and Terminal Velocity', level: 2 },
+  { id: 'face-velocity-targets-by-location', text: 'Face Velocity Targets by Register Location', level: 2 },
+  { id: 'supply-register-types', text: 'Supply Register Types: Ceiling, High Sidewall, Floor, Low Sidewall', level: 2 },
+  { id: 'return-grille-placement', text: 'Return Grille Placement and the Closed-Door Problem', level: 2 },
+  { id: 'sizing-registers-to-cfm', text: 'Sizing Registers and Grilles to Design CFM', level: 2 },
+  { id: 'register-pattern-and-mixing', text: 'Register Pattern, Mixing, and Comfort', level: 2 },
+  { id: 'common-manual-t-failures', text: 'Common Manual T Failures and How They Show Up', level: 2 },
+  { id: 'what-this-cluster-covers', text: 'What This Cluster Covers', level: 2 },
+];
+
+export const SOURCES = [
+  {
+    id: 'acca-manual-t',
+    title: 'Manual T — Air Distribution Basics for Residential and Small Commercial Buildings',
+    publisher: 'Air Conditioning Contractors of America (ACCA)',
+    year: 2010,
+    url: 'https://www.acca.org/standards/technical-manuals/manual-t',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'acca-manual-d',
+    title: 'Manual D — Residential Duct Systems (ANSI/ACCA 1 Manual D - 2016)',
+    publisher: 'Air Conditioning Contractors of America',
+    year: 2016,
+    url: 'https://www.acca.org/standards/technical-manuals/manual-d',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'acca-manual-j-8',
+    title: 'Manual J — Residential Load Calculation, 8th Edition (ANSI/ACCA 2 Manual J - 2016)',
+    publisher: 'Air Conditioning Contractors of America',
+    year: 2016,
+    url: 'https://www.acca.org/standards/technical-manuals/manual-j',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'ashrae-fundamentals-room-air',
+    title: 'ASHRAE Handbook of Fundamentals 2021, Chapter 20 (Space Air Diffusion)',
+    publisher: 'American Society of Heating, Refrigerating and Air-Conditioning Engineers',
+    year: 2021,
+    url: 'https://www.ashrae.org/technical-resources/ashrae-handbook',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'amca-211',
+    title: 'AMCA Standard 211 — Certified Ratings Program (air outlet performance)',
+    publisher: 'Air Movement and Control Association International',
+    year: 2020,
+    url: 'https://www.amca.org/certify-ratings-program-air-outlet-products.html',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'ashrae-55',
+    title: 'ANSI/ASHRAE Standard 55-2023, Thermal Environmental Conditions for Human Occupancy',
+    publisher: 'ASHRAE',
+    year: 2023,
+    url: 'https://www.ashrae.org/technical-resources/standards-and-guidelines/standards-addenda/standard-55-2023',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'iecc-2021-ventilation',
+    title: 'International Energy Conservation Code (IECC) 2021, Section R403.6 (Mechanical Ventilation)',
+    publisher: 'International Code Council',
+    year: 2021,
+    url: 'https://codes.iccsafe.org/content/IECC2021P2',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+];
+
+export const FAQ_ITEMS = [
+  {
+    q: 'What is Manual T in plain terms?',
+    a: 'Manual T is the ACCA methodology for selecting registers and grilles — the visible terminations of the duct system in each room. It answers two questions: what kind of register should each room have (throw, spread, pattern), and what size register face is needed to handle the design CFM at acceptable velocity (so the system stays quiet and air mixes properly with room air).',
+  },
+  {
+    q: 'What is "throw" in air distribution terms?',
+    a: 'Throw is the distance the supply air travels from the register before its velocity drops to a specified terminal velocity (typically 50 fpm). A high-sidewall register with 18 feet of throw will move air across an 18-foot room before mixing fully into the ambient air. Too short a throw (relative to room dimensions) leaves dead zones near the opposite wall. Too long a throw produces noticeable drafts at occupied areas. Manufacturers publish throw charts at each face velocity and each face area.',
+  },
+  {
+    q: 'What is the difference between a register and a grille?',
+    a: 'A register has integral louvers (volume-control dampers or directional vanes) for adjusting airflow direction or quantity. A grille has fixed openings without integral dampers. In residential terminology, "supply register" and "return grille" are the dominant labels — supplies usually have adjustable dampers, returns rarely do. The performance impact: registers can be partially closed to balance airflow between rooms; grilles cannot.',
+  },
+  {
+    q: 'What face velocity should I aim for at registers and grilles?',
+    a: 'Supply registers: 500-700 fpm at the face. Return grilles in living spaces: 500-700 fpm. Return grilles with filters (filter grilles): 300-400 fpm because higher velocity drops filter efficiency and shortens filter life. Above 700 fpm produces audible noise in a quiet room. Below 350 fpm allows air to drop directly from the register without properly mixing with room air. Both extremes produce comfort complaints.',
+  },
+  {
+    q: 'Should supply registers be in the floor, ceiling, or wall?',
+    a: 'Depends on the climate and the heating-cooling balance. Cold climates with heating-dominant load benefit from low-sidewall or floor registers because warm air rises naturally — putting the supply where the air starts produces good mixing. Hot climates with cooling-dominant load benefit from ceiling diffusers because cool air falls — the ceiling diffuser produces a "blanket" that drops to the occupied zone. Mixed climates do well with either, with high-sidewall a reasonable compromise. The Manual T tables address each case.',
+  },
+  {
+    q: 'How does register size relate to CFM?',
+    a: 'Free area × velocity = CFM. A 6×10 inch register has 60 square inches of nominal face area but only about 40-45 square inches of free area (after subtracting louver blockage). At 500 fpm face velocity (calculated against free area, not nominal area), it delivers about (40/144) × 500 = 139 CFM. Most manufacturer catalogs publish CFM-vs-velocity tables for each face size, which is easier than calculating from free area.',
+  },
+  {
+    q: 'What is the "closed door problem" in return air design?',
+    a: 'A typical 1990s-2000s house has one large central return in a hallway and supplies to every bedroom. When the bedroom doors close at night, the room pressurizes 2-8 Pa above the hallway because there is no return path. The pressure restricts supply CFM to the room, drives infiltration through the bedroom\'s exterior walls (warm or cool air leaks in from outdoors), and forces all return air to come through the under-door gap (which has roughly 30-50 CFM capacity, far below typical bedroom supply CFM). The fix is per-room returns, transfer grilles, or jump ducts between each bedroom and the hallway.',
+  },
+  {
+    q: 'Does it matter what direction registers are aimed?',
+    a: 'Yes, a lot. A register aimed at a wall or window deflects much of the supply air immediately, producing a wall-flow pattern that bypasses the occupied zone. A register aimed at the ceiling (in heating mode with floor registers) lets warm air rise too quickly without circulating. A register aimed across the room, slightly downward, produces the best mixing in typical residential geometries. Most adjustable registers permit setting the deflection angle; getting this right at install is a 5-minute task that significantly affects comfort.',
+  },
+];
+
+export const RELATED = [
+  {
+    title: 'Manual D duct design',
+    url: '/manual-d/',
+    description:
+      'Sizes the ducts that deliver the CFM Manual T registers and grilles distribute into rooms.',
+  },
+  {
+    title: 'Return air sizing',
+    url: '/manual-d/return-air-sizing/',
+    description:
+      'CFM-by-tonnage and grille velocity guidance for return air systems.',
+  },
+  {
+    title: 'Manual J load calculation',
+    url: '/manual-j/',
+    description:
+      'Produces the per-room CFM that drives both Manual D duct sizing and Manual T register selection.',
+  },
+  {
+    title: 'Manual S equipment selection',
+    url: '/manual-s/',
+    description:
+      'Selects the equipment whose blower must deliver the CFM Manual T registers terminate.',
+  },
+];
+
+export const FRONTMATTER = {
+  title: 'Manual T: Throw, Spread, Face Velocity, Register Selection',
+  h1: 'Manual T Residential Air Distribution: A Sourced Reference',
+  meta_description:
+    'A reference hub for ACCA Manual T residential air distribution methodology — register and grille selection, throw and spread, face velocity targets by location, ceiling vs floor vs perimeter strategies, and return air placement.',
+  url: '/manual-t/',
+  date_published: '2026-05-30',
+  last_reviewed: '2026-05-30',
+  target_keyword: 'manual t',
+  secondary_keywords: ['air distribution', 'throw and spread', 'register face velocity', 'register vs grille', 'register placement', 'return grille'],
+  sources: SOURCES,
+  faq: FAQ_ITEMS,
+  parent_title: 'Home',
+};
+
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={2300} />
+
+<JsonLdBreadcrumb items={BREADCRUMBS} />
+
+<Container>
+
+<Breadcrumbs items={BREADCRUMBS} />
+
+<ArticleHeader
+  h1="Manual T Residential Air Distribution: A Sourced Reference"
+  description="ACCA Manual T methodology — register and grille selection by throw and spread targets, face velocity limits by location, ceiling versus floor versus perimeter distribution strategies, and the return air placement decisions that determine room comfort."
+  datePublished="2026-05-30"
+  lastReviewed="2026-05-30"
+  readingTimeMinutes={10}
+/>
+
+<KeyTakeaways
+  items={[
+    'Manual T addresses the final 12 inches of every HVAC system — the registers and grilles that transfer air between the duct and the room — where bad design produces uncomfortable rooms even when Manual J/S/D were all correct.',
+    'Supply register face velocity target is 500-700 fpm for living spaces (quiet, well-mixed); return grilles match that band; filter grilles run at 300-400 fpm to preserve filter life and efficiency.',
+    'Register selection depends on heating-cooling balance: cold-dominated climates favor floor or low-sidewall supplies (warm air rises naturally), hot-dominated climates favor ceiling diffusers (cool air falls), mixed climates work with high-sidewall as a reasonable compromise.',
+    'Throw is the distance supply air travels before its velocity drops to 50 fpm terminal — too short produces dead zones at the opposite wall, too long produces drafts at occupied locations, and the right throw depends on room dimensions and register pattern.',
+    'The single most common Manual T failure is one central return for the whole house with all bedroom doors closed at night — bedrooms pressurize 2-8 Pa above the hallway, restricting supply CFM and driving infiltration losses.',
+  ]}
+/>
+
+<ClimateZonesQuickReference />
+
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
 
 <article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
 
-# Manual T Residential Air Distribution
+## What Manual T Is and What It Determines
 
-ACCA Manual T is the methodology for selecting registers and grilles — the visible terminations of the duct system in each room. The goal is delivering the design CFM to each room with acceptable throw and spread (so air mixes properly), without exceeding face velocity limits (so the system stays quiet), and without imposing a static pressure penalty that would compromise Manual D's design.
+ACCA Manual T addresses the air distribution in the room itself — the patterns, throws, and velocities that determine whether the conditioned air the ducts deliver actually reaches the occupants comfortably.<SourceCite id="acca-manual-t" number={1} /> Manual J produces room loads. Manual S produces equipment selection. Manual D produces the duct system. Manual T produces the registers and grilles, which is where all the upstream calculations either pay off or fail.
 
-This section covers throw and spread, face velocity limits, register selection by room type, and return air sizing for adequate flow back to the air handler.
+<Callout type="info" title="What goes wrong when Manual T is skipped">
+A duct system that delivers exactly the design CFM into a room can still feel uncomfortable if the register pattern dumps the air into the corner instead of mixing it with room air. Cold drafts near the windows in winter, hot spots near the floor in summer, audible whooshes during normal operation — all of these are Manual T failures, not Manual D failures. The fix is not bigger ducts, it is the right registers placed correctly.
+</Callout>
 
-## What this section covers
+The methodology has three explicit decisions per room. (1) What type of register matches the room and the climate — floor, ceiling, sidewall? (2) What face velocity range is acceptable given quietness expectations and mixing needs? (3) What throw distance is needed for the room dimensions? Together those decisions specify a face area, a free area, an air pattern (4-way, 2-way, 1-way), and a deflection angle.
 
-- **Throw and spread** — supply air reach and mixing patterns
-- **Face velocity** — noise and pressure budget at registers
-- **Register selection by room** — supply versus return locations
-- **Return air sizing** — total return area and grille count
-- **Common register sizing mistakes** — too small, wrong type, wrong location
+The same decisions apply to returns, though the constraints differ. Return grilles capture room air rather than projecting into it, so throw and spread do not apply; face velocity for noise control and filter performance dominates the selection.
 
-## Related calculators
+## Throw, Spread, and Terminal Velocity
 
-- [Return air grille calculator](/tools/return-air-grille-calculator/) — CFM-to-grille sizing
-- [CFM calculator](/tools/cfm-calculator/) — airflow conversion
+Throw is the horizontal distance supply air travels from the register face before its centerline velocity drops to a specified terminal velocity, typically 50 feet per minute (fpm).<SourceCite id="ashrae-fundamentals-room-air" number={4} /> Beyond the throw distance, the supply air has mixed with room air and lost its directional momentum; it now circulates as part of the room's overall flow pattern.
 
-## Related topics
+Spread is the lateral width of the airstream at a given distance from the register face. A "4-way throw" pattern (common in ceiling diffusers) projects air in four directions equally; a "1-way throw" projects air in one direction. The spread at half throw is typically the controlling design parameter, because adjacent registers need their spread patterns to overlap without producing concentrated cold or hot streams at occupant locations.
 
-- [Manual D duct design](/manual-d/) — supplies the per-room CFM
-- [Manual J load calculation](/manual-j/) — root of the per-room CFM targets
+<DataTable
+  caption="Typical throw and spread targets by room dimension (source: ACCA Manual T, ASHRAE Fundamentals Ch. 20)"
+  columns={[
+    { key: 'roomSize', label: 'Room dimension (largest)', align: 'right' },
+    { key: 'throwTarget', label: 'Throw target (to opposing wall)', align: 'right' },
+    { key: 'spreadTarget', label: 'Spread (at half throw)', align: 'right' },
+    { key: 'pattern', label: 'Typical pattern' },
+  ]}
+  rows={[
+    { roomSize: '< 10 ft', throwTarget: '6-9 ft', spreadTarget: '3-5 ft', pattern: '2-way or 4-way diffuser, 90° spread' },
+    { roomSize: '10-14 ft', throwTarget: '8-12 ft', spreadTarget: '5-7 ft', pattern: '4-way ceiling diffuser or wide-spread sidewall' },
+    { roomSize: '14-18 ft', throwTarget: '12-16 ft', spreadTarget: '6-9 ft', pattern: '1-way high sidewall or rectangular ceiling diffuser' },
+    { roomSize: '18-22 ft', throwTarget: '16-20 ft', spreadTarget: '7-11 ft', pattern: 'Long-throw 1-way sidewall, possibly multiple supplies' },
+    { roomSize: '> 22 ft', throwTarget: 'Multiple supplies', spreadTarget: 'Multiple supplies', pattern: 'Two or more supplies, throws meeting in middle' },
+  ]}
+/>
+
+Mismatched throw produces clear failure modes. Throw shorter than the room produces a "dead zone" at the opposite wall — that area never gets fresh supply air and drifts toward room temperature passively. Throw longer than the room produces a "stall" — air bounces off the opposite wall and creates a strong return flow at the floor or ceiling, often felt as a draft at occupied positions like a couch or bed.<SourceCite id="ashrae-fundamentals-room-air" number={4} />
+
+The terminal velocity convention (50 fpm) corresponds to barely-perceptible airflow in a still indoor environment. Air at 30 fpm is essentially undetectable; at 75-100 fpm it becomes noticeable; above 150 fpm it is a clear draft. Picking throw based on the 50 fpm terminus produces room air patterns where the air mixes thoroughly into the ambient but no occupant feels a draft.
+
+## Face Velocity Targets by Register Location
+
+Face velocity is the airflow velocity at the register's open face, calculated as CFM divided by free area (not nominal area — registers have louvers, bars, and grilles that block portion of the nominal opening).
+
+<FaceVelocityTargets />
+
+<DataTable
+  caption="Recommended face velocity by register and grille location (source: ACCA Manual T, AMCA Standard 211 ratings)"
+  columns={[
+    { key: 'location', label: 'Location' },
+    { key: 'minVelocity', label: 'Min face velocity (fpm)', align: 'right' },
+    { key: 'targetVelocity', label: 'Target face velocity (fpm)', align: 'right' },
+    { key: 'maxVelocity', label: 'Max face velocity (fpm)', align: 'right' },
+    { key: 'limit', label: 'Limiting factor' },
+  ]}
+  rows={[
+    { location: 'Supply register, living room', minVelocity: '350', targetVelocity: '500-600', maxVelocity: '700', limit: 'Noise above 700' },
+    { location: 'Supply register, bedroom', minVelocity: '300', targetVelocity: '400-500', maxVelocity: '600', limit: 'Noise during sleep hours' },
+    { location: 'Supply register, kitchen/bath', minVelocity: '400', targetVelocity: '500-700', maxVelocity: '800', limit: 'Ambient kitchen noise covers more' },
+    { location: 'Return grille (no filter)', minVelocity: '400', targetVelocity: '500-700', maxVelocity: '800', limit: 'Noise above 800' },
+    { location: 'Return filter grille', minVelocity: '200', targetVelocity: '300-400', maxVelocity: '500', limit: 'Filter pressure drop and life' },
+    { location: 'Floor register (supply)', minVelocity: '300', targetVelocity: '400-500', maxVelocity: '600', limit: 'Dust kick-up at high velocity' },
+    { location: 'Ceiling diffuser', minVelocity: '350', targetVelocity: '500-650', maxVelocity: '750', limit: 'Pattern collapses below 350' },
+  ]}
+/>
+
+The lower bound exists because air moving slower than ~300 fpm cannot reliably produce the designed throw pattern — the supply air simply falls (or rises, depending on density and direction) without mixing into the room.<SourceCite id="acca-manual-t" number={1} /> A supply register sized for 400 CFM at 250 fpm has 144 sq inches of free area; that face is large enough that the air's momentum dissipates within a few feet, leaving the room mostly dependent on natural convection for heat distribution.
+
+**The upper bound exists for two reasons:** noise and draft perception. Above 700-800 fpm at typical residential register sizes, the audible noise rises from background-undetectable to clearly noticeable in a quiet room. For filter grilles the upper bound is also driven by filter performance — efficiency and life both drop sharply at face velocities above 500 fpm.
+
+## Supply Register Types: Ceiling, High Sidewall, Floor, Low Sidewall
+
+Four register location types dominate residential installations, each with different performance characteristics.
+
+<DataTable
+  caption="Supply register types and their best application contexts"
+  columns={[
+    { key: 'type', label: 'Register type' },
+    { key: 'climateFit', label: 'Climate fit' },
+    { key: 'throwPattern', label: 'Throw pattern' },
+    { key: 'pros', label: 'Pros' },
+    { key: 'cons', label: 'Cons' },
+  ]}
+  rows={[
+    {
+      type: 'Ceiling diffuser (4-way)',
+      climateFit: 'Hot climates (cooling-dominant)',
+      throwPattern: 'Radial, all four horizontal directions',
+      pros: 'Cool air falls naturally; even distribution; aesthetics',
+      cons: 'Less effective in heating mode (warm air stays high)',
+    },
+    {
+      type: 'High sidewall (1-way)',
+      climateFit: 'Mixed climates, urban retrofits',
+      throwPattern: 'Long single throw across room',
+      pros: 'Effective for both heating and cooling; easy retrofit',
+      cons: 'Throws must be carefully matched to room dimensions',
+    },
+    {
+      type: 'Low sidewall (1-way)',
+      climateFit: 'Cold climates (heating-dominant)',
+      throwPattern: 'Short throw, often upward-deflected',
+      pros: 'Warm air rises naturally; good winter comfort',
+      cons: 'Less effective in cooling mode; furniture can block',
+    },
+    {
+      type: 'Floor register',
+      climateFit: 'Cold climates with basement/crawlspace ductwork',
+      throwPattern: 'Vertical upward',
+      pros: 'Best winter performance for older homes; warm zone near floor',
+      cons: 'Dust accumulation; furniture blockage; less cooling effectiveness',
+    },
+    {
+      type: 'Linear slot diffuser (ceiling)',
+      climateFit: 'High-end residential and architectural',
+      throwPattern: 'Linear, perpendicular to slot',
+      pros: 'Architecturally clean; good throw control',
+      cons: 'High cost; sensitive to install precision',
+    },
+  ]}
+/>
+
+**The climate-fit ranking reflects buoyancy physics.** Warm air is less dense than cool air and rises; cool air is denser than warm and falls.
+
+A floor register supplying 110°F air in heating mode delivers that air directly into the cooler near-floor zone, producing strong natural mixing as the warm air rises. The same floor register supplying 55°F air in cooling mode delivers cool air into an already-cooler floor zone, producing weak mixing — the cool air spreads horizontally along the floor and never reaches the upper room.<SourceCite id="ashrae-fundamentals-room-air" number={4} />
+
+**Ceiling diffusers invert the math.** Cool supply air falls into the occupied zone — strong mixing in cooling mode. Warm supply air stays near the ceiling because it is buoyant — weak mixing in heating mode. In a cooling-dominant climate (zones 1-2), the ceiling diffuser is the right choice. In a heating-dominant climate (zones 5-7), floor or low sidewall supplies improve winter comfort substantially. Mixed climates (zones 3-4) accept either with high sidewall as a reasonable middle ground.
+
+## Return Grille Placement and the Closed-Door Problem
+
+Return air design determines whether the supply system can deliver design CFM at design pressure. A return path with insufficient capacity raises total external static pressure across the air handler, reduces supply CFM, and can fail rooms even when their supply registers are perfect.
+
+The classic 1990s residential return strategy was "one large central return in the hallway, sized for total system CFM, with bedroom doors providing return air paths via under-door gaps when closed."
+
+That strategy fails when door gaps are too small (modern weatherstripped doors with 0.5" undercut yield only 25-35 CFM at typical pressure differences) or when bedroom supply CFM exceeds the door's return capacity (typical 100-200 CFM bedroom supply against 30 CFM door gap = pressure imbalance).<SourceCite id="acca-manual-d" number={2} />
+
+<Callout type="warn" title="The pressure-imbalance failure mode">
+With one central return and bedroom doors closed, the bedroom pressurizes 2-8 Pa above the hallway. Four effects compound:
+
+- Supply CFM to that bedroom drops 10-20% because the supply blower works against higher static pressure.
+- The bedroom drives infiltration through every exterior crack and outlet, increasing the heating/cooling load that the now-restricted supply cannot meet.
+- The central return must move ALL return CFM through the hallway, forcing the return grille to run at 1,200+ fpm (noisy and restrictive).
+- Total external static pressure across the air handler rises 0.05-0.15 in. wc, reducing total system CFM and potentially exceeding the blower's rated TESP.
+</Callout>
+
+Modern return air strategies fix the problem with one of three approaches.
+
+Approach 1: per-room returns. Each bedroom (and every conditioned room) gets its own dedicated return duct sized for its supply CFM. The most thorough solution; eliminates pressure imbalance entirely. Adds duct cost and labor but produces the best comfort.
+
+Approach 2: transfer grilles. Each bedroom has a transfer grille (typically 8×14 inches or larger) in the wall to an adjacent space with a return — usually the hallway. The grille is large enough (with low face velocity) to pass return CFM without significant pressure drop. Cheaper than per-room returns but slightly compromises sound privacy.
+
+Approach 3: jump ducts. Each bedroom has a return inlet that connects via short duct (the "jump duct") over the ceiling into the hallway return ceiling. Better sound privacy than transfer grilles, comparable cost. Less common in retrofits because of ceiling access.
+
+Whichever approach is used, the [return air sizing article](/manual-d/return-air-sizing/) walks through CFM-by-tonnage targets, grille selection, and manometer-based diagnostic procedures for existing systems.
+
+## Sizing Registers and Grilles to Design CFM
+
+**The basic register sizing equation:** CFM = free area (sq ft) × face velocity (fpm). Solving for free area: free area = CFM / face velocity, in square feet.
+
+For a 200 CFM bedroom supply at the 500 fpm target velocity: free area = 200/500 = 0.40 sq ft = 57.6 sq inches.
+
+Translating to a nominal register size: most manufacturers' 6×12 registers have ~50 sq inches of free area, and 8×14 registers have ~75 sq inches. The 8×14 size at 200 CFM produces about 380 fpm face velocity — below the 500 fpm target, so the airflow pattern may collapse.
+
+The 6×12 at 200 CFM produces about 575 fpm — slightly above target but within the 700 fpm maximum. **The 6×12 is the right answer.**
+
+<DataTable
+  caption="Common residential register/grille face areas and their CFM range at target velocity (manufacturer catalog reference)"
+  columns={[
+    { key: 'nominal', label: 'Nominal size' },
+    { key: 'freeArea', label: 'Free area (sq in)', align: 'right' },
+    { key: 'cfmAt400', label: 'CFM @ 400 fpm', align: 'right' },
+    { key: 'cfmAt500', label: 'CFM @ 500 fpm', align: 'right' },
+    { key: 'cfmAt600', label: 'CFM @ 600 fpm', align: 'right' },
+    { key: 'cfmAt700', label: 'CFM @ 700 fpm', align: 'right' },
+  ]}
+  rows={[
+    { nominal: '4×10 (floor)', freeArea: '~28', cfmAt400: '78', cfmAt500: '97', cfmAt600: '117', cfmAt700: '136' },
+    { nominal: '4×12 (floor)', freeArea: '~33', cfmAt400: '92', cfmAt500: '115', cfmAt600: '138', cfmAt700: '160' },
+    { nominal: '6×10 (sidewall)', freeArea: '~42', cfmAt400: '117', cfmAt500: '146', cfmAt600: '175', cfmAt700: '204' },
+    { nominal: '6×12 (sidewall)', freeArea: '~50', cfmAt400: '139', cfmAt500: '174', cfmAt600: '208', cfmAt700: '243' },
+    { nominal: '8×14 (sidewall)', freeArea: '~78', cfmAt400: '217', cfmAt500: '271', cfmAt600: '325', cfmAt700: '379' },
+    { nominal: '10×20 (return)', freeArea: '~140', cfmAt400: '389', cfmAt500: '486', cfmAt600: '583', cfmAt700: '681' },
+    { nominal: '20×20 (return filter)', freeArea: '~280', cfmAt400: '778', cfmAt500: '972', cfmAt600: '1,167', cfmAt700: '1,361' },
+    { nominal: '24×30 (large return)', freeArea: '~500', cfmAt400: '1,389', cfmAt500: '1,736', cfmAt600: '2,083', cfmAt700: '2,430' },
+  ]}
+/>
+
+The free-area-to-nominal-area ratio varies by register style. Stamped-steel registers have ~70% free area (the rest is louver). Cast-aluminum registers have ~75-80% free area. Linear slot diffusers have variable free area depending on slot count and angle. The catalog face velocity ratings apply to free area, not nominal area — comparing two manufacturers' "8×14 registers" without checking free area can produce 20% errors in expected CFM.<SourceCite id="amca-211" number={5} />
+
+## Register Pattern, Mixing, and Comfort
+
+Register pattern (1-way, 2-way, 3-way, 4-way) describes how the supply air leaves the register face. A 4-way ceiling diffuser sends air in all four horizontal directions equally. A 1-way sidewall register sends air in one direction with adjustable horizontal and vertical deflection.
+
+The pattern determines how the supply air mixes with the room. A 4-way ceiling diffuser produces relatively uniform horizontal flow at the ceiling, which sets up a slow, even circulation pattern as the air mixes downward. A 1-way sidewall register produces a strong directional throw, which sets up a one-direction-then-return flow pattern.
+
+<Callout type="info" title="Pattern selection by room geometry">
+Square rooms (within 1.5× ratio between sides): 4-way ceiling diffuser or square sidewall. Long rectangular rooms: 1-way sidewall throwing along the long axis, or two ceiling diffusers split along the length. Bedrooms: typically high sidewall 1-way aimed across the bed (avoiding direct draft onto sleeping occupants). Bathrooms: short-throw 4-way to provide quick humidity exhaust path to the return.
+</Callout>
+
+**Mixing is more important than direct cooling at the occupant.** ASHRAE Standard 55 (thermal comfort) specifies the acceptable range of air velocity at occupant locations as 30 fpm or less for sedentary indoor activities at typical temperatures.<SourceCite id="ashrae-55" number={6} />
+
+The supply air at the register can be 500-700 fpm because the throw mixes it with room air; by the time the air reaches the occupant, velocity should have dropped below 30 fpm at the occupied zone.
+
+A register aimed directly at a desk or couch produces direct-draft complaints; a register aimed across the room above occupant heads produces good mixing without drafts.
+
+## Common Manual T Failures and How They Show Up
+
+Field-observed failures cluster into four categories.
+
+1. Wrong register location for the climate. Floor registers in a hot, humid Florida house perform poorly in cooling mode because cool air pools at floor level. Ceiling diffusers in a cold Minneapolis house perform poorly in heating mode because warm air stratifies at ceiling. The fix is replacing registers with the right type, sometimes including ductwork rework if the takeoff location is wrong.
+
+2. Wrong face velocity. Oversized registers (face velocity below 300 fpm) produce supply air that drops or rises without mixing — the room never feels the conditioned air properly. Undersized registers (face velocity above 800 fpm) produce audible noise and direct drafts. The fix is right-sizing registers from manufacturer catalogs.
+
+3. Pattern aimed wrong. Adjustable registers default to a generic pattern at install; sometimes the installer never adjusts them. A register aimed at a wall, ceiling, or directly at an occupant produces poor mixing or direct draft. A 5-minute adjustment per register at commissioning prevents this entirely.
+
+4. Inadequate return. The closed-door problem described above. Fix is per-room returns, transfer grilles, or jump ducts depending on construction.
+
+The fix cost for Manual T failures is small relative to the comfort improvement: $30-$150 per register for swap-out, $300-$800 per bedroom for return-path additions. In existing-home retrofits where comfort is the primary complaint, Manual T fixes often produce the biggest comfort improvement per dollar — bigger than equipment upgrades or duct changes.
+
+## What This Cluster Covers
+
+The Manual T cluster is being expanded as part of the broader build-out. Planned articles:
+
+- Throw and spread methodology (planned) — the geometry of supply air patterns by room type
+- Register selection by room (planned) — bedroom, kitchen, bathroom, living room specifics
+- Face velocity vs noise (planned) — quantifying acoustic effects of register sizing
+- Transfer grilles and jump ducts (planned) — fixing the closed-door problem in existing homes
+
+### Related load and equipment topics
+
+- [Manual D duct design](/manual-d/) — sizes ducts upstream of Manual T registers
+- [Return air sizing](/manual-d/return-air-sizing/) — return grille sizing detail
+- [Manual J load calculation](/manual-j/) — produces per-room CFM that drives register sizing
+- [Manual S equipment selection](/manual-s/) — selects the equipment whose CFM Manual T terminates
 
 </article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<Sources sources={SOURCES} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-30" />
+</div>
+
+</Container>

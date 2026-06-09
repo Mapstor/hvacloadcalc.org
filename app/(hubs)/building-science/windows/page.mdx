@@ -1,32 +1,511 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { Sources } from '@/components/article/Sources';
+import { SourceCite } from '@/components/article/SourceCite';
+import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { Callout } from '@/components/article/Callout';
+import { DataTable } from '@/components/data/DataTable';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { WindowUFactorByFrameType } from '@/components/svg/building-science/WindowUFactorByFrameType';
+import { ClimateZonesQuickReference } from '@/components/svg/shared/ClimateZonesQuickReference';
 
 export const metadata = {
-  title: 'Window Reference: U-Factor, SHGC, NFRC Labels | hvacloadcalc.org',
+  alternates: { canonical: "/building-science/windows/" },
+  title: 'Residential Windows: U-Factor, SHGC, NFRC Labels, Glazing Selection',
   description:
-    'Residential window reference: U-factor by climate zone, SHGC, visible transmittance, NFRC label reading, double vs triple pane, and Low-E coatings.',
+    'Window U-factor, SHGC, NFRC label decoding, ENERGY STAR climate-zone minimums, frame and glazing comparison, IRS Section 25C tax credit eligibility for residential windows.',
+  openGraph: {
+    title: 'Residential Windows: A Sourced Reference',
+    description:
+      'U-factor, SHGC, VT, AL, CR — every NFRC rating field, every ENERGY STAR threshold, every glazing option compared with sourced data.',
+    type: 'article',
+    publishedTime: '2026-05-30',
+    modifiedTime: '2026-05-30',
+    authors: ['Jonathan Stowe'],
+    images: ['/opengraph-image'],
+  },
 };
 
-<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Building science', url: '/building-science/' }, { name: 'Windows' }]} />
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'Building Science', url: '/building-science/' },
+  { name: 'Windows' },
+];
 
-<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Building science', url: '/building-science/' }, { name: 'Windows' }]} />
+export const HEADINGS = [
+  { id: 'why-windows-dominate-envelope-loss', text: 'Why Windows Dominate Envelope Heat Flow', level: 2 },
+  { id: 'nfrc-label-fields', text: 'The NFRC Label: Five Rated Performance Fields', level: 2 },
+  { id: 'u-factor-by-glazing-and-frame', text: 'U-Factor by Glazing and Frame Combination', level: 2 },
+  { id: 'shgc-and-climate', text: 'SHGC and the Climate-Specific Glazing Decision', level: 2 },
+  { id: 'energy-star-by-climate-zone', text: 'ENERGY STAR Window Requirements by Climate Zone', level: 2 },
+  { id: 'frame-and-spacer-materials', text: 'Frame Materials and Spacer Construction', level: 2 },
+  { id: 'window-replacement-economics', text: 'Window Replacement Economics and Payback', level: 2 },
+  { id: 'storm-windows-and-films', text: 'Storm Windows, Films, and Other Retrofit Options', level: 2 },
+  { id: 'what-this-sub-hub-covers', text: 'What This Sub-Hub Covers', level: 2 },
+];
+
+export const SOURCES = [
+  {
+    id: 'nfrc-label',
+    title: 'NFRC Energy Performance Label methodology (U-Factor, SHGC, VT, AL, CR)',
+    publisher: 'National Fenestration Rating Council',
+    year: 2024,
+    url: 'https://www.nfrc.org/energy-performance-labels/',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'nfrc-100',
+    title: 'NFRC 100-2020: Procedure for Determining Fenestration Product U-Factors',
+    publisher: 'National Fenestration Rating Council',
+    year: 2020,
+    url: 'https://www.nfrc.org/standards-development/',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'energystar-windows-v7',
+    title: 'ENERGY STAR Residential Windows, Doors, and Skylights Specification Version 7.0',
+    publisher: 'US EPA / ENERGY STAR',
+    year: 2023,
+    url: 'https://www.energystar.gov/products/spec/residential_windows_doors_and_skylights_specification_version_7_0_pd',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'doe-windows',
+    title: 'Windows, Doors, and Skylights (consumer guide)',
+    publisher: 'US Department of Energy, Office of Energy Efficiency and Renewable Energy',
+    year: 2024,
+    url: 'https://www.energy.gov/energysaver/windows-doors-and-skylights',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'ashrae-fundamentals-ch15',
+    title: 'ASHRAE Handbook of Fundamentals 2021, Chapter 15 (Fenestration)',
+    publisher: 'American Society of Heating, Refrigerating and Air-Conditioning Engineers',
+    year: 2021,
+    url: 'https://www.ashrae.org/technical-resources/ashrae-handbook',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'iecc-2021-envelope',
+    title: 'International Energy Conservation Code (IECC) 2021, Table R402.1.2 (Fenestration U-Factor and SHGC Requirements)',
+    publisher: 'International Code Council',
+    year: 2021,
+    url: 'https://codes.iccsafe.org/content/IECC2021P2',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'irs-25c-fact-sheet',
+    title: 'IRA Section 25C — Energy Efficient Home Improvement Credit (window provisions)',
+    publisher: 'US Internal Revenue Service',
+    year: 2023,
+    url: 'https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'lbnl-window-research',
+    title: 'Window Technology and Performance Research',
+    publisher: 'Lawrence Berkeley National Laboratory, Windows and Daylighting Group',
+    year: 2024,
+    url: 'https://windows.lbl.gov/',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+];
+
+export const FAQ_ITEMS = [
+  {
+    q: 'What is U-factor in plain terms?',
+    a: 'U-factor measures how much heat flows through a window assembly per hour per square foot per degree Fahrenheit of temperature difference, in BTU/h·ft²·°F. Lower is better. A single-pane aluminum-frame window has whole-window U of about 1.2 (very leaky); a triple-pane low-E argon-filled fiberglass-frame window has U of about 0.18 (very tight). The number on the NFRC label is the whole-window U, including frame, glass, and edge-of-glass — not just the center-of-glass figure that manufacturer marketing often features.',
+  },
+  {
+    q: 'What is SHGC and when does it matter?',
+    a: 'Solar Heat Gain Coefficient (SHGC) is the fraction of incident solar radiation that enters through a window assembly. A SHGC of 0.50 means 50% of solar radiation hitting the window enters the building as heat; the rest is reflected, absorbed by the frame and glass, and lost to ambient. In cooling-dominated climates (zones 1-3) low SHGC reduces summer cooling load and is more important than U-factor. In heating-dominated climates (zones 5-8) higher SHGC admits useful winter solar gain and is fine; U-factor dominates the design conversation. Mixed climates (zone 4) split the difference with moderate SHGC selections.',
+  },
+  {
+    q: 'How much heat actually leaves a house through windows?',
+    a: 'Windows typically account for 8-15% of envelope surface area in a typical US home but 30-40% of envelope conductive heat loss. A 2,000 sq ft house with 300 sq ft of window area and Manual J heating load of 50,000 BTU/hr at design typically loses 15,000-20,000 BTU/hr through the windows alone. Upgrading from old aluminum-frame single-pane (U ≈ 1.20) to modern low-E double-pane vinyl (U ≈ 0.30) cuts that window load by roughly 75% — a 11,000-15,000 BTU/hr design load reduction in the example house.',
+  },
+  {
+    q: 'Are triple-pane windows worth the extra cost?',
+    a: "In cold climates (zones 5-8) the math typically favors triple-pane over double-pane low-E. The U-factor drop from ~0.30 to ~0.18 reduces window heat loss by 40% — at typical fuel prices, that saves $50-$150 per window per year in heating cost, paying back the $200-$500 per window premium in 4-10 years. In warm climates (zones 1-3) the U-factor improvement is less valuable than the SHGC reduction, and triple-pane low-SHGC double-pane often outperform triple-pane on cooling load reduction. Look at climate, not at glazing layer count.",
+  },
+  {
+    q: 'What does the IRS 25C credit cover for windows?',
+    a: 'The IRS Section 25C credit returns 30% of the installed cost of windows and skylights, up to $600 per year. Skylights have their own $250 sub-cap within the window category. The windows must meet ENERGY STAR Version 7.0 thresholds (U ≤ 0.30 in zones 4-7, U ≤ 0.27 in zone 8 with appropriate SHGC by zone). The credit is non-refundable but the $600 sub-cap is reset each tax year, so a homeowner replacing windows over multiple years can claim the credit multiple times.',
+  },
+  {
+    q: 'What about storm windows or window films?',
+    a: 'Storm windows (typically aluminum-frame single-pane or low-E single-pane added outside or inside existing windows) can reduce existing-window U-factor by 30-50% at low cost ($150-$400 per window installed). They are particularly cost-effective on historic windows where replacement is undesirable. Window films (low-E or solar control films applied to existing glass) can reduce SHGC by 30-70% and slightly reduce U-factor, primarily addressing cooling load. Both are reasonable retrofits where full window replacement is not justified.',
+  },
+  {
+    q: 'How does window frame material affect U-factor?',
+    a: 'Frame conductivity dramatically affects whole-window U because the frame is typically 20-30% of the visible window area. Aluminum frames without thermal break have very high U (~2.0) and dominate the whole-window U regardless of glass quality. Wood and vinyl frames have low U (~0.4-0.6) and let the glass quality determine whole-window U. Fiberglass and composite frames achieve the lowest frame U (~0.3-0.4) and produce the highest whole-window R ratings at any given glazing tier.',
+  },
+  {
+    q: 'How long does a window last?',
+    a: "Modern vinyl, fiberglass, and wood windows are designed for 25-40 year service life with proper installation and minimal maintenance. The most common failure mode is seal failure between glass panes (visible fogging between layers), which typically happens 15-25 years into service. Once seal failure occurs, the inert gas fill (argon, krypton) escapes and the window's U-factor degrades from rated to roughly the equivalent of an air-filled unit. Aluminum-frame windows from the 1960s-1980s are typically at end of life and warrant replacement for energy and durability reasons.",
+  },
+];
+
+export const RELATED = [
+  {
+    title: 'Window U-factor reference',
+    url: '/building-science/windows/u-factor/',
+    description:
+      'Detailed coverage of U-factor: NFRC label decoding, recommended values by zone, features that lower U-factor.',
+  },
+  {
+    title: 'Attic R-value reference',
+    url: '/building-science/insulation/attic-r-value/',
+    description:
+      'The insulation counterpart to U-factor for opaque envelope elements.',
+  },
+  {
+    title: 'HERS Index',
+    url: '/building-science/hers-index/',
+    description:
+      'Whole-home performance score that integrates window quality, insulation, and air sealing.',
+  },
+  {
+    title: 'Manual J load calculation',
+    url: '/manual-j/',
+    description:
+      'Takes window U-factor and SHGC as primary inputs to compute heating and cooling loads.',
+  },
+];
+
+export const FRONTMATTER = {
+  title: 'Residential Windows: U-Factor, SHGC, NFRC Labels, Glazing Selection',
+  h1: 'Residential Windows Reference',
+  meta_description:
+    'A reference hub for residential windows — U-factor, SHGC, visible transmittance, air leakage, and condensation resistance ratings; NFRC label reading; ENERGY STAR climate-zone minimums; frame and glazing comparison; IRS Section 25C tax credit eligibility.',
+  url: '/building-science/windows/',
+  date_published: '2026-05-30',
+  last_reviewed: '2026-05-30',
+  target_keyword: 'window u-factor',
+  secondary_keywords: ['shgc', 'nfrc label', 'energy star windows', 'low-e window', 'triple pane window', 'window u-factor by climate'],
+  sources: SOURCES,
+  faq: FAQ_ITEMS,
+  parent_title: 'Building Science',
+};
+
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={2400} />
+
+<JsonLdBreadcrumb items={BREADCRUMBS} />
+
+<Container>
+
+<Breadcrumbs items={BREADCRUMBS} />
+
+<ArticleHeader
+  h1="Residential Windows Reference"
+  description="U-factor, SHGC, VT, AL, CR — every NFRC label field decoded; ENERGY STAR Version 7.0 climate-zone minimums; frame and glazing comparisons with whole-window U ranges; window replacement economics."
+  datePublished="2026-05-30"
+  lastReviewed="2026-05-30"
+  readingTimeMinutes={10}
+/>
+
+<KeyTakeaways
+  items={[
+    'Windows account for 8-15% of envelope surface area in a typical US home but produce 30-40% of envelope conductive heat loss — the highest-loss component per square foot of any envelope element.',
+    'The NFRC label reports five performance fields: U-factor (heat flow), SHGC (solar gain), VT (visible light), AL (air leakage), CR (condensation resistance) — every certified US window carries this label with independently-verified values.',
+    'ENERGY STAR Version 7.0 climate-zone requirements: U ≤ 0.40 / SHGC ≤ 0.25 in zones 1-2; U ≤ 0.30 / SHGC ≤ 0.25 in zone 3; U ≤ 0.30 / SHGC ≤ 0.40 in zone 4; U ≤ 0.27 in zones 5-8 (SHGC any value in cold climates).',
+    'Whole-window U ranges from 1.2 (single-pane aluminum frame) to 0.10 (high-performance quad-pane), with the frame contributing 20-30% of whole-window area and dominating U for aluminum-frame designs.',
+    'IRS Section 25C returns 30% of installed window cost up to $600 per year ($250 sub-cap on skylights), with reset annual caps allowing multi-year window replacement programs to claim the credit multiple times.',
+  ]}
+/>
+
+<ClimateZonesQuickReference />
+
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
 
 <article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
 
-# Window Reference
+## Why Windows Dominate Envelope Heat Flow
 
-A window is a hole in your insulated envelope. Even the best windows let through more heat per square foot than the walls around them. U-factor rates how much; SHGC rates solar gain; visible transmittance rates daylight; air leakage rates infiltration around the assembly. The NFRC label puts all four ratings on every certified window sold in the US.
+Windows are the thermal weak point of every residential envelope. A typical 2,000 sq ft house has roughly 250-400 sq ft of window area, representing 8-15% of total envelope surface area. That same window area accounts for 30-40% of total envelope conductive heat loss, because windows have U-factors 5-10× higher than the walls around them.<SourceCite id="ashrae-fundamentals-ch15" number={5} />
 
-This section covers what each rating measures, how to read an NFRC label, recommended values by climate zone, and which features (double-pane, Low-E, argon fill, triple-pane) drive U-factor down.
+<Callout type="info" title="The window-area math">
+A 100 sq ft wall section with R-15 cavity insulation + R-5 continuous foam has whole-wall U of about 0.05 (R-20 effective). The 100 sq ft of single-pane aluminum window in the same wall has U of about 1.20.
 
-## Articles in this section
+Same square footage; the window section loses 24× as much heat per degree of indoor-outdoor temperature difference. Replacing single-pane with modern low-E double-pane (U ≈ 0.30) cuts that to 6× — meaningful improvement, but windows still dominate the wall's heat loss per square foot.
+</Callout>
 
-- [Window U-factor](/building-science/windows/u-factor/) — what U-factor measures, NFRC label reading, recommended values by zone, what features lower U-factor
+**The implication for sizing and retrofit prioritization** is that in houses where windows are old or poorly performing, the window upgrade often produces the largest single envelope improvement available.
 
-## Related topics
+A 2,000 sq ft house with 300 sq ft of single-pane aluminum windows in zone 5 (Chicago) loses roughly 22,000 BTU/hr through those windows at design heating temperature. Replacing them with modern low-E double-pane (U ≈ 0.30) cuts window heat loss to about 5,500 BTU/hr — a 16,500 BTU/hr Manual J heating load reduction.
 
-- [Attic R-value](/building-science/insulation/attic-r-value/) — U-factor's R-value cousin for insulation
-- [HERS Index](/building-science/hers-index/) — whole-home energy performance including windows
-- [Manual J load calculation](/manual-j/) — uses window U-factor and SHGC as inputs
+**The financial caveat:** window replacement is the most expensive envelope improvement per BTU/hr saved. Storm windows, films, and frame-only upgrades can capture a portion of the savings at a fraction of the cost. Full replacement makes economic sense when windows are at end of life for other reasons (seal failure, operability problems, aesthetic) more often than as standalone energy projects.
+
+## The NFRC Label: Five Rated Performance Fields
+
+Every certified residential window sold in the US carries an NFRC Energy Performance Label.<SourceCite id="nfrc-label" number={1} /> The label reports five independently-tested performance fields, each with a specific physical meaning.
+
+<DataTable
+  caption="The five NFRC label fields and what each measures (source: NFRC Energy Performance Label methodology)"
+  columns={[
+    { key: 'field', label: 'Field' },
+    { key: 'definition', label: 'Definition' },
+    { key: 'unit', label: 'Unit' },
+    { key: 'typical', label: 'Typical residential range', align: 'right' },
+    { key: 'betterDirection', label: 'Better' },
+  ]}
+  rows={[
+    {
+      field: 'U-factor',
+      definition: 'Heat flow through the assembly per hour per square foot per °F temperature difference',
+      unit: 'BTU/h·ft²·°F',
+      typical: '0.10 – 1.30',
+      betterDirection: 'Lower',
+    },
+    {
+      field: 'SHGC',
+      definition: 'Solar Heat Gain Coefficient — fraction of incident solar radiation transmitted',
+      unit: 'Dimensionless (0–1)',
+      typical: '0.18 – 0.85',
+      betterDirection: 'Lower in cooling-dominant, higher in heating-dominant',
+    },
+    {
+      field: 'VT',
+      definition: 'Visible Transmittance — fraction of visible-spectrum light transmitted',
+      unit: 'Dimensionless (0–1)',
+      typical: '0.30 – 0.80',
+      betterDirection: 'Higher (more natural light)',
+    },
+    {
+      field: 'AL',
+      definition: 'Air Leakage — air infiltration rate at standard test pressure',
+      unit: 'CFM per sq ft of window area',
+      typical: '0.1 – 0.5',
+      betterDirection: 'Lower',
+    },
+    {
+      field: 'CR',
+      definition: 'Condensation Resistance — relative likelihood of condensation forming on interior glass',
+      unit: 'Dimensionless (0–100)',
+      typical: '20 – 80',
+      betterDirection: 'Higher',
+    },
+  ]}
+/>
+
+The labeling system is administered by NFRC, an independent third-party certifying organization.<SourceCite id="nfrc-100" number={2} /> Each manufacturer submits products for testing at certified labs; the results are published in the NFRC Certified Products Directory (cpd.nfrc.org) and the values must appear on the physical label attached to each window when sold. Manufacturer marketing claims that conflict with NFRC values are not credible — the directory is the authoritative source.
+
+ENERGY STAR uses NFRC-rated values to determine qualification. A window qualifying for ENERGY STAR has its NFRC U-factor and SHGC below the relevant climate-zone thresholds (covered below). The IRS Section 25C tax credit similarly uses NFRC values to determine eligibility — the printed NFRC numbers determine federal incentive availability, not the manufacturer's marketing copy.
+
+## U-Factor by Glazing and Frame Combination
+
+Whole-window U-factor is the area-weighted average of three contributions: center-of-glass U, edge-of-glass U (slightly higher due to spacer conductivity), and frame U.<SourceCite id="ashrae-fundamentals-ch15" number={5} /> The relative weights depend on window size — small windows are frame-dominated, large windows are glass-dominated.
+
+The chart below summarizes typical whole-window U-factor ranges for seven common frame + glazing combinations. The span from worst (aluminum single-pane at U 1.10-1.30) to best (triple-pane low-E in premium frames at U 0.15-0.22) is roughly 8x — a difference that compounds across every heating-degree-day of a winter season.
+
+<WindowUFactorByFrameType />
+
+<DataTable
+  caption="Whole-window U-factor by frame and glazing combination (typical residential casement size, source: NFRC certified products directory typical values)"
+  columns={[
+    { key: 'glazing', label: 'Glazing' },
+    { key: 'aluminum', label: 'Aluminum frame', align: 'right' },
+    { key: 'aluminumTb', label: 'Al w/ thermal break', align: 'right' },
+    { key: 'vinyl', label: 'Vinyl frame', align: 'right' },
+    { key: 'wood', label: 'Wood frame', align: 'right' },
+    { key: 'fiberglass', label: 'Fiberglass frame', align: 'right' },
+  ]}
+  rows={[
+    { glazing: 'Single-pane clear', aluminum: '1.20', aluminumTb: '1.10', vinyl: '1.00', wood: '0.95', fiberglass: '0.90' },
+    { glazing: 'Double-pane clear', aluminum: '0.85', aluminumTb: '0.70', vinyl: '0.50', wood: '0.48', fiberglass: '0.45' },
+    { glazing: 'Double-pane low-E', aluminum: '0.65', aluminumTb: '0.52', vinyl: '0.32', wood: '0.30', fiberglass: '0.28' },
+    { glazing: 'Double-pane low-E + argon', aluminum: '0.60', aluminumTb: '0.48', vinyl: '0.28', wood: '0.27', fiberglass: '0.25' },
+    { glazing: 'Triple-pane low-E + argon', aluminum: '0.45', aluminumTb: '0.35', vinyl: '0.20', wood: '0.19', fiberglass: '0.17' },
+    { glazing: 'Triple-pane low-E + krypton', aluminum: '0.42', aluminumTb: '0.32', vinyl: '0.18', wood: '0.17', fiberglass: '0.16' },
+    { glazing: 'Quad-pane high-performance', aluminum: 'N/A', aluminumTb: '0.25', vinyl: '0.12', wood: '0.11', fiberglass: '0.10' },
+  ]}
+/>
+
+Two patterns emerge from the table.
+
+Frame matters as much as glazing for the cheaper tiers. A double-pane clear window in aluminum frame (U 0.85) has worse whole-window U than a single-pane window in fiberglass frame (U 0.90). At the low end, the frame's conductivity overwhelms the glass improvement. Upgrading from aluminum to vinyl/wood/fiberglass frame with the same glazing typically produces a 40-50% U-factor improvement.
+
+**Frame matters less at the high end.** Triple-pane low-E in any non-aluminum frame achieves U in the 0.17-0.20 range, with frame material producing only a 3-5% difference. At that performance tier, the glazing is doing almost all the insulating work and the frame is just a structural support.<SourceCite id="lbnl-window-research" number={8} />
+
+**Low-E coatings deserve their own note.** Low-emissivity coatings are thin metallic layers (typically silver) deposited on glass surfaces, designed to reflect long-wavelength thermal radiation. In double-pane construction, the low-E coating on the inner pane reflects winter indoor heat back inside; in triple-pane construction, two low-E coatings on intermediate panes do additional reflective work. The combined effect drops center-of-glass U by 40-60% compared to clear glass — the largest single contributor to modern window performance.
+
+## SHGC and the Climate-Specific Glazing Decision
+
+SHGC is the fraction of incident solar radiation that enters through the window assembly. A SHGC of 0.40 means 40% of solar energy hitting the window enters the building as heat; 60% is reflected, absorbed by the assembly, or transmitted in other wavelengths (UV, IR) that may also affect indoor comfort.<SourceCite id="ashrae-fundamentals-ch15" number={5} />
+
+The climate-specific decision:
+
+Cooling-dominant climates (zones 1-3). Solar gain is unwanted; it raises summer cooling load. Low-SHGC glazing (typically 0.20-0.30) is the right choice. Spectrally-selective low-E coatings reject most of the near-infrared spectrum (which carries solar heat) while transmitting visible light, achieving low SHGC without making the window look tinted.
+
+Heating-dominant climates (zones 5-8). Winter solar gain is wanted; it offsets heating load on sunny days. Moderate-to-high SHGC (0.40-0.60) is appropriate. The U-factor is the more important parameter; high-SHGC double-pane low-E is the right choice for most residential applications.
+
+Mixed climates (zone 4). Both seasons matter. SHGC 0.30-0.45 is typically the right compromise. Some climate-specific spectrally selective coatings can achieve different SHGC at different angles of incidence, optimizing for low summer (overhead sun) and higher winter (low-angle sun) gain — but this is rare in residential price ranges.
+
+<Callout type="warn" title="The orientation-specific consideration">
+A south-facing wall with high-SHGC windows admits substantial winter sun (favorable in cold climates) but also substantial summer sun (unfavorable).
+
+The conflict is resolved by overhangs and shading: a 2-foot overhang above a south window blocks most July noon sun while admitting most January noon sun, because the sun's altitude angle is much higher in summer. Manual J accounts for overhangs as a shading factor reducing effective SHGC.
+
+North-facing windows have low solar exposure year-round and SHGC matters less. East and west windows are the hardest to shade because the morning/evening sun comes in at low angles.
+</Callout>
+
+A 30 sq ft south-facing window with SHGC 0.50 at noon on a clear summer day admits roughly 30 × 230 × 0.50 = 3,450 BTU/hr of solar gain — a significant contribution to cooling load.
+
+The same window with SHGC 0.25 admits 1,725 BTU/hr — half the gain. Multiplied across all the south-and-west windows in a house, SHGC selection can move the design cooling load by 5,000-10,000 BTU/hr in cooling-dominant climates.
+
+## ENERGY STAR Window Requirements by Climate Zone
+
+The ENERGY STAR Version 7.0 specification defines minimum U-factor and SHGC by climate zone.<SourceCite id="energystar-windows-v7" number={3} />
+
+<DataTable
+  caption="ENERGY STAR Version 7.0 residential window requirements by climate zone (effective 2023; source: ENERGY STAR spec V7.0)"
+  columns={[
+    { key: 'zone', label: 'Climate zone' },
+    { key: 'uMax', label: 'Max U-factor', align: 'right' },
+    { key: 'shgcRange', label: 'SHGC range', align: 'right' },
+    { key: 'notes', label: 'Notes' },
+  ]}
+  rows={[
+    { zone: 'Northern (zones 5-8)', uMax: '0.22', shgcRange: 'Any', notes: 'U-factor dominates; high SHGC welcomed for winter solar gain' },
+    { zone: 'North-Central (zones 4-5)', uMax: '0.25', shgcRange: '≥ 0.35', notes: 'Heating-dominant but cooling matters; moderate-to-high SHGC' },
+    { zone: 'South-Central (zones 3-4)', uMax: '0.28', shgcRange: '0.25 – 0.40', notes: 'Balanced; moderate SHGC limits summer gain' },
+    { zone: 'Southern (zones 1-3)', uMax: '0.32', shgcRange: '≤ 0.23', notes: 'Cooling-dominant; low SHGC reduces summer cooling load' },
+  ]}
+/>
+
+ENERGY STAR Version 7.0 thresholds are tighter than IECC 2021 code minimums in most zones. IECC Table R402.1.2 sets the minimum U-factor at 0.40 in zones 1-2, 0.30 in zones 3-8, and SHGC ≤ 0.25 in zones 1-3.<SourceCite id="iecc-2021-envelope" number={6} /> ENERGY STAR aims for performance levels above code minimum, typically representing the upper third of US window performance for the climate.
+
+**The IRS Section 25C credit** uses the ENERGY STAR Version 7.0 thresholds as the eligibility test, with one adjustment: the credit applies only to windows meeting both the U-factor and SHGC criteria for the climate zone where the windows are installed.<SourceCite id="irs-25c-fact-sheet" number={7} />
+
+A homeowner in zone 5 (Chicago) installing windows with U-factor 0.25 and any SHGC qualifies for the $600 per year credit; the same homeowner installing windows with U-factor 0.28 does not qualify in zone 5 even though those windows would qualify in zone 4 a few hundred miles south.
+
+## Frame Materials and Spacer Construction
+
+The frame is 20-30% of typical residential window area and produces 30-50% of whole-window heat loss because most frame materials are far more conductive than insulating glass units.
+
+<DataTable
+  caption="Frame material performance comparison (typical residential casement, source: LBNL Window Research, DOE Energy Saver)"
+  columns={[
+    { key: 'material', label: 'Frame material' },
+    { key: 'frameU', label: 'Typical frame U', align: 'right' },
+    { key: 'durability', label: 'Service life', align: 'right' },
+    { key: 'cost', label: 'Cost vs vinyl baseline', align: 'right' },
+    { key: 'notes', label: 'Notes' },
+  ]}
+  rows={[
+    { material: 'Aluminum (no thermal break)', frameU: '~2.0', durability: '30+ years', cost: '-30% to -10%', notes: 'High conductivity; cold and prone to condensation in winter' },
+    { material: 'Aluminum w/ thermal break', frameU: '~0.8-1.2', durability: '30+ years', cost: '-10% to baseline', notes: 'Polyamide insert separates inside and outside; modest improvement' },
+    { material: 'Vinyl (PVC)', frameU: '~0.4-0.5', durability: '20-30 years', cost: 'Baseline', notes: 'Most common residential frame; multi-chambered designs improve performance' },
+    { material: 'Wood', frameU: '~0.35-0.45', durability: '30-50 years (with maintenance)', cost: '+50-100%', notes: 'Traditional choice; needs paint/stain maintenance; aluminum-clad exterior versions reduce maintenance' },
+    { material: 'Fiberglass (pultruded)', frameU: '~0.3-0.4', durability: '40-50 years', cost: '+30-80%', notes: 'Best long-term durability; lowest expansion-contraction; lowest frame U' },
+    { material: 'Composite (fiberglass + foam)', frameU: '~0.2-0.3', durability: '40+ years', cost: '+50-100%', notes: 'Best frame thermal performance; gaining market share in high-performance applications' },
+  ]}
+/>
+
+**Spacer construction matters at the edge of glass.** The spacer is the small structural element between the panes of an insulating glass unit. Older spacers were aluminum (high conductivity, low edge-of-glass R-value).
+
+Modern "warm edge" spacers use stainless steel, silicone foam, or thermoplastic — all with much lower conductivity than aluminum.<SourceCite id="lbnl-window-research" number={8} /> The edge-of-glass U-factor improvement reduces whole-window U by 5-10% on its own, and reduces condensation at the glass edge in winter.
+
+Modern high-performance windows specify warm-edge spacers, multi-chamber vinyl or composite frames, low-E coatings on intermediate panes, and argon or krypton gas fill (krypton is about 40% more thermally resistant than argon at the same fill thickness, but costs 5-10× as much — typically used only in narrow gap spaces where argon is impractical).
+
+## Window Replacement Economics and Payback
+
+Window replacement is the most expensive envelope improvement per BTU/hr saved.
+
+<DataTable
+  caption="Typical window replacement payback periods at 2026 prices (300 sq ft of windows, US average fuel prices, zone 5; sources: ENERGY STAR economic analysis, DOE retrofit case studies)"
+  columns={[
+    { key: 'upgrade', label: 'Upgrade' },
+    { key: 'cost', label: 'Total cost', align: 'right' },
+    { key: 'savingsHeating', label: 'Annual heating savings', align: 'right' },
+    { key: 'savingsCooling', label: 'Annual cooling savings', align: 'right' },
+    { key: 'paybackBefore', label: 'Payback before incentives', align: 'right' },
+    { key: 'paybackAfter', label: 'Payback after 25C credit', align: 'right' },
+  ]}
+  rows={[
+    { upgrade: 'Single-pane → ENERGY STAR double-pane (vinyl)', cost: '$10,000', savingsHeating: '$200-350', savingsCooling: '$50-100', paybackBefore: '22-40 years', paybackAfter: '18-32 years' },
+    { upgrade: 'Single-pane → ENERGY STAR triple-pane (vinyl)', cost: '$14,000', savingsHeating: '$280-450', savingsCooling: '$70-130', paybackBefore: '24-40 years', paybackAfter: '20-34 years' },
+    { upgrade: 'Old aluminum → ENERGY STAR double-pane (vinyl)', cost: '$10,000', savingsHeating: '$180-300', savingsCooling: '$80-150', paybackBefore: '25-40 years', paybackAfter: '20-33 years' },
+    { upgrade: '2000s double-pane clear → triple-pane low-E', cost: '$14,000', savingsHeating: '$80-150', savingsCooling: '$30-60', paybackBefore: '60-100+ years', paybackAfter: '48-85+ years' },
+    { upgrade: 'Add storm windows (interior)', cost: '$2,500', savingsHeating: '$80-160', savingsCooling: '$30-60', paybackBefore: '12-22 years', paybackAfter: '10-18 years' },
+    { upgrade: 'Apply low-E film to existing glass', cost: '$1,500', savingsHeating: '$40-100', savingsCooling: '$80-180', paybackBefore: '7-14 years', paybackAfter: '6-11 years' },
+  ]}
+/>
+
+**The pattern:** full window replacement rarely pays back as a pure energy investment. The payback dramatically improves when (1) the windows are at end of life for other reasons (seal failure, operability problems, aesthetic), (2) the replacement is part of a renovation that opens up the wall anyway, or (3) the existing windows are extremely poor (single-pane aluminum, broken seals, no weatherstripping).
+
+Storm windows and films capture a meaningful fraction of full-replacement savings at 15-25% of the cost, making them economically attractive standalone retrofits in many cases. Adding interior storm windows to existing single-pane glass typically cuts window heat loss by 40-50% for $200-$400 per window — far better $/BTU saved than full replacement.
+
+The non-financial considerations matter too. New windows are quieter (laminated glass options), more secure (impact-resistant glazing), more comfortable (less radiant cold near the glass surface in winter), and more durable than older units approaching end of life. These benefits drive most window replacements, with energy savings as a smaller secondary justification.
+
+## Storm Windows, Films, and Other Retrofit Options
+
+Three retrofit options serve homeowners who want window performance improvement without full replacement.
+
+**Storm windows** add a second glazing layer to an existing window assembly, creating an additional air gap that improves overall U-factor.
+
+Exterior aluminum-frame storm windows are the most common option ($150-$350 per window installed); interior magnetic-mount acrylic panels are higher-performance and lower-visual-impact ($250-$500 per window). Low-E storm windows can drop the assembly U-factor to roughly 0.45 from the existing window's 0.80-1.20.<SourceCite id="doe-windows" number={4} />
+
+Window films apply a thin polymer layer to the inside surface of existing glass. Solar-control films primarily reduce SHGC (often by 50-70%) with smaller U-factor improvements; low-E films primarily reduce U-factor (by 15-25%) with smaller SHGC effects. Professional installation runs $5-$12 per square foot of glass. Films are most cost-effective in cooling-dominant climates where SHGC reduction produces the biggest savings.
+
+Frame-only upgrades (replacing only the operable sash while keeping the existing frame) are an option in some construction types. The cost is roughly 40-60% of full replacement, the disruption is minimal, and the energy improvement is roughly 30-50% of full replacement. Best fit: houses with structurally sound frames but failed seals or single-pane glass in the sash.
+
+For historic windows where replacement is undesirable or prohibited, exterior storm windows plus weatherstripping plus interior thermal curtains can capture much of the energy savings while preserving the original window appearance. Field measurements show this approach typically reduces window U-factor by 50-60% compared to single-pane bare-frame baseline — meaningful improvement without altering the visible architecture.
+
+## What This Sub-Hub Covers
+
+### Articles
+
+- [Window U-factor reference](/building-science/windows/u-factor/) — detailed NFRC label decoding, U-factor by component, recommended values by zone, what features lower U-factor
+
+### Planned articles
+
+- SHGC selection by orientation and climate (planned) — solar-gain math with worked examples
+- Storm window selection and installation (planned) — retrofit option comparison and cost-benefit
+- Window film options (planned) — solar control vs low-E films, application methods
+- Frame material selection (planned) — vinyl vs fiberglass vs wood vs aluminum trade-offs
+
+### Related load and equipment topics
+
+- [Building science fundamentals](/building-science/) — the parent hub
+- [Attic R-value reference](/building-science/insulation/attic-r-value/) — the insulation counterpart for opaque envelope elements
+- [HERS Index](/building-science/hers-index/) — whole-home performance score
+- [Manual J load calculation](/manual-j/) — uses window U-factor and SHGC as primary inputs
+
+### Calculators
+
+- [Manual J load calculator](/tools/manual-j-calculator/) — full envelope load math that takes window U-factor, SHGC, area, and orientation as inputs
 
 </article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<Sources sources={SOURCES} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-30" />
+</div>
+
+</Container>

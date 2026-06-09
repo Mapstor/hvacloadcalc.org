@@ -1,3 +1,5 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import type { MetadataRoute } from 'next';
 import { SITE } from '@/lib/seo/site';
 import { btuExamples } from './tools/btu-calculator/examples-manifest';
@@ -114,11 +116,68 @@ const ALL_PAGES: PageEntry[] = [
   ...LEGAL,
 ];
 
+const APP_ROOT = path.join(process.cwd(), 'app');
+
+/**
+ * Resolve the on-disk page file for a sitemap URL and return its mtime.
+ *
+ * Search order:
+ *   1. Direct (app/<path>/page.mdx or page.tsx)
+ *   2. Route groups (app/(hubs)/<path>/page.mdx, app/(legal)/<path>/page.mdx)
+ *   3. Calculator example slug template (any slug under
+ *      tools/<calc>/examples/[slug]/page.tsx, since each generated URL shares
+ *      the same template source file)
+ *
+ * Returns build time as a safe fallback if no match is found.
+ */
+function resolveMtime(urlPath: string): Date {
+  const cleaned = urlPath.replace(/^\/+|\/+$/g, '');
+
+  if (cleaned === '') {
+    return safeStat(path.join(APP_ROOT, 'page.tsx'));
+  }
+
+  // Calculator example pages: all share the [slug] template's mtime
+  const exampleMatch = cleaned.match(
+    /^tools\/([a-z0-9-]+-calculator)\/examples\/[^/]+$/,
+  );
+  if (exampleMatch) {
+    const calc = exampleMatch[1];
+    return safeStat(
+      path.join(APP_ROOT, 'tools', calc, 'examples', '[slug]', 'page.tsx'),
+    );
+  }
+
+  const candidates = [
+    path.join(APP_ROOT, cleaned, 'page.mdx'),
+    path.join(APP_ROOT, cleaned, 'page.tsx'),
+    path.join(APP_ROOT, '(hubs)', cleaned, 'page.mdx'),
+    path.join(APP_ROOT, '(legal)', cleaned, 'page.mdx'),
+  ];
+
+  for (const candidate of candidates) {
+    try {
+      return fs.statSync(candidate).mtime;
+    } catch {
+      // try next
+    }
+  }
+
+  return new Date();
+}
+
+function safeStat(filePath: string): Date {
+  try {
+    return fs.statSync(filePath).mtime;
+  } catch {
+    return new Date();
+  }
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date().toISOString();
-  return ALL_PAGES.map(({ path, priority, changeFrequency }) => ({
-    url: `${SITE.url}${path}`,
-    lastModified: now,
+  return ALL_PAGES.map(({ path: urlPath, priority, changeFrequency }) => ({
+    url: `${SITE.url}${urlPath}`,
+    lastModified: resolveMtime(urlPath),
     changeFrequency,
     priority,
   }));

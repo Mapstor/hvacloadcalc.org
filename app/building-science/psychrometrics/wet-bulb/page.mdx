@@ -18,6 +18,7 @@ import { WbgtZones } from '@/components/svg/wet-bulb/WbgtZones';
 import { WetBulbSurvivabilityMap } from '@/components/svg/wet-bulb/WetBulbSurvivabilityMap';
 
 export const metadata = {
+  alternates: { canonical: "/building-science/psychrometrics/wet-bulb/" },
   title: 'Wet Bulb Temperature: What It Measures and Why It Matters',
   description:
     'Wet bulb temperature is the temperature a thermometer reads when its bulb is wrapped in a wet wick. It measures cooling potential, not air temperature.',
@@ -28,7 +29,7 @@ export const metadata = {
     type: 'article',
     publishedTime: '2026-05-18',
     modifiedTime: '2026-05-18',
-    authors: ['Jonathan S.'],
+    authors: ['Jonathan Stowe'],
     images: ['/opengraph-image'],
   },
 };
@@ -267,7 +268,9 @@ The relationship between the three temperatures is fixed by the laws of psychrom
 
 <WetBulbVsOthersComparison />
 
-A worked example: 90°F dry bulb at 50% relative humidity gives a wet bulb of about 78°F and a dew point of about 70°F.<SourceCite id="ashrae-fundamentals-2021-psychrometrics" number={1} /> The dry bulb is what you'd read on an outdoor thermometer. The wet bulb is the lowest your skin could cool to by sweating. The dew point is the temperature your eyeglasses would fog at if you walked from cold AC into that air. All three describe the same parcel of air; the use case picks which one matters.
+A worked example: 90°F dry bulb at 50% relative humidity gives a wet bulb of about 78°F and a dew point of about 70°F.<SourceCite id="ashrae-fundamentals-2021-psychrometrics" number={1} /> The dry bulb is what you'd read on an outdoor thermometer.
+
+The wet bulb is the lowest your skin could cool to by sweating. The dew point is the temperature your eyeglasses would fog at if you walked from cold AC into that air. All three describe the same parcel of air; the use case picks which one matters.
 
 When to reach for each: use dew point to predict condensation on cold surfaces and the absolute moisture in the air. Use wet bulb to predict evaporative cooling potential, HVAC dehumidification load, and human heat survivability. Use dry bulb for ordinary weather forecasts, indoor thermostat settings, and the casual "how hot is it" question.
 
@@ -293,7 +296,9 @@ The psychrometric chart is a two-dimensional plot of all possible states of mois
 
 The chart's power is that any two independent properties determine all the others. Read dry bulb and relative humidity from a weather report, and the chart gives you the wet bulb, dew point, humidity ratio, and enthalpy directly. HVAC engineers use the chart to size cooling and humidification equipment because every cooling process traces a path across it. Use our [psychrometric calculator](/tools/psychrometric-calculator/) to compute any state property from any pair.
 
-Lines of constant wet bulb run diagonally from upper-left (low dry bulb, high humidity) to lower-right (high dry bulb, low humidity). They are not exactly parallel to lines of constant [enthalpy and total heat content](/building-science/psychrometrics/enthalpy/), but they are very close. The small divergence is the enthalpy contribution of the water added during the wet bulb measurement process. For most engineering purposes, constant wet bulb and constant enthalpy are interchangeable. For [the psychrometric chart](/building-science/psychrometrics/chart/) in detail, the dedicated article covers each line family.
+Lines of constant wet bulb run diagonally from upper-left (low dry bulb, high humidity) to lower-right (high dry bulb, low humidity). They are not exactly parallel to lines of constant [enthalpy and total heat content](/building-science/psychrometrics/enthalpy/), but they are very close.
+
+The small divergence is the enthalpy contribution of the water added during the wet bulb measurement process. For most engineering purposes, constant wet bulb and constant enthalpy are interchangeable. For [the psychrometric chart](/building-science/psychrometrics/chart/) in detail, the dedicated article covers each line family.
 
 HVAC design relies on a specific wet bulb value: the mean coincident wet bulb. That's the average wet bulb temperature that occurs at the same hours as the location's 1% cooling design dry bulb. ASHRAE Standard 169 publishes mean coincident wet bulb values for thousands of US and global locations.<SourceCite id="ashrae-169" number={5} /> Mean coincident wet bulb feeds into [Manual J load calculation](/manual-j/) latent load. Short cycles fail to remove the latent load; see [AC short cycling and dehumidification](/ac/short-cycling/).
 
@@ -358,9 +363,13 @@ WBGT is not directly readable from a standard thermometer. Field instruments com
 
 ## Wet Bulb Survivability
 
-The widely cited 95°F (35°C) wet bulb threshold is the theoretical upper limit for human heat tolerance. At that wet bulb, the temperature of your skin equals or exceeds the temperature of the surrounding air, so sweat can no longer evaporate fast enough to cool you. Heat from your body has nowhere to go. Recent research from Penn State (Vecellio et al., 2022) tested this directly in a controlled chamber with young healthy adults and found uncompensable heat stress at 88°F (31°C) wet bulb under realistic conditions — well below the textbook limit. The practical survivability threshold for most people is lower than the theoretical one.<SourceCite id="penn-state-wet-bulb-survivability" number={4} />
+The widely cited 95°F (35°C) wet bulb threshold is the theoretical upper limit for human heat tolerance. At that wet bulb, the temperature of your skin equals or exceeds the temperature of the surrounding air, so sweat can no longer evaporate fast enough to cool you. Heat from your body has nowhere to go.
 
-The physics is straightforward. Human core body temperature must stay near 37°C (98.6°F). The body loses heat primarily by evaporation of sweat. Evaporation requires a vapor-pressure gradient from skin to air, and that gradient depends on the wet bulb temperature of the environment. When wet bulb approaches skin temperature, the gradient approaches zero, and sweating stops being a useful cooling mechanism. Without intervention (air conditioning, immersion in cool water, shade with strong wind), core temperature rises and heat stroke develops within hours.
+Recent research from Penn State (Vecellio et al., 2022) tested this directly in a controlled chamber with young healthy adults and found uncompensable heat stress at 88°F (31°C) wet bulb under realistic conditions — well below the textbook limit. The practical survivability threshold for most people is lower than the theoretical one.<SourceCite id="penn-state-wet-bulb-survivability" number={4} />
+
+The physics is straightforward. Human core body temperature must stay near 37°C (98.6°F). The body loses heat primarily by evaporation of sweat. Evaporation requires a vapor-pressure gradient from skin to air, and that gradient depends on the wet bulb temperature of the environment.
+
+When wet bulb approaches skin temperature, the gradient approaches zero, and sweating stops being a useful cooling mechanism. Without intervention (air conditioning, immersion in cool water, shade with strong wind), core temperature rises and heat stroke develops within hours.
 
 The original 35°C limit was derived under idealized conditions: healthy adult at rest, full shade, some air movement, adequate hydration. Real-world conditions are usually worse. Older adults, people on certain medications, anyone doing physical work, anyone without shade or airflow: all face the limit at lower wet bulb temperatures. The Vecellio finding of 31°C as a practical limit reflects a more realistic baseline.
 

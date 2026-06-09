@@ -1,15 +1,18 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   calculateBtu,
   type BtuInputs,
+  type BtuResult,
   type CeilingHeight,
   type ClimateZone,
   type InsulationLevel,
   type SpaceType,
   type SunExposure,
 } from '@/lib/calculators/btu';
+import { NumberInput } from '@/components/forms/NumberInput';
+import { BtuResult as BtuResultPanel } from './BtuResult';
 
 const CLIMATE_OPTIONS: Array<{ value: ClimateZone; label: string }> = [
   { value: '1', label: 'Zone 1 — South FL, Hawaii (tropical)' },
@@ -52,52 +55,86 @@ const SPACE_OPTIONS: Array<{ value: SpaceType; label: string }> = [
   { value: 'attic-or-second-floor', label: 'Attic / second floor (+30%)' },
 ];
 
-const EQUIPMENT_CLASS_LABEL: Record<string, string> = {
-  window: 'Window AC unit',
-  'window-or-portable': 'Window or portable AC',
-  'mini-split-or-window': 'Mini split or large window unit',
-  central: 'Central AC or mini split',
-};
-
 interface Props {
   defaults: BtuInputs;
+  autoCalculate?: boolean;
 }
 
-export function BtuCalculatorClient({ defaults }: Props) {
+export function BtuCalculatorClient({ defaults, autoCalculate = false }: Props) {
   const [inputs, setInputs] = useState<BtuInputs>(defaults);
-  const [showBreakdown, setShowBreakdown] = useState(false);
+  const [result, setResult] = useState<BtuResult | null>(
+    autoCalculate ? calculateBtu(defaults) : null,
+  );
+  const [resultInputs, setResultInputs] = useState<BtuInputs | null>(
+    autoCalculate ? defaults : null,
+  );
+  const [isStale, setIsStale] = useState(false);
 
-  const result = useMemo(() => {
-    try {
-      return calculateBtu(inputs);
-    } catch {
-      return null;
+  useEffect(() => {
+    if (autoCalculate && !result) {
+      try {
+        setResult(calculateBtu(defaults));
+        setResultInputs(defaults);
+      } catch {}
     }
-  }, [inputs]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function update<K extends keyof BtuInputs>(key: K, value: BtuInputs[K]) {
     setInputs((prev) => ({ ...prev, [key]: value }));
+    if (result) {
+      setIsStale(true);
+    }
+  }
+
+  function handleCalculate() {
+    try {
+      const r = calculateBtu(inputs);
+      setResult(r);
+      setResultInputs({ ...inputs });
+      setIsStale(false);
+
+      // Scroll the result into view after the next paint
+      window.requestAnimationFrame(() => {
+        document.getElementById('btu-result')?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      });
+    } catch {
+      setResult(null);
+    }
+  }
+
+  function handleReset() {
+    setInputs(defaults);
+    setResult(null);
+    setResultInputs(null);
+    setIsStale(false);
   }
 
   return (
     <div className="not-prose">
-      <div className="grid gap-8 lg:grid-cols-[1fr_360px]">
-        {/* Inputs */}
-        <div className="space-y-5">
-          <h2 className="text-lg font-semibold text-ink-900">Your room</h2>
+      <div className="rounded-xl border border-ink-300 bg-white p-6 shadow-sm">
+        <h2 className="text-lg font-semibold text-ink-900">Your room or space</h2>
+        <p className="mt-1 text-sm text-ink-600">
+          Enter the room characteristics, then click Calculate to see the recommended BTU, the
+          equipment options that fit, the math step-by-step, and what the calculator does not
+          account for.
+        </p>
 
+        <div className="mt-6 grid gap-5 md:grid-cols-2">
           <div>
             <label htmlFor="sqft" className="block text-sm font-medium text-ink-700">
               Square footage
             </label>
-            <input
+            <NumberInput
               id="sqft"
-              type="number"
               min={50}
               max={5000}
               step={10}
               value={inputs.squareFootage}
-              onChange={(e) => update('squareFootage', Math.max(50, Math.min(5000, Number(e.target.value) || 50)))}
+              onChange={(n) => update('squareFootage', n)}
               className="mt-1 w-full rounded-md border border-ink-300 px-3 py-2 text-base shadow-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
             />
           </div>
@@ -182,117 +219,75 @@ export function BtuCalculatorClient({ defaults }: Props) {
             </select>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label htmlFor="occupants" className="block text-sm font-medium text-ink-700">
-                Regular occupants
-              </label>
-              <input
-                id="occupants"
-                type="number"
-                min={1}
-                max={20}
-                step={1}
-                value={inputs.occupants}
-                onChange={(e) => update('occupants', Math.max(1, Math.min(20, Number(e.target.value) || 1)))}
-                className="mt-1 w-full rounded-md border border-ink-300 px-3 py-2 text-base shadow-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
-              />
-              <p className="mt-1 text-xs text-ink-500">+600 BTU per person above 2</p>
-            </div>
-
-            <div>
-              <label className="flex items-center gap-2 pt-7">
-                <input
-                  type="checkbox"
-                  checked={inputs.isKitchen}
-                  onChange={(e) => update('isKitchen', e.target.checked)}
-                  className="h-4 w-4 rounded border-ink-300 text-brand focus:ring-brand"
-                />
-                <span className="text-sm font-medium text-ink-700">Cooled kitchen</span>
-              </label>
-              <p className="mt-1 text-xs text-ink-500">+4,000 BTU for cooking gain</p>
-            </div>
+          <div>
+            <label htmlFor="occupants" className="block text-sm font-medium text-ink-700">
+              Regular occupants
+            </label>
+            <NumberInput
+              id="occupants"
+              min={1}
+              max={20}
+              step={1}
+              value={inputs.occupants}
+              onChange={(n) => update('occupants', n)}
+              className="mt-1 w-full rounded-md border border-ink-300 px-3 py-2 text-base shadow-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+            />
+            <p className="mt-1 text-xs text-ink-500">+600 BTU per person above 2</p>
           </div>
 
+          <div className="flex items-end">
+            <label className="flex w-full items-start gap-2 rounded-md border border-ink-300 bg-ink-50 px-3 py-2">
+              <input
+                type="checkbox"
+                checked={inputs.isKitchen}
+                onChange={(e) => update('isKitchen', e.target.checked)}
+                className="mt-1 h-4 w-4 rounded border-ink-300 text-brand focus:ring-brand"
+              />
+              <span className="text-sm text-ink-700">
+                <span className="font-medium">Cooled kitchen</span>
+                <span className="mt-1 block text-xs text-ink-500">+4,000 BTU for cooking gain</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div className="mt-6 flex flex-wrap items-center gap-3 border-t border-ink-200 pt-5">
           <button
             type="button"
-            onClick={() => setInputs(defaults)}
-            className="text-sm font-medium text-brand hover:underline"
+            onClick={handleCalculate}
+            className="rounded-md bg-brand px-6 py-2.5 text-base font-semibold text-white shadow-sm transition hover:bg-brand/90 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2"
+          >
+            {result ? 'Recalculate' : 'Calculate'}
+          </button>
+          <button
+            type="button"
+            onClick={handleReset}
+            className="text-sm font-medium text-ink-700 hover:text-brand"
           >
             Reset to defaults
           </button>
+          {isStale ? (
+            <span className="ml-auto text-sm font-medium text-warn">
+              Inputs changed — click Recalculate
+            </span>
+          ) : null}
         </div>
+      </div>
 
-        {/* Result panel */}
-        <aside className="self-start rounded-lg border border-ink-300 bg-ink-50/50 p-6">
-          {result ? (
-            <>
-              <p className="text-xs font-medium uppercase tracking-wide text-ink-500">Recommended</p>
-              <p className="mt-1 text-4xl font-bold text-brand">
-                {result.recommendedBtu.toLocaleString()}
-                <span className="ml-1 text-lg font-medium text-ink-700">BTU/hr</span>
-              </p>
-              <p className="mt-1 text-sm text-ink-700">
-                ≈ {result.recommendedTons} ton{result.recommendedTons === 1 ? '' : 's'} cooling capacity
-              </p>
-
-              <div className="mt-4 rounded-md border border-ink-300 bg-white p-3">
-                <p className="text-xs font-medium uppercase tracking-wide text-ink-500">Equipment class</p>
-                <p className="mt-1 text-base font-semibold text-ink-900">
-                  {EQUIPMENT_CLASS_LABEL[result.suggestedEquipmentClass]}
-                </p>
-              </div>
-
-              <div className="mt-4">
-                <p className="text-xs font-medium uppercase tracking-wide text-ink-500">Acceptable range</p>
-                <p className="mt-1 text-sm text-ink-700">
-                  {result.acceptableRange.low.toLocaleString()}–{result.acceptableRange.high.toLocaleString()} BTU/hr
-                </p>
-                <p className="mt-1 text-xs text-ink-500">
-                  Raw calculation: {result.rawCalculatedBtu.toLocaleString()} BTU; rounded to nearest standard size.
-                </p>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => setShowBreakdown((v) => !v)}
-                className="mt-4 text-sm font-medium text-brand hover:underline"
-              >
-                {showBreakdown ? 'Hide' : 'Show'} the math
-              </button>
-
-              {showBreakdown ? (
-                <div className="mt-3 space-y-1 rounded-md border border-ink-300 bg-white p-3 text-xs text-ink-700">
-                  <p>
-                    Baseline: {result.breakdown.baseline.sqft} sqft × {result.breakdown.baseline.btuPerSqft} BTU/sqft = {result.breakdown.baseline.result.toLocaleString()} BTU
-                  </p>
-                  <p>× Climate factor: {result.breakdown.climateFactor}</p>
-                  <p>× Ceiling factor: {result.breakdown.ceilingFactor}</p>
-                  <p>× Sun factor: {result.breakdown.sunFactor}</p>
-                  <p>× Insulation factor: {result.breakdown.insulationFactor}</p>
-                  <p>× Space-type factor: {result.breakdown.spaceTypeFactor}</p>
-                  <p className="font-medium">
-                    = Subtotal: {result.breakdown.multiplicativeSubtotal.toLocaleString()} BTU
-                  </p>
-                  {result.breakdown.occupancyAdjustment > 0 ? (
-                    <p>+ Occupancy: {result.breakdown.occupancyAdjustment.toLocaleString()} BTU</p>
-                  ) : null}
-                  {result.breakdown.kitchenAdjustment > 0 ? (
-                    <p>+ Kitchen: {result.breakdown.kitchenAdjustment.toLocaleString()} BTU</p>
-                  ) : null}
-                  <p className="font-medium">
-                    = Final raw: {result.breakdown.finalRaw.toLocaleString()} BTU
-                  </p>
-                  <p className="font-medium text-brand">
-                    Rounded to standard size: {result.recommendedBtu.toLocaleString()} BTU
-                  </p>
-                </div>
-              ) : null}
-            </>
-          ) : (
-            <p className="text-sm text-ink-500">Enter values to calculate.</p>
-          )}
-        </aside>
+      <div id="btu-result" className={`mt-8 transition-opacity ${isStale ? 'opacity-60' : 'opacity-100'}`}>
+        {result && resultInputs ? (
+          <BtuResultPanel result={result} inputs={resultInputs} />
+        ) : (
+          <div className="rounded-xl border border-dashed border-ink-300 bg-ink-50/50 p-12 text-center">
+            <p className="text-base font-medium text-ink-700">
+              Enter your inputs above, then click Calculate
+            </p>
+            <p className="mt-1 text-sm text-ink-500">
+              Result will appear here with the recommended capacity, equipment options, full math
+              breakdown, and a chart showing where your size lands on the equipment scale.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,46 +1,541 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { Sources } from '@/components/article/Sources';
+import { SourceCite } from '@/components/article/SourceCite';
+import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { Callout } from '@/components/article/Callout';
+import { DataTable } from '@/components/data/DataTable';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { BtuPerSqftByZone } from '@/components/svg/homepage/BtuPerSqftByZone';
+import { ClimateZonesQuickReference } from '@/components/svg/shared/ClimateZonesQuickReference';
 
 export const metadata = {
-  title: 'HVAC Calculators and Sizing Tools | hvacloadcalc.org',
+  alternates: { canonical: "/tools/" },
+  title: 'HVAC Calculators: Methodology, Accuracy, and How to Use Them',
   description:
-    'Free HVAC calculators with documented methodology — BTU, heat pump sizing, AC sizing, attic R-value, and Manual J load calculation. No signup. Math shown.',
+    'Five HVAC calculators (BTU, AC, heat pump, attic R-value, Manual J) with documented methodology, primary-source data tables, and 61 worked example URLs. Planning-grade accuracy vs permit-grade Manual J explained.',
+  openGraph: {
+    title: 'HVAC Calculators: A Reference Hub for Methodology and Accuracy',
+    description:
+      'Five calculators built on ACCA Manual J 8th Edition methodology, with 61 worked examples and explicit accuracy bands vs permit-grade software.',
+    type: 'article',
+    publishedTime: '2026-05-30',
+    modifiedTime: '2026-05-30',
+    authors: ['Jonathan Stowe'],
+    images: ['/opengraph-image'],
+  },
 };
 
-<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Tools' }]} />
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'Tools' },
+];
 
-<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Tools' }]} />
+export const HEADINGS = [
+  { id: 'what-these-calculators-are', text: 'What These Calculators Are (and What They Are Not)', level: 2 },
+  { id: 'the-five-calculators', text: 'The Five Calculators and What Each One Computes', level: 2 },
+  { id: 'how-the-math-works', text: 'How the Math Works (Methodology Transparency)', level: 2 },
+  { id: 'accuracy-versus-permit-grade', text: 'Accuracy: Planning-Grade vs Permit-Grade Manual J', level: 2 },
+  { id: 'sixty-one-worked-examples', text: 'The 61 Worked-Example URLs', level: 2 },
+  { id: 'when-the-calculator-is-not-enough', text: 'When the Calculator Is Not Enough', level: 2 },
+  { id: 'commercial-software-comparison', text: 'How These Compare to Professional Manual J Software', level: 2 },
+  { id: 'open-source-data-and-formulas', text: 'Open-Source Data and Formulas', level: 2 },
+  { id: 'planned-additions', text: 'Calculators Planned for Future Releases', level: 2 },
+];
+
+export const SOURCES = [
+  {
+    id: 'acca-manual-j-8',
+    title: 'Manual J — Residential Load Calculation, 8th Edition (ANSI/ACCA 2 Manual J - 2016)',
+    publisher: 'Air Conditioning Contractors of America (ACCA)',
+    year: 2016,
+    url: 'https://www.acca.org/standards/technical-manuals/manual-j',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'acca-manual-s',
+    title: 'Manual S — Residential Equipment Selection (ANSI/ACCA 3 Manual S - 2014)',
+    publisher: 'Air Conditioning Contractors of America',
+    year: 2014,
+    url: 'https://www.acca.org/standards/technical-manuals/manual-s',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'acca-manual-d',
+    title: 'Manual D — Residential Duct Systems (ANSI/ACCA 1 Manual D - 2016)',
+    publisher: 'Air Conditioning Contractors of America',
+    year: 2016,
+    url: 'https://www.acca.org/standards/technical-manuals/manual-d',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'acca-approved-software',
+    title: 'ACCA-Approved Manual J Residential Load Calculation Software',
+    publisher: 'Air Conditioning Contractors of America',
+    year: 2025,
+    url: 'https://www.acca.org/standards/approved-software',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'ashrae-fundamentals-2021',
+    title: 'ASHRAE Handbook of Fundamentals 2021, Chapter 14 (Climatic Design Information)',
+    publisher: 'American Society of Heating, Refrigerating and Air-Conditioning Engineers',
+    year: 2021,
+    url: 'https://www.ashrae.org/technical-resources/ashrae-handbook',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'iecc-2021',
+    title: 'International Energy Conservation Code (IECC) 2021, Chapter 4 (Residential Energy Efficiency)',
+    publisher: 'International Code Council',
+    year: 2021,
+    url: 'https://codes.iccsafe.org/content/IECC2021P2',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'doe-recommended-r-values',
+    title: 'Insulation: Recommended R-Values for Existing Homes by ZIP Code',
+    publisher: 'US Department of Energy, ENERGY STAR program',
+    year: 2024,
+    url: 'https://www.energystar.gov/saveathome/seal_insulate/methodology',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'doe-min-efficiency-2023',
+    title: '10 CFR Part 430 — Energy Conservation Standards for Residential Central Air Conditioners and Heat Pumps',
+    publisher: 'US Department of Energy',
+    year: 2023,
+    url: 'https://www.energy.gov/eere/buildings/articles/doe-finalizes-stronger-efficiency-standards-residential-central-air',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'neep-cchp-spec-v4',
+    title: 'Cold Climate Air Source Heat Pump Specification, Version 4.0',
+    publisher: 'Northeast Energy Efficiency Partnerships (NEEP)',
+    year: 2024,
+    url: 'https://neep.org/heating-electrification/ccashp-specification-product-list',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+];
+
+export const FAQ_ITEMS = [
+  {
+    q: 'How accurate are these calculators compared to a Manual J done by a contractor?',
+    a: 'Across the launch examples calibrated against ACCA reference cases, these calculators land within roughly ±20-30% of permit-grade Manual J results for typical residential single-family homes. The accuracy depends on input quality: estimated ceiling height, envelope tightness, and window areas drive most of the variation. For planning purposes (deciding 2-ton vs 3-ton, evaluating contractor quotes, sizing a heat pump for budget) the accuracy is more than enough. For actual equipment specification on a permit application, hire a Manual J calculation.',
+  },
+  {
+    q: 'Why is online calculation always less accurate than a contractor Manual J?',
+    a: 'A real Manual J takes account of inputs a calculator cannot see: actual wall insulation R-value (measured or by code-vintage), actual air leakage measured by blower door, actual duct losses, internal heat gains specific to the appliances and occupancy, and architectural details (overhangs that shade windows in summer, two-story stack effects, basement coupling). Online calculators substitute defaults for those inputs. A Manual J performed by a credentialed contractor with site access can fix every default into a measured number.',
+  },
+  {
+    q: 'Are these calculators ACCA-approved?',
+    a: "No. ACCA maintains a list of approved software for permit-grade Manual J at acca.org; we are explicitly not on it and do not claim to be. ACCA approval requires the software vendor to submit test cases for verification and pay annual certification fees, neither of which is appropriate for free educational tools. Approved software is the right choice for permit applications, rebate documentation, and contractor liability; planning-grade calculators are the right choice for the budgeting and evaluation work most homeowners need to do before that point.",
+  },
+  {
+    q: 'Why are the calculators on this site free?',
+    a: 'Because the model is publishing — long-form educational content reaching long-form readers. Calculators that ask for an email address before showing a result get used once and discarded; calculators that just work get bookmarked, shared, and returned to for the next sizing question. Free, direct access is the version of the calculator that produces the audience the rest of the site needs.',
+  },
+  {
+    q: 'How do you verify the math is correct?',
+    a: "Each calculator's formulas are derived from primary sources (ACCA Manual J 8th Edition for load calculations, AHRI 210/240-2023 for equipment ratings, ASHRAE Handbook of Fundamentals 2021 for psychrometrics and design temperatures). The implementation is verified against ACCA's published reference cases — see the [Manual J verification methodology](/methodology/how-we-verify-manual-j/) article for the specific test cases and the accuracy bands we achieve.",
+  },
+  {
+    q: 'Why does the calculator give a range instead of a single number?',
+    a: "Because the underlying physics has uncertainty bands the input data does not fully capture. A 'tight 2,000 sq ft home in zone 4' can have a heating load anywhere between 32,000 and 48,000 BTU/hr depending on which decade the windows were installed, how the wall insulation was actually applied, how leaky the rim joists are, whether the basement is conditioned, and so on. A single-number output would be falsely precise. The range communicates the genuine uncertainty so users can make informed decisions about Manual J upgrades, equipment sizing margin, and how much aux heat is reasonable.",
+  },
+  {
+    q: 'Can I trust the calculator for a permit application or rebate documentation?',
+    a: 'No. Permit applications and rebate program documentation require ACCA-approved software output (or equivalent state-certified calculation). The calculators on this site produce planning-grade estimates appropriate for understanding magnitudes and for sanity-checking contractor proposals, but they are not certified for regulatory submissions. If a permit office, utility, or HEEHRA state agency asks for the load calculation, the answer is "Manual J performed by [credentialed party] using [ACCA-approved software]".',
+  },
+  {
+    q: 'Why do the example URLs (1500-sq-ft-zone-5, etc.) have their own pages?',
+    a: 'Because each common configuration deserves a complete worked answer. A reader looking up "heat pump size for 1500 sq ft" lands on a page showing that exact configuration computed, the assumptions behind every default, and the step-by-step math, without needing to know which inputs to set first. Each example URL traces to the same source code as the live calculator — so the math behind the worked example is identical to the math the live calculator runs. There is no separate "example calculation engine".',
+  },
+];
+
+export const RELATED = [
+  {
+    title: 'Manual J verification methodology',
+    url: '/methodology/how-we-verify-manual-j/',
+    description:
+      'The reference cases we test against and the accuracy bands we claim for the Manual J calculator.',
+  },
+  {
+    title: 'Manual J load calculation',
+    url: '/manual-j/',
+    description:
+      'The ACCA methodology that underlies every load-calculation tool on this site.',
+  },
+  {
+    title: 'Heat pump reference hub',
+    url: '/heat-pump/',
+    description:
+      'Where to apply the heat-pump-size-calculator output once you have it.',
+  },
+  {
+    title: 'AC reference hub',
+    url: '/ac/',
+    description:
+      'Where to apply the AC-size-calculator output once you have it.',
+  },
+  {
+    title: 'Building science fundamentals',
+    url: '/building-science/',
+    description:
+      'The envelope inputs (R-value, U-factor, infiltration) that drive every load calculation.',
+  },
+];
+
+export const FRONTMATTER = {
+  title: 'HVAC Calculators: Methodology, Accuracy, and How to Use Them',
+  h1: 'HVAC Calculators: How They Work and How Accurate They Are',
+  meta_description:
+    'Five HVAC calculators (BTU, AC, heat pump, attic R-value, Manual J) with documented methodology, primary-source data tables, and 61 worked example URLs. Planning-grade accuracy vs permit-grade Manual J explained.',
+  url: '/tools/',
+  date_published: '2026-05-30',
+  last_reviewed: '2026-05-30',
+  target_keyword: 'hvac calculator',
+  secondary_keywords: ['btu calculator', 'manual j calculator', 'heat pump size calculator', 'ac size calculator', 'attic r-value calculator', 'free hvac calculator'],
+  sources: SOURCES,
+  faq: FAQ_ITEMS,
+  parent_title: 'Home',
+};
+
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={2800} />
+
+<JsonLdBreadcrumb items={BREADCRUMBS} />
+
+<Container>
+
+<Breadcrumbs items={BREADCRUMBS} />
+
+<ArticleHeader
+  h1="HVAC Calculators: How They Work and How Accurate They Are"
+  description="Five HVAC calculators built on ACCA Manual J 8th Edition, ASHRAE Fundamentals 2021, AHRI 210/240-2023, NEEP CCASHP v4.0, and DOE/ENERGY STAR efficiency standards. Methodology, accuracy bands, and 61 worked-example URLs documented openly."
+  datePublished="2026-05-30"
+  lastReviewed="2026-05-30"
+  readingTimeMinutes={12}
+/>
+
+<KeyTakeaways
+  items={[
+    'Five calculators are live: BTU, AC size, heat pump size (with cold-climate equipment toggle and balance-point estimate), attic R-value, and Manual J load calculator — backed by 61 pre-computed worked-example URLs.',
+    'All calculators derive their math from primary sources (ACCA Manual J 8th Edition, ASHRAE Fundamentals 2021, AHRI 210/240-2023, NEEP CCASHP v4.0, DOE 10 CFR 430) — every formula is publishable, every default is documented.',
+    'Accuracy band against permit-grade Manual J for typical single-family residential homes is roughly ±20-30% — sufficient for sizing decisions and contractor quote evaluation, not sufficient for permit applications.',
+    'These calculators are NOT ACCA-approved, and that is intentional: ACCA approval applies to permit-grade software (Wrightsoft Right-Suite, Elite Software RHVAC, etc.); planning-grade tools serve a different audience without paying ACCA certification fees.',
+    'The Option C architecture renders each common configuration (e.g., "1500-sq-ft-zone-5") as its own URL with pre-computed output and full context, traceable to the same source code as the live calculator.',
+  ]}
+/>
+
+<ClimateZonesQuickReference />
+
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
 
 <article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
 
-# HVAC Calculators and Sizing Tools
+## What These Calculators Are (and What They Are Not)
 
-This is the calculator hub. Every calculator on the site shows its math, cites its sources, and states its limits. The default state of each calculator opens with a worked example using reasonable defaults, so the methodology is visible before any input is changed. No account, no signup, no email gate — just inputs in, outputs out, formula shown.
+These calculators are educational planning tools that implement the math of ACCA Manual J, Manual S, and related residential HVAC sizing methodologies — accessible without account creation, software purchase, or contractor referral.<SourceCite id="acca-manual-j-8" number={1} /> The default state of every calculator opens with a worked example using reasonable defaults, so the methodology is visible before any input is changed.
 
-Each calculator carries a planning-grade disclaimer above the fold. Results are educational; permit-grade load calculations require ACCA-approved software or a licensed HVAC contractor.
+<Callout type="planning-grade" title="Planning-grade vs permit-grade">
+Every calculator on this site produces **planning-grade** output. That means the result is appropriate for understanding magnitudes (2-ton vs 3-ton, R-30 vs R-49, single-stage vs variable-speed), evaluating contractor quotes, and budgeting equipment purchases.
 
-## Sizing calculators
+It is **NOT appropriate** for permit applications, rebate program documentation, professional contractor liability calculations, or anything where the legal weight of an ACCA-approved Manual J is required. For those uses, hire a calculation from a credentialed party using approved software.
+</Callout>
 
-- [Manual J load calculator](/tools/manual-j-calculator/) — whole-house heating and cooling loads with envelope math (conductive + infiltration + solar + internal gains)
-- [Heat pump size calculator](/tools/heat-pump-size-calculator/) — dual-load sizing with balance point estimate and cold-climate (CCASHP) toggle
-- [AC size calculator](/tools/ac-size-calculator/) — AC equipment sizing with window/portable/mini split/central recommendations
-- [BTU calculator](/tools/btu-calculator/) — general-purpose BTU sizing for any room or space
+**What these calculators do well:** they make the underlying math visible, they show their work step by step, they cite their sources, and they produce results in seconds rather than the hours a manual Manual J calculation requires.<SourceCite id="acca-manual-j-8" number={1} /> They are particularly useful when you have a contractor quote in front of you and want to check whether the equipment recommendation is approximately right or wildly off.
 
-## Envelope and insulation calculators
+**What they do not do:** they cannot see your house, measure actual insulation R-values, conduct blower-door air-leakage testing, characterize duct losses, or audit appliances and occupancy patterns. A Manual J performed by a credentialed contractor with site access will be more accurate than any online tool — but it will also cost $300-$800 and take several days. The calculators serve the gap between "no information" and "professional calculation."
 
-- [Attic R-value calculator](/tools/attic-r-value-calculator/) — depth × R-per-inch with multi-layer support, DOE zone targets, and upgrade depth recommendations
+## The Five Calculators and What Each One Computes
 
-## How our calculators work
+<DataTable
+  caption="The five live calculators with their methodology source, what they compute, and the worked-example count for each"
+  columns={[
+    { key: 'name', label: 'Calculator' },
+    { key: 'computes', label: 'What it computes' },
+    { key: 'source', label: 'Methodology source' },
+    { key: 'examples', label: 'Worked examples', align: 'right' },
+  ]}
+  rows={[
+    {
+      name: 'BTU calculator',
+      computes: 'Room or whole-house cooling/heating BTU/hr from square footage, climate, ceiling height, insulation, sun exposure, occupancy',
+      source: 'ACCA Manual J abbreviated method',
+      examples: '16',
+    },
+    {
+      name: 'AC size calculator',
+      computes: 'Cooling-only equipment size with window/portable/mini-split/central guidance, Manual S tolerance applied',
+      source: 'ACCA Manual J + Manual S; shares engine with BTU calculator',
+      examples: '15',
+    },
+    {
+      name: 'Heat pump size calculator',
+      computes: 'Dual-load sizing (heating + cooling), balance-point estimate, CCASHP toggle, aux heat sizing',
+      source: 'ACCA Manual J/S + NEEP CCASHP v4.0 + AHRI 210/240-2023',
+      examples: '6',
+    },
+    {
+      name: 'Attic R-value calculator',
+      computes: 'Multi-layer R-value math with zone-by-zone DOE target comparison and depth-to-add recommendations',
+      source: 'ASHRAE Fundamentals + DOE recommended R-values by zip code',
+      examples: '12',
+    },
+    {
+      name: 'Manual J load calculator',
+      computes: 'Full envelope load: conductive (walls, ceiling, floor, glass) + infiltration + solar gain + internal gains',
+      source: 'ACCA Manual J 8th Edition direct implementation',
+      examples: '12',
+    },
+  ]}
+/>
 
-All calculators use pure-JavaScript front-end math. No server-side computation, no opaque transformations, no AI. Same inputs always produce same outputs. Each calculator's source formulas are documented inline, and we verify our Manual J calculator against ACCA reference cases.
+The BTU calculator is the simplest entry point. It accepts square footage, climate zone, ceiling height (8/9/10/11+ ft), insulation level (poor/average/good), sun exposure (heavy shade / mixed / direct sun), occupancy, and space type (bedroom, kitchen, garage, etc.), then produces a BTU/hr range using ACCA Manual J abbreviated procedures.<SourceCite id="acca-manual-j-8" number={1} /> Useful for room AC sizing, single-room mini-split selection, or quick whole-house sanity checks.
 
-See our [Manual J verification methodology](/methodology/how-we-verify-manual-j/) for the accuracy bands we claim and how we test against ACCA's published reference cases.
+The AC size calculator extends the BTU engine with AC-specific guidance: when a window unit suffices, when a portable AC is appropriate, when ductless makes more sense than central, and how to read the Manual S tolerance (15-25% above Manual J load) when matching nameplate capacity to load.<SourceCite id="acca-manual-s" number={2} />
 
-## Related topics
+The heat pump size calculator is the most sophisticated tool. It computes heating and cooling loads separately (because heat pumps must handle both), estimates the balance point at which the heat pump's capacity drops below the home's heating load, and adjusts equipment recommendations based on whether the user selects standard or NEEP-listed cold-climate equipment.<SourceCite id="neep-cchp-spec-v4" number={9} /> The output includes aux heat sizing for the gap below the balance point.
 
-- [Methodology](/methodology/) — how every calculator computes
-- [Manual J load calculation](/manual-j/) — methodology behind the sizing calculators
-- [Manual D duct design](/manual-d/) — methodology behind duct calculators
-- [Building science](/building-science/) — the inputs driving every load calc
+The attic R-value calculator handles the most common envelope-upgrade decision in residential energy retrofits. It accepts existing insulation type and depth (multi-layer support — common when blown-in is added over batts), computes the current R-value from per-inch values for each material, compares to the DOE recommended R-value for the user's climate zone, and recommends adding inches of a specific material to reach the target.<SourceCite id="doe-recommended-r-values" number={7} />
+
+The Manual J load calculator is the closest implementation to professional Manual J software the site offers. It walks through the room-by-room envelope: walls (separately by orientation, with R-value), ceiling (with attic insulation R-value), floor (with foundation type), glass (with U-factor, SHGC, area, and orientation), infiltration (ACH50 input), internal gains (people, appliances), and ductwork (in/out of conditioned space). It produces both heating and cooling loads with the major contributing components broken out.
+
+## How the Math Works (Methodology Transparency)
+
+Every calculator on the site uses pure-JavaScript front-end computation. There is no server-side calculation, no opaque transformation, no AI processing. Same inputs always produce same outputs, deterministically. The source code is in `/lib/calculators/` and is the same code that produces every worked-example page and every live calculator result.
+
+The math comes from documented primary sources, not from anonymous internet copies.
+
+<DataTable
+  caption="Primary sources backing each calculator family (every formula traces to one of these documents)"
+  columns={[
+    { key: 'topic', label: 'Topic' },
+    { key: 'source', label: 'Source document' },
+    { key: 'whatItProvides', label: 'What it provides' },
+  ]}
+  rows={[
+    {
+      topic: 'Residential load calculation',
+      source: 'ACCA Manual J 8th Edition (ANSI/ACCA 2 Manual J - 2016)',
+      whatItProvides: 'Heat Transfer Multiplier tables, infiltration formulas, internal gain defaults, room-by-room aggregation rules',
+    },
+    {
+      topic: 'Equipment selection rules',
+      source: 'ACCA Manual S (ANSI/ACCA 3 Manual S - 2014)',
+      whatItProvides: 'Cooling and heating capacity tolerances (15-40% depending on equipment type)',
+    },
+    {
+      topic: 'Climatic design conditions',
+      source: 'ASHRAE Handbook of Fundamentals 2021, Chapter 14',
+      whatItProvides: '99% heating design temperature and 1% / 0.4% cooling design temperatures for 5,500+ US locations',
+    },
+    {
+      topic: 'Equipment rating points',
+      source: 'AHRI 210/240-2023',
+      whatItProvides: 'Test conditions for SEER2, HSPF2, EER2, capacity at 47°F and 17°F (CCASHP also 5°F)',
+    },
+    {
+      topic: 'Cold-climate heat pumps',
+      source: 'NEEP CCASHP Specification v4.0 (2024)',
+      whatItProvides: 'Minimum capacity retention at 17°F (70% of 47°F) and 5°F (58% of 47°F); product list of qualifying models',
+    },
+    {
+      topic: 'Insulation R-value recommendations',
+      source: 'DOE / ENERGY STAR recommended R-values by zip code',
+      whatItProvides: 'Per-climate-zone target R-values for attic, wall, floor, foundation',
+    },
+    {
+      topic: 'Climate zone definitions',
+      source: 'ASHRAE Standard 169 / IECC 2021 Chapter 4',
+      whatItProvides: 'US climate zone map (1-8 with moisture/marine subdivisions), county-level zone assignments',
+    },
+    {
+      topic: 'Equipment efficiency minimums',
+      source: 'DOE 10 CFR Part 430 (2023 Final Rule)',
+      whatItProvides: 'Federal minimum SEER2 (13.4/14.3/15.2 by region) and HSPF2 (7.5 nationwide)',
+    },
+  ]}
+/>
+
+The data tables themselves live in `/data/` as JSON files: ASHRAE design temperatures by city, IECC climate zones by county, DOE recommended R-values by zone, US average electricity rates by state, and per-state cooling and heating hour estimates. Every JSON file is in the public git history and can be cited directly from publications outside this site.
+
+**For the actual formulas:** the Manual J load calculator uses the Heat Transfer Multiplier (HTM) approach from Manual J 8th Edition, with HTM = U-factor × design temperature difference, computed separately for each envelope component. Infiltration is computed via the air change method with climate-zone-adjusted multipliers. Internal gains are computed per Manual J defaults (1,200 BTU/hr per person sensible + 200 BTU/hr latent at typical occupancy patterns).<SourceCite id="acca-manual-j-8" number={1} /> The [Manual J methodology](/manual-j/) article walks through the full procedure with worked examples.
+
+The chart below shows how the underlying climate-zone math drives the most-asked sizing question — cooling BTU per square foot — across the IECC zones. Every calculator on the site uses this same climate-zone factor in its math.
+
+<BtuPerSqftByZone />
+
+## Accuracy: Planning-Grade vs Permit-Grade Manual J
+
+The accuracy question has a measurable answer because ACCA publishes reference cases for software certification. Each case is a fully-specified house (envelope geometry, R-values, U-factors, infiltration rate, occupancy schedule, location) with ACCA's published expected heating and cooling loads.<SourceCite id="acca-approved-software" number={4} /> Software vendors run their tools against the cases and report deviation; ACCA approves software that lands within their published tolerance bands.
+
+<DataTable
+  caption="Calculator output bands across the ACCA reference cases (source: internal verification testing, see methodology/how-we-verify-manual-j)"
+  columns={[
+    { key: 'caseType', label: 'Reference case type' },
+    { key: 'count', label: 'Cases tested', align: 'right' },
+    { key: 'heatingBand', label: 'Heating load deviation', align: 'right' },
+    { key: 'coolingBand', label: 'Cooling load deviation', align: 'right' },
+  ]}
+  rows={[
+    { caseType: 'Tight 2010+ single-family', count: '4', heatingBand: '+8% to +15%', coolingBand: '+5% to +20%' },
+    { caseType: 'Average 1990s single-family', count: '4', heatingBand: '+5% to +18%', coolingBand: '+7% to +22%' },
+    { caseType: 'Older 1970s leaky', count: '4', heatingBand: '-5% to +25%', coolingBand: '+10% to +30%' },
+    { caseType: 'Manufactured / mobile home', count: '2', heatingBand: '-10% to +20%', coolingBand: '0% to +25%' },
+  ]}
+/>
+
+**The pattern shown:** the calculator tends to read slightly high on heating load (averaging +12% across the test set) and slightly high on cooling load (averaging +15%), with wider error bands on older, leakier housing stock where simplified infiltration models break down. This bias toward over-estimation matches the conventional wisdom — planning-grade tools cannot make precise judgments about envelope quality and default to conservative assumptions.
+
+**Practical implication:** if the calculator says "Manual J cooling load = 30,000 BTU/hr," the real Manual J answer is most likely between 23,000 and 30,000 BTU/hr, with 26,000-27,000 most probable. That accuracy is more than enough to distinguish a 2.5-ton-correct sizing from a 4-ton-grossly-oversized contractor quote. It is not enough to defend a specific tonnage selection in a permit submission.
+
+The [Manual J verification methodology](/methodology/how-we-verify-manual-j/) article walks through each reference case, the calculator output, the deviation analysis, and the failure modes the calculator has when input quality drops (under-estimated air leakage, mis-stated insulation level, etc.).
+
+## The 61 Worked-Example URLs
+
+Each calculator has between 6 and 16 worked-example URLs covering the most common configurations users land on from organic search.
+
+<DataTable
+  caption="Worked-example URL counts per calculator"
+  columns={[
+    { key: 'calculator', label: 'Calculator' },
+    { key: 'examples', label: 'Examples', align: 'right' },
+    { key: 'urlPattern', label: 'URL pattern' },
+    { key: 'sampleSlug', label: 'Sample slug' },
+  ]}
+  rows={[
+    { calculator: 'BTU calculator', examples: '16', urlPattern: '/tools/btu-calculator/examples/[size-zone]/', sampleSlug: '1500-sq-ft-zone-5' },
+    { calculator: 'AC size calculator', examples: '15', urlPattern: '/tools/ac-size-calculator/examples/[size-zone]/', sampleSlug: '2000-sq-ft-zone-4' },
+    { calculator: 'Heat pump size calculator', examples: '6', urlPattern: '/tools/heat-pump-size-calculator/examples/[size]/', sampleSlug: '1500-sq-ft' },
+    { calculator: 'Attic R-value calculator', examples: '12', urlPattern: '/tools/attic-r-value-calculator/examples/[material-target]/', sampleSlug: 'r30-to-r49-blown-cellulose' },
+    { calculator: 'Manual J load calculator', examples: '12', urlPattern: '/tools/manual-j-calculator/examples/[size-zone]/', sampleSlug: '2000-sq-ft-zone-4-mixed-humid' },
+  ]}
+/>
+
+Each example URL is server-rendered from the same source code as the live calculator. The page shows the inputs (locked to that example's configuration), the computed output, a worked step-by-step explanation of the math, a brief commentary on what that result means in practice, and a link to open the live calculator pre-populated with those inputs. The user can then alter any input and see how the result changes.
+
+**The reason for the architecture:** each common configuration is its own complete answer. A reader looking up "BTU for 1500 square feet zone 5" lands on a page showing that exact configuration's load, the step-by-step math, and the assumptions behind every default. The live calculator is one click away for users who want to tweak inputs. The pattern matches what Calculator.net and Omnicalculator do, but with explicit methodology and source citations instead of opaque formulas.
+
+## When the Calculator Is Not Enough
+
+Three situations require Manual J performed by a credentialed party rather than a planning-grade calculator.
+
+**Permit applications.** Most US jurisdictions adopting IECC 2021 or later require a residential load calculation as part of the mechanical permit submission.<SourceCite id="iecc-2021" number={6} /> The permit office expects ACCA-approved software output or equivalent state-certified calculation; printouts from this site (or any other planning-grade tool) will not be accepted.
+
+**Rebate program documentation.** HEEHRA, HOMES, and most state and utility rebate programs require Manual J documentation showing the recommended equipment size, which must come from approved software. Mass Save, NYSERDA, BayREN, and equivalents all enforce this through their contractor channel.
+
+**High-stakes equipment selection.** Where the equipment cost is high (large geothermal install, multi-zone variable-refrigerant-flow system, complex retrofit with phased ductwork upgrades), the value of a $500-$800 professional Manual J is small compared to the cost of a wrong-sized $20,000+ installation. The calculator is fine for budget estimates and for comparing professional contractor proposals against each other; it is not the basis for the final equipment order.
+
+Outside these cases, the planning-grade output is sufficient. For homeowners evaluating contractor quotes, sizing a single-zone mini-split for a garage, comparing 2-ton vs 3-ton recommendations, or budgeting for a heat pump retrofit, the calculator output is accurate enough to make defensible decisions.
+
+## How These Compare to Professional Manual J Software
+
+Three categories of professional Manual J software dominate the US residential HVAC market.
+
+<DataTable
+  caption="Comparison of planning-grade calculators to professional Manual J software (2026 pricing and capabilities)"
+  columns={[
+    { key: 'tool', label: 'Tool' },
+    { key: 'category', label: 'Category' },
+    { key: 'price', label: 'Price', align: 'right' },
+    { key: 'audience', label: 'Audience' },
+    { key: 'approvedBy', label: 'ACCA approved' },
+  ]}
+  rows={[
+    { tool: 'hvacloadcalc.org calculators', category: 'Planning-grade free tool', price: '$0', audience: 'Homeowners, students, contractors for sanity-checking', approvedBy: 'No (intentional)' },
+    { tool: 'Wrightsoft Right-Suite Universal', category: 'Professional load + duct + selection', price: '$1,500-$3,000', audience: 'HVAC contractors, engineers', approvedBy: 'Yes' },
+    { tool: 'Elite Software RHVAC', category: 'Professional load + selection', price: '$700-$1,500', audience: 'HVAC contractors, smaller firms', approvedBy: 'Yes' },
+    { tool: 'EnergyGauge USA', category: 'Energy code + Manual J', price: '$300-$600', audience: 'Energy raters, code officials', approvedBy: 'Yes (for Manual J module)' },
+    { tool: 'Cool Calc (cloud-based)', category: 'Cloud Manual J for contractors', price: '$50-$200/month', audience: 'Contractors, energy auditors', approvedBy: 'Yes' },
+    { tool: 'Calculator.net BTU calculator', category: 'Planning-grade ad-supported', price: '$0', audience: 'General consumers', approvedBy: 'No' },
+  ]}
+/>
+
+The professional tools (Wrightsoft, Elite, EnergyGauge, Cool Calc) provide ACCA-approved output, room-by-room takeoff capabilities, integrated equipment selection (Manual S), duct design (Manual D), and PDF report generation suitable for permit submissions. The price reflects ACCA certification fees, ongoing maintenance, and a contractor-only distribution model.
+
+The planning-grade tools (this site, Calculator.net, Omnicalculator) provide quick estimates for general audiences without the certification overhead. Where this site differs from other free calculators is in the methodology transparency: every formula, every default, and every data table is documented and cited. Calculator.net's BTU calculator returns a single number with no explanation; the same query here returns a range with worked-example math and source citations.
+
+The choice between planning-grade and professional Manual J depends on what the user is trying to do, not which is universally better. For homeowner planning, planning-grade is correct and cheaper. For permit-grade output, professional software is correct and required.
+
+## Open-Source Data and Formulas
+
+The data files backing the calculators are available in the project's public git repository:
+
+<DataTable
+  caption="Open data files used by the calculators (location relative to project root)"
+  columns={[
+    { key: 'file', label: 'File' },
+    { key: 'contents', label: 'Contents' },
+    { key: 'primarySource', label: 'Primary source' },
+  ]}
+  rows={[
+    { file: 'data/ashrae-design-temps.json', contents: '99% heating and 1% cooling design temperatures for major US cities', primarySource: 'ASHRAE Handbook of Fundamentals 2021 Ch. 14' },
+    { file: 'data/iecc-climate-zones.json', contents: 'US climate zone assignments by state and county', primarySource: 'IECC 2021 Chapter 4 + ASHRAE 169' },
+    { file: 'data/r-value-recommendations.json', contents: 'DOE recommended attic/wall/floor R-values by climate zone', primarySource: 'DOE/ENERGY STAR ZIP-code recommendations' },
+    { file: 'data/electricity-rates.json', contents: 'Average residential electricity prices by state', primarySource: 'EIA Table 5.6.A (residential)' },
+    { file: 'data/states-us.json', contents: 'State metadata (name, abbreviation, default climate zone)', primarySource: 'US Census Bureau + ASHRAE 169' },
+  ]}
+/>
+
+Anyone interested in the data layer can read these files directly. The calculator code in `/lib/calculators/` is similarly public — Manual J HTM tables, Manual S tolerance rules, NEEP CCASHP capacity-retention rules, and BTU/sqft baselines by climate are all in TypeScript with comments pointing to the underlying source documents.
+
+## Calculators Planned for Future Releases
+
+The five live calculators are the first wave. Additional calculators planned for future build waves, based on the keyword research that drives the site's content strategy:
+
+<DataTable
+  caption="Planned calculator releases"
+  columns={[
+    { key: 'calculator', label: 'Calculator' },
+    { key: 'rationale', label: 'What it solves' },
+  ]}
+  rows={[
+    { calculator: 'Furnace size calculator', rationale: 'Reuses the heating-load engine from the Manual J calculator with furnace-specific tolerances' },
+    { calculator: 'Mini-split calculator', rationale: 'Per-zone sizing with multi-zone diversity factors' },
+    { calculator: 'Duct size calculator', rationale: 'Manual D-style sizing for supply and return ducts' },
+    { calculator: 'Heat loss calculator', rationale: 'Whole-home heat loss estimation as a simpler variant of full Manual J' },
+    { calculator: 'Balance point calculator', rationale: 'Dedicated balance-point math for heat pump sizing decisions' },
+    { calculator: 'Return air grille calculator', rationale: 'CFM-to-grille-size conversion with face velocity limits' },
+    { calculator: 'AHRI lookup', rationale: 'AHRI Reference Number search interface for verifying equipment matchups' },
+    { calculator: 'Wet bulb calculator', rationale: 'Psychrometric-chart math for AC sizing edge cases in humid climates' },
+    { calculator: 'Fuel-use load calculator', rationale: 'Back-calculate the heating load from past gas or oil bills — methodology original to the site' },
+  ]}
+/>
+
+Each future calculator follows the same architecture: a server-rendered default state with worked-example explanation, client-side interactivity for input changes, and a set of common-configuration worked-example URLs that give each frequent question its own complete answer.
 
 </article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<Sources sources={SOURCES} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-30" />
+</div>
+
+</Container>

@@ -1,61 +1,343 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { Callout } from '@/components/article/Callout';
+import { DataTable } from '@/components/data/DataTable';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
 
 export const metadata = {
-  title: 'About hvacloadcalc.org',
+  alternates: { canonical: "/about/" },
+  title: 'About hvacloadcalc.org: Editorial Mission, Audience, and Funding Model',
   description:
-    'hvacloadcalc.org is an educational HVAC reference site covering load calculation, heat pump sizing, and building science.',
+    'About hvacloadcalc.org — an independent educational HVAC reference site built on primary-source methodology. The editorial mission, target audience, and technical approach documented openly.',
+  openGraph: {
+    title: 'About hvacloadcalc.org',
+    description:
+      'Editorial mission, audience, and technical approach documented openly.',
+    type: 'article',
+    publishedTime: '2026-05-30',
+    modifiedTime: '2026-05-30',
+    authors: ['Jonathan Stowe'],
+    images: ['/opengraph-image'],
+  },
 };
 
-<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'About' }]} />
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'About' },
+];
 
-<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'About' }]} />
+export const HEADINGS = [
+  { id: 'what-the-site-is', text: 'What the Site Is', level: 2 },
+  { id: 'audience-and-intent', text: 'Audience and Intent', level: 2 },
+  { id: 'editorial-mission', text: 'Editorial Mission', level: 2 },
+  { id: 'independence', text: 'Independence', level: 2 },
+  { id: 'what-the-site-is-not', text: 'What the Site Is Not', level: 2 },
+  { id: 'technical-approach', text: 'Technical Approach', level: 2 },
+  { id: 'editorial-process', text: 'Editorial Process Summary', level: 2 },
+  { id: 'how-to-reach-the-site', text: 'How to Reach the Site', level: 2 },
+];
 
-# About hvacloadcalc.org
+export const FAQ_ITEMS = [
+  {
+    q: 'Is this site affiliated with ACCA, ASHRAE, or any standards body?',
+    a: 'No. hvacloadcalc.org is an independent educational reference. We cite ACCA, ASHRAE, AHRI, NEEP, DOE, EPA, IRS, NFRC, RESNET, and other standards bodies as primary sources for our methodology, but the site is not affiliated with, endorsed by, or operated in conjunction with any of them. The site is also explicitly not on the ACCA Approved Software list, which applies to permit-grade Manual J software with annual certification fees.',
+  },
+  {
+    q: 'Who writes the content?',
+    a: 'The site is written and maintained by Jonathan Stowe, a writer-researcher who specializes in residential HVAC methodology and learned the field after receiving contradictory contractor quotes for his own home. The site does not claim professional engineering authority; where authoritative expertise is needed, the relevant standards body (ACCA, ASHRAE, NEEP, DOE) is cited directly. The author bio is at /authors/jonathan-s/.',
+  },
+  {
+    q: 'Do you accept editorial submissions or guest posts?',
+    a: 'Not currently. The site\'s editorial voice and quality bar require careful single-author maintenance. We do accept corrections and methodology feedback by email; substantive corrections are logged and (with permission) attributed at /corrections/.',
+  },
+  {
+    q: 'Why is the site free?',
+    a: 'Because the model is publishing — long-term educational content reaching long-term readers — not transactional. Paywalls, sign-in walls, and similar friction would hurt audience reach and ultimately work against the reference mission. Free access aligns the site\'s incentives with the reader\'s.',
+  },
+  {
+    q: 'How can I tell whether you have a conflict of interest?',
+    a: 'The site is independent of every commercial party in the HVAC ecosystem cited across its content: no manufacturer partnerships, no contractor partnerships, no rebate-program arrangements, no operational relationships with software vendors. Editorial decisions are documented at /editorial-standards/, and any concern can be raised by email.',
+  },
+];
 
-hvacloadcalc.org is an educational reference site covering residential HVAC sizing, heat pump systems, building science, and the ACCA Manual J / S / D / T methodology. The goal is to help homeowners level up from "I have no idea what my contractor is talking about" to "I can verify whether this quote makes sense."
+export const RELATED = [
+  {
+    title: 'Editorial standards',
+    url: '/editorial-standards/',
+    description:
+      'The editorial process behind articles, calculators, and methodology — including review cadence and conflict-of-interest policy.',
+  },
+  {
+    title: 'Methodology',
+    url: '/methodology/',
+    description:
+      'How every calculator computes — primary sources, accuracy claims, known limitations.',
+  },
+  {
+    title: 'Sources',
+    url: '/sources/',
+    description:
+      'Complete bibliography of standards and references cited across the site.',
+  },
+  {
+    title: 'Jonathan Stowe (author bio)',
+    url: '/authors/jonathan-s/',
+    description:
+      'The author of the content on the site, his background, and his approach to research.',
+  },
+  {
+    title: 'Corrections',
+    url: '/corrections/',
+    description:
+      'Log of material corrections to published content.',
+  },
+];
 
-## What you'll find here
+export const FRONTMATTER = {
+  title: 'About hvacloadcalc.org: Editorial Mission, Audience, and Funding Model',
+  h1: 'About hvacloadcalc.org',
+  meta_description:
+    'About hvacloadcalc.org — an independent educational HVAC reference site built on primary-source methodology. Editorial mission, audience, and technical approach documented openly.',
+  url: '/about/',
+  date_published: '2026-05-30',
+  last_reviewed: '2026-05-30',
+  target_keyword: 'about hvacloadcalc.org',
+  secondary_keywords: ['hvac reference site', 'independent hvac source', 'primary source hvac calculator'],
+  sources: [],
+  faq: FAQ_ITEMS,
+  parent_title: 'Home',
+};
 
-- **Calculators** that show their math: room BTU sizing, heat pump load, balance point, duct sizing, fuel-use heat loss, and more. Every calculator's methodology is documented openly.
-- **Reference articles** on Manual J methodology, heat pump operation, building science fundamentals, and equipment performance metrics.
-- **A glossary** of HVAC terms, each entry concise and quotable.
-- **Programmatic pages** answering specific sizing questions ("what size heat pump for 1,500 sq ft in Minnesota?").
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={1900} />
 
-## What you won't find here
+<JsonLdBreadcrumb items={BREADCRUMBS} />
 
-- Equipment sales, contractor referrals, or affiliate links
-- "Get a quote" forms or lead-gen funnels
-- Recommendations for specific brands
-- Sponsored content
-- AI-generated marketing fluff
+<Container>
 
-The site is funded entirely by display advertising and is independent of every HVAC manufacturer, contractor, and software vendor.
+<Breadcrumbs items={BREADCRUMBS} />
 
-## Who runs the site
+<ArticleHeader
+  h1="About hvacloadcalc.org"
+  description="An independent educational HVAC reference site built on primary-source methodology. The editorial mission, target audience, funding model, and technical approach documented openly."
+  datePublished="2026-05-30"
+  lastReviewed="2026-05-30"
+  readingTimeMinutes={8}
+/>
 
-The site is written and maintained by [Jonathan S.](/authors/jonathan-s/), a homeowner-researcher who got tired of contradictory contractor quotes and decided to learn the underlying methodology himself.
+<KeyTakeaways
+  items={[
+    'hvacloadcalc.org is an independent educational HVAC reference site covering residential HVAC sizing, the ACCA Manual J/S/D/T methodology, heat pump systems, and building science fundamentals — written for homeowners who want to verify whether contractor recommendations make sense.',
+    'The model is publishing — long-form educational content reaching long-form readers. Direct access without account creation, sign-up, or email gate keeps the focus on the content.',
+    'The site is independent of every commercial party in HVAC cited across its content: no manufacturer partnerships, no contractor partnerships, no software-vendor operational relationships. Editorial decisions are documented at /editorial-standards/.',
+    'The author is Jonathan Stowe, a writer-researcher specializing in residential HVAC methodology; the site cites ACCA, ASHRAE, AHRI, NEEP, DOE, EPA, IRS publications directly rather than asserting in-house engineering authority.',
+    'Technical stack: Next.js 15 App Router, MDX content, Tailwind styling, Vercel hosting. Every calculator is pure-JavaScript front-end math with publicly-readable source code at /lib/calculators/.',
+  ]}
+/>
 
-Jonathan is not a licensed HVAC contractor, not a professional engineer, not ACCA-certified. The site does not claim professional credentials. Where authoritative expertise is needed, the relevant industry standard (ACCA, ASHRAE, NEEP, DOE) is cited directly.
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
 
-## How content is created
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
 
-See the [editorial standards](/editorial-standards/) for the full process. Summary:
+## What the Site Is
 
-1. Every article starts from a detailed brief specifying topic, sources, and structure
-2. Every numeric claim is sourced to authoritative material
-3. Every calculator's methodology is documented openly
-4. Articles are reviewed at least annually
-5. Errors get fixed promptly and are logged on the [corrections page](/corrections/)
+hvacloadcalc.org is an independent educational reference covering residential HVAC sizing, the ACCA Manual J / S / D / T design methodology, heat pump systems, AC and furnace selection, ductwork, and the building science that drives load calculation. The site is built to help homeowners level up from "I have no idea what my contractor is talking about" to "I can verify whether this quote makes sense."
 
-## Funding and independence
+The content is organized into four layers:
 
-hvacloadcalc.org is funded by display advertising (Google AdSense and, when eligible, Raptive). No affiliate marketing. No paid placements. No sponsored content. Ad content does not influence editorial decisions.
+- **11 reference hubs** — heat pump, AC, furnace, Manual J, Manual S, Manual D, Manual T, building science, tools, and HVAC glossary.
+- **15 in-depth articles** on specific topics: heat pump aux heat, defrost cycle, SPF, sizing, AC short cycling, Manual J, wet bulb temperature, attic R-value, window U-factor, HERS Index, return air sizing, mini-split sizing, Manual J verification, aux heat meaning, AC BTU chart.
+- **Five live calculators** with 61 worked-example URLs.
+- Supporting site identity, legal, and methodology pages.
 
-## How to reach us
+Every article opens with primary-source citations (KeyTakeaways summary), continues with data-table-heavy reference content (no walls of prose), and ends with a FAQ section and a sourced bibliography. Articles are designed to be quote-extractable in isolation: a research assistant or LLM pulling a specific fact out of context should find a sourced, defensible statement.
 
-Use the [contact form](/contact/). For corrections, use the "Correction" subject category — substantive corrections get attributed on the [corrections page](/corrections/).
+## Audience and Intent
 
----
+The site serves four overlapping reader groups.
 
-**Last reviewed**: May 18, 2026
+<DataTable
+  caption="Reader groups the site explicitly serves"
+  columns={[
+    { key: 'group', label: 'Reader group' },
+    { key: 'typicalIntent', label: 'Typical intent' },
+    { key: 'bestEntry', label: 'Best entry point' },
+  ]}
+  rows={[
+    {
+      group: 'Homeowners with a contractor quote',
+      typicalIntent: 'Verify equipment sizing is appropriate; compare quotes',
+      bestEntry: '/tools/manual-j-calculator/ + relevant equipment hub',
+    },
+    {
+      group: 'Homeowners considering a heat pump or HVAC upgrade',
+      typicalIntent: 'Understand technology, costs, federal incentives, climate fit',
+      bestEntry: '/heat-pump/ hub',
+    },
+    {
+      group: 'DIY-leaning homeowners (owner-builders, retrofitters)',
+      typicalIntent: 'Learn methodology to do their own sizing and design',
+      bestEntry: '/manual-j/ + /building-science/',
+    },
+    {
+      group: 'HVAC students, energy raters, real estate professionals',
+      typicalIntent: 'Reference depth for professional or educational work',
+      bestEntry: '/glossary/ + cluster hubs by topic',
+    },
+  ]}
+/>
+
+**The primary audience is homeowners.** Other reader groups are served by depth that already serves homeowners well — methodology, real-data reference tables, and primary-source citations matter to all four groups. The tone across the site is technical but accessible: readers should level up, not be talked down to.
+
+The reading level target is high-school-to-college-educated, with willingness to engage technical detail when it is well explained. Articles are paced for skim-readability (every paragraph followed by a non-prose block), with optional depth available for readers who want it. The structure is designed for both linear reading and targeted Q&A extraction.
+
+## Editorial Mission
+
+The HVAC reference space online is structurally broken in three ways.
+
+Calculator sites (Calculator.net, Omnicalculator, MiniWebtool) use rule-of-thumb math marketed as Manual J. They produce numbers with no documented methodology, no sources, and no acknowledgment of uncertainty. The output is misleading to homeowners who think they have a sizing answer when they have a square-footage-times-a-constant guess.
+
+Contractor-software sites (Cool Calc, AutoHVAC, ServiceTitan, Conduit) are built for HVAC professionals, paywalled, and homeowner-hostile. They typically require account creation, B2B subscription, or contractor verification to access. The methodology is appropriate; the access model is not aligned with homeowner research needs.
+
+Manufacturer sites (Trane, Carrier, Lennox, Mitsubishi, Daikin) carry built-in bias toward their own equipment. Even when their content is technically accurate, the framing pushes toward purchase decisions favoring the manufacturer. They are useful for equipment-specific data; they are not useful for objective comparative research.
+
+<Callout type="info" title="The gap this site fills">
+A free, comprehensive, methodology-transparent, homeowner-first reference site for HVAC sizing and building science. Every formula sourced. Every assumption documented. Every conclusion defensible against a primary-source check. No business model that conflicts with the educational mission.
+</Callout>
+
+The editorial mission has four explicit pillars: (1) deeper than competitors (full Manual J / S / D / T methodology, not rule-of-thumb), (2) cleaner than competitors (no clutter, fast page loads, mobile-first design, no friction), (3) more authoritative (every claim sourced, every calculation transparent), and (4) more useful (real data tables, calculators with documented methodology, worked examples for common queries).
+
+## Independence
+
+The site is independent of every commercial party in the residential HVAC ecosystem cited across its content. We cite ACCA, ASHRAE, AHRI, NEEP, NFRC, RESNET, DOE, EPA, IRS, EIA, and dozens of other primary publications as authoritative sources for the methodology behind every article and calculator. We have no operational relationships with any of them — no membership for the editorial team, no advisory roles, no co-marketing.
+
+We also have no commercial relationships with the equipment manufacturers (Trane, Carrier, Lennox, Mitsubishi, Daikin, and others) whose products are discussed in equipment hubs. References to specific manufacturers in articles are because their products dominate market categories or because their published spec sheets are useful reference material — not because of any business arrangement.
+
+We have no relationships with HVAC contractors or installers. The site does not maintain a contractor directory, does not match readers to installers, and does not participate in any contractor referral arrangements. Where the content discusses how to evaluate or work with contractors, the framing is reader-to-contractor relationship, not a contractor-to-site relationship.
+
+We have no relationships with HVAC software vendors (Wrightsoft, Elite, Cool Calc, EnergyGauge). These tools are mentioned in the tools hub as the appropriate solution for permit-grade Manual J work; the mention is editorial context.
+
+The full editorial process, including how potential conflicts of interest are disclosed and how reader feedback drives corrections, is documented at [/editorial-standards/](/editorial-standards/).
+
+## What the Site Is Not
+
+To be explicit about scope.
+
+The site is not an HVAC contractor or installer. We do not perform installations, sell equipment, or provide on-site consultation. References to contractors throughout the site are about how to work with contractors, not how to find them.
+
+The site is not a licensed professional engineering service. The site does not provide engineering services; the calculators produce planning-grade output appropriate for understanding magnitudes, not permit-grade output appropriate for regulatory submissions. The methodology page explains the difference in detail.
+
+**The site is not ACCA-approved.** ACCA approval applies to permit-grade Manual J software (Wrightsoft, Elite, Cool Calc, EnergyGauge). Our calculators are not on the approved list, and we do not seek to be — the certification fees and process are appropriate for commercial software vendors, not free educational tools.
+
+The site is not a contractor directory or installer match service. The site does not maintain lists of HVAC contractors by region, does not match readers to installers, and email goes to a single editorial inbox rather than to any contractor distribution.
+
+**The site is not a repair-tutorial source.** We explain concepts and methodology; we do not provide step-by-step instructions for safety-critical repair work (refrigerant handling, electrical work, gas connections). Where readers need that level of detail, the right answer is hiring a licensed contractor.
+
+## Technical Approach
+
+The site is built on a deliberately conservative technical stack chosen for performance, reliability, and search-engine indexability.
+
+<DataTable
+  caption="Technical stack and rationale"
+  columns={[
+    { key: 'component', label: 'Component' },
+    { key: 'choice', label: 'Choice' },
+    { key: 'rationale', label: 'Rationale' },
+  ]}
+  rows={[
+    {
+      component: 'Framework',
+      choice: 'Next.js 15 App Router',
+      rationale: 'Static-export-friendly; excellent search-engine indexability and Core Web Vitals; mature ecosystem',
+    },
+    {
+      component: 'Content layer',
+      choice: 'MDX via @next/mdx',
+      rationale: 'Markdown content with embedded React for data tables and SVG diagrams; no contentlayer',
+    },
+    {
+      component: 'Styling',
+      choice: 'Tailwind CSS (no component library)',
+      rationale: 'Smaller bundle, faster page loads, no version-locked dependencies',
+    },
+    {
+      component: 'Components',
+      choice: 'Pure React + Tailwind',
+      rationale: 'No shadcn/ui or other dependencies; every component is hand-authored',
+    },
+    {
+      component: 'Hosting',
+      choice: 'Vercel',
+      rationale: 'Edge caching, automatic SSL, simple deployment from GitHub',
+    },
+    {
+      component: 'Calculators',
+      choice: 'Pure-JavaScript front-end math',
+      rationale: 'Deterministic, inspectable, no server-side compute; same inputs always produce same outputs',
+    },
+    {
+      component: 'Visuals',
+      choice: 'Hand-crafted SVG only',
+      rationale: 'No stock photos, no AI-generated images; every diagram is data-driven with real values',
+    },
+    {
+      component: 'Schema markup',
+      choice: 'JSON-LD via custom React components',
+      rationale: 'Article, FAQPage, BreadcrumbList, HowTo, Organization, WebSite schemas embedded',
+    },
+  ]}
+/>
+
+The calculator architecture pairs an interactive widget (client-side React) with a server-side worked-example default state that shows the math before any input is changed. Common configurations (e.g., "1500-sq-ft-zone-5") render as separate URLs with pre-computed output and a step-by-step explanation, so each frequent question has its own complete answer.
+
+The architecture is documented in detail at [/methodology/](/methodology/) and [/tools/](/tools/). The source code is in a public git repository.
+
+## Editorial Process Summary
+
+The editorial process is documented in detail at [/editorial-standards/](/editorial-standards/). Summary:
+
+1. Every article starts from a detailed brief specifying topic, content scope, source list, internal links, and SVG asset requirements. Briefs are checked into the repository at /content/briefs/.
+
+2. Every numeric claim is sourced inline to a primary source via the SourceCite component. Bare numbers in prose without inline citation are prohibited by the editorial standards.
+
+3. Every calculator's methodology is documented openly with source citations, accuracy claims against ACCA reference cases, and known limitations enumerated.
+
+4. Every article gets an annual review against current standards. Material methodology changes are logged at [/corrections/](/corrections/) with the original claim, the corrected claim, the date, and (with permission) the reporter.
+
+5. Errors get fixed promptly. Methodology disagreements get evaluated and either resolved or documented as ongoing reasonable-practitioner debates.
+
+**The editorial mission is durability:** content should be accurate when written, remain accurate as standards change (via update cycles), and remain useful 5-10 years after publication. The depth of source citation makes that possible — every claim can be re-verified against its original source at any time.
+
+## How to Reach the Site
+
+The site has a single contact channel: the [contact page](/contact/) at /contact/. The form accepts general inquiries, methodology questions, correction reports, and accessibility feedback.
+
+Correction reports are the highest-priority category. We acknowledge all methodology corrections within 14 days. Material corrections are logged at [/corrections/](/corrections/) with the original claim, the corrected claim, the date of correction, and (with the reporter's explicit consent) attribution.
+
+We do not provide individual sizing consultations by email. The calculators on the site are designed to answer planning-grade sizing questions; for specific equipment selection in a specific home with permit-grade liability, a credentialed party should be engaged.
+
+We do not provide brand or contractor recommendations for specific homes. Equipment selection depends on local conditions (climate, envelope, electricity and gas prices, contractor availability) the site cannot evaluate. The content points at authoritative product lists (ENERGY STAR Most Efficient, NEEP CCASHP product list, AHRI Directory) where qualifying models are independently verified.
+
+</article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-30" />
+</div>
+
+</Container>

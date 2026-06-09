@@ -11,6 +11,8 @@ import { calculateHeatPumpSize } from '@/lib/calculators/heat-pump-size';
 import { SITE } from '@/lib/seo/site';
 import { getSources } from '@/lib/seo/sources';
 import { HeatPumpSizeCalculatorClient } from '../../HeatPumpSizeCalculatorClient';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import {
   heatPumpExamples,
   findHeatPumpExampleBySlug,
@@ -33,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
   const canonicalPath = `/tools/heat-pump-size-calculator/examples/${slug}/`;
   return {
-    title: `${example.metaTitle} | hvacloadcalc.org`,
+    title: `${example.metaTitle}`,
     description: example.metaDescription,
     alternates: { canonical: `${SITE.url}${canonicalPath}` },
     openGraph: {
@@ -41,6 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: example.metaDescription,
       url: `${SITE.url}${canonicalPath}`,
       type: 'article',
+      images: ['/opengraph-image'],
     },
   };
 }
@@ -80,8 +83,22 @@ export default async function ExamplePage({ params }: Props) {
     { name: example.title },
   ];
 
+  const articleFrontmatter = {
+    title: example.metaTitle,
+    h1: example.title,
+    meta_description: example.metaDescription,
+    url: `/tools/heat-pump-size-calculator/examples/${slug}/`,
+    date_published: '2026-05-25',
+    last_reviewed: '2026-05-29',
+    target_keyword: example.metaTitle,
+    sources: sources,
+    parent_title: 'Heat Pump Size Calculator',
+  };
+
   return (
     <Container>
+      <JsonLdArticle frontmatter={articleFrontmatter} />
+      <JsonLdBreadcrumb items={breadcrumbs} />
       <Breadcrumbs items={breadcrumbs} />
 
       <header className="not-prose mb-6 mt-4">
@@ -106,7 +123,7 @@ export default async function ExamplePage({ params }: Props) {
       </Callout>
 
       <section className="mt-8">
-        <HeatPumpSizeCalculatorClient defaults={example.inputs} />
+        <HeatPumpSizeCalculatorClient defaults={example.inputs} autoCalculate />
       </section>
 
       {/* Overview */}

@@ -1,42 +1,566 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { Sources } from '@/components/article/Sources';
+import { SourceCite } from '@/components/article/SourceCite';
+import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { Callout } from '@/components/article/Callout';
+import { DataTable } from '@/components/data/DataTable';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { FuelCostPerMillionBtu } from '@/components/svg/furnace/FuelCostPerMillionBtu';
+import { AfueEfficiencyBreakdown } from '@/components/svg/furnace/AfueEfficiencyBreakdown';
 
 export const metadata = {
-  title: 'Furnace Sizing, AFUE, and Selection | hvacloadcalc.org',
+  alternates: { canonical: "/furnace/" },
+  title: 'Furnaces: AFUE, Sizing, Fuel Types, and the Heat Pump Decision',
   description:
-    'Residential furnace sizing methodology, AFUE rating explained, 80 vs 95 AFUE comparison, oversizing problems, and what to ask a contractor before purchase.',
+    'Residential furnace reference — AFUE, federal minimums, 80 vs 95 AFUE payback, sizing per Manual J/S, fuel-cost comparison, heat-pump-vs-furnace decision.',
+  openGraph: {
+    title: 'Furnaces: A Reference Hub Built on Primary Sources',
+    description:
+      'AFUE rating, federal minimums, 80 vs 95 AFUE comparison, sizing methodology, fuel-cost comparisons, and the heat-pump-versus-furnace decision — every number cited.',
+    type: 'article',
+    publishedTime: '2026-05-30',
+    modifiedTime: '2026-05-30',
+    authors: ['Jonathan Stowe'],
+    images: ['/opengraph-image'],
+  },
 };
 
-<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Furnace' }]} />
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'Furnace' },
+];
 
-<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Furnace' }]} />
+export const HEADINGS = [
+  { id: 'what-a-furnace-actually-is', text: 'What a Furnace Is and How It Differs from a Boiler', level: 2 },
+  { id: 'afue-what-it-measures', text: 'AFUE: What the Number Measures (and What It Misses)', level: 2 },
+  { id: 'eighty-vs-ninety-five-afue', text: '80 vs 95 AFUE: The Real Comparison', level: 2 },
+  { id: 'sizing-a-furnace-properly', text: 'Sizing a Furnace Properly (Manual J First, Manual S Second)', level: 2 },
+  { id: 'fuel-type-and-operating-cost', text: 'Fuel Type and Operating Cost by Region', level: 2 },
+  { id: 'oversizing-shortens-furnace-life', text: 'Why Oversizing Shortens Furnace Life', level: 2 },
+  { id: 'safety-cracked-heat-exchanger', text: 'Safety: Cracked Heat Exchangers and CO', level: 2 },
+  { id: 'the-heat-pump-decision', text: 'The Heat-Pump-Replaces-Furnace Decision', level: 2 },
+  { id: 'incentives-and-rebates', text: 'Federal and State Incentives for High-Efficiency Furnaces', level: 2 },
+  { id: 'what-this-cluster-covers', text: 'What This Cluster Covers', level: 2 },
+];
+
+export const SOURCES = [
+  {
+    id: 'doe-furnace-efficiency-standards',
+    title: '10 CFR Part 430 — Energy Conservation Standards for Residential Furnaces (Final Rule, effective for nonweatherized gas furnaces 2028; weatherized gas 2029)',
+    publisher: 'US Department of Energy',
+    year: 2023,
+    url: 'https://www.energy.gov/eere/buildings/articles/doe-finalizes-energy-efficiency-standards-residential-furnaces',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'doe-furnace-buying',
+    title: 'Furnaces and Boilers (consumer guide)',
+    publisher: 'US Department of Energy, Office of Energy Efficiency and Renewable Energy',
+    year: 2024,
+    url: 'https://www.energy.gov/energysaver/furnaces-and-boilers',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'energystar-furnace-spec',
+    title: 'ENERGY STAR Program Requirements for Residential Furnaces, Version 5.0',
+    publisher: 'US EPA / ENERGY STAR',
+    year: 2024,
+    url: 'https://www.energystar.gov/products/spec/residential_furnaces_specification_version_5_0_pd',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'acca-manual-j-8',
+    title: 'Manual J — Residential Load Calculation, 8th Edition (ANSI/ACCA 2 Manual J - 2016)',
+    publisher: 'Air Conditioning Contractors of America (ACCA)',
+    year: 2016,
+    url: 'https://www.acca.org/standards/technical-manuals/manual-j',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'acca-manual-s',
+    title: 'Manual S — Residential Equipment Selection (ANSI/ACCA 3 Manual S - 2014)',
+    publisher: 'Air Conditioning Contractors of America',
+    year: 2014,
+    url: 'https://www.acca.org/standards/technical-manuals/manual-s',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'eia-natural-gas-residential',
+    title: 'Natural Gas Prices: Residential Sector (Average city-gate price by state and US average)',
+    publisher: 'US Energy Information Administration',
+    year: 2025,
+    url: 'https://www.eia.gov/dnav/ng/ng_pri_sum_dcu_nus_m.htm',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'eia-heating-oil-propane',
+    title: 'State Heating Oil and Propane Program Weekly Prices (Winter Heating Season)',
+    publisher: 'US Energy Information Administration',
+    year: 2025,
+    url: 'https://www.eia.gov/petroleum/heatingoilpropane/',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'eia-electricity-table-5-6-a',
+    title: 'Average Price of Electricity to Ultimate Customers by End-Use Sector, Table 5.6.A (Residential)',
+    publisher: 'US Energy Information Administration',
+    year: 2025,
+    url: 'https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_6_a',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'ansi-z21-47-furnace',
+    title: 'ANSI Z21.47 / CSA 2.3 — Gas-Fired Central Furnaces (Safety and Efficiency Test Standard)',
+    publisher: 'American National Standards Institute / CSA Group',
+    year: 2021,
+    url: 'https://www.csagroup.org/store/product/2701313/',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'epa-co-indoor',
+    title: 'Carbon Monoxide\'s Impact on Indoor Air Quality',
+    publisher: 'US Environmental Protection Agency',
+    year: 2024,
+    url: 'https://www.epa.gov/indoor-air-quality-iaq/carbon-monoxides-impact-indoor-air-quality',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'irs-25c-fact-sheet',
+    title: 'IRA Section 25C — Energy Efficient Home Improvement Credit (Fact Sheet FS-2022-40)',
+    publisher: 'US Internal Revenue Service',
+    year: 2023,
+    url: 'https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'ashrae-fundamentals-fuel-values',
+    title: 'ASHRAE Handbook of Fundamentals 2021, Chapter 28 (Combustion and Fuels) — Standard heating values for natural gas, propane, fuel oil, and biomass',
+    publisher: 'American Society of Heating, Refrigerating and Air-Conditioning Engineers',
+    year: 2021,
+    url: 'https://www.ashrae.org/technical-resources/ashrae-handbook',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+];
+
+export const FAQ_ITEMS = [
+  {
+    q: 'What AFUE rating should I buy for a new gas furnace?',
+    a: 'In most US climates the right answer is 95-97% AFUE (a "condensing" furnace) because the efficiency improvement over an 80% unit typically pays back in 5-10 years through reduced gas use, and federal Section 25C tax credits return $600 for qualifying ≥97% AFUE installations. The exception is a household in a warm climate (zone 1-2) using the furnace only 20-30 days per year, where the gas savings cannot recover the $1,500-$3,000 cost premium for a condensing unit; 80% AFUE is reasonable there if the furnace runs rarely.',
+  },
+  {
+    q: 'How much does it cost to install a new furnace in 2026?',
+    a: 'Typical installed cost for a residential gas furnace in 2026 is $3,000 to $5,500 for a standard 80% AFUE unit and $4,500 to $7,500 for a 95-97% AFUE condensing unit. Condensing units cost more because they include a secondary heat exchanger to extract latent heat from flue gases, a PVC vent (instead of metal flue), and a condensate drain. Oil furnaces typically run $4,000-$8,000 installed; propane furnaces match gas pricing.',
+  },
+  {
+    q: 'Is a 95% AFUE furnace really worth the extra cost over 80%?',
+    a: 'In most cases yes. A 95% AFUE unit consumes about 19% less gas per BTU of heat delivered than an 80% unit (because 95/80 = 1.1875, so each delivered BTU requires 1/1.1875 = 0.842 as much fuel). At the US average residential gas price of $1.30 per therm, a typical 2,000 sq ft house in climate zone 4 burning 800 therms a year of heating gas saves roughly $200 per year going from 80% to 95% AFUE — paying back a $1,500 premium in 7-8 years. In colder climates with higher gas use the payback is faster; in warm climates with low gas use the math worsens.',
+  },
+  {
+    q: 'How big a furnace do I need for a 2000 square foot home?',
+    a: 'For a tight, well-insulated 2,000 sq ft house in climate zone 4 (Kansas City latitude), the design heating load is typically 40,000-55,000 BTU/hr, which after Manual S sizing (which permits up to 40% above Manual J load for furnaces) translates to a 60,000-80,000 BTU/hr nominal furnace. A leaky pre-1980s house of the same size in zone 6 (Minneapolis) can need 70,000-95,000 BTU/hr design load and a 100,000-130,000 BTU/hr furnace. Square footage alone produces wildly different numbers depending on envelope; Manual J is the only path to a defensible number.',
+  },
+  {
+    q: 'Why are most contractor furnace quotes oversized?',
+    a: 'Two reasons. First, contractors who do not perform a real Manual J use rule-of-thumb sizing (typically 40-50 BTU/sqft) that ignores envelope tightness, window quality, and insulation — and rule of thumb runs high for any house built after about 1990. Second, contractors carry no downside risk for oversizing (the homeowner pays for it, and the unit still heats the house), while undersizing produces a callback when the house cannot hit setpoint on the coldest day. The asymmetry biases the industry toward bigger-than-needed.',
+  },
+  {
+    q: 'Should I replace my old furnace with a heat pump instead?',
+    a: 'In most US climates with both heating and cooling demand, replacing an aging furnace plus an aging AC with a single heat pump produces the lowest 15-year ownership cost, especially with the 25C credit ($2,000) and HEEHRA rebates (up to $8,000 for qualifying households). Where heat pumps lag: very cold climates with cheap natural gas and high electricity prices (parts of the upper Midwest), or households that just replaced the AC last year and have a brand-new gas furnace with 15 years of remaining life. The [heat pump reference](/heat-pump/) covers the full comparison.',
+  },
+  {
+    q: 'What is a "dual fuel" or "hybrid" heating system?',
+    a: 'A dual-fuel setup uses a heat pump as the primary heating system above a chosen outdoor temperature lockout (typically 25-35°F) and switches to the gas furnace below that temperature. It captures heat pump efficiency in mild winter conditions and gas furnace capacity in cold conditions, avoiding both expensive electric resistance aux and gas inefficiency at mild temperatures. It costs slightly more to install than either system alone but typically beats either on operating cost in cold climates with both gas service and dual heating/cooling demand.',
+  },
+  {
+    q: 'How long does a furnace last?',
+    a: 'The US Department of Energy cites typical operational life of 15-20 years for a residential gas furnace and 20-25 years for a well-maintained oil furnace. End-of-life is most often a cracked heat exchanger (gas furnace, requires full replacement for safety) or a failed combustion chamber liner (oil furnace, sometimes repairable). Annual professional service extends life and catches small problems before they become emergencies. A furnace older than 15 years is a candidate for proactive replacement before failure.',
+  },
+  {
+    q: 'What is a cracked heat exchanger and why does it matter?',
+    a: 'The heat exchanger is the metal partition that separates combustion gases from the indoor air the furnace heats. When it cracks (from thermal cycling stress over many years), combustion byproducts including carbon monoxide can leak into the indoor air stream and be distributed through the duct system. A cracked heat exchanger is a safety failure that requires furnace replacement; it cannot be safely repaired. CO detectors are required by code in most jurisdictions and should be installed on every floor; the EPA cites 9 ppm as the chronic exposure limit and 70 ppm as the threshold for immediate evacuation.',
+  },
+];
+
+export const RELATED = [
+  {
+    title: 'Heat pump reference hub',
+    url: '/heat-pump/',
+    description:
+      'Heat pumps deliver heating and cooling from one piece of equipment — most furnace replacement decisions in 2026 deserve a heat pump comparison.',
+  },
+  {
+    title: 'Manual J load calculation',
+    url: '/manual-j/',
+    description:
+      'The methodology that produces the heating load any honest furnace quote should reference.',
+  },
+  {
+    title: 'Manual D duct design',
+    url: '/manual-d/',
+    description:
+      'Furnaces depend on duct systems sized correctly for their CFM target; Manual D covers the methodology.',
+  },
+  {
+    title: 'Building science fundamentals',
+    url: '/building-science/',
+    description:
+      'Envelope drivers (R-value, U-factor, infiltration) determine the heating load and therefore the right furnace size.',
+  },
+];
+
+export const FRONTMATTER = {
+  title: 'Furnaces: AFUE, Sizing, Fuel Types, and the Heat Pump Decision',
+  h1: 'Furnaces: A Reference Built on Primary Sources',
+  meta_description:
+    'A reference hub for residential furnaces covering AFUE rating, federal efficiency minimums, 80 vs 95 AFUE comparison, sizing per ACCA Manual J/S, fuel-cost comparisons across natural gas/propane/oil/electric, and when a heat pump replaces the furnace decision.',
+  url: '/furnace/',
+  date_published: '2026-05-30',
+  last_reviewed: '2026-05-30',
+  target_keyword: 'furnace',
+  secondary_keywords: ['afue', '95 afue furnace', 'furnace sizing', 'gas furnace', '80 vs 95 afue', 'furnace cost'],
+  sources: SOURCES,
+  faq: FAQ_ITEMS,
+  parent_title: 'Home',
+};
+
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={2900} />
+
+<JsonLdBreadcrumb items={BREADCRUMBS} />
+
+<Container>
+
+<Breadcrumbs items={BREADCRUMBS} />
+
+<ArticleHeader
+  h1="Furnaces: A Reference Built on Primary Sources"
+  description="AFUE rating methodology, federal efficiency minimums, 80 vs 95 AFUE comparison, sizing per ACCA Manual J and Manual S, fuel-cost comparisons by region, and when replacing the furnace with a heat pump produces a better 15-year outcome — every number on this page traces to DOE, EIA, ACCA, ASHRAE, IRS, or EPA publications."
+  datePublished="2026-05-30"
+  lastReviewed="2026-05-30"
+  readingTimeMinutes={13}
+/>
+
+<KeyTakeaways
+  items={[
+    'AFUE measures annual fuel-to-heat conversion efficiency across a complete heating season, including flue losses and ignition cycles; a 95% AFUE furnace converts 95% of fuel energy to delivered heat versus 80% for the federal-minimum 1992-era unit.',
+    'Federal minimum AFUE for new gas furnaces will rise from the current 80% to 95% under DOE\'s 2023 final rule (effective 2028-2029 depending on category) — making condensing furnaces the default for new sales.',
+    'In a typical 2,000 sq ft home in climate zone 4 burning 800 therms of gas per year, going from 80% to 95% AFUE saves roughly 126 therms per year, or about $164 at the US average $1.30/therm — paying back a $1,500 efficiency premium in 7-10 years.',
+    'Heating fuel cost per million BTU at US 2024-2025 average prices spans an 8× range: natural gas at $13.68/MMBTU (95% AFUE), propane at $32.79/MMBTU, fuel oil at $32.69/MMBTU, electric resistance at $47.77/MMBTU.',
+    'Manual S permits the installed furnace\'s output BTU/hr to exceed Manual J heating load by up to 40% — beyond that tolerance the furnace short-cycles, runs colder ducts, and wears the heat exchanger faster.',
+  ]}
+/>
+
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
 
 <article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
 
-# Furnace Sizing, AFUE, and Selection
+## What a Furnace Is and How It Differs from a Boiler
 
-Furnace sizing is the part of HVAC where most contractor quotes drift highest. A common pattern is sizing for the worst single hour of the worst winter day, then adding a 25% safety margin — producing a furnace 50 to 80 percent larger than the home actually needs. The consequences: short-cycling, hot-then-cold comfort swings, premature heat exchanger failures, and noticeably higher fuel bills than a correctly-sized system would produce.
+A furnace is a forced-air heating appliance that burns fuel (natural gas, propane, fuel oil, or in older units coal or wood) inside a metal heat exchanger, then blows indoor air across the outside of that exchanger to warm it.<SourceCite id="doe-furnace-buying" number={2} /> Combustion gases leave through a flue vent; conditioned air leaves through the duct system. The distinction between a furnace and a boiler is the heat-transfer medium: furnaces use air, boilers use water (hot water or steam).
 
-This section covers correct furnace sizing per ACCA Manual J, what AFUE actually measures, the practical differences between 80 and 95 AFUE units, and the diagnostic signs that an existing furnace is oversized.
+<Callout type="info" title="What the word furnace does and does not cover">
+A furnace in US residential terminology is the forced-air heating unit that ducts conditioned air around the house. It does not include radiant floor systems (those are boiler-driven hydronic), wall-mounted gas heaters (room-by-room appliances, not central systems), or electric baseboard (no central air handler). This hub covers central forced-air gas, propane, oil, and electric furnaces.
+</Callout>
 
-## What this section covers
+Combustion happens in a sealed combustion chamber (in newer units) or in an atmospheric "draft" chamber (in older units).
 
-- **Furnace sizing** — load calc to BTU output, not square footage
-- **AFUE explained** — what efficiency rating includes and excludes
-- **80 vs 95 AFUE** — payback period, condensate handling, vent options
-- **Oversized furnace symptoms** — short cycling, comfort issues, equipment failure
-- **Gas vs oil vs electric** — fuel choice and the load calc that applies
+**Sealed combustion** uses outdoor air ducted directly to the burner and exhausts combustion gases through a separate vent — a closed loop with zero exchange of combustion air with the conditioned space.<SourceCite id="ansi-z21-47-furnace" number={9} />
 
-## Related calculators
+**Atmospheric units** pull combustion air from the equipment room and rely on the chimney's natural draft for exhaust; they cannot be installed in tight modern construction without combustion-air provisions.
 
-- [Furnace size calculator](/tools/furnace-size-calculator/) — sizing for your home
-- [Fuel-use load calculator](/tools/fuel-use-load-calculator/) — back-calculate load from past bills
-- [Heat loss calculator](/tools/heat-loss-calculator/) — home heat loss estimate
+**The four common fuel options behave very differently.**
 
-## Related topics
+- **Natural gas (piped)** is the dominant US fuel by a wide margin — about 47% of US households heat with natural gas per EIA RECS 2020 — because of its low per-BTU cost in most regions.
+- **Propane** (delivered to an on-site tank) is common where gas service does not extend; about 5% of US households use it.
+- **Fuel oil** (#2 heating oil, delivered to an on-site tank) accounts for about 4%, concentrated in the Northeast.
+- **Electric resistance furnaces** are about 3%, mostly in the Pacific Northwest and Southeast where electricity is cheap.
 
-- [Heat pump reference](/heat-pump/) — for electrification considerations
-- [Manual J load calculation](/manual-j/) — underlying sizing methodology
-- [Building science](/building-science/) — envelope effects on heating load
+## AFUE: What the Number Measures (and What It Misses)
+
+Annual Fuel Utilization Efficiency (AFUE) is the steady-state seasonal ratio of useful heat delivered to total fuel energy input, expressed as a percentage.<SourceCite id="ansi-z21-47-furnace" number={9} /> An 80% AFUE furnace turns 80% of the fuel's heating value into delivered indoor heat; the remaining 20% is lost as hot flue gases up the vent, casing losses to the equipment room, and ignition/standby losses.
+
+<DataTable
+  caption="AFUE bands and what the percentages physically mean (source: ANSI Z21.47 test methodology, DOE Energy Saver)"
+  columns={[
+    { key: 'band', label: 'AFUE band' },
+    { key: 'description', label: 'Description' },
+    { key: 'venting', label: 'Vent type' },
+    { key: 'lossPath', label: 'Where the lost 100-AFUE % goes' },
+  ]}
+  rows={[
+    { band: '78-80%', description: 'Federal minimum since 1992 (rising to 95% 2028-2029)', venting: 'Metal Type B vent', lossPath: 'Mostly hot flue gases (300-500°F)' },
+    { band: '90-93%', description: 'Non-condensing high-efficiency', venting: 'Metal Type B vent', lossPath: 'Hot flue gases (200-300°F)' },
+    { band: '95-97%', description: 'Condensing furnace (most common high-efficiency tier)', venting: 'PVC sidewall', lossPath: 'Cooler flue gases + condensate handling' },
+    { band: '98-99%', description: 'ENERGY STAR Most Efficient', venting: 'PVC sidewall', lossPath: 'Casing + minor flue losses' },
+  ]}
+/>
+
+**The condensing transition at 90% is a physical break, not just a marketing tier.** Below about 90% AFUE, flue gases leave the equipment hot enough that water vapor (a combustion byproduct) stays as vapor and exits the vent.
+
+Above 90% AFUE, the design extracts enough heat that water vapor condenses inside a secondary heat exchanger — recovering the latent heat of vaporization and depositing acidic condensate that must drain to a floor drain or condensate pump.<SourceCite id="doe-furnace-buying" number={2} />
+
+Condensing furnaces require PVC vent (the condensate is corrosive to metal), a slope for condensate flow, and a freeze-protected drain path.
+
+<Callout type="warn" title="What AFUE does not capture">
+AFUE excludes electricity used by the blower, which can be substantial — a single-speed PSC blower at ~750W running 1,500 hours per year consumes about 1,125 kWh per year, costing $183 at the US average $0.163/kWh. A variable-speed ECM blower at ~250W average uses about 1/3 as much.
+
+Two furnaces with identical AFUE can have $100+ different annual operating costs because one has a more efficient blower. ENERGY STAR Version 5.0 added ECM blower requirements to address this gap.
+</Callout>
+
+The federal minimum AFUE has been 78-80% since the 1992 NAECA standards. The DOE 2023 final rule raises minimums to 95% AFUE for nonweatherized gas furnaces (compliance dates 2028 for most categories, 2029 for weatherized units), which will effectively eliminate 80% AFUE production for residential applications by the end of the decade.<SourceCite id="doe-furnace-efficiency-standards" number={1} /> ENERGY STAR Version 5.0 currently requires ≥ 90% AFUE in southern regions and ≥ 95% AFUE in northern regions with ECM blowers.
+
+## 80 vs 95 AFUE: The Real Comparison
+
+The headline comparison: a 95% AFUE furnace burns about 16% less fuel per delivered BTU than an 80% AFUE furnace, because 95 / 80 = 1.1875, so each delivered BTU requires 1 / 1.1875 = 0.842 as much fuel input. The savings translate directly to annual gas bills, with the magnitude depending on heating-season fuel use.
+
+<AfueEfficiencyBreakdown />
+
+<DataTable
+  caption="Annual fuel cost comparison 80% vs 95% AFUE at varying heating loads (US average natural gas at $1.30/therm, 100,000 BTU/therm)"
+  columns={[
+    { key: 'climate', label: 'Climate / load' },
+    { key: 'annualBtu', label: 'Annual heat (MMBTU)', align: 'right' },
+    { key: 'therms80', label: 'Therms @ 80%', align: 'right' },
+    { key: 'cost80', label: 'Annual cost @ 80%', align: 'right' },
+    { key: 'therms95', label: 'Therms @ 95%', align: 'right' },
+    { key: 'cost95', label: 'Annual cost @ 95%', align: 'right' },
+    { key: 'savings', label: 'Annual savings', align: 'right' },
+  ]}
+  rows={[
+    { climate: 'Zone 2 (light heating)', annualBtu: '30', therms80: '375', cost80: '$488', therms95: '316', cost95: '$411', savings: '$77' },
+    { climate: 'Zone 4 (moderate)', annualBtu: '80', therms80: '1,000', cost80: '$1,300', therms95: '842', cost95: '$1,095', savings: '$205' },
+    { climate: 'Zone 5 (heavier)', annualBtu: '120', therms80: '1,500', cost80: '$1,950', therms95: '1,263', cost95: '$1,642', savings: '$308' },
+    { climate: 'Zone 6 (cold)', annualBtu: '160', therms80: '2,000', cost80: '$2,600', therms95: '1,684', cost95: '$2,189', savings: '$411' },
+    { climate: 'Zone 7 (very cold)', annualBtu: '210', therms80: '2,625', cost80: '$3,413', therms95: '2,211', cost95: '$2,874', savings: '$539' },
+  ]}
+/>
+
+Annual savings range from $77 (light heating, zone 2) to $539 (very cold, zone 7). The cost premium for a 95% AFUE unit over an 80% unit is typically $1,500-$2,500 at the equipment level, with another $400-$800 for the PVC vent run, condensate plumbing, and combustion-air piping that condensing equipment requires.<SourceCite id="doe-furnace-buying" number={2} />
+
+A $2,000 premium pays back in 4 years at zone 7 use, 6-7 years at zone 5, 10-11 years at zone 4, and 25+ years at zone 2.
+
+The 25C tax credit shifts the math substantially. The IRS Section 25C credit returns 30% of the installed cost up to $600 for a qualifying ≥97% AFUE gas furnace, which directly reduces the effective premium by up to $600.<SourceCite id="irs-25c-fact-sheet" number={11} /> In a zone 4 install, a $2,000 premium minus $600 credit becomes a $1,400 net premium with $205 annual savings — a 7-year payback rather than a 10-year one.
+
+The non-financial considerations also favor condensing units. The PVC sidewall vent can exit a basement or first-floor wall at any convenient location, freeing up the chimney for water heater venting or removal. Indoor air quality improves because sealed combustion eliminates back-drafting risk during high-wind events that can pull flue gases back into atmospheric units.
+
+## Sizing a Furnace Properly (Manual J First, Manual S Second)
+
+Furnace sizing follows the same two-step methodology as any forced-air heating equipment selection: Manual J produces the design heating load, and Manual S picks equipment whose output BTU/hr matches the load within allowed tolerances.<SourceCite id="acca-manual-j-8" number={4} />
+
+**Manual J output.** A whole-house Manual J calculation reports the design heating load at the 99% ASHRAE heating design temperature — the outdoor temperature exceeded only about 87 hours per year. For a tight 2,000 sq ft house in climate zone 4 with R-49 attic insulation, R-21 walls, R-30 floor, and triple-pane windows, the design heating load is typically 32,000-45,000 BTU/hr. The same house with R-13 walls, R-19 attic, double-pane windows, and 10 ACH50 infiltration can have a 55,000-75,000 BTU/hr design heating load.<SourceCite id="acca-manual-j-8" number={4} />
+
+<DataTable
+  caption="Manual S maximum oversizing tolerances for forced-air heating equipment (source: ANSI/ACCA 3 Manual S - 2014)"
+  columns={[
+    { key: 'equipmentType', label: 'Equipment type' },
+    { key: 'tolerance', label: 'Maximum output above Manual J heating load', align: 'right' },
+    { key: 'rationale', label: 'Why the tolerance exists' },
+  ]}
+  rows={[
+    { equipmentType: 'Single-stage gas furnace', tolerance: '+ 40%', rationale: 'Discrete capacity steps; nearest available unit may exceed need' },
+    { equipmentType: 'Two-stage gas furnace', tolerance: '+ 40%', rationale: 'Same discrete-step issue, but low stage runs longer cycles' },
+    { equipmentType: 'Modulating gas furnace', tolerance: '+ 40% to nominal; low fire matches low-load periods', rationale: 'Variable output 30-100% of nominal, more forgiving' },
+    { equipmentType: 'Heat pump (heating mode)', tolerance: '+ 15-25% over Manual J cooling load', rationale: 'Cooling-side oversizing dominates because heat pumps must size to both loads' },
+  ]}
+/>
+
+**The Manual S 40% tolerance for furnaces is larger than the 15-25% tolerance for AC** because furnaces come in discrete BTU/hr increments (typical residential sizes: 40k, 60k, 80k, 100k, 120k BTU/hr output).
+
+For a Manual J load of 47,000 BTU/hr, the contractor cannot order a 47k furnace — they pick from the 40k or 60k options, and 60k (+28% above load) is the right call. Going to 80k (+70% above load) is out of Manual S tolerance and produces the cycling and ductwork problems covered below.
+
+Two-stage and modulating furnaces handle the discrete-step problem better than single-stage units. A 100k BTU/hr two-stage furnace runs at 60-70k in low stage and 100k in high stage; the low stage matches mild-weather load while the high stage handles design conditions. A modulating furnace runs continuously between 30k and 100k. Both produce longer cycles, more even heating, and better duct-system performance than oversized single-stage equipment.
+
+## Fuel Type and Operating Cost by Region
+
+Furnace operating cost depends entirely on fuel choice and local fuel price. Calculating cost per million BTU of delivered heat normalizes for both efficiency and fuel content.
+
+<FuelCostPerMillionBtu />
+
+<DataTable
+  caption="Cost per million BTU of delivered heat by fuel type and equipment efficiency (US 2024-2025 average residential fuel prices)"
+  columns={[
+    { key: 'fuel', label: 'Fuel' },
+    { key: 'heatingValue', label: 'Heating value', align: 'right' },
+    { key: 'priceUnit', label: 'Price per unit (US avg)', align: 'right' },
+    { key: 'efficiency', label: 'Equipment AFUE', align: 'right' },
+    { key: 'costPerMmbtu', label: 'Cost per MMBTU delivered', align: 'right' },
+  ]}
+  rows={[
+    { fuel: 'Natural gas', heatingValue: '100,000 BTU/therm', priceUnit: '$1.30/therm', efficiency: '95%', costPerMmbtu: '$13.68' },
+    { fuel: 'Natural gas', heatingValue: '100,000 BTU/therm', priceUnit: '$1.30/therm', efficiency: '80%', costPerMmbtu: '$16.25' },
+    { fuel: 'Propane', heatingValue: '91,500 BTU/gal', priceUnit: '$2.85/gal', efficiency: '95%', costPerMmbtu: '$32.79' },
+    { fuel: 'Propane', heatingValue: '91,500 BTU/gal', priceUnit: '$2.85/gal', efficiency: '80%', costPerMmbtu: '$38.94' },
+    { fuel: 'Fuel oil (#2)', heatingValue: '138,500 BTU/gal', priceUnit: '$3.85/gal', efficiency: '85%', costPerMmbtu: '$32.69' },
+    { fuel: 'Electric resistance', heatingValue: '3,412 BTU/kWh', priceUnit: '$0.163/kWh', efficiency: '100%', costPerMmbtu: '$47.77' },
+    { fuel: 'Heat pump (HSPF2 8.5)', heatingValue: '8,500 BTU/kWh', priceUnit: '$0.163/kWh', efficiency: '249%', costPerMmbtu: '$19.18' },
+  ]}
+/>
+
+Natural gas at 95% AFUE is the cheapest US-average fuel for heating, at $13.68 per million BTU delivered.<SourceCite id="eia-natural-gas-residential" number={6} /> Propane and fuel oil run roughly 2.4× more expensive at $32-33 per million BTU. Electric resistance is the most expensive at $47.77 per million BTU. A modern heat pump (HSPF2 8.5) at the US average electricity price sits between natural gas and propane at $19.18 per million BTU.
+
+**Local prices change the ranking.** In states where natural gas is unavailable, propane and fuel oil are the only liquid-fuel options — and a heat pump beats both decisively even at high electricity prices. In Massachusetts where electricity averages $0.295/kWh, electric resistance hits $86 per million BTU but a HSPF2 9 heat pump still beats fuel oil. In Tennessee where electricity averages $0.115/kWh, a heat pump at $11.50 per million BTU beats every fossil option.<SourceCite id="eia-electricity-table-5-6-a" number={8} />
+
+The decision rule that emerges: where natural gas service exists at typical prices, 95% AFUE gas remains competitive with heat pumps on operating cost. Where natural gas does not exist or is expensive, heat pumps win clearly. The [heat pump reference hub](/heat-pump/) covers the heat-pump-versus-furnace decision in detail with worked examples.
+
+## Why Oversizing Shortens Furnace Life
+
+An oversized furnace produces five overlapping problems: short cycling, comfort swings, duct system stress, premature heat exchanger fatigue, and reduced effective AFUE.
+
+**Short cycling.** A furnace sized 60% above Manual J load reaches setpoint in 5-7 minutes during mild weather, then shuts off for 10-15 minutes before restarting. Each ignition cycle uses about 30 seconds of high-fire warmup before steady-state heating begins, and the post-cycle cooldown loses the rest of the flue temperature gradient to the chimney. A furnace cycling 8-12 times per hour in mild weather can run at 65-70% effective AFUE versus its 80%+ nameplate.<SourceCite id="acca-manual-s" number={5} />
+
+**Comfort swings.** Each cycle puts a slug of 110-130°F supply air into the duct system, raising room temperature 2-4°F above setpoint by the time the furnace shuts down. The room then cools back through and below setpoint before the next ignition. A correctly sized furnace runs longer cycles with less temperature overshoot.
+
+**Duct system stress.** A 100k BTU/hr furnace producing the same heat output as a 60k unit needs roughly 1.7× the airflow. Existing duct systems sized for the smaller unit cannot deliver that CFM; the new oversized blower hits static pressure limits, throws code faults, and ages the blower motor faster.
+
+**Heat exchanger fatigue.** Each ignition-shutdown cycle is a thermal stress event on the steel heat exchanger as it cycles from room temperature to 800-1000°F and back. The DOE estimates heat exchanger fatigue life is roughly 200,000-400,000 cycles for typical residential equipment. A unit cycling 25,000 times per heating season reaches end of life in 8-12 years; one cycling 8,000 times per season lasts 20-25 years.<SourceCite id="doe-furnace-buying" number={2} />
+
+The cumulative cost over a 20-year ownership period typically dwarfs the original sizing decision. A correctly sized 60k BTU/hr furnace serving a Manual J load of 50k BTU/hr costs less to install, runs at higher effective AFUE, lasts 5-8 years longer, and produces more comfortable heating than an oversized 100k BTU/hr unit in the same house.
+
+## Safety: Cracked Heat Exchangers and CO
+
+The heat exchanger is the metal partition separating combustion gases from the indoor air stream. It is the single most safety-critical component in a gas or oil furnace because any breach allows combustion products — including carbon monoxide — to enter the conditioned air.<SourceCite id="ansi-z21-47-furnace" number={9} />
+
+Cracks form from thermal cycling stress over many heating seasons. A heat exchanger that fires 25,000 times per season undergoes 25,000 expand-contract cycles per year; cracks initiate at stress concentrators (welds, sharp corners) after roughly 12-20 years of service in well-maintained units, sooner in oversized or poorly-maintained ones. A cracked heat exchanger cannot be repaired and requires furnace replacement for safety.
+
+<Callout type="danger" title="Carbon monoxide thresholds (EPA)">
+- 0-9 ppm: normal background indoor levels
+- 10-30 ppm: ventilate; investigate combustion appliances
+- 35 ppm: maximum 8-hour OSHA workplace exposure
+- 70 ppm: evacuate dwelling, call emergency services
+- 200+ ppm: immediate danger to life, headache within 1-3 hours
+- 800+ ppm: nausea, convulsions, loss of consciousness within 45 minutes
+- 1,600+ ppm: death within hours
+
+Source: EPA Indoor Air Quality guidance and OSHA workplace standards.<SourceCite id="epa-co-indoor" number={10} />
+</Callout>
+
+**The required safety measures are concrete:**
+
+- Install UL-listed CO detectors on every floor and within 15 feet of each bedroom; most state and local codes require this for any combustion-appliance-equipped home built or renovated after about 2010.
+- Service the furnace annually. The technician's combustion-analysis instruments measure CO in the flue and at the supply registers, detecting heat exchanger compromise before it becomes dangerous.
+- Replace any furnace where the technician finds visible heat exchanger cracking, regardless of detector readings.
+
+Sealed combustion units (typical of condensing/95% AFUE furnaces) reduce CO risk substantially compared to atmospheric units. The combustion chamber is closed to the indoor air, the combustion air comes from outdoors through a dedicated pipe, and exhaust gases leave through a separate dedicated pipe. A cracked heat exchanger in a sealed-combustion unit still produces CO entry into the indoor air stream, but the higher-pressure exhaust path makes leakage detection more sensitive.
+
+## The Heat-Pump-Replaces-Furnace Decision
+
+By 2026 the most consequential furnace question for many homeowners is not "80% or 95% AFUE?" but "furnace at all, or heat pump?" The economics favor heat pumps in more US households every year as electricity prices stay relatively flat, natural gas prices climb, federal incentives expand, and cold-climate heat pump equipment becomes commonplace.
+
+<Callout type="info" title="Five-question replacement decision frame">
+1. Is your existing furnace over 15 years old? (If yes, replacement is happening regardless — compare new heat pump vs new furnace, not vs the old furnace.)
+2. Do you also have central AC, and is it more than 12 years old? (If yes, a heat pump replaces both pieces of equipment for the cost of one install.)
+3. Is your natural gas rate above or below $1.50/therm?
+4. Is your electricity rate above or below $0.18/kWh?
+5. Does your household qualify for HEEHRA at 80% or 150% Area Median Income?
+</Callout>
+
+The math favors a heat pump replacement when: AC is also at end-of-life (one install replaces two systems), the household qualifies for HEEHRA rebates ($8,000 off install), the climate has substantial cooling demand (the heat pump earns its keep in both seasons), and local electricity rates are moderate to low. The 15-year ownership cost of a heat pump beats a new gas furnace + AC pair in most of these cases.
+
+The math favors keeping a furnace when: AC is brand new with 12+ years remaining, gas prices are below $1.00/therm and electricity is above $0.25/kWh (parts of the upper Midwest with cheap gas and expensive electricity), the climate is severely cold and the household prioritizes minimizing aux-heat-driven peak electric demand, or the existing furnace is less than 5 years old with 15+ years remaining.
+
+Dual-fuel (hybrid) systems split the difference. A heat pump handles all heating above a chosen lockout temperature (typically 30-35°F), and the gas furnace fires below that. In cold climates with both gas service and existing dual heating-cooling demand, dual fuel typically beats either system alone on 15-year operating cost while maintaining gas-furnace reliability for the coldest hours. The [heat pump reference hub](/heat-pump/) covers the comparison with worked examples.
+
+## Federal and State Incentives for High-Efficiency Furnaces
+
+Federal incentives for furnace replacement are smaller than for heat pumps but still meaningful for households committed to staying on natural gas.
+
+<DataTable
+  caption="2026 federal incentives for high-efficiency furnaces (source: IRS Fact Sheet 25C, DOE HEEHRA program documentation)"
+  columns={[
+    { key: 'program', label: 'Program' },
+    { key: 'qualifying', label: 'Qualifying equipment' },
+    { key: 'amount', label: 'Maximum amount', align: 'right' },
+    { key: 'mechanism', label: 'How it works' },
+  ]}
+  rows={[
+    {
+      program: 'IRA Section 25C — Gas/Propane/Oil Furnace',
+      qualifying: '≥ 97% AFUE gas, ≥ 95% AFUE oil',
+      amount: '$600 per year',
+      mechanism: 'Non-refundable tax credit, 30% of installed cost up to cap',
+    },
+    {
+      program: 'HEEHRA Section 50122',
+      qualifying: 'Heat pump only (no furnace eligibility)',
+      amount: '$8,000 (heat pump)',
+      mechanism: 'Point-of-sale rebate for income-qualifying households',
+    },
+    {
+      program: 'HOMES Section 50121',
+      qualifying: 'Whole-home retrofit, modeled or measured savings',
+      amount: 'Up to $8,000 / $4,000',
+      mechanism: 'Performance-based rebate, can include furnace replacement as part of package',
+    },
+  ]}
+/>
+
+The 25C credit applies only to ≥97% AFUE gas or ≥95% AFUE oil furnaces — federal-minimum 80% units are not eligible, and condensing 95% AFUE units fall just short of the 97% threshold for gas.<SourceCite id="irs-25c-fact-sheet" number={11} /> This effectively pushes high-efficiency-tier buyers toward the 97-98% AFUE options where the credit applies and away from the 95% AFUE tier where it does not.
+
+HEEHRA point-of-sale rebates do not cover furnaces — the program is heat-pump-only by design, intentionally accelerating electrification of US heating. A qualifying household replacing a furnace with a heat pump can stack the $2,000 25C heat pump credit with up to $8,000 HEEHRA, while the same household replacing a furnace with a new furnace cannot stack — and is limited to $600 maximum.<SourceCite id="doe-heehra" number={8} />
+
+State and utility incentives vary widely. Mass Save offers $1,000-$3,000 for 97% AFUE gas furnaces in Massachusetts. CenterPoint Energy offers $200-$500 in Minnesota and Texas. Most Pacific Northwest utilities offer zero gas furnace rebates as they push customers toward heat pumps. Check your state energy office and local gas utility for current programs.
+
+## What This Cluster Covers
+
+The furnace cluster is being expanded as part of the broader build-out, with the launch set focused on sizing and AFUE comparison. Planned articles:
+
+### Sizing references
+
+- Furnace sizing methodology (planned) — full Manual J + Manual S walkthrough with worked examples
+- Furnace sizing by square footage (planned) — programmatic per-sqft pages for common sizes
+
+### Efficiency and selection
+
+- 80 vs 95 AFUE detailed comparison (planned) — payback math by climate, dual-fuel break-even analysis
+- AFUE definition and limitations (planned) — what AFUE measures, what it misses
+
+### Related load and equipment topics
+
+- [Heat pump reference](/heat-pump/) — the most important furnace alternative for any 2026 replacement decision
+- [Manual J load calculation](/manual-j/) — produces the heating load that drives sizing
+- [Manual D duct design](/manual-d/) — the duct system that furnace airflow depends on
+- [Building science fundamentals](/building-science/) — envelope drivers of heating load
+
+### Calculators
+
+- [Manual J load calculator](/tools/manual-j-calculator/) — full envelope load math for planning-grade heating load estimate
+- [BTU calculator](/tools/btu-calculator/) — general BTU sizing for room or whole-house
+- [Heat pump size calculator](/tools/heat-pump-size-calculator/) — dual-load math when comparing furnace replacement to heat pump
 
 </article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<Sources sources={SOURCES} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-30" />
+</div>
+
+</Container>

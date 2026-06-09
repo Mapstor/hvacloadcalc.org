@@ -1,41 +1,465 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { Sources } from '@/components/article/Sources';
+import { SourceCite } from '@/components/article/SourceCite';
+import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { Callout } from '@/components/article/Callout';
+import { DataTable } from '@/components/data/DataTable';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { ManualSToleranceBands } from '@/components/svg/manual-s/ManualSToleranceBands';
+import { ClimateZonesQuickReference } from '@/components/svg/shared/ClimateZonesQuickReference';
 
 export const metadata = {
-  title: 'Manual S Residential Equipment Selection | hvacloadcalc.org',
+  alternates: { canonical: "/manual-s/" },
+  title: 'Manual S Equipment Selection: AHRI Matchup, SHR, Capacity Tolerances',
   description:
-    'ACCA Manual S equipment selection methodology for matching residential HVAC equipment capacity to Manual J load. AHRI matchup and sensible heat ratio.',
+    'ACCA Manual S equipment selection reference — AHRI matchup, sensible vs latent capacity, SHR, oversizing tolerances by equipment type, and NEEP CCASHP cold-climate selection.',
+  openGraph: {
+    title: 'Manual S Equipment Selection: A Reference Built on ACCA Methodology',
+    description:
+      'AHRI matchup, sensible vs latent capacity, SHR, oversizing tolerances, and cold-climate heat pump selection.',
+    type: 'article',
+    publishedTime: '2026-05-30',
+    modifiedTime: '2026-05-30',
+    authors: ['Jonathan Stowe'],
+    images: ['/opengraph-image'],
+  },
 };
 
-<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Manual S' }]} />
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'Manual S' },
+];
 
-<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Manual S' }]} />
+export const HEADINGS = [
+  { id: 'what-manual-s-is', text: 'What Manual S Is (and Why Manual J Alone Is Not Enough)', level: 2 },
+  { id: 'ahri-matchup-explained', text: 'AHRI Matchup: Why the Indoor and Outdoor Unit Must Be Tested Together', level: 2 },
+  { id: 'sensible-and-latent-capacity', text: 'Sensible and Latent Capacity at Real Indoor Conditions', level: 2 },
+  { id: 'sensible-heat-ratio-and-humid-climates', text: 'Sensible Heat Ratio and the Humid Climate Problem', level: 2 },
+  { id: 'manual-s-tolerances', text: 'Manual S Oversizing Tolerances by Equipment Type', level: 2 },
+  { id: 'variable-capacity-equipment', text: 'Variable-Capacity Equipment and the Modulation Sweet Spot', level: 2 },
+  { id: 'cold-climate-heat-pump-selection', text: 'Cold-Climate Heat Pump Selection Under NEEP CCASHP v4.0', level: 2 },
+  { id: 'reading-expanded-performance-data', text: 'Reading Expanded Performance Data', level: 2 },
+  { id: 'what-this-cluster-covers', text: 'What This Cluster Covers', level: 2 },
+];
+
+export const SOURCES = [
+  {
+    id: 'acca-manual-s',
+    title: 'Manual S — Residential Equipment Selection (ANSI/ACCA 3 Manual S - 2014)',
+    publisher: 'Air Conditioning Contractors of America (ACCA)',
+    year: 2014,
+    url: 'https://www.acca.org/standards/technical-manuals/manual-s',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'acca-manual-j-8',
+    title: 'Manual J — Residential Load Calculation, 8th Edition (ANSI/ACCA 2 Manual J - 2016)',
+    publisher: 'Air Conditioning Contractors of America',
+    year: 2016,
+    url: 'https://www.acca.org/standards/technical-manuals/manual-j',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'ahri-210-240',
+    title: 'ANSI/AHRI Standard 210/240-2023, Performance Rating of Unitary Air-Conditioning and Air-Source Heat Pump Equipment',
+    publisher: 'Air-Conditioning, Heating and Refrigeration Institute (AHRI)',
+    year: 2023,
+    url: 'https://www.ahrinet.org/search-standards/ahri-210240-2023-performance-rating-unitary-air-conditioning-air-source-heat-pump',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'ahri-directory',
+    title: 'AHRI Directory of Certified Product Performance (AHRI Reference Number search)',
+    publisher: 'Air-Conditioning, Heating and Refrigeration Institute',
+    year: 2025,
+    url: 'https://www.ahridirectory.org/',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'neep-cchp-spec-v4',
+    title: 'Cold Climate Air Source Heat Pump Specification, Version 4.0',
+    publisher: 'Northeast Energy Efficiency Partnerships (NEEP)',
+    year: 2024,
+    url: 'https://neep.org/heating-electrification/ccashp-specification-product-list',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'ashrae-fundamentals-2021-psychro',
+    title: 'ASHRAE Handbook of Fundamentals 2021, Chapter 1 (Psychrometrics) and Chapter 18 (Nonresidential Cooling and Heating Load Calculations)',
+    publisher: 'ASHRAE',
+    year: 2021,
+    url: 'https://www.ashrae.org/technical-resources/ashrae-handbook',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'doe-min-efficiency-2023',
+    title: '10 CFR Part 430 — Energy Conservation Standards for Residential Central Air Conditioners and Heat Pumps',
+    publisher: 'US Department of Energy',
+    year: 2023,
+    url: 'https://www.energy.gov/eere/buildings/articles/doe-finalizes-stronger-efficiency-standards-residential-central-air',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'energystar-hp-v6-1',
+    title: 'ENERGY STAR Program Requirements for Central Air Conditioners and Air-Source Heat Pumps, Version 6.1',
+    publisher: 'US EPA / ENERGY STAR',
+    year: 2024,
+    url: 'https://www.energystar.gov/products/spec/central_air_conditioner_and_heat_pump_specification_version_6_1_pd',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+];
+
+export const FAQ_ITEMS = [
+  {
+    q: 'What is Manual S in one sentence?',
+    a: 'Manual S is the ACCA methodology for selecting HVAC equipment whose published capacity (at AHRI rating conditions) matches the Manual J load within specified tolerances, while also verifying that the equipment\'s sensible and latent capacities at actual indoor design conditions cover both components of the load.',
+  },
+  {
+    q: 'Why is Manual J not enough on its own?',
+    a: 'Manual J tells you how much heating and cooling the house needs. It says nothing about how much capacity any specific piece of equipment delivers at your local design conditions. Manual S adds three checks: (1) is the AHRI nameplate capacity within tolerance of the Manual J load, (2) does the equipment have enough sensible capacity at your indoor design dew point, and (3) does it have enough latent capacity at your wet-bulb cooling design condition. Skipping Manual S can result in equipment that meets the Manual J total load but leaves the house humid in summer or short on heating capacity at the design heating temperature.',
+  },
+  {
+    q: 'What is AHRI matchup?',
+    a: "AHRI matchup is the certification that a specific indoor unit (coil + air handler or furnace) and a specific outdoor unit (condenser) have been tested together and meet their published combined capacity and efficiency ratings. The AHRI Reference Number (ARN) is the tracking identifier; each ARN corresponds to one matched combination. A condenser tested with one coil cannot be installed with a different coil and assumed to perform the same — the matchup AHRI certified is the only one with verified rated performance. The AHRI Directory at ahridirectory.org publishes every certified matchup.",
+  },
+  {
+    q: 'What is sensible heat ratio (SHR)?',
+    a: 'Sensible heat ratio is the fraction of total cooling capacity that goes to sensible cooling (lowering temperature) versus latent cooling (removing moisture). SHR = sensible capacity / total capacity. In dry climates SHR can be 0.85-0.95 (most cooling work is temperature drop). In humid climates SHR drops to 0.65-0.75 because a quarter to a third of the cooling work is removing water vapor from indoor air. Manual S compares the equipment\'s SHR at indoor design conditions to the home\'s load SHR; mismatch produces either humidity problems (equipment SHR too high) or undersized sensible cooling (equipment SHR too low).',
+  },
+  {
+    q: 'How much oversizing does Manual S allow?',
+    a: "Cooling: 15% above Manual J cooling load for single-stage equipment, 25% for two-stage and variable-speed equipment, 40% for variable-speed heat pumps in heating-dominated applications. Heating: Manual S generally allows furnace output up to 40% above Manual J heating load because of discrete equipment capacity steps; heat pumps must additionally satisfy the cooling tolerance, which is usually more constraining. Beyond Manual S tolerances the equipment is technically out of compliance — and starts producing the short-cycling, humidity, and durability problems that oversizing-driven failures look like.",
+  },
+  {
+    q: 'How is heat pump selection different from AC selection under Manual S?',
+    a: 'Heat pumps must satisfy both the cooling Manual S tolerance (typical 15-25% above Manual J cooling load) AND the heating Manual S tolerance (heating output adequate for Manual J heating load, with a defensible balance point). Because heating and cooling loads are rarely equal, the size that fits both constraints is often a compromise — the right answer depends on which constraint is tighter at the specific house. For cold climates with heating-load-dominated math, the heat pump may need to be cold-climate-certified (NEEP CCASHP v4.0) to maintain enough capacity at low temperatures to hit the heating constraint without massive aux runtime.',
+  },
+  {
+    q: 'What is the NEEP CCASHP specification?',
+    a: 'The Northeast Energy Efficiency Partnerships Cold Climate Air Source Heat Pump (CCASHP) specification defines minimum capacity retention at low outdoor temperatures for heat pumps marketed as cold-climate-capable. Version 4.0 (2024) requires at least 70% of 47°F heating capacity at 17°F, at least 58% at 5°F, COP ≥ 1.75 at 5°F, and HSPF2 ≥ 8.5. About 800+ residential models qualify for the NEEP product list as of 2024; this list is the authoritative reference for cold-climate heat pump selection.',
+  },
+  {
+    q: 'How do I read an AHRI rated capacity table?',
+    a: 'The AHRI Reference Number on the equipment label maps to a row in the public AHRI Directory. That row publishes: nominal cooling capacity at A2 (95°F/80°F/67°F WB), sensible cooling capacity at A2, total heating capacity at H1 (47°F/70°F), heating capacity at H3 (17°F/70°F) for heat pumps, and heating capacity at H4 (5°F) for CCASHP-certified units. Efficiency metrics include SEER2, EER2, HSPF2. Manufacturer "expanded performance data" tables go further, publishing capacity at many additional indoor and outdoor conditions — Manual S equipment selection uses the manufacturer expanded tables, not just the AHRI ratings.',
+  },
+];
+
+export const RELATED = [
+  {
+    title: 'Manual J load calculation',
+    url: '/manual-j/',
+    description:
+      'Produces the heating and cooling loads Manual S matches equipment against.',
+  },
+  {
+    title: 'Heat pump reference hub',
+    url: '/heat-pump/',
+    description:
+      'Heat pump equipment selection details, including CCASHP and balance-point math.',
+  },
+  {
+    title: 'AC reference hub',
+    url: '/ac/',
+    description:
+      'AC sizing principles including sensible vs latent capacity and the Manual S tolerance.',
+  },
+  {
+    title: 'Manual D duct design',
+    url: '/manual-d/',
+    description:
+      'Downstream of equipment selection — Manual D delivers the airflow the selected equipment requires.',
+  },
+];
+
+export const FRONTMATTER = {
+  title: 'Manual S Equipment Selection: AHRI Matchup, SHR, Capacity Tolerances',
+  h1: 'Manual S Residential Equipment Selection: A Sourced Reference',
+  meta_description:
+    'A reference hub for ACCA Manual S residential equipment selection — AHRI matchup requirements, sensible vs latent capacity, sensible heat ratio targets, oversizing tolerances by equipment type, and how cold-climate heat pump selection works under the NEEP CCASHP v4.0 specification.',
+  url: '/manual-s/',
+  date_published: '2026-05-30',
+  last_reviewed: '2026-05-30',
+  target_keyword: 'manual s',
+  secondary_keywords: ['ahri matchup', 'sensible heat ratio', 'shr', 'manual s tolerance', 'equipment selection', 'expanded performance data'],
+  sources: SOURCES,
+  faq: FAQ_ITEMS,
+  parent_title: 'Home',
+};
+
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={2500} />
+
+<JsonLdBreadcrumb items={BREADCRUMBS} />
+
+<Container>
+
+<Breadcrumbs items={BREADCRUMBS} />
+
+<ArticleHeader
+  h1="Manual S Residential Equipment Selection: A Sourced Reference"
+  description="ACCA Manual S methodology — AHRI matchup verification, sensible and latent capacity at actual indoor conditions, sensible heat ratio targets by climate, oversizing tolerances by equipment type, and cold-climate heat pump selection under NEEP CCASHP v4.0."
+  datePublished="2026-05-30"
+  lastReviewed="2026-05-30"
+  readingTimeMinutes={11}
+/>
+
+<KeyTakeaways
+  items={[
+    'Manual S adds three checks Manual J does not perform: AHRI matchup verification, sensible-capacity-at-design-conditions confirmation, and latent-capacity check against the home\'s SHR — without these, equipment can meet the Manual J total load but still leave the house humid or short on heating capacity at design.',
+    'Manual S cooling tolerances: 15% above Manual J cooling load for single-stage equipment, 25% for two-stage and variable-speed equipment, 40% for variable-speed heat pumps in heating-dominated installations.',
+    'Sensible heat ratio (SHR) varies from 0.65-0.75 in humid climates to 0.85-0.95 in dry climates; mismatched equipment SHR produces the "cold but sticky" pattern when SHR is too high or undersized sensible cooling when too low.',
+    'AHRI matchup means the indoor coil and outdoor condenser have been tested as a specific paired combination — substituting either side with a different model voids the certified performance, which matters for both warranty and rebate documentation.',
+    'NEEP CCASHP v4.0 (2024) certifies heat pumps that retain at least 70% of 47°F heating capacity at 17°F outdoor and at least 58% at 5°F, with COP ≥ 1.75 at 5°F — the authoritative spec for cold-climate heat pump selection.',
+  ]}
+/>
+
+<ClimateZonesQuickReference />
+
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
 
 <article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
 
-# Manual S Residential Equipment Selection
+## What Manual S Is (and Why Manual J Alone Is Not Enough)
 
-ACCA Manual S is the methodology for matching equipment to the load Manual J calculated. The principle is straightforward: equipment performance varies with outdoor and indoor conditions, so the capacity stamped on the unit at AHRI rating conditions isn't necessarily the capacity available at your local design temperature. Manual S walks through the corrections.
+ACCA Manual S is the methodology for selecting specific equipment whose performance matches the loads Manual J calculated.<SourceCite id="acca-manual-s" number={1} /> Manual J produces two numbers: heating load and cooling load, both at the local design conditions. Manual S takes those numbers and selects a specific make, model, and configuration of equipment that satisfies three constraints.
 
-This section covers the AHRI matchup process, sensible versus latent capacity, sensible heat ratio (SHR), the implications for variable-capacity equipment, and how cold-climate heat pump selection differs from conventional AC selection.
+<Callout type="info" title="The Manual S three-check structure">
+(1) AHRI matchup verification: the indoor and outdoor units must be a certified combination on file with AHRI. (2) Total capacity within tolerance: nominal AHRI capacity must be within the Manual S allowed band of the Manual J load. (3) Component capacity adequacy at actual design conditions: the equipment's sensible and latent capacities at the home's specific indoor design dew point and outdoor design wet bulb must each cover their respective load components.
+</Callout>
 
-## What this section covers
+The first check (AHRI matchup) ensures the published performance applies to the installation. The second check (capacity tolerance) ensures the equipment is neither absurdly oversized nor undersized. The third check (component adequacy at actual conditions) ensures the equipment delivers the right balance of sensible cooling and dehumidification at the home's specific climate. All three checks together produce equipment that can actually carry the loads Manual J described.
 
-- **AHRI matchup** — verifying the outdoor and indoor unit combination
-- **Sensible vs latent capacity** — sizing for the dehumidification you actually need
-- **Sensible heat ratio (SHR)** — what 0.75 means in humid vs dry climates
-- **Variable-capacity equipment** — modulation range and selection
-- **Cold-climate heat pump selection** — capacity at 17°F and 5°F
+**A common failure mode in field installations is meeting check 2 but failing check 3.** The contractor picks an oversized AC because it matches the rounded-up Manual J load on the cooling side, then discovers that at the home's humid summer condition the equipment's sensible heat ratio is so high (because it cycles quickly to setpoint) that latent cooling cannot keep up.
 
-## Related calculators
+The house holds 73°F at 65% RH — which feels worse than 75°F at 50% RH. Manual S, performed correctly, catches this before equipment ships.
 
-- [Heat pump size calculator](/tools/heat-pump-size-calculator/) — incorporates Manual S adjustments
-- [AC size calculator](/tools/ac-size-calculator/) — sensible-load-aware sizing
+## AHRI Matchup: Why the Indoor and Outdoor Unit Must Be Tested Together
 
-## Related topics
+AHRI Standard 210/240-2023 specifies how residential AC and heat pump equipment is tested for certified capacity and efficiency.<SourceCite id="ahri-210-240" number={3} /> The test is performed on a specific indoor unit + outdoor unit combination — not on either component in isolation. The results are published in the AHRI Directory and identified by AHRI Reference Number (ARN).
 
-- [Manual J load calculation](/manual-j/) — the load Manual S matches equipment to
-- [Heat pump reference](/heat-pump/) — performance at low temperatures
+A condenser tested with Coil A and rated at 36,000 BTU/hr cooling at AHRI conditions does not necessarily deliver 36,000 BTU/hr when paired with Coil B. The reasons: different coil surface area changes refrigerant superheat behavior, different blower airflow shifts the temperature-pressure-flow balance, different metering devices (TXV vs piston vs EEV) change refrigerant feed rate. The condenser is the same hardware, but the system's performance is a property of the matched combination.
+
+<DataTable
+  caption="What AHRI matchup verification produces (source: AHRI Directory of Certified Product Performance)"
+  columns={[
+    { key: 'metric', label: 'Metric' },
+    { key: 'description', label: 'What it certifies' },
+  ]}
+  rows={[
+    { metric: 'AHRI Reference Number (ARN)', description: 'Unique 7-9 digit identifier for one specific indoor+outdoor unit combination' },
+    { metric: 'Nominal cooling capacity', description: 'Total cooling BTU/hr at 95°F outdoor / 80°F indoor / 67°F WB' },
+    { metric: 'Sensible cooling capacity (at A2)', description: 'Portion of cooling that goes to temperature reduction' },
+    { metric: 'SEER2', description: 'Seasonal Energy Efficiency Ratio under 2023 test protocol' },
+    { metric: 'EER2', description: 'Steady-state efficiency at 95°F design point' },
+    { metric: 'Heating capacity at H1 (47°F)', description: 'Heat pumps only — nominal heating BTU/hr' },
+    { metric: 'Heating capacity at H3 (17°F)', description: 'Heat pumps only — low-temp heating BTU/hr' },
+    { metric: 'Heating capacity at H4 (5°F)', description: 'CCASHP-certified heat pumps only — cold-climate heating BTU/hr' },
+    { metric: 'HSPF2', description: 'Heat pumps only — Heating Seasonal Performance Factor under 2023 protocol' },
+  ]}
+/>
+
+The AHRI Directory at ahridirectory.org is the authoritative public source for this data.<SourceCite id="ahri-directory" number={4} /> Any contractor quote should be checkable: the AHRI Reference Number for the proposed system maps to a public row showing every metric. If the row's nominal cooling capacity does not match the contractor's quoted capacity, the contractor is quoting the wrong number or the wrong matchup.
+
+For Manual S compliance, the selected matchup must be a certified ARN — substituting equipment after the matchup was specified voids the certified performance. This matters most for rebate documentation (HEEHRA, state energy programs) and warranty claims (manufacturers may refuse warranty work on unmatched combinations).
+
+## Sensible and Latent Capacity at Real Indoor Conditions
+
+AHRI rates equipment at a fixed indoor condition: 80°F dry bulb, 67°F wet bulb. At a different indoor condition, capacity changes — both the total and the split between sensible and latent.
+
+**The physical reason:** latent capacity is the rate at which the coil condenses water vapor out of the air passing through it. Water vapor condenses when the coil surface is below the entering air's dew point, and the rate scales with the difference (coil temperature minus dew point). At lower indoor dew points (drier air), the coil sees less humidity differential and condenses less water vapor — sensible capacity goes up because the same coil is doing less latent work.<SourceCite id="ashrae-fundamentals-2021-psychro" number={6} />
+
+<DataTable
+  caption="How equipment capacity shifts with indoor conditions (3-ton AHRI-rated unit, manufacturer expanded performance data example)"
+  columns={[
+    { key: 'condition', label: 'Indoor condition' },
+    { key: 'total', label: 'Total capacity (BTU/hr)', align: 'right' },
+    { key: 'sensible', label: 'Sensible capacity (BTU/hr)', align: 'right' },
+    { key: 'latent', label: 'Latent capacity (BTU/hr)', align: 'right' },
+    { key: 'shr', label: 'SHR', align: 'right' },
+  ]}
+  rows={[
+    { condition: '80°F DB / 67°F WB (AHRI A2)', total: '36,000', sensible: '26,800', latent: '9,200', shr: '0.74' },
+    { condition: '78°F DB / 65°F WB (typical comfort)', total: '34,500', sensible: '26,500', latent: '8,000', shr: '0.77' },
+    { condition: '75°F DB / 63°F WB (dry climate)', total: '32,000', sensible: '26,000', latent: '6,000', shr: '0.81' },
+    { condition: '72°F DB / 60°F WB (very dry)', total: '29,500', sensible: '26,500', latent: '3,000', shr: '0.90' },
+    { condition: '82°F DB / 71°F WB (humid)', total: '38,500', sensible: '27,200', latent: '11,300', shr: '0.71' },
+  ]}
+/>
+
+**The pattern:** at lower indoor dew points (drier conditions), latent capacity drops sharply while sensible capacity stays roughly flat. At higher indoor dew points (more humid conditions), total and latent capacity both rise, sensible stays flat, and SHR drops.<SourceCite id="acca-manual-s" number={1} />
+
+**The Manual S implication:** the load SHR (calculated by Manual J for the specific home and climate) must match the equipment's SHR at the actual operating condition. A house with Manual J cooling load of 30,000 BTU/hr at SHR 0.75 needs equipment that delivers 30,000 BTU/hr at SHR ≤ 0.75 at the local cooling design condition. Picking equipment with higher SHR leaves the latent load uncovered and produces humid indoor conditions.
+
+## Sensible Heat Ratio and the Humid Climate Problem
+
+SHR mismatches show up most often in cooling-dominated humid climates: zones 1A (Miami), 2A (Houston), 3A (Atlanta) and along the Gulf Coast. In these locations, the Manual J load SHR is typically 0.65-0.75 — meaning a quarter to a third of the cooling work is removing water vapor.
+
+<Callout type="warn" title="The classic SHR-mismatch failure">
+A contractor uses Manual J to determine "the house needs 36,000 BTU/hr of cooling at the Houston cooling design condition." They select a single-stage 3-ton AC because that's the right total tonnage.
+
+The unit at the home's actual indoor condition (78°F at design) delivers 34,500 BTU/hr at SHR 0.77. The Manual J load was 30,000 BTU/hr sensible + 6,000 BTU/hr latent — SHR 0.83 — but they ignored the split.
+
+The unit covers the sensible load fine but only delivers 7,900 BTU/hr latent at design, leaving zero latent margin and zero capacity to handle humid weeks above design. Result: 73°F at 62% RH indoor, customer complaint, contractor blames "humidity, can't really fix it." The fix was a two-stage unit running long cycles, not a bigger unit.
+</Callout>
+
+The correct Manual S approach in humid climates: verify equipment latent capacity at the local indoor design SHR. Variable-speed equipment helps because running longer cycles at lower capacity removes more moisture per BTU of cooling delivered. Single-stage equipment in humid climates needs to be sized right at the Manual J cooling load (not oversized) so cycles are long enough to dehumidify.
+
+**In dry climates** (zones 2B, 3B, 4B — Phoenix, Las Vegas, Albuquerque) the problem inverts. Manual J load SHR is 0.90+ because there is almost no latent load.
+
+Equipment selected with low SHR (because that is what the catalog defaults to) provides more latent capacity than needed at the cost of sensible capacity — and the unit cannot keep up on the hottest dry afternoons. Manual S for dry climates picks equipment with SHR matched to the high-SHR load, often single-stage cooling-only configurations.
+
+## Manual S Oversizing Tolerances by Equipment Type
+
+Manual S permits oversizing within specified bands, with tighter tolerances for equipment types whose performance degrades more with oversizing.
+
+<ManualSToleranceBands />
+
+<DataTable
+  caption="Manual S maximum oversizing tolerances (source: ANSI/ACCA 3 Manual S - 2014)"
+  columns={[
+    { key: 'equipmentType', label: 'Equipment type' },
+    { key: 'application', label: 'Application' },
+    { key: 'maxOversize', label: 'Maximum oversize above Manual J', align: 'right' },
+    { key: 'rationale', label: 'Why the tolerance exists' },
+  ]}
+  rows={[
+    { equipmentType: 'Single-stage AC', application: 'Cooling only', maxOversize: '+15%', rationale: 'Cycles aggressively at low load; oversizing degrades comfort fast' },
+    { equipmentType: 'Two-stage AC', application: 'Cooling only', maxOversize: '+25%', rationale: 'Low stage runs longer at part load; more forgiving' },
+    { equipmentType: 'Variable-speed AC', application: 'Cooling only', maxOversize: '+25%', rationale: 'Modulates 30-100% of nominal; widest part-load range' },
+    { equipmentType: 'Single-stage heat pump (cooling sizing)', application: 'Cooling-dominated install', maxOversize: '+15% over Manual J cooling load', rationale: 'Same cooling-mode concerns as AC' },
+    { equipmentType: 'Variable-speed heat pump (cooling)', application: 'Cooling-dominated install', maxOversize: '+25% over Manual J cooling load', rationale: 'Modulating low stage handles mild cooling without cycling' },
+    { equipmentType: 'Variable-speed heat pump (heating-dominated)', application: 'Heating-dominated install', maxOversize: '+40% over Manual J cooling load', rationale: 'Extra heating capacity at low temps justifies higher cooling tolerance' },
+    { equipmentType: 'Furnace (any type)', application: 'Heating only', maxOversize: '+40% over Manual J heating load', rationale: 'Discrete BTU/hr increments; rounding up to next size produces +20-40%' },
+    { equipmentType: 'Boiler (hydronic)', application: 'Heating only', maxOversize: '+40% over Manual J heating load', rationale: 'Same discrete-step argument as furnace' },
+  ]}
+/>
+
+The asymmetry between AC and furnace tolerances reflects real differences in how the equipment fails when oversized. An oversized AC short-cycles, fails to dehumidify, and produces audible thumps when starting. An oversized furnace short-cycles and wears the heat exchanger but heats the house — discomfort is subtle, not flagrant. Manual S calibrates tolerances to the perceived comfort failure threshold.
+
+Going beyond the tolerance is technically out of compliance with Manual S. In permit-required installations and in rebate-program audits, the documentation must show the proposed equipment within tolerance, with calculations showing both Manual J load and proposed AHRI capacity. A residential install at +50% above Manual J cooling load is not eligible for HEEHRA rebates and may fail code inspection.
+
+## Variable-Capacity Equipment and the Modulation Sweet Spot
+
+Variable-speed equipment changes the Manual S conversation because it operates across a capacity range, not at a single discrete output. A modulating heat pump rated 36,000 BTU/hr at AHRI can typically run anywhere from 11,000-12,000 BTU/hr (low stage, ~30%) to 36,000 BTU/hr (high stage, 100%) continuously.<SourceCite id="energystar-hp-v6-1" number={8} />
+
+The sweet spot of variable-speed operation is the broad middle range — say 40-80% of nominal. In that range the compressor runs efficiently, the system rarely cycles, and humidity control is excellent because long cycles favor latent removal. The failure modes appear at the extremes: at less than 30% load, the equipment cycles like a single-stage; at greater than 100% (which means the equipment can't keep up), aux heat or backup AC must engage.
+
+The Manual S implication for variable-speed equipment: oversizing the equipment moves the typical operating point to the low-modulation end where cycling resumes. A 5-ton variable-speed heat pump in a house needing 3 tons of cooling capacity runs in the 15-20% modulation range most of the time, which is below the equipment's modulation floor and produces single-stage-like cycling. The +25% tolerance exists to prevent this; +50% does not.
+
+Variable-speed equipment also tolerates seasonal mismatch better than single-stage. A 4-ton variable-speed heat pump in a house with 4-ton cooling load and 3-ton heating load runs efficiently across both seasons. The same 4-ton single-stage unit would short-cycle in mild winter weather because it cannot modulate below its single output point.
+
+## Cold-Climate Heat Pump Selection Under NEEP CCASHP v4.0
+
+Cold-climate heat pump selection is the most consequential Manual S decision in heating-dominated climates. The Northeast Energy Efficiency Partnerships (NEEP) Cold Climate Air Source Heat Pump (CCASHP) Specification v4.0 defines the minimum performance for equipment marketed as cold-climate-capable.<SourceCite id="neep-cchp-spec-v4" number={5} />
+
+<DataTable
+  caption="NEEP CCASHP Specification v4.0 minimum requirements (effective January 2024)"
+  columns={[
+    { key: 'requirement', label: 'Requirement' },
+    { key: 'threshold', label: 'Minimum threshold', align: 'right' },
+    { key: 'comparison', label: 'Comparison to non-CCASHP' },
+  ]}
+  rows={[
+    { requirement: 'Heating capacity at 17°F (relative to 47°F)', threshold: '≥ 70% of 47°F capacity', comparison: 'Standard heat pumps typically deliver 55-65% at 17°F' },
+    { requirement: 'Heating capacity at 5°F (relative to 47°F)', threshold: '≥ 58% of 47°F capacity', comparison: 'Standard heat pumps typically deliver 30-40% at 5°F' },
+    { requirement: 'COP at 5°F outdoor', threshold: '≥ 1.75', comparison: 'Above electric resistance (COP 1.0); standard heat pumps drop to 1.2-1.4 at 5°F' },
+    { requirement: 'HSPF2', threshold: '≥ 8.5 (Region IV)', comparison: 'Above ENERGY STAR Version 6.1 minimum of 8.1' },
+    { requirement: 'Variable-speed compressor', threshold: 'Required', comparison: 'Single-stage equipment does not qualify' },
+    { requirement: 'Defrost control', threshold: 'Demand-defrost (not time-based)', comparison: 'Reduces defrost cycle frequency in dry cold' },
+  ]}
+/>
+
+The NEEP product list at neep.org/heating-electrification/ccashp-specification-product-list publishes about 800 qualifying models as of 2024. Models on the list have submitted manufacturer expanded performance data showing they meet the v4.0 thresholds; models not on the list either fail the thresholds or have not been submitted.
+
+**For cold-climate Manual S selection, the workflow is:**
+
+1. Determine the heating Manual J load at local design temperature.
+2. Determine local design temperature (Minneapolis -11°F, Boston 9°F, Burlington -8°F).
+3. Consult the manufacturer expanded performance data for capacity at design temperature.
+4. Verify capacity covers the Manual J load with reasonable aux margin.
+5. Check that the cooling-side AHRI nominal capacity is within Manual S cooling tolerance of the Manual J cooling load.
+
+In practice, a Minneapolis house with 50,000 BTU/hr heating load at -11°F and 30,000 BTU/hr cooling load at 88°F often ends up with a 4-ton CCASHP unit.
+
+That unit delivers 25,000 BTU/hr at -11°F (matched with a 25,000 BTU/hr electric aux strip for design-day margin) and 48,000 BTU/hr nominal AHRI cooling — within the +60% over-Manual-J-cooling tolerance allowed for variable-speed heat pumps in heating-dominated climates.
+
+## Reading Expanded Performance Data
+
+The AHRI Directory publishes summary ratings. Manufacturer expanded performance data tables go further, publishing capacity at many specific combinations of outdoor temperature, indoor temperature, and (for AC) indoor wet bulb. Manual S equipment selection at the design conditions specific to a home is done from the expanded tables, not from the AHRI summary.
+
+<DataTable
+  caption="Example manufacturer expanded performance table excerpt (3-ton heat pump, total cooling at varying conditions)"
+  columns={[
+    { key: 'outdoor', label: 'Outdoor temp (°F)', align: 'right' },
+    { key: 'cfm', label: 'CFM' },
+    { key: 'total75', label: 'Total cooling at 75°F DB / 63°F WB', align: 'right' },
+    { key: 'total80', label: 'Total cooling at 80°F DB / 67°F WB', align: 'right' },
+    { key: 'total85', label: 'Total cooling at 85°F DB / 71°F WB', align: 'right' },
+  ]}
+  rows={[
+    { outdoor: '85°F', cfm: '1,200', total75: '34,800', total80: '36,600', total85: '38,400' },
+    { outdoor: '95°F (AHRI A2)', cfm: '1,200', total75: '32,500', total80: '34,200', total85: '35,900' },
+    { outdoor: '105°F', cfm: '1,200', total75: '30,100', total80: '31,700', total85: '33,200' },
+    { outdoor: '115°F', cfm: '1,200', total75: '27,600', total80: '29,100', total85: '30,500' },
+  ]}
+/>
+
+The table shows that the same nominal 3-ton heat pump delivers 35,900 BTU/hr cooling at 95°F outdoor with humid indoor conditions but only 30,100 BTU/hr at 105°F outdoor with dry indoor conditions. For a Phoenix install at 108°F cooling design, the equipment delivers about 6% less total capacity than the AHRI nameplate would suggest — a difference that Manual J + Manual S calculations using only AHRI summary data would miss.
+
+Most manufacturers publish expanded performance data as PDF documents on their commercial-channel websites. The data is sometimes also available through proprietary contractor software (Wrightsoft, Elite, Cool Calc) integrated with each manufacturer's product database. The [AHRI Directory](https://www.ahridirectory.org) is the authoritative source for the summary ratings; manufacturer pages are the source for the expanded data.
+
+## What This Cluster Covers
+
+The Manual S cluster is being expanded as part of the broader build-out. Planned articles:
+
+- AHRI matchup explained (planned) — how to read an AHRI Reference Number and what it certifies
+- Sensible heat ratio in equipment selection (planned) — how to match equipment SHR to climate SHR
+- Manual S tolerances by equipment type (planned) — the full ANSI/ACCA 3 tolerance reference
+- Cold-climate heat pump selection walkthrough (planned) — NEEP CCASHP v4.0 selection methodology with worked examples
+
+### Related load and equipment topics
+
+- [Manual J load calculation](/manual-j/) — produces the loads Manual S selects equipment against
+- [Heat pump reference hub](/heat-pump/) — heat pump equipment characteristics
+- [AC reference hub](/ac/) — AC equipment characteristics
 - [Manual D duct design](/manual-d/) — downstream of equipment selection
 
+### Calculators
+
+- [Heat pump size calculator](/tools/heat-pump-size-calculator/) — applies Manual J + Manual S for heat pump selection
+- [AC size calculator](/tools/ac-size-calculator/) — applies Manual J + Manual S for AC selection
+- [Manual J load calculator](/tools/manual-j-calculator/) — produces the loads that drive Manual S
+
 </article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<Sources sources={SOURCES} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-30" />
+</div>
+
+</Container>

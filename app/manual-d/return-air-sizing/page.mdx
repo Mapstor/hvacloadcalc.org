@@ -19,9 +19,10 @@ import { MultiRoomReturnStrategies } from '@/components/svg/return-air/MultiRoom
 import { ReturnSizingDecisionTree } from '@/components/svg/return-air/ReturnSizingDecisionTree';
 
 export const metadata = {
+  alternates: { canonical: "/manual-d/return-air-sizing/" },
   title: 'Return Air Sizing: How to Size Returns for Residential HVAC',
   description:
-    "Return air sizing is often overlooked but affects comfort, efficiency, and equipment life. Here's how to size returns correctly per CFM, velocity, and code.",
+    "Return air sizing — why undersized returns starve airflow, the closed-door problem in 1990s layouts, CFM-to-grille face-velocity targets, transfer grille and jump duct strategies.ment life. Here's how to size returns correctly per CFM, velocity, and code.",
   openGraph: {
     title: 'Return Air Sizing: Velocity, CFM, and Layout',
     description:
@@ -29,7 +30,7 @@ export const metadata = {
     type: 'article',
     publishedTime: '2026-05-18',
     modifiedTime: '2026-05-18',
-    authors: ['Jonathan S.'],
+    authors: ['Jonathan Stowe'],
     images: ['/opengraph-image'],
   },
 };
@@ -174,7 +175,7 @@ export const FRONTMATTER = {
   title: 'Return Air Sizing: How to Size Returns for Residential HVAC',
   h1: 'Return Air Sizing Explained',
   meta_description:
-    "Return air sizing is often overlooked but affects comfort, efficiency, and equipment life. Here's how to size returns correctly per CFM, velocity, and code.",
+    "Return air sizing — why undersized returns starve airflow, the closed-door problem in 1990s layouts, CFM-to-grille face-velocity targets, transfer grille and jump duct strategies.ment life. Here's how to size returns correctly per CFM, velocity, and code.",
   url: '/manual-d/return-air-sizing/',
   date_published: '2026-05-18',
   last_reviewed: '2026-05-18',
@@ -212,7 +213,7 @@ export const FRONTMATTER = {
 
 <ArticleHeader
   h1="Return Air Sizing Explained"
-  description="Return air sizing is often overlooked but affects comfort, efficiency, and equipment life. Here's how to size returns correctly per CFM, velocity, and code."
+  description="Return air sizing — why undersized returns starve airflow, the closed-door problem in 1990s layouts, CFM-to-grille face-velocity targets, transfer grille and jump duct strategies.ment life. Here's how to size returns correctly per CFM, velocity, and code."
   datePublished="2026-05-18"
   lastReviewed="2026-05-18"
   readingTimeMinutes={11}
@@ -359,7 +360,9 @@ Free area depends on grille style:
 - **Bar grille** (parallel bars with adjustable angle): ~70-80% free
 - **Egg-crate** (square grid pattern): ~80-90% free (highest free-area-to-cost ratio)
 
-Filter grille sizing: a filter at the grille adds 0.10-0.20 in w.c. of pressure drop on top of the unfiltered grille loss. To keep the system at design static pressure, the filter grille and downstream duct must be sized larger. Practical rule: filter grilles need ~30% more face area than unfiltered grilles for the same CFM. Return air filter grille sizing for a 3-ton system targets ~26×26 or similar instead of the 20×25 unfiltered size.
+Filter grille sizing: a filter at the grille adds 0.10-0.20 in w.c. of pressure drop on top of the unfiltered grille loss. To keep the system at design static pressure, the filter grille and downstream duct must be sized larger.
+
+Practical rule: filter grilles need ~30% more face area than unfiltered grilles for the same CFM. Return air filter grille sizing for a 3-ton system targets ~26×26 or similar instead of the 20×25 unfiltered size.
 
 Worked example for a 3-ton system at 1,200 CFM:
 - Target velocity 500 FPM
@@ -371,7 +374,9 @@ For acoustic considerations and detailed velocity tables, see [return grille fac
 
 ## Diagnosing Undersized Returns
 
-The diagnostic tool for return air sizing is a manometer reading total external static pressure at the air handler. Below 0.5 inches of water column is healthy. Around 0.7 is the threshold where things start hurting. Above 1.0 is a system in trouble — the blower is straining, the coil is at risk of freezing, the equipment is wearing faster than it should, and the homeowner is paying for all of it in electricity. The reading by itself doesn't tell you what's restricted, but it tells you something is, and returns are the most common culprit in residential systems.<SourceCite id="doe-hvac-static-pressure" number={6} />
+The diagnostic tool for return air sizing is a manometer reading total external static pressure at the air handler. Below 0.5 inches of water column is healthy. Around 0.7 is the threshold where things start hurting.
+
+Above 1.0 is a system in trouble — the blower is straining, the coil is at risk of freezing, the equipment is wearing faster than it should, and the homeowner is paying for all of it in electricity. The reading by itself doesn't tell you what's restricted, but it tells you something is, and returns are the most common culprit in residential systems.<SourceCite id="doe-hvac-static-pressure" number={6} />
 
 <StaticPressureImpact />
 

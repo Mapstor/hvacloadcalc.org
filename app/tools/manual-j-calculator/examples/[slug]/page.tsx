@@ -8,6 +8,8 @@ import { AuthorByline } from '@/components/article/AuthorByline';
 import { calculateManualJ } from '@/lib/calculators/manual-j';
 import { SITE } from '@/lib/seo/site';
 import { ManualJCalculatorClient } from '../../ManualJCalculatorClient';
+import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import {
   manualJExamples,
   findManualJExampleBySlug,
@@ -30,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
   const canonicalPath = `/tools/manual-j-calculator/examples/${slug}/`;
   return {
-    title: `${example.metaTitle} | hvacloadcalc.org`,
+    title: `${example.metaTitle}`,
     description: example.metaDescription,
     alternates: { canonical: `${SITE.url}${canonicalPath}` },
     openGraph: {
@@ -38,6 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: example.metaDescription,
       url: `${SITE.url}${canonicalPath}`,
       type: 'article',
+      images: ['/opengraph-image'],
     },
   };
 }
@@ -60,8 +63,21 @@ export default async function ExamplePage({ params }: Props) {
     { name: example.title },
   ];
 
+  const articleFrontmatter = {
+    title: example.metaTitle,
+    h1: example.title,
+    meta_description: example.metaDescription,
+    url: `/tools/manual-j-calculator/examples/${slug}/`,
+    date_published: '2026-05-24',
+    last_reviewed: '2026-05-25',
+    target_keyword: example.metaTitle,
+    parent_title: 'Manual J Calculator',
+  };
+
   return (
     <Container>
+      <JsonLdArticle frontmatter={articleFrontmatter} />
+      <JsonLdBreadcrumb items={breadcrumbs} />
       <Breadcrumbs items={breadcrumbs} />
 
       <header className="not-prose mb-6 mt-4">
@@ -111,7 +127,7 @@ export default async function ExamplePage({ params }: Props) {
       </section>
 
       <section className="mt-8">
-        <ManualJCalculatorClient defaults={example.inputs} />
+        <ManualJCalculatorClient defaults={example.inputs} autoCalculate />
       </section>
 
       <section className="prose prose-slate mt-10 max-w-prose">

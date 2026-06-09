@@ -10,6 +10,7 @@ import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
 import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { JsonLdLearningResource } from '@/components/seo/JsonLdLearningResource';
 import { HeroVerificationProcess } from '@/components/svg/methodology-mj/HeroVerificationProcess';
 import { AccaReferenceCasesTable } from '@/components/svg/methodology-mj/AccaReferenceCasesTable';
 import { PeerComparisonResults } from '@/components/svg/methodology-mj/PeerComparisonResults';
@@ -18,6 +19,7 @@ import { KnownLimitations } from '@/components/svg/methodology-mj/KnownLimitatio
 import { AuditTrailStack } from '@/components/svg/methodology-mj/AuditTrailStack';
 
 export const metadata = {
+  alternates: { canonical: "/methodology/how-we-verify-manual-j/" },
   title: 'How We Verify Manual J: Our Calculator Audit Methodology',
   description:
     'How our Manual J load calculator is verified against ACCA reference cases, third-party software, and field-measured homes. Our complete methodology and audit trail.',
@@ -28,7 +30,7 @@ export const metadata = {
     type: 'article',
     publishedTime: '2026-05-18',
     modifiedTime: '2026-05-18',
-    authors: ['Jonathan S.'],
+    authors: ['Jonathan Stowe'],
     images: ['/opengraph-image'],
   },
 };
@@ -188,6 +190,19 @@ export const FRONTMATTER = {
 
 <JsonLdBreadcrumb items={BREADCRUMBS} />
 
+<JsonLdLearningResource
+  resource={{
+    name: 'Manual J Verification Methodology',
+    description: 'How the Manual J load calculator is verified against ACCA reference cases — test methodology, accuracy bands, deviation analysis.',
+    url: '/methodology/how-we-verify-manual-j/',
+    about: 'Manual J load calculator verification against ACCA reference cases',
+    learningResourceType: 'Reference Material',
+    educationalLevel: 'Advanced',
+    datePublished: '2026-05-22',
+    dateModified: '2026-05-30',
+  }}
+/>
+
 <Container>
 
 <Breadcrumbs items={BREADCRUMBS} />
@@ -218,7 +233,9 @@ export const FRONTMATTER = {
 
 We run a free Manual J-style load calculator. Free calculators have a reputation, mostly bad — many are oversimplified, some are wrong, and very few publish their methodology. This article exists because we think calculators that affect equipment sizing decisions worth thousands of dollars should be auditable, and we want to make that auditing easy.
 
-Below we cover how we verify our calculator against ACCA's published test cases, how it compares to ACCA-approved commercial software on identical inputs, how it performs against real-home measured data, and where it falls short. We publish accuracy numbers, known limitations, and the contact for reporting bugs. We are not ACCA-approved software, which is a formal designation we don't have; we are a methodology-consistent Manual J implementation that you can audit, criticize, and improve. For broader context, [our methodology](/methodology/) covers our approach across all calculators.
+Below we cover how we verify our calculator against ACCA's published test cases, how it compares to ACCA-approved commercial software on identical inputs, how it performs against real-home measured data, and where it falls short. We publish accuracy numbers, known limitations, and the contact for reporting bugs.
+
+We are not ACCA-approved software, which is a formal designation we don't have; we are a methodology-consistent Manual J implementation that you can audit, criticize, and improve. For broader context, [our methodology](/methodology/) covers our approach across all calculators.
 
 ## What Manual J Is (Brief)
 
@@ -361,7 +378,9 @@ The audit trail is the alternative to unverified marketing claims. Any reader ca
 
 ## What We Don't Claim
 
-Our calculator is not perfect, and we don't pretend it is. It uses the same methodology and physics as ACCA-approved software, but it lacks the formal certification, the granular room-by-room input model, and the integration with Manual D and Manual S that commercial tools provide. It approximates non-rectangular geometries. It assumes standard occupancy schedules. It estimates duct losses rather than measuring them. These are real limitations and they affect real users. If your situation matches one of them, please use ACCA-approved software or a certified contractor instead. If it doesn't, we think we're a useful tool — but check our results against your own intuition and consult a professional before installing equipment.
+Our calculator is not perfect, and we don't pretend it is. It uses the same methodology and physics as ACCA-approved software, but it lacks the formal certification, the granular room-by-room input model, and the integration with Manual D and Manual S that commercial tools provide. It approximates non-rectangular geometries. It assumes standard occupancy schedules.
+
+It estimates duct losses rather than measuring them. These are real limitations and they affect real users. If your situation matches one of them, please use ACCA-approved software or a certified contractor instead. If it doesn't, we think we're a useful tool — but check our results against your own intuition and consult a professional before installing equipment.
 
 <KnownLimitations />
 
@@ -398,7 +417,9 @@ What we commit to:
 
 The contact methodology is documented at [report an audit issue](/methodology/contact-an-audit/). Include: your inputs as entered, our calculator's output, what you expected and why, and any third-party calculator outputs you ran for comparison.
 
-What counts as a verified bug: a documented case where our calculator produces a result that violates Manual J 8th Edition methodology, ASHRAE physics, or our published reference case behavior. Examples we've fixed in past changelog entries: incorrect orientation factor lookup for west-facing windows above 40° latitude, infiltration default applied twice in some configurations, and a rounding edge case that shifted attic R-value bins by one notch. Examples we'd consider methodology differences rather than bugs: different infiltration default than another calculator (both defensible under Manual J), different solar gain factor table for the same orientation (ASHRAE publishes multiple acceptable tables), or rounded final results.
+What counts as a verified bug: a documented case where our calculator produces a result that violates Manual J 8th Edition methodology, ASHRAE physics, or our published reference case behavior. Examples we've fixed in past changelog entries: incorrect orientation factor lookup for west-facing windows above 40° latitude, infiltration default applied twice in some configurations, and a rounding edge case that shifted attic R-value bins by one notch.
+
+Examples we'd consider methodology differences rather than bugs: different infiltration default than another calculator (both defensible under Manual J), different solar gain factor table for the same orientation (ASHRAE publishes multiple acceptable tables), or rounded final results.
 
 This is the alternative to unverified claims. Published methodology + bug reporting + visible accountability > "trust us." We'd rather be visibly imperfect than pretend perfection we don't have. Manual j calculator accuracy is a function of methodology consistency, input quality, and ongoing maintenance, and we publish at each of those layers.
 

@@ -1,82 +1,348 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { Callout } from '@/components/article/Callout';
+import { DataTable } from '@/components/data/DataTable';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
 
 export const metadata = {
-  title: 'Disclaimer',
+  alternates: { canonical: "/disclaimer/" },
+  title: 'Disclaimer: Educational Scope and What This Site Does Not Provide',
   description:
-    'Educational HVAC information from hvacloadcalc.org. Not professional engineering advice. Calculators provide planning-grade estimates only.',
+    'Legal disclaimer — educational scope, planning-grade calculator limits, no personalized advice, safety-critical work boundaries, warranty and liability disclaimer.',
+  openGraph: {
+    title: 'hvacloadcalc.org Disclaimer',
+    description:
+      'Educational scope, planning-grade calculator limits, and the explicit boundaries of what this site does and does not provide.',
+    type: 'article',
+    publishedTime: '2026-05-30',
+    modifiedTime: '2026-05-30',
+    authors: ['Jonathan Stowe'],
+    images: ['/opengraph-image'],
+  },
 };
 
-<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Disclaimer' }]} />
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'Disclaimer' },
+];
 
-<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Disclaimer' }]} />
+export const HEADINGS = [
+  { id: 'educational-content-only', text: 'Educational Content Only', level: 2 },
+  { id: 'planning-grade-vs-permit-grade', text: 'Planning-Grade Versus Permit-Grade', level: 2 },
+  { id: 'what-this-site-does-and-does-not-do', text: 'What This Site Does and Does Not Do', level: 2 },
+  { id: 'no-professional-credentials', text: 'No Professional Credentials Claimed', level: 2 },
+  { id: 'no-personalized-advice', text: 'No Personalized Advice', level: 2 },
+  { id: 'safety-critical-work-boundary', text: 'Safety-Critical Work Boundary', level: 2 },
+  { id: 'information-accuracy-and-updates', text: 'Information Accuracy and Updates', level: 2 },
+  { id: 'no-warranty-of-any-kind', text: 'No Warranty of Any Kind', level: 2 },
+  { id: 'limitation-of-liability', text: 'Limitation of Liability', level: 2 },
+  { id: 'third-party-links-and-resources', text: 'Third-Party Links and Resources', level: 2 },
+];
 
-# Disclaimer
+export const FAQ_ITEMS = [
+  {
+    q: 'Why this much disclaimer?',
+    a: 'Because the site provides technical content about residential HVAC sizing, which is adjacent to professional engineering, contractor licensing, and safety-critical equipment operation. Being explicit about what the site is (educational reference), what it is not (engineering service, contractor referral, repair guide), and what authority it claims (research rigor, not in-house engineering credentials) prevents both reader misuse and legal ambiguity. The detail is the cost of being clear rather than vague.',
+  },
+  {
+    q: 'If the content is not professional advice, why should I trust it?',
+    a: 'Because every claim is sourced inline to a primary authority — ACCA, ASHRAE, AHRI, NEEP, NFRC, DOE, EPA, IRS publications. The trust comes from citation traceability rather than from in-house credentials. A reader who wants to verify any specific claim follows the inline citation to the SOURCES entry and from there to the original document. Trust based on verifiable citation is different from trust based on professional license — both are legitimate; the site relies on the first kind.',
+  },
+  {
+    q: 'Can I use the calculator output to apply for a permit?',
+    a: 'No. Permit applications in most US jurisdictions require ACCA-approved software output (Wrightsoft Right-Suite, Elite Software RHVAC, Cool Calc, EnergyGauge USA) for the load calculation. Output from this site is planning-grade and not eligible for permit submission. For permit-grade work, hire a credentialed party using approved software.',
+  },
+  {
+    q: 'Can I use the calculator output to qualify for HEEHRA or 25C rebates?',
+    a: 'No. HEEHRA point-of-sale rebates and most state and utility rebate programs require Manual J documentation from ACCA-approved software, performed and stamped by a credentialed contractor or HERS rater. Planning-grade output from this site is not eligible documentation for any rebate program we are aware of. For rebate-eligible work, hire a credentialed party.',
+  },
+  {
+    q: 'What if my contractor uses output from this site as their Manual J?',
+    a: "That would be inappropriate. Contractors performing Manual J for permit, rebate, or warranty purposes are expected to use ACCA-approved software. If your contractor is presenting planning-grade output from this site (or from Calculator.net, Omnicalculator, or any similar planning-grade tool) as a real Manual J, that is a contractor-side problem worth questioning before signing a contract. A real Manual J is a multi-page document with room-by-room loads, infiltration measurements, internal-gain calculations, and equipment selection rationale — not a screenshot of a website calculator.",
+  },
+  {
+    q: 'Does the disclaimer mean nothing on this site can be trusted?',
+    a: 'No — the disclaimer means the trust framework is appropriate to the content. Factual claims sourced to primary publications can be trusted to match the source (and if they do not, the corrections process applies). Calculator output can be trusted as a planning-grade estimate within the ±20-30% accuracy band documented in the methodology page. What cannot be trusted from this site: a guarantee that the planning-grade output is permit-grade, a substitute for site-specific Manual J performed by a credentialed party, or instructions for safety-critical work. The disclaimer marks those boundaries clearly.',
+  },
+];
 
-## Educational content only
+export const RELATED = [
+  {
+    title: 'Methodology',
+    url: '/methodology/',
+    description:
+      'How the calculators compute and what the accuracy bands are against permit-grade software.',
+  },
+  {
+    title: 'About',
+    url: '/about/',
+    description:
+      'The site\'s editorial mission, audience, and funding model.',
+  },
+  {
+    title: 'Editorial standards',
+    url: '/editorial-standards/',
+    description:
+      'The editorial process that produces the content covered by this disclaimer.',
+  },
+  {
+    title: 'Sources',
+    url: '/sources/',
+    description:
+      'The bibliography against which all factual claims are sourced.',
+  },
+];
 
-hvacloadcalc.org provides educational information about residential HVAC systems, including heat pump sizing, load calculation methodology, building science fundamentals, and equipment selection guidance. The site exists to help homeowners understand HVAC concepts well enough to make informed decisions.
+export const FRONTMATTER = {
+  title: 'Disclaimer: Educational Scope and What This Site Does Not Provide',
+  h1: 'Disclaimer',
+  meta_description:
+    'Legal disclaimer — educational scope, planning-grade calculator limits, no personalized advice, safety-critical work boundaries, warranty and liability disclaimer.',
+  url: '/disclaimer/',
+  date_published: '2026-05-30',
+  last_reviewed: '2026-05-30',
+  target_keyword: 'hvacloadcalc.org disclaimer',
+  secondary_keywords: ['hvac calculator disclaimer', 'planning grade hvac', 'educational hvac content'],
+  sources: [],
+  faq: FAQ_ITEMS,
+  parent_title: 'Home',
+};
 
-Nothing on this site is professional engineering advice. Nothing on this site is a substitute for consultation with a licensed HVAC contractor, professional engineer, or building scientist.
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={1700} />
 
-## Planning-grade estimates
+<JsonLdBreadcrumb items={BREADCRUMBS} />
 
-The calculators on hvacloadcalc.org provide planning-grade estimates based on industry-standard methodology, including elements derived from ACCA Manual J 8th Edition, ASHRAE design conditions, and published equipment performance data. These estimates are useful for:
+<Container>
 
-- Understanding the magnitude of your home's heating and cooling needs
-- Sanity-checking contractor recommendations
-- Comparing how different variables (insulation, climate, square footage) affect load
-- General education about HVAC sizing concepts
+<Breadcrumbs items={BREADCRUMBS} />
 
-Calculator outputs are NOT:
+<ArticleHeader
+  h1="Disclaimer"
+  description="Educational scope, planning-grade calculator limits, no professional credentials claimed, no personalized advice, safety-critical work boundary, warranty disclaimer, and limitation of liability — the explicit boundaries of what this site provides and does not provide."
+  datePublished="2026-05-30"
+  lastReviewed="2026-05-30"
+  readingTimeMinutes={7}
+/>
 
-- ACCA-approved Manual J calculations
-- Permit-ready documents
-- Engineering specifications
-- Equipment selection commitments
-- Warranties or guarantees of any kind
+<KeyTakeaways
+  items={[
+    'hvacloadcalc.org provides educational information about residential HVAC. Nothing on the site is professional engineering advice and nothing substitutes for consultation with a licensed HVAC contractor, professional engineer, or building scientist on specific installations.',
+    'Every calculator on the site produces planning-grade output appropriate for understanding magnitudes and evaluating contractor proposals. Output is NOT ACCA-approved Manual J, NOT permit-ready, NOT engineering specification, and NOT eligible for rebate program documentation.',
+    'The author writes as a researcher translating authoritative standards (ACCA, ASHRAE, NEEP, DOE) into educational content; no licensed contractor, professional engineer, or ACCA certification is claimed. Where in-house expertise is needed, the relevant primary source is cited directly.',
+    'The site does not provide individual sizing consultations, contractor referrals, equipment brand recommendations, or installation guidance specific to any home. Personalized HVAC decisions require local professional consultation.',
+    'Information about safety-critical work (refrigerant handling, electrical work, gas connections, combustion appliance commissioning) is for general education only. Performing safety-critical HVAC work requires the appropriate licensing and certification.',
+  ]}
+/>
 
-A full Manual J performed by a licensed contractor includes site-specific factors that no online calculator can fully capture: actual envelope conditions, duct system characteristics, infiltration measurements from a blower door test, internal loads from specific appliances and occupancy patterns, and site-specific orientation and shading. Where a permit, rebate, or warranty depends on a Manual J calculation, that calculation must be performed by a qualified professional using approved software.
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
 
-## No professional credentials claimed
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
 
-The site is not operated by a licensed HVAC contractor, professional engineer, ACCA-certified specialist, HERS rater, or any other credentialed professional. The author writes as a researcher and homeowner translating authoritative standards (ACCA, ASHRAE, NEEP, DOE) into accessible educational content.
+## Educational Content Only
 
-## No personalized advice
+hvacloadcalc.org provides educational information about residential HVAC systems — including heat pump sizing, load calculation methodology, building science fundamentals, ductwork design, equipment selection guidance, and HVAC terminology. The site exists to help homeowners understand HVAC concepts well enough to make informed decisions and to verify whether contractor recommendations make sense.
 
-hvacloadcalc.org does not provide personalized engineering advice, contractor referrals, equipment recommendations, or installation guidance for specific homes. Information on the site is general and educational; your situation requires consultation with qualified local professionals.
+<Callout type="planning-grade" title="What 'educational only' means in practice">
+Reading articles on this site and using the calculators provides understanding of how residential HVAC sizing works, what the authoritative standards say, and what the rough magnitudes are for typical houses. It does not provide a permit-grade Manual J for any specific house, does not provide engineering certification of equipment selection, and does not substitute for site-specific contractor expertise on installations.
+</Callout>
 
-## Safety-critical work
+Nothing on this site is professional engineering advice. Nothing on this site is a substitute for consultation with a licensed HVAC contractor, professional engineer, or building scientist for a specific home with specific construction details, specific equipment options, and specific local code requirements. The site provides general education; specific decisions require local professional consultation.
 
-Information on this site about refrigerant systems, electrical work, gas connections, and combustion appliances is for general education only. Do not perform safety-critical HVAC work based on information from this site. Refrigerant handling requires EPA certification. Electrical work on HVAC equipment requires a licensed electrician. Gas line work requires a licensed gas professional. Combustion appliance commissioning requires manufacturer-specific training.
+## Planning-Grade Versus Permit-Grade
 
-## Information accuracy
+The calculators on hvacloadcalc.org produce planning-grade estimates. The distinction between planning-grade and permit-grade is material.
 
-The site makes a good-faith effort to cite authoritative sources for every claim and to update content when standards change. Despite this effort:
+<DataTable
+  caption="Planning-grade vs permit-grade HVAC calculations"
+  columns={[
+    { key: 'aspect', label: 'Aspect' },
+    { key: 'planningGrade', label: 'Planning-grade (this site)' },
+    { key: 'permitGrade', label: 'Permit-grade (ACCA-approved software)' },
+  ]}
+  rows={[
+    {
+      aspect: 'Methodology source',
+      planningGrade: 'ACCA Manual J 8th Edition abbreviated method + sensible defaults',
+      permitGrade: 'ACCA Manual J 8th Edition full procedure with site-specific inputs',
+    },
+    {
+      aspect: 'Input quality',
+      planningGrade: 'Estimated values (insulation level "average", infiltration "moderate")',
+      permitGrade: 'Measured values (R-value verified, blower-door ACH50, duct leakage test)',
+    },
+    {
+      aspect: 'Typical accuracy',
+      planningGrade: '±20-30% of permit-grade result',
+      permitGrade: 'Authoritative for the specific home as analyzed',
+    },
+    {
+      aspect: 'Appropriate use',
+      planningGrade: 'Magnitude check, contractor quote evaluation, budget estimation',
+      permitGrade: 'Permit application, rebate documentation, contractor liability calculation',
+    },
+    {
+      aspect: 'Cost',
+      planningGrade: 'Free (this site)',
+      permitGrade: '$300-$800 typical for credentialed Manual J',
+    },
+    {
+      aspect: 'Time required',
+      planningGrade: 'Seconds',
+      permitGrade: '4-8 hours of practitioner work',
+    },
+  ]}
+/>
 
-- Information may be outdated relative to the latest standards
-- Equipment performance data may not reflect the latest manufacturer specifications
-- Regional code requirements vary and are not comprehensively covered
-- Errors may exist; corrections are documented on the [corrections page](/corrections/)
+The planning-grade output is genuinely useful for the decisions homeowners need to make before contracting. Comparing a "2.5-ton" planning estimate against a contractor proposing a 4-ton unit gives the homeowner reason to question the proposal. Distinguishing whether a house needs a heat pump or a window AC clarifies which equipment category to research. Estimating whether attic insulation is worth upgrading by year-1 payback helps prioritize envelope work.
 
-Users are responsible for verifying critical information against current standards and local code requirements.
+The planning-grade output is NOT appropriate for: ACCA-approved Manual J calculations required for permit applications, permit-ready documents for building department submissions, engineering specifications for HVAC system design, equipment selection commitments for contractor or installer scope of work, rebate program documentation (HEEHRA, state energy program qualification, utility rebate documentation), warranty support for manufacturer claims, or any other context where the legal weight of a permit-grade Manual J is required.
 
-## No warranty
+## What This Site Does and Does Not Do
+
+To be explicit about scope.
+
+<DataTable
+  caption="Scope of what hvacloadcalc.org provides"
+  columns={[
+    { key: 'category', label: 'Category' },
+    { key: 'does', label: 'Does' },
+    { key: 'doesNot', label: 'Does NOT' },
+  ]}
+  rows={[
+    {
+      category: 'Load calculation',
+      does: 'Planning-grade Manual J-style estimate; methodology documentation; accuracy bands published',
+      doesNot: 'Permit-grade ACCA Manual J; site-specific blower-door analysis; engineering stamp',
+    },
+    {
+      category: 'Equipment selection',
+      does: 'Methodology for matching equipment to Manual J load; NEEP CCASHP product list reference',
+      doesNot: 'Specific equipment brand or model recommendations; contractor referrals; installer matching',
+    },
+    {
+      category: 'Pricing',
+      does: 'Typical 2026 installed cost ranges from DOE Energy Saver and EIA pricing data',
+      doesNot: 'Specific quotes for specific homes; pricing negotiations; contractor bid analysis',
+    },
+    {
+      category: 'Repair and maintenance',
+      does: 'Explanation of common HVAC problems and what they signify (short cycling, aux heat behavior)',
+      doesNot: 'Step-by-step repair instructions; safety-critical work guidance; gas/electric/refrigerant procedures',
+    },
+    {
+      category: 'Code interpretation',
+      does: 'Reference to IECC 2021 requirements; DOE federal minimum efficiency rules',
+      doesNot: 'Local code interpretation; building department-specific requirements; jurisdiction-specific permits',
+    },
+    {
+      category: 'Federal incentives',
+      does: 'Documentation of 25C, HEEHRA, HOMES program structures and qualifying equipment thresholds',
+      doesNot: 'Personalized tax advice; income qualification verification; rebate application processing',
+    },
+    {
+      category: 'Climate analysis',
+      does: 'ASHRAE design temperatures by city; IECC climate zone mapping',
+      doesNot: 'Site-specific microclimate analysis; coastal salt-air corrosion estimation',
+    },
+  ]}
+/>
+
+## No Professional Credentials Claimed
+
+The site is not operated by a licensed HVAC contractor, professional engineer, ACCA-certified specialist, RESNET HERS rater, BPI Building Analyst, or any other credentialed professional. The author writes as a researcher and homeowner translating authoritative standards (ACCA, ASHRAE, NEEP, NFRC, RESNET, DOE) into accessible educational content.
+
+The site does not claim ACCA approval, ACCA certification, or any other industry credentialing. Where in-house expertise is needed, the relevant primary source is cited directly rather than asserting in-house authority. When ACCA Manual S Section 4 covers tolerance bands for equipment selection, the article cites ACCA Manual S Section 4 — not "industry experience" or "professional judgment."
+
+The accountability model is different from credentialed professional content but still rigorous: every claim is sourced inline to a primary publication, every conclusion is defensible against the cited source, and every correction is logged publicly. The trust framework relies on citation traceability and editorial transparency, which is documented in detail at [/editorial-standards/](/editorial-standards/).
+
+## No Personalized Advice
+
+hvacloadcalc.org does not provide personalized engineering advice, contractor referrals, equipment recommendations specific to your home, or installation guidance for specific construction. Information on the site is general and educational; your situation requires consultation with qualified local professionals.
+
+Specifically, the site does not respond to messages asking "what size heat pump do I need for [specific house]" with a specific tonnage recommendation. The calculators on the site produce planning-grade output the reader can interpret for themselves; we do not provide email-based sizing consultations. For permit-grade sizing in a specific home, the right approach is hiring a credentialed contractor or HERS rater using ACCA-approved software.
+
+The site does not provide brand or model recommendations for specific homes. Equipment selection depends on local climate, electricity and gas prices, contractor availability, and other factors the site cannot evaluate. Where the content discusses categories ("ENERGY STAR Version 6.1 Cold Climate qualifying", "NEEP CCASHP-listed units"), the framing is the authoritative category definition — readers can then consult the underlying authoritative list (ENERGY STAR product database, NEEP product list) for specific qualifying models.
+
+## Safety-Critical Work Boundary
+
+Information on this site about refrigerant systems, electrical work, gas connections, and combustion appliances is for general education only. The site does not provide step-by-step instructions for any of these systems.
+
+**Refrigerant handling.** Recovery, recharging, brazing, and disposal of refrigerants requires EPA Section 608 certification under US federal regulation. This site does not instruct readers in refrigerant handling. R-410A, R-454B, R-32, R-22, and other refrigerants in residential equipment can cause asphyxiation, frostbite, and (in A2L classification) ignition under specific conditions; safe handling requires training that this site does not provide.
+
+**Electrical work.** Wiring HVAC equipment to electrical panels, installing high-voltage disconnects, and similar electrical work requires licensed electrician credentials in most US jurisdictions. The site does not instruct readers in electrical work; references to circuit sizing in the heat pump articles are framed as factors to verify with an electrician, not instructions.
+
+**Gas connections.** Connecting natural gas or propane lines to furnaces, water heaters, and other appliances requires licensed gas professional credentials. The site does not instruct readers in gas connections. References to gas piping in the furnace and dual-fuel articles are framed as factors a licensed gas professional verifies, not as DIY guidance.
+
+**Combustion appliance commissioning.** Setting up and verifying safe operation of gas furnaces and oil-fired equipment requires manufacturer-specific training and combustion analysis instrumentation. The site discusses what proper commissioning looks like (combustion analysis, draft testing, CO measurement) but does not instruct readers in performing it.
+
+**The pattern:** the site explains what these systems are, what they do, what failure modes look like, and what proper installation includes — but the doing of safety-critical work is the work of credentialed practitioners, not the work of readers acting on information from this site.
+
+## Information Accuracy and Updates
+
+The site makes a good-faith effort to cite authoritative sources for every claim and to update content when standards change. Despite this effort, information may be outdated, equipment performance data may not reflect the latest manufacturer specifications, regional code requirements may have changed, and errors may exist.
+
+Corrections are documented on the [corrections page](/corrections/). Standards-triggered updates (when ACCA, ASHRAE, NEEP, NFRC, DOE, EPA, IRS revise their published documents) are logged separately in the same corrections page. The last-reviewed date on each article reflects the most recent verification of accuracy against current standards.
+
+Users are responsible for verifying critical information against current standards and local code requirements. The site cannot guarantee that information remains accurate as standards evolve between annual reviews, and cannot anticipate every regional variation in code interpretation. When information from the site will be used to make a consequential decision (equipment purchase, permit application, rebate filing), readers should verify against current authoritative sources before acting.
+
+## No Warranty of Any Kind
 
 Information on hvacloadcalc.org is provided "as is" without warranty of any kind, express or implied. The site disclaims all warranties including merchantability, fitness for a particular purpose, and non-infringement. Use of any information from this site is at the user's own risk.
 
-## Limitation of liability
+This includes calculator output, FAQ answers, methodology documentation, federal incentive amounts, equipment cost ranges, and every other piece of content on the site. The disclaimer applies whether the information was sourced from a primary publication (ACCA, ASHRAE, etc.) or derived from secondary sources or research.
 
-In no event shall hvacloadcalc.org, its author, or its operators be liable for any direct, indirect, incidental, consequential, or special damages arising out of or in connection with the use of information on this site, including but not limited to damages for equipment sizing errors, installation outcomes, energy costs, comfort issues, or any other consequence of relying on educational content from this site.
+The "as is" warranty disclaimer is standard for educational reference content. It reflects the reality that the site cannot promise specific outcomes from specific applications of its content; it can only promise that the content was accurate as researched against the cited sources at the time of publication and most recent review.
 
-## Third-party links
+## Limitation of Liability
 
-The site links to third-party resources (DOE, ASHRAE, NEEP, manufacturer documentation, etc.) for educational purposes. hvacloadcalc.org is not responsible for the content, accuracy, or availability of third-party sites.
+In no event shall hvacloadcalc.org, its author, or its operators be liable for any direct, indirect, incidental, consequential, or special damages arising out of or in connection with the use of information on this site.
 
-## Updates to this disclaimer
+This includes but is not limited to damages for:
 
-This disclaimer may be updated to reflect changes in site content, applicable law, or industry practice. The "Last reviewed" date below indicates the most recent revision.
+- Equipment sizing errors leading to undersized or oversized HVAC installations.
+- Installation outcomes including comfort issues, equipment failures, and ductwork problems.
+- Energy costs higher than predicted by site calculators.
+- Humidity or air quality problems.
+- Safety incidents related to refrigerant, electrical, or gas work.
+- Permit or rebate program denials.
+- Warranty rejections by manufacturers or contractors.
+- Any other consequence of relying on educational content from this site.
 
----
+The limitation of liability is comprehensive because the site cannot evaluate the specific use case for any specific reader. A reader using the BTU calculator to evaluate whether a contractor's 4-ton recommendation is plausible is in a fundamentally different situation than a reader using the same calculator output to argue with a permit office. The site cannot tailor its liability exposure to use cases it cannot predict.
 
-**Last reviewed**: May 18, 2026
+For specific HVAC decisions where the outcomes matter, hire credentialed practitioners. The cost of professional Manual J ($300-$800 typical) is small compared to the cost of a 4-ton install ($10,000+), and the professional Manual J carries the practitioner's liability rather than transferring the risk to a free educational reference.
+
+## Third-Party Links and Resources
+
+The site links to third-party resources (DOE, ASHRAE, NEEP, AHRI, NFRC, RESNET, EPA, IRS, manufacturer documentation, state energy programs, research lab publications) for educational purposes. hvacloadcalc.org is not responsible for the content, accuracy, or availability of third-party sites.
+
+When a third-party source moves, updates, or changes its URL structure, the site updates links on a quarterly review cycle. Broken or moved links can be reported via the [contact page](/contact/) and are usually fixed within 14 days.
+
+The link to a third-party source represents the editorial judgment that the cited information existed at the cited URL on the cited date; it does not represent any ongoing endorsement of the third-party site's overall content or business practices.
+
+This disclaimer may be updated to reflect changes in site content, applicable law, or industry practice. The last-reviewed date at the top of this page indicates the most recent revision.
+
+</article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-30" />
+</div>
+
+</Container>

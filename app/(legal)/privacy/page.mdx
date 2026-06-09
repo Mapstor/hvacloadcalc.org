@@ -1,117 +1,468 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { Callout } from '@/components/article/Callout';
+import { DataTable } from '@/components/data/DataTable';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
 
 export const metadata = {
-  title: 'Privacy Policy',
+  alternates: { canonical: "/privacy/" },
+  title: 'Privacy Policy: Data Collection, Advertising Cookies, and Your Choices',
   description:
-    'Privacy policy for hvacloadcalc.org. What data we collect, how we use it, and your choices.',
+    'Privacy policy — server logs, Google AdSense cookies (DART, NID), third-party vendor disclosures, GDPR and CCPA rights, and how to exercise privacy choices.',
+  openGraph: {
+    title: 'hvacloadcalc.org Privacy Policy',
+    description:
+      'Server logs, Google AdSense advertising cookies, third-party vendor disclosures, GDPR and CCPA rights, and how to exercise privacy choices.',
+    type: 'article',
+    publishedTime: '2026-05-30',
+    modifiedTime: '2026-06-03',
+    authors: ['Jonathan Stowe'],
+    images: ['/opengraph-image'],
+  },
 };
 
-<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Privacy' }]} />
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'Privacy' },
+];
 
-<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Privacy' }]} />
+export const HEADINGS = [
+  { id: 'summary', text: 'Summary', level: 2 },
+  { id: 'what-data-we-collect', text: 'What Data We Collect', level: 2 },
+  { id: 'cookies-and-local-storage', text: 'Cookies and Local Storage', level: 2 },
+  { id: 'advertising-and-third-party-vendors', text: 'Advertising and Third-Party Vendors', level: 2 },
+  { id: 'how-we-use-information', text: 'How We Use Information', level: 2 },
+  { id: 'data-retention', text: 'Data Retention', level: 2 },
+  { id: 'your-choices-and-controls', text: 'Your Choices and Controls', level: 2 },
+  { id: 'gdpr-and-ccpa-rights', text: 'GDPR, CCPA, and Equivalent Rights', level: 2 },
+  { id: 'childrens-privacy', text: "Children's Privacy (COPPA)", level: 2 },
+  { id: 'international-transfers', text: 'International Data Transfers', level: 2 },
+  { id: 'changes-to-this-policy', text: 'Changes to This Policy', level: 2 },
+  { id: 'contact-for-privacy', text: 'Contact for Privacy Matters', level: 2 },
+];
 
-# Privacy Policy
+export const FAQ_ITEMS = [
+  {
+    q: 'Does this site use Google AdSense?',
+    a: 'Yes. hvacloadcalc.org is monetized through Google AdSense, which serves display advertising on article and calculator pages. Google AdSense uses cookies (including the DART and NID cookies) to serve ads based on prior visits to this site and other sites across the internet. You can review and opt out of personalized advertising at https://adssettings.google.com or https://www.aboutads.info.',
+  },
+  {
+    q: 'What other third-party services does the site use?',
+    a: 'In addition to Google AdSense and its third-party ad partners, the site uses Vercel for hosting (standard server-request logs only) and may load Google-served fonts via the AdSense integration. No analytics platforms (Google Analytics, Plausible, Fathom, Mixpanel, etc.) are currently loaded. No social media widgets are embedded. No tracking pixels (Facebook Pixel, LinkedIn Insight Tag, etc.) are loaded.',
+  },
+  {
+    q: 'How can I opt out of personalized advertising?',
+    a: 'Three independent opt-out paths: (1) Google Ads Settings at https://adssettings.google.com lets you disable Google personalized advertising across all Google services and partners. (2) The Digital Advertising Alliance opt-out at https://www.aboutads.info covers most US ad networks via one consent step. (3) European users can opt out at https://www.youronlinechoices.eu. You can also block third-party cookies entirely in your browser settings; the site remains fully functional without them.',
+  },
+  {
+    q: 'Do you use Google Analytics or any analytics provider?',
+    a: 'No. The site does not currently load Google Analytics, Vercel Analytics, Plausible, Fathom, Matomo, or any other analytics JavaScript. The only request metadata recorded is the standard Vercel server log produced when any request is served (IP address, user-agent, request timestamp, URL). If analytics is added in the future, this policy will be updated to disclose the specific provider, the cookies set, and the opt-out mechanisms.',
+  },
+  {
+    q: 'Do you sell personal information?',
+    a: 'No. hvacloadcalc.org does not sell, rent, trade, or share personal information for monetary or other valuable consideration. The site does not maintain a customer database, a marketing email list, or any user-profile data store. The only personal information collected is what you choose to share when emailing the site (info@hvacloadcalc.org), used solely to respond to your inquiry. For California residents, this constitutes the CCPA "Do Not Sell My Personal Information" notice.',
+  },
+  {
+    q: 'How can I exercise my GDPR or CCPA rights?',
+    a: 'Email info@hvacloadcalc.org with subject "Privacy" and describe the request. Eligible requests include access to information held about you, correction of inaccurate information, deletion of your information, data portability, and opting out of certain processing where applicable. Responses are provided within 30 days of receipt. Because the site collects very little personal data, most requests resolve to either confirming there is no data to provide (if you have never emailed the site) or providing a copy of the correspondence (if you have).',
+  },
+  {
+    q: 'How are EU and UK users treated for personalized ads?',
+    a: 'European Economic Area, UK, and Swiss users are presented with a Google-certified consent management platform (CMP) before personalized advertising is served. Until valid consent is recorded, only non-personalized (contextual) advertising is shown to those users, in line with Google\'s EU User Consent Policy and the ePrivacy Directive. Users can withdraw consent at any time through the CMP control.',
+  },
+];
 
-This policy explains what information hvacloadcalc.org collects, how it's used, and the choices available to visitors.
+export const RELATED = [
+  {
+    title: 'Terms of use',
+    url: '/terms/',
+    description:
+      'Acceptable use, intellectual property, and limitations on the use of the site.',
+  },
+  {
+    title: 'Disclaimer',
+    url: '/disclaimer/',
+    description:
+      'Planning-grade content disclosure, scope of educational information, and warranty disclaimer.',
+  },
+  {
+    title: 'Editorial standards',
+    url: '/editorial-standards/',
+    description:
+      'How content is researched, reviewed, and updated — including independence disclosures.',
+  },
+  {
+    title: 'Contact',
+    url: '/contact/',
+    description:
+      'How to email the site for corrections, methodology questions, and privacy requests.',
+  },
+];
+
+export const FRONTMATTER = {
+  title: 'Privacy Policy: Data Collection, Advertising Cookies, and Your Choices',
+  h1: 'Privacy Policy',
+  meta_description:
+    'Privacy policy for hvacloadcalc.org. Server-request logs, Google AdSense advertising cookies (DART, NID), third-party vendor disclosures, GDPR and CCPA rights, and how to exercise privacy choices.',
+  url: '/privacy/',
+  date_published: '2026-05-30',
+  last_reviewed: '2026-06-03',
+  target_keyword: 'hvacloadcalc.org privacy policy',
+  secondary_keywords: ['google adsense privacy policy', 'gdpr ccpa privacy policy', 'advertising cookies opt out'],
+  sources: [],
+  faq: FAQ_ITEMS,
+  parent_title: 'Home',
+};
+
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={2400} />
+
+<JsonLdBreadcrumb items={BREADCRUMBS} />
+
+<Container>
+
+<Breadcrumbs items={BREADCRUMBS} />
+
+<ArticleHeader
+  h1="Privacy Policy"
+  description="What hvacloadcalc.org collects, how Google AdSense and other third-party advertising vendors set cookies on this site, what your choices and controls are, and how to exercise GDPR, CCPA, and equivalent privacy rights. Last reviewed 2026-06-03."
+  datePublished="2026-05-30"
+  lastReviewed="2026-06-03"
+  readingTimeMinutes={9}
+/>
+
+<KeyTakeaways
+  items={[
+    'hvacloadcalc.org is funded by display advertising served through Google AdSense and its third-party ad partners. Advertising cookies (including the DART and NID cookies) are set by Google and partners on this site to deliver and measure ads.',
+    'Beyond advertising, the site collects only what is technically necessary: standard server-request logs from the Vercel hosting platform (IP address, user-agent, request timestamp, URL) and any email correspondence you choose to send to info@hvacloadcalc.org.',
+    'You control personalized advertising at https://adssettings.google.com (Google), https://www.aboutads.info (DAA), and https://www.youronlinechoices.eu (EU). Browser-level cookie blocking is an additional independent control. The site remains fully functional without third-party cookies.',
+    'hvacloadcalc.org does not sell personal information. The site has no marketing email list, no user account system, no profile store, and no behavioral targeting beyond what Google AdSense provides for ad delivery.',
+    'European Economic Area, UK, and Swiss users are presented with a Google-certified consent management platform before personalized advertising is served. California residents have CCPA opt-out and request rights. Brazil residents have LGPD rights. Email info@hvacloadcalc.org with subject "Privacy" to exercise any right.',
+  ]}
+/>
+
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
+
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
 
 ## Summary
 
-- We do not require accounts. There is no signup, no login, no user database.
-- We use Google Analytics (or Vercel Analytics) for anonymous traffic statistics.
-- We serve display advertising through Google AdSense (and/or Raptive after eligibility). These ad systems set cookies and may use device identifiers.
-- We do not sell or share personal information with third parties beyond what's required for ad serving and analytics.
-- The contact form collects only the information you choose to provide.
+hvacloadcalc.org is an educational HVAC reference site funded by display advertising served through **Google AdSense** and its third-party advertising partners. This policy explains, in detail and without hedging, what data is collected, what cookies are set, what controls you have, and how to exercise your privacy rights.
 
-## Information we collect
+The site collects only what is operationally necessary plus what advertising vendors set on it through standard ad-network integration. There is no customer database, no marketing email list, no behavioral profile, and no sale of personal information. If you want to use the site with no third-party cookies at all, block third-party cookies in your browser; every calculator and every article remains fully functional.
 
-### Automatically collected
+<Callout type="info" title="What this policy is and is not">
+This is the complete privacy policy for hvacloadcalc.org as of the Last Reviewed date at the bottom of this page. It supersedes any earlier version that may have been posted at this URL. The text is intentionally exhaustive so an external reviewer (a privacy regulator, a researcher, a user evaluating the site) can verify the documented practices against the actual site behavior.
+</Callout>
 
-When you visit the site, the following is collected automatically by standard web infrastructure:
+## What Data We Collect
 
-- IP address (used for analytics, ad targeting, and security; truncated where possible)
-- Browser type, version, and language
-- Operating system
-- Referring URL
-- Pages viewed, time spent, and basic interaction events
-- Approximate geographic location (country/state from IP)
+The site collects data in three categories: standard server logs, advertising and measurement data (set by Google and its ad partners), and any email you choose to send to the site.
 
-This data is aggregated for analytics and never tied to a personal identity.
+### Server request logs (Vercel hosting platform)
 
-### Information you provide
+Like every website on the public internet, hvacloadcalc.org's hosting platform records standard HTTP request logs when a page is served. These contain:
 
-The contact form collects:
+<DataTable
+  caption="Server log fields recorded by Vercel for every request"
+  columns={[
+    { key: 'field', label: 'Field' },
+    { key: 'value', label: 'What is recorded' },
+    { key: 'purpose', label: 'Purpose' },
+  ]}
+  rows={[
+    { field: 'IP address', value: 'The numeric IP of the requesting client', purpose: 'Required by TCP/IP to deliver the response; used for abuse prevention and security' },
+    { field: 'User-agent', value: 'The browser identification string', purpose: 'Required for browser-compatible rendering' },
+    { field: 'Request timestamp', value: 'Server time of the HTTP request', purpose: 'Standard log convention; debugging and security' },
+    { field: 'Request URL', value: 'The URL path requested', purpose: 'Standard log convention; necessary to serve the right page' },
+    { field: 'HTTP status code', value: 'Server response code (200, 404, etc.)', purpose: 'Operational monitoring' },
+    { field: 'Referrer header', value: 'The previous URL if the user clicked a link to arrive here', purpose: 'Standard HTTP header provided by the browser' },
+  ]}
+/>
 
-- Your name (as you provide it)
-- Your email address (as you provide it)
-- Your message content
-- Subject category (Correction / Question / Press / Other)
+This data is the minimum technically necessary to serve a web page. It is generated by Vercel infrastructure, not by code added to the site. Vercel retains these logs per its own retention schedule (see Vercel's privacy notice for specifics).
 
-This information is used only to respond to your message and is not retained beyond what's needed for that purpose.
+### Advertising and measurement data (Google AdSense and partners)
 
-### Cookies
+When you load a page on this site, Google AdSense and its third-party ad partners may set and read cookies and similar identifiers on your browser to deliver and measure advertising. These cookies are described in detail in the [Advertising and Third-Party Vendors](#advertising-and-third-party-vendors) section below.
 
-- **First-party cookies**: minimal session cookies if needed for site function
-- **Third-party cookies**: set by Google AdSense (and Raptive when enabled), Google Analytics, and similar ad/analytics services
-- You can manage cookies through your browser settings
+The site itself does not directly collect, store, or process advertising data. Google and its partners collect this data through their own standard ad-network integration; the site embeds the AdSense ad code, which loads the rest.
 
-## How we use information
+### Email correspondence
 
-- To understand site traffic patterns and improve content
-- To serve relevant advertising (managed by Google AdSense / Raptive)
-- To respond to contact form messages
-- To detect and prevent abuse (excessive form submissions, scraping, etc.)
+When you choose to email **info@hvacloadcalc.org**, the message and the email address it was sent from are received and read by the editorial inbox. This data is used solely to respond to your inquiry. It is not added to a mailing list, a marketing system, or any third-party CRM.
 
-## Advertising
+Correction reports may be referenced in the public [corrections log](/corrections/) — but reporter attribution there is opt-in only (the default is anonymous; you have to explicitly request attribution to receive it).
 
-This site is supported by display advertising. Google AdSense (and Raptive when eligible) may use cookies and similar technology to:
+## Cookies and Local Storage
 
-- Show ads on this site
-- Personalize ad content based on prior browsing
-- Measure ad performance
+Cookies and similar storage on this site break into two categories.
 
-You can manage personalized ads through:
+<DataTable
+  caption="Cookies and local storage used on hvacloadcalc.org"
+  columns={[
+    { key: 'category', label: 'Category' },
+    { key: 'who', label: 'Who sets it' },
+    { key: 'examples', label: 'Examples' },
+    { key: 'purpose', label: 'Purpose' },
+  ]}
+  rows={[
+    {
+      category: 'First-party site cookies',
+      who: 'hvacloadcalc.org',
+      examples: 'None set as of the Last Reviewed date',
+      purpose: 'The site has no login system, no preferences store, and no first-party tracking, so no first-party cookies are written',
+    },
+    {
+      category: 'Advertising cookies',
+      who: 'Google AdSense and third-party ad partners',
+      examples: 'DART (Google), NID (Google), IDE (DoubleClick), partner-specific cookies',
+      purpose: 'Ad delivery, frequency capping, and personalization based on prior visits to this site and other sites',
+    },
+    {
+      category: 'EU consent state',
+      who: 'Google-certified consent management platform',
+      examples: 'Consent record (set on first visit by EU/UK/Swiss users)',
+      purpose: 'Records your consent or rejection of personalized advertising for the GDPR/ePrivacy framework',
+    },
+    {
+      category: 'Browser session storage',
+      who: 'Site code (transient)',
+      examples: 'Anti-spam timestamp on contact-related interactions',
+      purpose: 'Reject malicious form submissions submitted within milliseconds of page load; not persisted across page loads',
+    },
+  ]}
+/>
 
-- [Google's Ads Settings](https://adssettings.google.com/)
-- [Network Advertising Initiative opt-out](https://optout.networkadvertising.org/)
-- [Digital Advertising Alliance opt-out](https://optout.aboutads.info/)
+You can block any or all of these cookies through your browser's privacy settings. Calculators on this site run entirely in your browser as plain JavaScript — they require no cookies, no local storage, and no server connection beyond loading the initial page.
 
-## Third-party services used
+## Advertising and Third-Party Vendors
 
-- [Google AdSense privacy policy](https://policies.google.com/privacy)
-- Google Analytics (or Vercel Analytics, depending on configuration)
-- [Raptive privacy policy](https://help.raptive.com/hc/en-us/articles/360037451031) (when eligible)
-- Vercel (hosting provider)
+This is the section that describes how advertising on hvacloadcalc.org works, in line with Google AdSense publisher policies and applicable privacy law.
 
-## Data retention
+### Google AdSense
 
-- Analytics data: retained per analytics provider's policy (typically 14-26 months)
-- Contact form messages: retained only as long as needed to address the inquiry, generally less than 90 days
-- Server logs: retained for security and debugging, typically less than 30 days
+hvacloadcalc.org uses **Google AdSense**, a service provided by Google LLC, to serve display advertising on article and calculator pages.
 
-## Your rights
+Third-party vendors, including Google, use cookies to serve ads based on a user's prior visits to this website or other websites on the internet. Google's use of advertising cookies enables it and its partners to serve ads to users based on their visits to this site and other sites on the internet.
 
-Depending on your jurisdiction (GDPR for EU users, CCPA for California residents, etc.), you may have rights including:
+The full Google advertising technology and policies — including the specific cookies Google sets, how Google uses the data collected, how long Google retains it, and how Google handles legal requests — are described at the Google policy pages linked below.
 
-- Access to information held about you
-- Correction of inaccurate information
-- Deletion of your information
-- Opting out of certain processing
+<DataTable
+  caption="Google advertising policies and user controls"
+  columns={[
+    { key: 'resource', label: 'Resource' },
+    { key: 'url', label: 'URL' },
+  ]}
+  rows={[
+    { resource: 'How Google uses information from sites or apps that use our services', url: 'https://policies.google.com/technologies/partner-sites' },
+    { resource: 'Google advertising technology policies', url: 'https://policies.google.com/technologies/ads' },
+    { resource: 'Google Privacy Policy', url: 'https://policies.google.com/privacy' },
+    { resource: 'Manage Google ad personalization (Ads Settings)', url: 'https://adssettings.google.com' },
+    { resource: 'My Ad Center (Google account ad controls)', url: 'https://myadcenter.google.com' },
+  ]}
+/>
 
-To exercise any of these rights, use the [contact form](/contact/) with subject "Other".
+### Other third-party advertising vendors
 
-## Children
+Through Google AdSense, third-party advertising vendors may serve ads on this site and may set their own cookies. These vendors operate under Google's Ad Exchange and are subject to Google's policies for participating vendors. You can review the participating third-party vendors and adjust controls via the Google resources linked above, or use industry self-regulatory opt-outs:
 
-This site is not directed at children under 13. We do not knowingly collect information from children. If you believe a child has provided information through the site, please contact us so we can remove it.
+<DataTable
+  caption="Industry self-regulatory opt-out resources"
+  columns={[
+    { key: 'org', label: 'Organization' },
+    { key: 'url', label: 'URL' },
+    { key: 'scope', label: 'Coverage' },
+  ]}
+  rows={[
+    { org: 'Digital Advertising Alliance (DAA)', url: 'https://www.aboutads.info/choices', scope: 'Most US ad networks; single-step opt-out' },
+    { org: 'Network Advertising Initiative (NAI)', url: 'https://optout.networkadvertising.org', scope: 'NAI member networks; single-step opt-out' },
+    { org: 'European Interactive Digital Advertising Alliance (EDAA)', url: 'https://www.youronlinechoices.eu', scope: 'European Economic Area ad networks' },
+    { org: 'DAA Canada (AdChoices)', url: 'https://youradchoices.ca', scope: 'Canadian ad networks' },
+  ]}
+/>
 
-## Changes to this policy
+### Personalized versus non-personalized advertising
 
-This policy may be updated. The "Last reviewed" date indicates the current version. Material changes will be noted prominently on the site for at least 30 days.
+**Personalized advertising** uses information about your prior visits, inferred interests, and similar signals to select which ads to show you. **Non-personalized advertising** uses only contextual signals (the page content, your approximate location at country level, and your device type) to select ads, with no profile-based targeting.
 
-## Contact
+EU, UK, and Swiss users are shown a Google-certified consent management platform on first visit and may choose personalized or non-personalized advertising. Users in other jurisdictions can switch to non-personalized advertising at any time via Google Ads Settings.
 
-Questions about privacy: use the [contact form](/contact/) with subject "Other".
+### EU/UK consent (GDPR and ePrivacy)
+
+For users in the European Economic Area, the United Kingdom, and Switzerland, the site complies with Google's EU User Consent Policy. A Google-certified consent management platform is presented on first visit. Until valid consent is recorded for personalized advertising, only non-personalized (contextual) advertising is served to those users. The consent state is recorded in a consent cookie or similar storage and can be revisited at any time through the CMP control.
+
+### California residents (CCPA / CPRA)
+
+For California residents, the California Consumer Privacy Act and the California Privacy Rights Act provide specific rights. hvacloadcalc.org does not sell personal information for monetary consideration and does not knowingly share personal information for cross-context behavioral advertising in a way that requires affirmative opt-out under California law.
+
+The Google AdSense integration may transmit identifiers to Google and its ad partners as described above; California residents who wish to opt out of personalized advertising should use Google Ads Settings or the DAA opt-out tool linked above. To exercise other CCPA rights (access, deletion, correction), email **info@hvacloadcalc.org** with subject "Privacy."
+
+## How We Use Information
+
+The categories of data described above are used as follows.
+
+(1) **Server logs** operate and secure the site — serving requests, detecting abuse (excessive request rates, scraping attempts, malformed payloads), and diagnosing errors. They are not used for marketing, personalization, or behavioral profiling.
+
+(2) **Advertising data** is used by Google and its third-party ad partners to deliver and measure ads, in line with Google's policies. The site itself does not access, retain, or process the advertising data Google collects — the integration is the standard AdSense embed.
+
+(3) **Email correspondence** is used solely to respond to your inquiry. Correction reports may be referenced in the public [corrections log](/corrections/) when a correction is published; reporter identity is opt-in (the default is anonymous attribution).
+
+(4) **No data is sold.** No data is shared with third parties for marketing-list resale or similar purposes. No "look-alike audiences" are built. The site does not have anything to sell because it does not collect anything to monetize beyond what Google AdSense receives through standard ad serving.
+
+## Data Retention
+
+<DataTable
+  caption="Data retention by category"
+  columns={[
+    { key: 'data', label: 'Data category' },
+    { key: 'retention', label: 'Retention' },
+    { key: 'notes', label: 'Notes' },
+  ]}
+  rows={[
+    {
+      data: 'Server logs (Vercel)',
+      retention: "Per Vercel's policy, typically less than 30 days for operational logs",
+      notes: 'See Vercel privacy notice for specifics',
+    },
+    {
+      data: 'Email correspondence',
+      retention: 'As long as needed to address the inquiry, typically less than 90 days',
+      notes: 'After resolution, messages are deleted from working systems',
+    },
+    {
+      data: 'Advertising cookies (Google and partners)',
+      retention: 'Per Google and partner retention schedules',
+      notes: 'See Google ad technology policy for specifics; user-controllable via Google Ads Settings',
+    },
+    {
+      data: 'Correction-report attribution (when reporter opts in)',
+      retention: 'Permanent on /corrections/ page',
+      notes: 'Only published when reporter explicitly requests attribution by name',
+    },
+    {
+      data: 'Calculator inputs and results',
+      retention: 'NOT retained — never sent to any server',
+      notes: 'All calculation happens in your browser as plain JavaScript',
+    },
+  ]}
+/>
+
+## Your Choices and Controls
+
+You have several independent controls over data and advertising on this site.
+
+<DataTable
+  caption="User controls over advertising and data"
+  columns={[
+    { key: 'control', label: 'Control' },
+    { key: 'how', label: 'How to use it' },
+    { key: 'effect', label: 'Effect' },
+  ]}
+  rows={[
+    {
+      control: 'Google Ads Settings',
+      how: 'Visit https://adssettings.google.com',
+      effect: 'Disable personalized advertising across Google services and partners (signed in or signed out)',
+    },
+    {
+      control: 'My Ad Center',
+      how: 'Visit https://myadcenter.google.com (Google account required)',
+      effect: 'Customize ad topics, brands, and personalization at a granular level',
+    },
+    {
+      control: 'DAA AdChoices',
+      how: 'Visit https://www.aboutads.info/choices',
+      effect: 'Opt out across most US ad networks via a single industry-wide step',
+    },
+    {
+      control: 'EU consent platform',
+      how: 'Use the CMP control presented on the site (EU/UK/Swiss visitors)',
+      effect: 'Withdraw or update consent for personalized advertising at any time',
+    },
+    {
+      control: 'Block third-party cookies in your browser',
+      how: 'Browser privacy settings (Chrome, Firefox, Safari, Edge all support this)',
+      effect: 'Prevents all third-party cookies including AdSense and partners; the site remains fully functional',
+    },
+    {
+      control: 'Email a privacy request',
+      how: 'Email info@hvacloadcalc.org with subject "Privacy"',
+      effect: 'Exercise GDPR, CCPA, LGPD, or equivalent statutory rights for the editorial side of the site',
+    },
+  ]}
+/>
+
+## GDPR, CCPA, and Equivalent Rights
+
+Depending on your jurisdiction, you may have statutory rights including:
+
+- **Right to access** the information held about you.
+- **Right to correction** of inaccurate information.
+- **Right to deletion** of your information.
+- **Right to portability** of your information in a structured format.
+- **Right to object** to certain processing.
+- **Right to opt out of sale or sharing** of personal information.
+- **Right to non-discrimination** for exercising privacy rights.
+
+Because the editorial side of the site collects very little data (only what you submit by email, plus operational server logs), most editorial-side requests resolve quickly. Advertising-side data is held by Google and partners; the appropriate path for those requests is Google Ads Settings, My Ad Center, or a direct request to Google.
+
+To exercise a right on the editorial side, email **info@hvacloadcalc.org** with subject **"Privacy"** and describe the request. Responses are provided within 30 days of receipt.
+
+EEA, UK, and Swiss residents have GDPR rights. California residents have CCPA/CPRA rights. Brazilian residents have LGPD rights. Canadian residents have PIPEDA rights. All such requests receive the same response standard regardless of jurisdiction.
+
+## Children's Privacy (COPPA)
+
+This site is not directed at children under 13 years of age, and we do not knowingly collect personal information from children under 13.
+
+The content covers HVAC sizing, building science, and equipment selection — topics aimed at adult homeowners. There is no account system, no form requiring personal information beyond email correspondence (which presumes adult or parental consent), and no targeting of children.
+
+If you believe a child under 13 has provided information by emailing the site, email **info@hvacloadcalc.org** with subject "Privacy" and the information will be deleted.
+
+Per Google's policies, advertising on this site does not target children under 13 with personalized advertising.
+
+## International Data Transfers
+
+Vercel and Google operate globally. When you load this site, data may be transferred to and processed in countries other than the one you are in, including the United States. Vercel and Google use standard contractual clauses, data privacy framework certifications, and other lawful mechanisms to govern those transfers.
+
+For EU, UK, and Swiss users specifically: Google is certified under the EU-US Data Privacy Framework, the UK Extension to the DPF, and the Swiss-US DPF. The standard contractual clauses approved by the European Commission also apply to transfers as a fallback safeguard.
+
+## Changes to This Policy
+
+This policy may be updated to reflect changes in site practice, applicable law, or third-party vendor disclosures. Material changes are noted with an updated "Last Reviewed" date at the top of the page and a summary entry on the [corrections log](/corrections/).
+
+The Last Reviewed date indicates when the policy was most recently verified against actual site practice. If you see a Last Reviewed date older than three months, you can request an interim verification by emailing **info@hvacloadcalc.org**.
+
+## Contact for Privacy Matters
+
+For any privacy-related inquiry — exercising your rights, asking about specific practices, reporting a concern, or anything else — email **info@hvacloadcalc.org** with subject **"Privacy"** and describe the matter.
+
+Responses to privacy inquiries are acknowledged within 7 days and substantively addressed within 30 days. There is no other privacy contact channel; the editorial inbox processes all privacy requests directly.
 
 ---
 
-**Last reviewed**: May 18, 2026
+This policy is the complete privacy statement for hvacloadcalc.org as of the Last Reviewed date below. The text is intentionally exhaustive so that an external reviewer (Google AdSense, a privacy regulator, a researcher, or any other party) can verify the site's practices against the documented text.
+
+</article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-06-03" />
+</div>
+
+</Container>

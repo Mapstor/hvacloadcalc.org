@@ -19,6 +19,7 @@ import { IndoorExperienceDuringDefrost } from '@/components/svg/defrost-cycle/In
 import { DefrostProblemDecisionTree } from '@/components/svg/defrost-cycle/DefrostProblemDecisionTree';
 
 export const metadata = {
+  alternates: { canonical: "/heat-pump/cold-climate/defrost-cycle/" },
   title: "Heat Pump Defrost Cycle: What It Is and Why It's Normal",
   description:
     'A heat pump defrost cycle reverses the system briefly to melt ice off the outdoor coil. Learn how it works, how long it lasts, and when it indicates a problem.',
@@ -29,7 +30,7 @@ export const metadata = {
     type: 'article',
     publishedTime: '2026-05-18',
     modifiedTime: '2026-05-18',
-    authors: ['Jonathan S.'],
+    authors: ['Jonathan Stowe'],
     images: ['/opengraph-image'],
   },
 };
@@ -307,7 +308,9 @@ During defrost, the indoor coil briefly becomes the evaporator. Refrigerant abso
 
 Aux heat strips are coils of nichrome wire inside the air handler, between the indoor coil and the supply duct. When current flows, the strips reach 800-1,500°F. Air passing over them warms by 20-40°F. The heat pump auxiliary heat during defrost runs for the duration of defrost plus a brief overlap as the system transitions back to heating.<SourceCite id="ashrae-fundamentals-hp" number={5} />
 
-Aux heat runs at COP = 1.0, meaning every watt of electricity becomes one watt of heat. That is much less efficient than the heat pump itself, which runs at COP 2.5-4.5 in mild weather and COP 1.8-2.5 in cold weather. But the cost penalty applies only for the 5-15 minutes of defrost, plus the brief recovery period. Over a heating season, aux heat during defrost is a small fraction of total energy use.
+Aux heat runs at COP = 1.0, meaning every watt of electricity becomes one watt of heat. That is much less efficient than the heat pump itself, which runs at COP 2.5-4.5 in mild weather and COP 1.8-2.5 in cold weather.
+
+But the cost penalty applies only for the 5-15 minutes of defrost, plus the brief recovery period. Over a heating season, aux heat during defrost is a small fraction of total energy use.
 
 Without aux heat, you will feel a cool spell at the registers during defrost. Some mini-split installations don't include aux strips; they pause indoor airflow during defrost instead. Some ducted installs are configured to use aux only during emergency heat mode, not during defrost. Either way, the heat pump is doing what it should; the homeowner just notices the brief lull.
 
@@ -355,7 +358,9 @@ Cold climate models still defrost. They just defrost more efficiently, more sele
 
 ## When Defrost Indicates a Problem
 
-Most defrost cycles are normal. A few are not. The difference is in frequency, duration, and whether the coil clears. A defrost cycle that runs every 10 minutes regardless of weather, or that takes 25 minutes to complete, or that ends with the outdoor unit still mostly covered in ice — those are signs of a real problem, and they are worth calling a technician about before the system damages itself. If the cycle runs every 45 minutes for 8 minutes and the coil is clean afterward, your heat pump is doing exactly what it was designed to do.
+Most defrost cycles are normal. A few are not. The difference is in frequency, duration, and whether the coil clears. A defrost cycle that runs every 10 minutes regardless of weather, or that takes 25 minutes to complete, or that ends with the outdoor unit still mostly covered in ice — those are signs of a real problem, and they are worth calling a technician about before the system damages itself.
+
+If the cycle runs every 45 minutes for 8 minutes and the coil is clean afterward, your heat pump is doing exactly what it was designed to do.
 
 <DefrostProblemDecisionTree />
 

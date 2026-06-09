@@ -1,38 +1,850 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { Sources } from '@/components/article/Sources';
+import { SourceCite } from '@/components/article/SourceCite';
+import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { Callout } from '@/components/article/Callout';
+import { DataTable } from '@/components/data/DataTable';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { ClimateZonesQuickReference } from '@/components/svg/shared/ClimateZonesQuickReference';
+import { BtuPerSqftByZone } from '@/components/svg/homepage/BtuPerSqftByZone';
 
 export const metadata = {
-  title: 'HVAC Glossary and Terminology Reference | hvacloadcalc.org',
+  alternates: { canonical: "/glossary/" },
+  title: 'HVAC Glossary: 60+ Term Definitions, Formulas, Sources',
   description:
-    'HVAC glossary covering BTU, SEER, HSPF, COP, AFUE, Manual J, ACCA, ASHRAE, AHRI, and 50+ other terms used across residential HVAC and building science.',
+    'A reference glossary of 60+ residential HVAC and building-science terms with concise definitions, formulas where applicable, and the standards body that defines each one. Quotable, sourced, and organized by category.',
+  openGraph: {
+    title: 'HVAC Glossary: Sourced Definitions for 60+ Terms',
+    description:
+      'Concise definitions for SEER2, HSPF2, COP, AFUE, R-value, U-factor, ACH50, Manual J/S/D/T, ACCA, ASHRAE, NEEP, and 50+ other terms.',
+    type: 'article',
+    publishedTime: '2026-05-30',
+    modifiedTime: '2026-05-30',
+    authors: ['Jonathan Stowe'],
+    images: ['/opengraph-image'],
+  },
 };
 
-<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Glossary' }]} />
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'Glossary' },
+];
 
-<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Glossary' }]} />
+export const HEADINGS = [
+  { id: 'how-to-use-this-glossary', text: 'How to Use This Glossary', level: 2 },
+  { id: 'equipment-efficiency-metrics', text: 'Equipment Efficiency Metrics', level: 2 },
+  { id: 'equipment-capacity-and-airflow', text: 'Equipment Capacity and Airflow', level: 2 },
+  { id: 'equipment-types-and-configurations', text: 'Equipment Types and Configurations', level: 2 },
+  { id: 'building-science-and-envelope', text: 'Building Science and Envelope Metrics', level: 2 },
+  { id: 'psychrometric-and-climate', text: 'Psychrometric and Climate Terms', level: 2 },
+  { id: 'refrigeration-cycle', text: 'Refrigeration Cycle Terms', level: 2 },
+  { id: 'standards-bodies-and-acronyms', text: 'Standards Bodies and Acronyms', level: 2 },
+  { id: 'controls-and-operation', text: 'Controls and Operation', level: 2 },
+];
+
+export const SOURCES = [
+  {
+    id: 'ahri-210-240',
+    title: 'ANSI/AHRI Standard 210/240-2023, Performance Rating of Unitary Air-Conditioning and Air-Source Heat Pump Equipment',
+    publisher: 'Air-Conditioning, Heating and Refrigeration Institute (AHRI)',
+    year: 2023,
+    url: 'https://www.ahrinet.org/search-standards/ahri-210240-2023-performance-rating-unitary-air-conditioning-air-source-heat-pump',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'acca-manuals',
+    title: 'ACCA Technical Manuals (Manual J, S, D, T, N — residential design methodology)',
+    publisher: 'Air Conditioning Contractors of America',
+    year: 2014,
+    url: 'https://www.acca.org/standards/technical-manuals',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'ashrae-fundamentals',
+    title: 'ASHRAE Handbook of Fundamentals 2021',
+    publisher: 'American Society of Heating, Refrigerating and Air-Conditioning Engineers',
+    year: 2021,
+    url: 'https://www.ashrae.org/technical-resources/ashrae-handbook',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'iecc-2021',
+    title: 'International Energy Conservation Code (IECC) 2021',
+    publisher: 'International Code Council',
+    year: 2021,
+    url: 'https://codes.iccsafe.org/content/IECC2021P2',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'doe-energy-saver',
+    title: 'DOE Energy Saver consumer resources (heat pumps, AC, furnaces, building envelope)',
+    publisher: 'US Department of Energy, Office of Energy Efficiency and Renewable Energy',
+    year: 2024,
+    url: 'https://www.energy.gov/energysaver',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'neep-cchp-spec-v4',
+    title: 'Cold Climate Air Source Heat Pump Specification, Version 4.0',
+    publisher: 'Northeast Energy Efficiency Partnerships (NEEP)',
+    year: 2024,
+    url: 'https://neep.org/heating-electrification/ccashp-specification-product-list',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'nfrc-label',
+    title: 'NFRC Energy Performance Label methodology',
+    publisher: 'National Fenestration Rating Council',
+    year: 2024,
+    url: 'https://www.nfrc.org/energy-performance-labels/',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'epa-aim-act',
+    title: 'EPA AIM Act final rule on HFC refrigerant phasedown',
+    publisher: 'US Environmental Protection Agency',
+    year: 2023,
+    url: 'https://www.epa.gov/climate-hfcs-reduction',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'ashrae-34',
+    title: 'ANSI/ASHRAE Standard 34-2022, Designation and Safety Classification of Refrigerants',
+    publisher: 'ASHRAE',
+    year: 2022,
+    url: 'https://www.ashrae.org/technical-resources/standards-and-guidelines',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'resnet-hers',
+    title: 'RESNET HERS Index Standard (ANSI/RESNET/ICC 301)',
+    publisher: 'Residential Energy Services Network',
+    year: 2022,
+    url: 'https://www.resnet.us/hers-index/',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+];
+
+export const FAQ_ITEMS = [
+  {
+    q: 'How is this glossary different from a generic HVAC glossary?',
+    a: 'Three differences. (1) Each definition cites the standards body that defines the term — ASHRAE, ACCA, AHRI, EPA, IECC, NEEP, NFRC, RESNET — so the source authority is clear. (2) Where a term has a formula or numerical relationship, that math is included in the entry. (3) Each term is written to be quote-extractable in isolation: an LLM or human can pull the definition out of context and have it stand on its own.',
+  },
+  {
+    q: 'Why do some metrics have a "2" suffix (SEER2, HSPF2, EER2)?',
+    a: 'AHRI Standard 210/240-2023 introduced new test procedures for residential AC and heat pump rating that better reflect installed performance. The new procedures use higher assumed external static pressure (0.50 in. wc vs the old 0.10 in. wc), which lowered measured efficiency by roughly 4-5% across the board. SEER2, HSPF2, and EER2 are the metrics under the new procedure; SEER, HSPF, and EER are the legacy metrics. Federal minimums and ENERGY STAR thresholds use the "2" metrics as of 2023.',
+  },
+  {
+    q: 'What is the difference between Manual J, S, D, T, and N?',
+    a: 'ACCA Manual J is the residential load calculation methodology (heating and cooling). Manual S is the residential equipment selection methodology (matching equipment to Manual J load). Manual D is the residential duct design methodology (sizing ducts to deliver design CFM). Manual T is the residential air distribution methodology (selecting registers and grilles). Manual N is the commercial load calculation methodology (for non-residential applications). The five together form ACCA\'s residential design framework.',
+  },
+  {
+    q: 'What does "tier 1 source" mean on this site?',
+    a: 'A tier 1 source is a primary standards document or government publication — ACCA Manual J 8th Edition itself, ASHRAE Handbook of Fundamentals, AHRI 210/240, DOE 10 CFR Part 430, EPA AIM Act final rule, IRS Section 25C guidance. Tier 2 sources are peer-reviewed academic literature, established trade publications, or government-funded research labs (NREL, ORNL). The site cites tier 1 wherever possible because primary standards are the authoritative source for HVAC terminology and methodology.',
+  },
+];
+
+export const RELATED = [
+  {
+    title: 'Heat pump reference hub',
+    url: '/heat-pump/',
+    description:
+      'Where most of the heat-pump-specific terminology in this glossary appears in context.',
+  },
+  {
+    title: 'AC reference hub',
+    url: '/ac/',
+    description:
+      'Where AC-specific terminology in this glossary appears in context.',
+  },
+  {
+    title: 'Building science fundamentals',
+    url: '/building-science/',
+    description:
+      'Where envelope and climate terminology in this glossary appears in context.',
+  },
+  {
+    title: 'Manual J load calculation',
+    url: '/manual-j/',
+    description:
+      'The ACCA methodology whose terms many of these definitions reference.',
+  },
+];
+
+export const FRONTMATTER = {
+  title: 'HVAC Glossary: 60+ Term Definitions, Formulas, Sources',
+  h1: 'HVAC and Building Science Glossary',
+  meta_description:
+    'A reference glossary of 60+ residential HVAC and building-science terms with concise definitions, formulas where applicable, and the standards body that defines each one. Quotable, sourced, and organized by category.',
+  url: '/glossary/',
+  date_published: '2026-05-30',
+  last_reviewed: '2026-05-30',
+  target_keyword: 'hvac glossary',
+  secondary_keywords: ['hvac terms', 'seer2 definition', 'hspf2 definition', 'manual j definition', 'r-value definition', 'cop definition'],
+  sources: SOURCES,
+  faq: FAQ_ITEMS,
+  parent_title: 'Home',
+};
+
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={2200} />
+
+<JsonLdBreadcrumb items={BREADCRUMBS} />
+
+<Container>
+
+<Breadcrumbs items={BREADCRUMBS} />
+
+<ArticleHeader
+  h1="HVAC and Building Science Glossary"
+  description="60+ residential HVAC and building science terms with concise definitions, formulas where applicable, and the standards body that defines each. Organized by category and citation-ready for use in research or quote extraction."
+  datePublished="2026-05-30"
+  lastReviewed="2026-05-30"
+  readingTimeMinutes={9}
+/>
+
+<KeyTakeaways
+  items={[
+    'Each entry is written to be quotable in isolation — the first sentence stands alone as the definition, and the standards body that defines the term is cited.',
+    'Efficiency metrics with a "2" suffix (SEER2, HSPF2, EER2) are post-2023 metrics under the updated AHRI 210/240-2023 test protocol; the legacy metrics (SEER, HSPF, EER) are no longer used for federal regulation or ENERGY STAR.',
+    'The five ACCA residential design manuals (J, S, D, T, N) form the methodology stack: Manual J calculates loads, Manual S selects equipment, Manual D sizes ducts, Manual T selects registers, Manual N handles small commercial.',
+    'Refrigerant nomenclature follows ASHRAE Standard 34: the number system encodes molecular composition, and the safety classification (A1, A2L, B1, etc.) encodes flammability and toxicity.',
+    'Building envelope metrics (R-value, U-factor, ACH50, SHGC) and climate metrics (IECC zones 1-8, ASHRAE 99% / 1% design temperatures) appear in nearly every Manual J calculation — they are the inputs that determine the load output.',
+  ]}
+/>
+
+<ClimateZonesQuickReference />
+
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
 
 <article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
 
-# HVAC Glossary and Terminology Reference
+## How to Use This Glossary
 
-This is the glossary. Each entry is a short, citation-friendly definition of a specific HVAC or building-science term, with the formula or numerical relationship where one exists. The goal is one quotable sentence per term, plus enough context for a homeowner to use the term correctly.
+This glossary is organized by category — efficiency metrics, capacity terms, equipment types, building science, psychrometrics, refrigeration, standards bodies, and controls. Each entry includes a concise definition (one to two sentences), a formula or numeric value where one exists, and the standards body or document that defines the term authoritatively.
 
-Glossary entries land as part of Wave 3 of the build. The categories below show what's in scope.
+<Callout type="info" title="Entries are designed for citation extraction">
+Each entry is written so the definition stands alone if pulled from context. An LLM extracting "what is HSPF2" should be able to lift the first sentence verbatim and have a coherent, sourced definition. This pattern works for AI summarization, journalism, academic citation, and quick reference.
+</Callout>
 
-## What this section covers
+For longer explanations of any term, follow the link to the relevant article or hub. Most glossary terms appear in context in one of the equipment hubs (/heat-pump/, /ac/, /furnace/), the building science hub (/building-science/), or the ACCA-methodology hubs (/manual-j/, /manual-s/, /manual-d/, /manual-t/).
 
-- **Equipment metrics** — BTU, SEER, SEER2, HSPF, HSPF2, COP, EER, AFUE
-- **Standards bodies** — ACCA, ASHRAE, AHRI, IECC, ENERGY STAR
-- **Building science terms** — R-value, U-factor, SHGC, infiltration, ACH
-- **Psychrometric terms** — dry bulb, wet bulb, dew point, enthalpy
-- **Sizing terminology** — sensible heat, latent heat, heat transfer multiplier, balance point
+Many of the terms defined here are climate-sensitive — BTU per square foot, design temperature, balance point — and the numbers shift substantially across the eight IECC climate zones. The chart below shows cooling BTU per square foot as a worked example of how a single sizing metric varies across climates.
 
-Each entry is designed to be quotable by search engines and LLMs in isolation — the first sentence stands alone as the definition.
+<BtuPerSqftByZone />
 
-## Related topics
+## Equipment Efficiency Metrics
 
-- [Heat pump reference](/heat-pump/) — heat-pump-specific terminology in context
-- [Manual J load calculation](/manual-j/) — sizing methodology terms
-- [Building science](/building-science/) — envelope and climate terms
+<DataTable
+  caption="Residential HVAC efficiency metrics with formulas and source standards"
+  columns={[
+    { key: 'term', label: 'Term' },
+    { key: 'definition', label: 'Definition' },
+    { key: 'formula', label: 'Formula / value' },
+    { key: 'source', label: 'Source' },
+  ]}
+  rows={[
+    {
+      term: 'SEER',
+      definition: 'Seasonal Energy Efficiency Ratio — legacy seasonal cooling efficiency metric in BTU per Wh. Replaced by SEER2 in 2023.',
+      formula: 'BTU cooling / Wh electricity (seasonal)',
+      source: 'AHRI 210/240 pre-2023',
+    },
+    {
+      term: 'SEER2',
+      definition: 'Seasonal Energy Efficiency Ratio under the 2023 test protocol — same BTU/Wh ratio measured at 0.50 in. wc external static pressure (vs 0.10 in. wc for SEER).',
+      formula: 'SEER2 ≈ SEER × 0.95',
+      source: 'AHRI 210/240-2023',
+    },
+    {
+      term: 'EER',
+      definition: 'Energy Efficiency Ratio — steady-state cooling efficiency at design conditions (95°F outdoor / 80°F indoor) in BTU per Wh. No seasonal weighting.',
+      formula: 'BTU cooling / Wh at AHRI A2',
+      source: 'AHRI 210/240 pre-2023',
+    },
+    {
+      term: 'EER2',
+      definition: 'Energy Efficiency Ratio under 2023 protocol — same as EER but measured at 0.50 in. wc external static pressure.',
+      formula: 'BTU cooling / Wh at AHRI A2 (new ESP)',
+      source: 'AHRI 210/240-2023',
+    },
+    {
+      term: 'HSPF',
+      definition: 'Heating Seasonal Performance Factor — legacy seasonal heating efficiency in BTU per Wh. Replaced by HSPF2 in 2023.',
+      formula: 'BTU heating / Wh electricity (seasonal)',
+      source: 'AHRI 210/240 pre-2023',
+    },
+    {
+      term: 'HSPF2',
+      definition: 'Heating Seasonal Performance Factor under 2023 protocol — same BTU/Wh ratio measured under updated test conditions.',
+      formula: 'HSPF2 ≈ HSPF × 0.85',
+      source: 'AHRI 210/240-2023',
+    },
+    {
+      term: 'COP',
+      definition: 'Coefficient of Performance — instantaneous ratio of heating or cooling output to electrical input, dimensionless.',
+      formula: 'BTU output / 3.41 / Wh input',
+      source: 'ASHRAE Fundamentals',
+    },
+    {
+      term: 'AFUE',
+      definition: 'Annual Fuel Utilization Efficiency — seasonal ratio of useful heat delivered to fuel energy input for combustion equipment.',
+      formula: 'Delivered BTU / Input BTU × 100%',
+      source: 'ANSI Z21.47, DOE 10 CFR 430',
+    },
+    {
+      term: 'CEER',
+      definition: 'Combined Energy Efficiency Ratio — efficiency metric for room AC accounting for both active cooling and standby power.',
+      formula: 'Modified EER including standby kWh',
+      source: 'DOE 10 CFR 430 (room AC)',
+    },
+    {
+      term: 'IEER',
+      definition: 'Integrated Energy Efficiency Ratio — commercial unitary equipment seasonal efficiency including part-load weighting.',
+      formula: 'Weighted EER across 4 load points',
+      source: 'AHRI 340/360 (commercial)',
+    },
+  ]}
+/>
+
+## Equipment Capacity and Airflow
+
+<DataTable
+  caption="Capacity and airflow units with definitions and conversions"
+  columns={[
+    { key: 'term', label: 'Term' },
+    { key: 'definition', label: 'Definition' },
+    { key: 'formula', label: 'Formula / conversion' },
+    { key: 'source', label: 'Source' },
+  ]}
+  rows={[
+    {
+      term: 'BTU',
+      definition: 'British Thermal Unit — the energy needed to raise one pound of water by one degree Fahrenheit.',
+      formula: '1 BTU = 1,055 joules',
+      source: 'ASHRAE Fundamentals',
+    },
+    {
+      term: 'Ton (refrigeration)',
+      definition: 'Equal to 12,000 BTU/hr of cooling capacity — derived from the heat needed to melt one short ton of ice per 24 hours.',
+      formula: '1 ton = 12,000 BTU/hr = 3.517 kW',
+      source: 'ASHRAE Fundamentals',
+    },
+    {
+      term: 'CFM',
+      definition: 'Cubic Feet per Minute — volumetric airflow rate.',
+      formula: '1 CFM = 0.000472 m³/s = 1.699 m³/hr',
+      source: 'ASHRAE Fundamentals',
+    },
+    {
+      term: 'Sensible capacity',
+      definition: 'The portion of cooling output that lowers air temperature, measured in BTU/hr.',
+      formula: 'Sensible = Total × SHR',
+      source: 'ASHRAE Fundamentals Ch. 1',
+    },
+    {
+      term: 'Latent capacity',
+      definition: 'The portion of cooling output that removes water vapor from indoor air, measured in BTU/hr.',
+      formula: 'Latent = Total − Sensible',
+      source: 'ASHRAE Fundamentals Ch. 1',
+    },
+    {
+      term: 'SHR',
+      definition: 'Sensible Heat Ratio — fraction of total cooling that goes to sensible (vs latent) cooling. Range 0 to 1.',
+      formula: 'SHR = Sensible / Total',
+      source: 'ASHRAE Fundamentals, ACCA Manual S',
+    },
+    {
+      term: 'CFM per ton',
+      definition: 'Air handler design airflow per nominal ton of cooling capacity.',
+      formula: 'Typical residential: 350-400 CFM/ton',
+      source: 'ACCA Manual D',
+    },
+  ]}
+/>
+
+## Equipment Types and Configurations
+
+<DataTable
+  caption="Equipment types with definitions and primary use cases"
+  columns={[
+    { key: 'term', label: 'Term' },
+    { key: 'definition', label: 'Definition' },
+    { key: 'primaryUse', label: 'Primary use' },
+    { key: 'source', label: 'Source' },
+  ]}
+  rows={[
+    {
+      term: 'Split system',
+      definition: 'Residential HVAC with separate outdoor condenser and indoor air handler/coil, connected by refrigerant lineset.',
+      primaryUse: 'Most US residential central AC and heat pump installations',
+      source: 'DOE Energy Saver',
+    },
+    {
+      term: 'Packaged unit',
+      definition: 'All HVAC components (condenser, coil, blower) in one outdoor cabinet, with ducted supply and return through the building envelope.',
+      primaryUse: 'Manufactured housing, low-ceiling space installations, rooftop',
+      source: 'DOE Energy Saver',
+    },
+    {
+      term: 'Mini-split',
+      definition: 'Ductless heat pump with one outdoor unit feeding one or more indoor heads via refrigerant lineset; no central ductwork.',
+      primaryUse: 'Houses without ducts, additions, single-zone solutions',
+      source: 'DOE Energy Saver',
+    },
+    {
+      term: 'CCASHP',
+      definition: 'Cold Climate Air Source Heat Pump — a heat pump certified to the NEEP CCASHP specification with capacity retention at low temperatures.',
+      primaryUse: 'Heat pump installations in IECC climate zones 5-8',
+      source: 'NEEP CCASHP v4.0',
+    },
+    {
+      term: 'GSHP / geothermal heat pump',
+      definition: 'Ground-Source Heat Pump — exchanges heat with the earth via buried loops rather than outdoor air.',
+      primaryUse: 'New construction, high heating demand, owner-occupied long term',
+      source: 'DOE Energy Saver',
+    },
+    {
+      term: 'Furnace',
+      definition: 'Forced-air heating appliance that burns fuel inside a heat exchanger and blows indoor air across it.',
+      primaryUse: 'Most US residential heating (47% of households use natural gas furnaces)',
+      source: 'DOE Energy Saver, EIA RECS 2020',
+    },
+    {
+      term: 'Condensing furnace',
+      definition: 'High-efficiency furnace (typically ≥90% AFUE) with secondary heat exchanger that extracts latent heat from flue gases.',
+      primaryUse: 'New high-efficiency installations; vented through PVC sidewall',
+      source: 'DOE Energy Saver',
+    },
+    {
+      term: 'Boiler',
+      definition: 'Hot-water (or steam) heating appliance that distributes heat through hydronic loops to radiators or radiant floor.',
+      primaryUse: 'Older Northeast homes, radiant floor systems, multi-family buildings',
+      source: 'DOE Energy Saver',
+    },
+    {
+      term: 'Dual fuel / hybrid system',
+      definition: 'Heat pump primary above a chosen outdoor temperature, fossil-fuel furnace backup below.',
+      primaryUse: 'Cold climates with existing gas service and existing AC',
+      source: 'NEEP CCASHP v4.0, ACCA',
+    },
+    {
+      term: 'Aux heat / strip heat',
+      definition: 'Electric resistance backup integrated into a heat pump\'s indoor unit, supplementing the heat pump below the balance point.',
+      primaryUse: 'All-electric heat pump installations needing supplemental capacity',
+      source: 'ACCA Manual S',
+    },
+    {
+      term: 'Emergency heat / EM HEAT',
+      definition: 'Manually-selected operating mode that runs only the resistance strips, locking out the heat pump entirely.',
+      primaryUse: 'Heat pump failure or maintenance scenarios',
+      source: 'ACCA Manual S',
+    },
+  ]}
+/>
+
+## Building Science and Envelope Metrics
+
+<DataTable
+  caption="Building envelope and thermal performance metrics"
+  columns={[
+    { key: 'term', label: 'Term' },
+    { key: 'definition', label: 'Definition' },
+    { key: 'formula', label: 'Formula / typical range' },
+    { key: 'source', label: 'Source' },
+  ]}
+  rows={[
+    {
+      term: 'R-value',
+      definition: 'Thermal resistance of a material — how strongly it resists heat flow. Higher is better.',
+      formula: 'R = thickness / k, in h·ft²·°F/BTU',
+      source: 'ASHRAE Fundamentals Ch. 26',
+    },
+    {
+      term: 'U-factor',
+      definition: 'Thermal conductance (inverse of R-value), used for glazing assemblies with complex parallel heat-flow paths.',
+      formula: 'U = 1/R, in BTU/h·ft²·°F',
+      source: 'NFRC, ASHRAE Fundamentals',
+    },
+    {
+      term: 'SHGC',
+      definition: 'Solar Heat Gain Coefficient — fraction of incident solar radiation transmitted through a glazing assembly. Range 0 to 1.',
+      formula: 'Typical residential: 0.20 (low-E) to 0.85 (clear single-pane)',
+      source: 'NFRC, ASHRAE Fundamentals',
+    },
+    {
+      term: 'VT',
+      definition: 'Visible Transmittance — fraction of visible-light spectrum transmitted through a glazing assembly. Range 0 to 1.',
+      formula: 'Typical residential: 0.40-0.85',
+      source: 'NFRC',
+    },
+    {
+      term: 'ACH50',
+      definition: 'Air Changes per Hour at 50 Pascals — building envelope tightness measured by blower-door pressurization.',
+      formula: 'CFM50 × 60 / building volume',
+      source: 'ASTM E779, IECC 2021',
+    },
+    {
+      term: 'CFM50',
+      definition: 'Cubic Feet per Minute of air leakage at 50 Pa pressure differential — raw output of a blower-door test.',
+      formula: 'Reported by manometer + flow meter during blower-door test',
+      source: 'ASTM E779',
+    },
+    {
+      term: 'Natural ACH',
+      definition: 'Air changes per hour at typical operating conditions (no pressurization fan).',
+      formula: 'Approximately ACH50 / 20 in typical US climates',
+      source: 'ASHRAE Fundamentals Ch. 16',
+    },
+    {
+      term: 'Heat Transfer Multiplier (HTM)',
+      definition: 'Manual J shortcut: U-factor × design temperature difference, used to compute load per square foot of envelope element.',
+      formula: 'HTM (BTU/h·ft²) = U × ΔT',
+      source: 'ACCA Manual J 8',
+    },
+    {
+      term: 'Thermal bridge',
+      definition: 'Localized path of higher conductivity through an insulated assembly (typically through wood or metal structural members).',
+      formula: 'Reduces effective R by 15-40% in standard wood-frame walls',
+      source: 'ASHRAE Fundamentals Ch. 25',
+    },
+    {
+      term: 'HERS Index',
+      definition: 'Home Energy Rating System Index — 0-150+ scale comparing a home\'s energy use to a 2006 IECC reference home (score 100).',
+      formula: 'Reference home = 100; net-zero home = 0',
+      source: 'RESNET ANSI/RESNET/ICC 301',
+    },
+  ]}
+/>
+
+## Psychrometric and Climate Terms
+
+<DataTable
+  caption="Psychrometric properties and climate-design terms"
+  columns={[
+    { key: 'term', label: 'Term' },
+    { key: 'definition', label: 'Definition' },
+    { key: 'formula', label: 'Formula / typical range' },
+    { key: 'source', label: 'Source' },
+  ]}
+  rows={[
+    {
+      term: 'Dry bulb temperature',
+      definition: 'Air temperature measured by a standard thermometer; no humidity adjustment.',
+      formula: 'Indoor design: 70°F heating / 75°F cooling',
+      source: 'ASHRAE Fundamentals Ch. 1',
+    },
+    {
+      term: 'Wet bulb temperature',
+      definition: 'Temperature of a wet thermometer in moving air, reflecting evaporative cooling potential.',
+      formula: 'Always ≤ dry bulb; equal at 100% RH',
+      source: 'ASHRAE Fundamentals Ch. 1',
+    },
+    {
+      term: 'Dew point',
+      definition: 'Temperature at which water vapor in the air begins to condense.',
+      formula: 'Comfort range: 50-60°F indoor',
+      source: 'ASHRAE Fundamentals Ch. 1',
+    },
+    {
+      term: 'Relative humidity (RH)',
+      definition: 'Ratio of water vapor in air to the maximum it could hold at the current temperature, expressed as percentage.',
+      formula: 'Indoor comfort: 30-50% summer, 30-45% winter',
+      source: 'ASHRAE Standard 55',
+    },
+    {
+      term: 'Enthalpy',
+      definition: 'Total energy content of moist air per pound of dry air; sum of sensible and latent heat.',
+      formula: 'Indoor at 75°F/50% RH ≈ 28.3 BTU/lb',
+      source: 'ASHRAE Fundamentals Ch. 1',
+    },
+    {
+      term: 'Heating design temperature',
+      definition: 'Outdoor dry bulb temperature exceeded 99% of typical-year hours (about 87 hours per year are colder).',
+      formula: 'Miami 47°F to Anchorage −19°F',
+      source: 'ASHRAE Fundamentals Ch. 14',
+    },
+    {
+      term: 'Cooling design temperature',
+      definition: 'Outdoor dry bulb temperature exceeded 1% of typical-year hours; reported with coincident wet bulb.',
+      formula: 'Miami 90°F, Phoenix 108°F, Chicago 91°F',
+      source: 'ASHRAE Fundamentals Ch. 14',
+    },
+    {
+      term: 'Climate zone (IECC)',
+      definition: 'One of 8 numbered zones (with A/B/C moisture subdivisions) characterizing US climates for code purposes.',
+      formula: 'Zone 1 hot/humid to Zone 8 subarctic',
+      source: 'IECC 2021, ASHRAE 169',
+    },
+    {
+      term: 'HDD / CDD',
+      definition: 'Heating / Cooling Degree Days — annual sum of daily temperature differences from a base (typically 65°F).',
+      formula: 'Used to estimate annual energy use',
+      source: 'NOAA, EIA',
+    },
+    {
+      term: 'Balance point',
+      definition: 'Outdoor temperature at which a heat pump\'s heating capacity equals the building heating load.',
+      formula: 'Above: heat pump alone; Below: aux heat fills gap',
+      source: 'NEEP CCASHP v4.0',
+    },
+    {
+      term: 'WBGT',
+      definition: 'Wet Bulb Globe Temperature — composite metric used in heat-stress research; not a typical HVAC metric.',
+      formula: '0.7 Twb + 0.2 Tg + 0.1 Tdb',
+      source: 'ISO 7243, NOAA',
+    },
+  ]}
+/>
+
+## Refrigeration Cycle Terms
+
+<DataTable
+  caption="Refrigeration cycle components and refrigerant terminology"
+  columns={[
+    { key: 'term', label: 'Term' },
+    { key: 'definition', label: 'Definition' },
+    { key: 'formula', label: 'Notes' },
+    { key: 'source', label: 'Source' },
+  ]}
+  rows={[
+    {
+      term: 'Refrigerant',
+      definition: 'Working fluid that absorbs heat from indoor air (evaporator) and releases it to outdoor air (condenser).',
+      formula: 'Phase-change between vapor and liquid drives the cycle',
+      source: 'ASHRAE Fundamentals Ch. 28',
+    },
+    {
+      term: 'GWP',
+      definition: 'Global Warming Potential — warming impact relative to CO2 over 100 years.',
+      formula: 'R-410A = 2,088; R-454B = 466; R-32 = 675; CO2 = 1',
+      source: 'IPCC AR5, EPA AIM Act',
+    },
+    {
+      term: 'A2L refrigerant',
+      definition: 'ASHRAE safety classification for low-toxicity, mildly-flammable refrigerants (lower flammability than A2 hydrocarbons).',
+      formula: 'R-454B, R-32, R-1234yf — replacing A1 R-410A',
+      source: 'ASHRAE Standard 34',
+    },
+    {
+      term: 'TXV',
+      definition: 'Thermostatic Expansion Valve — meters refrigerant flow into the evaporator based on superheat at the coil outlet.',
+      formula: 'Maintains 8-12°F superheat at outlet',
+      source: 'ASHRAE Fundamentals Ch. 11',
+    },
+    {
+      term: 'EEV',
+      definition: 'Electronic Expansion Valve — solenoid-controlled metering device that adjusts refrigerant flow dynamically.',
+      formula: 'Used in modulating and inverter equipment',
+      source: 'ASHRAE Fundamentals Ch. 11',
+    },
+    {
+      term: 'Superheat',
+      definition: 'Vapor refrigerant temperature above its saturation point at current pressure.',
+      formula: 'Target 8-12°F at evaporator outlet',
+      source: 'ASHRAE Fundamentals Ch. 1',
+    },
+    {
+      term: 'Subcooling',
+      definition: 'Liquid refrigerant temperature below its saturation point at current pressure.',
+      formula: 'Target 8-12°F at condenser outlet (TXV systems)',
+      source: 'ASHRAE Fundamentals Ch. 1',
+    },
+    {
+      term: 'Reversing valve',
+      definition: 'Four-way valve that switches refrigerant flow direction, converting an AC into a heat pump.',
+      formula: 'Energized in cooling, de-energized in heating (most US convention)',
+      source: 'ASHRAE Fundamentals Ch. 1',
+    },
+    {
+      term: 'Defrost cycle',
+      definition: 'Periodic reversal of heat pump refrigerant flow to melt frost from the outdoor coil in heating mode.',
+      formula: 'Triggered by time, temperature, or demand; typically 5-15 minutes',
+      source: 'AHRI 210/240, NEEP CCASHP',
+    },
+  ]}
+/>
+
+## Standards Bodies and Acronyms
+
+<DataTable
+  caption="Standards organizations and trade bodies referenced throughout US residential HVAC"
+  columns={[
+    { key: 'acronym', label: 'Acronym' },
+    { key: 'full', label: 'Full name' },
+    { key: 'role', label: 'Role in HVAC' },
+    { key: 'url', label: 'Web reference' },
+  ]}
+  rows={[
+    {
+      acronym: 'ACCA',
+      full: 'Air Conditioning Contractors of America',
+      role: 'Publishes Manual J/S/D/T/N residential and small commercial design methodologies',
+      url: 'acca.org',
+    },
+    {
+      acronym: 'AHRI',
+      full: 'Air-Conditioning, Heating and Refrigeration Institute',
+      role: 'Publishes equipment performance rating standards (210/240, 340/360) and product certification directory',
+      url: 'ahrinet.org',
+    },
+    {
+      acronym: 'ASHRAE',
+      full: 'American Society of Heating, Refrigerating and Air-Conditioning Engineers',
+      role: 'Publishes Handbook of Fundamentals, design standards (55 comfort, 62.2 ventilation, 169 climate, 90.1 energy)',
+      url: 'ashrae.org',
+    },
+    {
+      acronym: 'IECC',
+      full: 'International Energy Conservation Code',
+      role: 'Federal energy code adopted by most US jurisdictions; sets minimum envelope and equipment efficiency',
+      url: 'iccsafe.org',
+    },
+    {
+      acronym: 'DOE',
+      full: 'US Department of Energy',
+      role: 'Sets federal minimum efficiency standards (10 CFR 430); publishes Energy Saver consumer guides',
+      url: 'energy.gov',
+    },
+    {
+      acronym: 'EPA',
+      full: 'US Environmental Protection Agency',
+      role: 'Manages refrigerant regulation (AIM Act, SNAP), ENERGY STAR (jointly with DOE), indoor air quality guidance',
+      url: 'epa.gov',
+    },
+    {
+      acronym: 'RESNET',
+      full: 'Residential Energy Services Network',
+      role: 'Publishes HERS Index standard and certifies HERS raters',
+      url: 'resnet.us',
+    },
+    {
+      acronym: 'BPI',
+      full: 'Building Performance Institute',
+      role: 'Certifies energy auditors and home performance contractors',
+      url: 'bpi.org',
+    },
+    {
+      acronym: 'NEEP',
+      full: 'Northeast Energy Efficiency Partnerships',
+      role: 'Publishes CCASHP cold-climate heat pump specification and product list',
+      url: 'neep.org',
+    },
+    {
+      acronym: 'NFRC',
+      full: 'National Fenestration Rating Council',
+      role: 'Certifies window and door performance (U-factor, SHGC, VT, AL, CR)',
+      url: 'nfrc.org',
+    },
+    {
+      acronym: 'SMACNA',
+      full: 'Sheet Metal and Air Conditioning Contractors\' National Association',
+      role: 'Publishes sheet metal fabrication and duct installation standards',
+      url: 'smacna.org',
+    },
+    {
+      acronym: 'AMCA',
+      full: 'Air Movement and Control Association International',
+      role: 'Certifies air outlet products (registers, grilles, diffusers) per Standard 211',
+      url: 'amca.org',
+    },
+    {
+      acronym: 'ANSI',
+      full: 'American National Standards Institute',
+      role: 'Accredits standards development; ACCA Manuals are ANSI-approved (ANSI/ACCA 1, 2, 3)',
+      url: 'ansi.org',
+    },
+  ]}
+/>
+
+## Controls and Operation
+
+<DataTable
+  caption="Thermostat and control terminology"
+  columns={[
+    { key: 'term', label: 'Term' },
+    { key: 'definition', label: 'Definition' },
+    { key: 'formula', label: 'Notes' },
+    { key: 'source', label: 'Source' },
+  ]}
+  rows={[
+    {
+      term: 'Setback',
+      definition: 'Programmed thermostat adjustment to a lower (winter) or higher (summer) setpoint during unoccupied hours.',
+      formula: 'Typical setback: 8°F heating / 4°F cooling',
+      source: 'ENERGY STAR, ACCA Manual RS',
+    },
+    {
+      term: 'Setpoint',
+      definition: 'The temperature the thermostat is set to maintain in conditioned spaces.',
+      formula: 'Typical: 70°F heating / 75°F cooling',
+      source: 'ASHRAE Standard 55',
+    },
+    {
+      term: 'Lockout temperature',
+      definition: 'Outdoor temperature below which a thermostat disables a specific stage or system (typically the heat pump or aux strips).',
+      formula: 'Aux lockout typically set at 25-40°F',
+      source: 'ACCA Manual S, thermostat documentation',
+    },
+    {
+      term: 'Droop',
+      definition: 'Temperature differential between thermostat setpoint and the point at which a higher heating stage engages.',
+      formula: 'Typical: 2-4°F before aux engages',
+      source: 'Thermostat manufacturer specs',
+    },
+    {
+      term: 'Smart thermostat',
+      definition: 'Programmable thermostat with Wi-Fi connectivity, learning algorithms, and optional remote sensors.',
+      formula: 'Examples: Ecobee, Nest, Honeywell T-series',
+      source: 'ENERGY STAR smart thermostat program',
+    },
+    {
+      term: 'Modulating control',
+      definition: 'Control scheme that continuously varies output (compressor speed, gas valve position) rather than cycling between fixed levels.',
+      formula: 'Typically 30-100% modulation range',
+      source: 'Equipment manufacturer documentation',
+    },
+    {
+      term: 'Demand defrost',
+      definition: 'Defrost cycle triggered by measurement of frost accumulation (coil temperature/airflow ratio) rather than fixed time interval.',
+      formula: 'Reduces defrost frequency 30-50% in dry cold',
+      source: 'NEEP CCASHP v4.0',
+    },
+  ]}
+/>
 
 </article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<Sources sources={SOURCES} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-30" />
+</div>
+
+</Container>

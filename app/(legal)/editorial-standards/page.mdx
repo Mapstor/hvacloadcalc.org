@@ -1,97 +1,509 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { Callout } from '@/components/article/Callout';
+import { DataTable } from '@/components/data/DataTable';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
 
 export const metadata = {
-  title: 'Editorial Standards',
+  alternates: { canonical: "/editorial-standards/" },
+  title: 'Editorial Standards: Sourcing, Review Process, Corrections Policy',
   description:
-    'How content is created and reviewed at hvacloadcalc.org. Sourcing standards, review process, and update cadence.',
+    "Editorial standards for hvacloadcalc.org — source tier classification, six-stage article review process, annual update cadence, independence disclosure, accessibility targets, and the corrections policy.",
+  openGraph: {
+    title: 'hvacloadcalc.org Editorial Standards',
+    description:
+      'Source tier classification, six-stage article review process, annual update cadence, and editorial independence documented openly.',
+    type: 'article',
+    publishedTime: '2026-05-30',
+    modifiedTime: '2026-05-30',
+    authors: ['Jonathan Stowe'],
+    images: ['/opengraph-image'],
+  },
 };
 
-<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Editorial Standards' }]} />
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'Editorial Standards' },
+];
 
-<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Editorial Standards' }]} />
+export const HEADINGS = [
+  { id: 'editorial-mission', text: 'Editorial Mission and Approach', level: 2 },
+  { id: 'who-writes-the-content', text: 'Who Writes the Content', level: 2 },
+  { id: 'sourcing-standards', text: 'Sourcing Standards: The Tier System', level: 2 },
+  { id: 'six-stage-review-process', text: 'The Six-Stage Article Review Process', level: 2 },
+  { id: 'hard-rules', text: 'Hard Rules That Cannot Be Bypassed', level: 2 },
+  { id: 'update-cadence', text: 'Update Cadence', level: 2 },
+  { id: 'independence-and-conflicts', text: 'Independence and Conflicts of Interest', level: 2 },
+  { id: 'corrections-policy', text: 'Corrections Policy', level: 2 },
+  { id: 'accessibility-standards', text: 'Accessibility Standards', level: 2 },
+  { id: 'reader-feedback', text: 'Reader Feedback Process', level: 2 },
+];
 
-# Editorial Standards
+export const FAQ_ITEMS = [
+  {
+    q: 'Why publish editorial standards in this much detail?',
+    a: "Because a homeowner reaching the site has no reason to trust an unverified source. The detailed editorial standards make accountability concrete: when a methodology error is found, the process for fixing and disclosing is documented; when a potential conflict of interest exists, the disclosure is published; when a source tier is unclear, the criteria for inclusion are defined. Editorial standards in the abstract are not credible — published process is.",
+  },
+  {
+    q: 'How do you decide which sources count as authoritative?',
+    a: "Tier 1 sources are standards documents published by ANSI-accredited standards development organizations (ACCA, ASHRAE, AHRI, NFRC, AMCA, ASTM), federal regulatory publications (DOE 10 CFR 430, EPA AIM Act, IRS Fact Sheets), and government statistical agencies (EIA, NOAA, Census Bureau). Tier 2 sources are federally-funded research labs (LBNL, NREL, ORNL, PNNL), peer-reviewed academic literature, and industry research institutes (Building Science Corporation). Tier 3 sources are trade publications with strong editorial standards. The hierarchy is applied consistently — claims are sourced from the highest available tier.",
+  },
+  {
+    q: 'Does the site ever publish opinions?',
+    a: 'Yes, in clearly-marked editorial sections. When a topic involves a reasonable-practitioner disagreement (for example, whether dual-fuel hybrid systems beat pure heat pump installs in cold climates), the site presents the major positions with their respective sources and explains the tradeoffs rather than declaring one position correct. Where the editorial team has a position, it is labeled as such. Pure factual claims (capacity at 17°F, federal incentive amounts, building code requirements) are always sourced rather than asserted.',
+  },
+  {
+    q: 'What happens when a reader reports an error?',
+    a: 'The error is logged in the editorial tracking system within 7 days of receipt. The relevant article is reviewed, the original source is re-checked, and the correction is either implemented or the original content is re-defended with citation. If a correction is implemented, the article is updated, the SOURCES list is reviewed, the corrections page is updated, and (with the reporter\'s explicit consent) the reporter is attributed. The process takes 14 days for routine corrections and longer for substantive methodology disagreements.',
+  },
+  {
+    q: 'How often is content reviewed?',
+    a: 'Every article is reviewed at least annually with the "last reviewed" date updated regardless of whether content changed. Standards-triggered reviews happen within 60 days of a major standards update (new edition of ACCA Manual, new ENERGY STAR specification version, new DOE Final Rule). Critical safety-related updates (refrigerant regulation, CO standards) are implemented faster, typically within 14 days.',
+  },
+  {
+    q: 'Why does the site avoid recommending specific equipment brands?',
+    a: 'Because equipment performance for any specific household depends on local conditions (climate, envelope, electric/gas prices, contractor competence) that the site cannot evaluate. Pointing at categories ("CCASHP-listed units from NEEP", "ENERGY STAR Version 6.1 Cold Climate") routes the user toward authoritative product lists that publish every qualifying model with independently-verified specs.',
+  },
+];
 
-## Mission
+export const RELATED = [
+  {
+    title: 'About',
+    url: '/about/',
+    description:
+      'The site\'s mission, audience, and funding model — context for these editorial standards.',
+  },
+  {
+    title: 'Methodology',
+    url: '/methodology/',
+    description:
+      'How calculators implement the editorial sourcing standards in practice.',
+  },
+  {
+    title: 'Sources',
+    url: '/sources/',
+    description:
+      'The complete bibliography organized by tier and category.',
+  },
+  {
+    title: 'Corrections',
+    url: '/corrections/',
+    description:
+      'Public log of corrections following these editorial standards.',
+  },
+  {
+    title: 'Jonathan Stowe (author bio)',
+    url: '/authors/jonathan-s/',
+    description:
+      'The author writing under these editorial standards.',
+  },
+];
 
-hvacloadcalc.org exists to help homeowners understand residential HVAC well enough to make informed decisions about system sizing, equipment selection, and contractor recommendations. Content is educational, methodology-transparent, and free of commercial bias.
+export const FRONTMATTER = {
+  title: 'Editorial Standards: Sourcing, Review Process, Corrections Policy',
+  h1: 'Editorial Standards',
+  meta_description:
+    "Editorial standards for hvacloadcalc.org — source tier classification, six-stage article review process, annual update cadence, independence disclosure, accessibility targets, and the corrections policy.",
+  url: '/editorial-standards/',
+  date_published: '2026-05-30',
+  last_reviewed: '2026-05-30',
+  target_keyword: 'editorial standards',
+  secondary_keywords: ['hvac source citation', 'editorial review process', 'corrections policy'],
+  sources: [],
+  faq: FAQ_ITEMS,
+  parent_title: 'Home',
+};
 
-## Who writes the content
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={1900} />
 
-All content is written by Jonathan S. ([author page](/authors/jonathan-s/)). Jonathan is a homeowner-researcher, not a credentialed HVAC professional. The site does not claim professional engineering authority — it claims that rigorous research into ACCA, ASHRAE, NEEP, and DOE publications produces content that helps non-specialists make better decisions.
+<JsonLdBreadcrumb items={BREADCRUMBS} />
 
-When subject-matter expertise beyond the author's reading is required, the relevant source is cited directly. The site relies on authoritative standards for the substance of every claim.
+<Container>
 
-## Sourcing standards
+<Breadcrumbs items={BREADCRUMBS} />
 
-Every claim that could be disputed is cited to a source. Sources are tiered:
+<ArticleHeader
+  h1="Editorial Standards"
+  description="The editorial process behind the content on the site — source tier classification, six-stage article review process, annual update cadence, independence disclosure, accessibility targets, and the corrections policy."
+  datePublished="2026-05-30"
+  lastReviewed="2026-05-30"
+  readingTimeMinutes={9}
+/>
 
-- **Tier 1**: Industry standards (ACCA, ASHRAE, AHRI, IECC), government agencies (DOE, EIA, ENERGY STAR, NOAA), and authoritative databases (NEEP, AHRI Directory). Preferred for all factual claims.
-- **Tier 2**: Peer-reviewed publications, national laboratory reports (LBNL, ORNL, NREL), state energy office publications.
-- **Tier 3**: Established building-science publications (GreenBuildingAdvisor, Energy Vanguard, Building Science Corporation) for context where Tier 1/2 sources don't directly address a topic.
+<KeyTakeaways
+  items={[
+    'Every factual claim is sourced inline to a primary publication (tier 1 standards, federal regulations, government data) wherever possible; tier 2 sources (research labs, peer-reviewed research) fill gaps; trade publications are tier 3 and used for context only.',
+    'Articles go through a six-stage review (brief → draft → editorial → mobile/a11y → schema validation → publication) and every published article gets an annual review with the last-reviewed date updated regardless of whether content changed.',
+    'The site is independent of every commercial party cited across its content: no manufacturer partnerships, no contractor referral arrangements, no software-vendor operational relationships. The independence disclosure is documented below.',
+    'Corrections policy: errors are fixed within 14 days of credible report, logged at /corrections/ with date and (with permission) attribution, and the affected article\'s last-reviewed date is updated.',
+    'Accessibility targets: WCAG AA color contrast, screen reader compatibility, 375px mobile viewport functionality, Flesch reading ease 50-65 (high school graduate level), descriptive alt text on every image and SVG.',
+  ]}
+/>
 
-The site does not cite competitor calculator outputs, HVAC contractor marketing blog posts, social media, or AI-generated content as sources of fact.
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
 
-## Review process
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
 
-Every article goes through a multi-stage review:
+## Editorial Mission and Approach
 
-1. **Brief**: Article topic, target keywords, required content, sources, and structure are specified in a detailed brief before writing begins.
-2. **Drafting**: Article is written against the brief, with all sources cited inline.
-3. **Editorial review**: Brand voice, content policy, factual claims, and source citations are verified.
-4. **Mobile/accessibility review**: Page is checked at 375px viewport, with screen reader, and against WCAG AA standards.
-5. **Schema validation**: All JSON-LD structured data is validated at schema.org validator and Google Rich Results Test.
-6. **Publication**: Article is published with a "Last reviewed" date in the byline.
+The site exists to help homeowners understand residential HVAC well enough to make informed decisions about system sizing, equipment selection, and contractor recommendations. Content is educational, methodology-transparent, and free of commercial bias.
 
-## Update cadence
+<Callout type="info" title="The editorial standard in one sentence">
+Every factual claim is sourced to a primary publication, every conclusion is defensible against a primary-source check, and every potential conflict of interest is disclosed in writing. When these standards conflict with what would be commercially advantageous, the editorial standards win.
+</Callout>
 
-- Articles are reviewed at least annually, with the "Last reviewed" date updated regardless of whether content changed
-- When industry standards change (ACCA updates Manual J, NEEP updates CCASHP spec, etc.), affected articles are reviewed and updated within 60 days
-- When errors are identified, articles are corrected immediately and the correction is logged on the [corrections page](/corrections/)
+**The approach is deliberately conservative.** We do not break news, do not chase trending topics, do not optimize content for social media virality. The content is designed to be accurate when published, remain accurate as standards change (via update cycles), and remain useful 5-10 years after publication. The depth of source citation makes that durability possible — every claim can be re-verified against its original source at any time.
 
-## Independence and bias
+The editorial voice is third-person factual for hub and article content, with first-person "we" voice reserved for site-identity pages like this one, the about page, and the methodology page.
 
-hvacloadcalc.org is independent of:
+The brand voice document specifies forbidden phrases (marketing fluff like "navigate the world of," "in today's world," "look no further") and limits on stylistic devices (max 3 em-dashes per article, max 4 sentences per paragraph). The voice is technical but accessible: readers should level up, not be talked down to.
 
-- HVAC equipment manufacturers
-- HVAC contractors and installers
-- HVAC software vendors
-- Trade associations
-- Real estate companies
-- Utility companies
+## Who Writes the Content
 
-The site does not accept paid placement, sponsored content, contractor referral fees, or affiliate commissions. The site is funded entirely by display advertising managed by Raptive / AdSense. Display ad content does not influence editorial decisions.
+All content is written by Jonathan Stowe (the [author page](/authors/jonathan-s/)), a writer-researcher specializing in residential HVAC methodology. The site does not claim professional engineering authority — it claims that rigorous research into ACCA, ASHRAE, NEEP, DOE, and other primary sources produces content that helps non-specialists make better decisions.
 
-The site does not recommend specific brands or models. Where equipment categories are discussed (e.g., "cold-climate heat pumps with vapor-injection compressors"), general guidance is provided; specific model recommendations are out of scope.
+When subject-matter expertise beyond the author's reading is required, the relevant source is cited directly. The site relies on authoritative standards for the substance of every claim. When a methodology question requires reasoning beyond what standards explicitly address, the article either presents the major reasonable-practitioner positions (with their respective sources) or labels the editorial position as such rather than asserting it as fact.
 
-## Corrections policy
+Editorial contributions from external practitioners are welcome but currently rare. The editorial process for accepting a guest perspective requires the contributor to follow the source tier system, the brief format, and the review process; we have not yet established a guest-contributor channel.
 
-When an error is identified — whether in factual content, methodology, or sourcing — the policy is:
+## Sourcing Standards: The Tier System
 
-1. **Fix immediately** in the article
-2. **Update "Last reviewed" date** in the article frontmatter
-3. **Log the correction** on the [corrections page](/corrections/) with date, article URL, and summary of the change
-4. **Attribute** when the correction came from a reader, building scientist, or industry professional
+Every claim that could be disputed is cited to a source via the SourceCite component (which renders as a superscript citation linking to the SOURCES list). Sources are classified by tier.
 
-The site treats accuracy as a higher priority than ego. Corrections are public and prompt.
+<DataTable
+  caption="Source tier classification used across the site"
+  columns={[
+    { key: 'tier', label: 'Tier' },
+    { key: 'sources', label: 'Source types' },
+    { key: 'use', label: 'When to use' },
+  ]}
+  rows={[
+    {
+      tier: 'Tier 1 (preferred)',
+      sources: 'ANSI-accredited standards (ACCA Manual J/S/D/T, ASHRAE Handbook, AHRI 210/240, NFRC, AMCA, ASTM, RESNET); federal regulatory publications (DOE 10 CFR 430, EPA AIM Act, IRS Fact Sheets); federal statistical agencies (EIA, NOAA, Census)',
+      use: 'For all factual claims where a tier 1 source exists',
+    },
+    {
+      tier: 'Tier 2 (gap-filling)',
+      sources: 'National research labs (LBNL, NREL, ORNL, PNNL); peer-reviewed academic literature; industry research institutes (Building Science Corporation, RDH Building Science)',
+      use: 'When tier 1 does not address a specific question or field validation is needed',
+    },
+    {
+      tier: 'Tier 3 (context only)',
+      sources: 'Trade publications with editorial standards (ACHR News, JLC, Energy Vanguard, GreenBuildingAdvisor); manufacturer-published technical reports',
+      use: 'For market context, field-practice perspective, and trend data — not for primary factual claims',
+    },
+    {
+      tier: 'Not cited',
+      sources: 'Wikipedia (tertiary), competitor calculator outputs, contractor marketing pages, social media, AI-generated content, retail product listings, unsourced rule-of-thumb publications',
+      use: 'Never as a citation source for facts',
+    },
+  ]}
+/>
 
-## Accessibility
+**The tier hierarchy is applied consistently.** When a claim has a tier 1 source available, the article cites tier 1 even if a tier 2 source presents the same fact more accessibly. The rationale: tier 1 sources are revision-tracked by standards organizations (ACCA, ASHRAE, AHRI, DOE) and remain authoritative through revision cycles, while secondary sources can become out of date silently.
 
-Content is designed to be accessible across reading levels and devices:
+The exception is where tier 1 standards are paywalled and tier 2 sources reproduce the relevant data in accessible form. In those cases the citation is tier 1 (for the standard authority) plus a parenthetical pointing to where the data is also available freely. The DOE Energy Saver consumer guides, for example, reproduce many ASHRAE Handbook tables in publicly accessible form.
 
-- Reading level target: high school graduate (Flesch reading ease ~50-65)
-- Technical concepts are introduced before being used
-- Headings provide a clear outline
-- Tables include responsive scrolling
-- Images include descriptive alt text
-- Color contrast meets WCAG AA
-- Site is functional with screen readers
+## The Six-Stage Article Review Process
 
-## Reader feedback
+Every article goes through six stages before publication.
 
-Reader questions, corrections, and feedback are welcome via the [contact form](/contact/). The site is small and responses are not guaranteed, but substantive feedback is read and considered.
+<DataTable
+  caption="The six-stage article review process"
+  columns={[
+    { key: 'stage', label: 'Stage' },
+    { key: 'description', label: 'Description' },
+    { key: 'output', label: 'Output' },
+  ]}
+  rows={[
+    {
+      stage: '1. Brief',
+      description: 'Article topic, content scope, source list, internal link map, SVG asset requirements, and editorial gate checklist are specified',
+      output: 'Brief document at /content/briefs/[topic]/',
+    },
+    {
+      stage: '2. Drafting',
+      description: 'Article written against the brief in MDX format, with all sources cited inline via SourceCite, every numeric claim accompanied by source attribution',
+      output: 'Draft .mdx file with imports, JSON-LD, components, and content',
+    },
+    {
+      stage: '3. Editorial review',
+      description: 'Brand voice (forbidden phrases, em-dash limits, paragraph length), content policy (no specific-home recommendations, no marketing fluff), factual claims (every number sourced), and source citations (every SourceCite resolves to a SOURCES entry) are verified',
+      output: 'Edited draft passing editorial gate checklist',
+    },
+    {
+      stage: '4. Mobile and accessibility review',
+      description: 'Page checked at 375px mobile viewport, with VoiceOver/NVDA screen reader, against WCAG AA color contrast, focus management, and keyboard navigation',
+      output: 'Mobile/a11y check passing',
+    },
+    {
+      stage: '5. Schema validation',
+      description: 'All JSON-LD structured data (Article, FAQPage, BreadcrumbList, HowTo where applicable) validated at schema.org validator and Google Rich Results Test',
+      output: 'Schema validation passing',
+    },
+    {
+      stage: '6. Publication',
+      description: 'Article published with date_published and last_reviewed in frontmatter, sitemap updated, internal links from related articles verified',
+      output: 'Live article URL with all components rendering correctly',
+    },
+  ]}
+/>
 
----
+The review process is not a linear waterfall in practice — stages 3, 4, and 5 often surface issues that require returning to stage 2 (drafting) for revision. The full cycle for a typical hero-depth article takes 8-15 hours of editorial work spread across 2-4 sessions, plus the underlying research time which can be substantially longer for novel topics.
 
-**Last reviewed**: May 18, 2026
+Brief documents are checked into the repository at /content/briefs/ so that the editorial intent for each article is auditable. This is part of the editorial standards' transparency commitment: a reader who wants to understand why a specific topic was covered in a specific way can read the original brief alongside the published article.
+
+## Hard Rules That Cannot Be Bypassed
+
+A subset of the editorial standards are "hard rules" — bypassable only with explicit policy revision, never quietly compromised.
+
+<DataTable
+  caption="Hard editorial rules"
+  columns={[
+    { key: 'category', label: 'Category' },
+    { key: 'rule', label: 'Rule' },
+    { key: 'rationale', label: 'Rationale' },
+  ]}
+  rows={[
+    {
+      category: 'Sourcing',
+      rule: 'Every claim that could be disputed gets an inline SourceCite',
+      rationale: 'Editorial accountability requires that claims be verifiable',
+    },
+    {
+      category: 'Structure',
+      rule: 'Every article opens with a KeyTakeaways block of 4-6 bullets',
+      rationale: 'Skim-readability and AI extractability',
+    },
+    {
+      category: 'Style',
+      rule: 'Maximum 4 sentences per paragraph; no walls of prose',
+      rationale: 'Mobile readability and visual density',
+    },
+    {
+      category: 'Style',
+      rule: 'Maximum 3 em-dashes per article; commas or periods otherwise',
+      rationale: 'Brand voice; em-dash overuse is a marketing-content tell',
+    },
+    {
+      category: 'Style',
+      rule: 'Forbidden marketing phrases: "in today\'s world", "It\'s important to note", "When it comes to", "Let\'s dive in", "Whether you\'re", "Navigate the world of"',
+      rationale: 'These phrases mark content as generic AI or marketing rather than reference',
+    },
+    {
+      category: 'Linking',
+      rule: 'Every page links to at least 2 other articles, 1 calculator, and 1 external authoritative source',
+      rationale: 'Internal link density supports reader navigation between related concepts',
+    },
+    {
+      category: 'Linking',
+      rule: 'Internal links use descriptive anchor text; never "click here", "this article", "read more"',
+      rationale: 'Accessibility for screen readers and visual scannability',
+    },
+    {
+      category: 'Independence',
+      rule: 'Editorial decisions are independent of commercial parties cited in the content; manufacturer/contractor/software-vendor relationships are disclosed',
+      rationale: 'Reader trust requires verifiable independence',
+    },
+    {
+      category: 'Authority',
+      rule: 'Never claim ACCA approval, professional engineering credentials, or contractor licensing',
+      rationale: 'The site is educational, not credentialed',
+    },
+    {
+      category: 'Safety',
+      rule: 'Never give wiring, electrical, refrigerant, or gas-connection instructions',
+      rationale: 'Liability and safety; this is reference content not how-to repair content',
+    },
+  ]}
+/>
+
+The hard rules exist to prevent slow drift toward generic content marketing. Without them, the temptation over time would be to add "click here" links because they are common, to publish 6-sentence paragraphs because they feel substantive, or to soften technical claims that might seem too sharp. The rules make that drift visible and (when it happens) reversible.
+
+## Update Cadence
+
+The cadence has three layers.
+
+**Annual review baseline.** Every article is reviewed at least annually with the last-reviewed date updated regardless of whether content changed. The annual review verifies that every cited URL still resolves, every standards version is current, and every quoted threshold matches the current authoritative document.
+
+**Standards-triggered reviews.** When a major standard is revised (new edition of ACCA Manual J, new ENERGY STAR specification version, new NEEP CCASHP version, new DOE final rule), every article citing the standard is reviewed within 60 days. The review confirms whether the change affects published numbers or methodology and implements updates as needed.
+
+**Critical updates.** Safety-related changes (refrigerant regulation, CO exposure thresholds, code-mandated efficiency minimums) are implemented within 14 days of becoming effective. Tax credit and rebate program changes are implemented within 30 days because the timing matters for readers making purchase decisions.
+
+The corrections page logs material updates triggered by any of these review processes. The last-reviewed date on each article page reflects the most recent verification of accuracy against current standards.
+
+## Independence and Conflicts of Interest
+
+The site is independent of every commercial party in the residential HVAC ecosystem.
+
+<DataTable
+  caption="Disclosed relationships and explicit non-relationships"
+  columns={[
+    { key: 'party', label: 'Party' },
+    { key: 'relationship', label: 'Relationship' },
+    { key: 'disclosureRationale', label: 'Notes' },
+  ]}
+  rows={[
+    {
+      party: 'HVAC equipment manufacturers (Trane, Carrier, Lennox, Mitsubishi, Daikin, etc.)',
+      relationship: 'No commercial relationship',
+      disclosureRationale: 'Products are discussed because they dominate market categories or have useful published specs; no business arrangement',
+    },
+    {
+      party: 'HVAC contractors and installers',
+      relationship: 'No commercial relationship',
+      disclosureRationale: 'No contractor directory and no installer match service; contact email goes to a single editorial inbox',
+    },
+    {
+      party: 'HVAC software vendors (Wrightsoft, Cool Calc, etc.)',
+      relationship: 'No commercial relationship',
+      disclosureRationale: 'Mentioned in tools hub as the appropriate solution for permit-grade Manual J work',
+    },
+    {
+      party: 'Standards bodies (ACCA, ASHRAE, AHRI, NEEP, NFRC)',
+      relationship: 'No affiliation',
+      disclosureRationale: 'Cited as primary sources for methodology; editorial team holds no membership or advisory role',
+    },
+    {
+      party: 'Trade associations',
+      relationship: 'No membership or sponsorship',
+      disclosureRationale: 'No paid memberships, no advisory board roles',
+    },
+    {
+      party: 'Real estate companies',
+      relationship: 'No commercial relationship',
+      disclosureRationale: 'Real estate professionals are a secondary audience; no business arrangement',
+    },
+    {
+      party: 'Utility companies',
+      relationship: 'No commercial relationship',
+      disclosureRationale: 'State and utility rebate programs are documented as facts; no business arrangement',
+    },
+  ]}
+/>
+
+The independence disclosure above covers every category of commercial party referenced across the site's content. When a new commercial relationship is established (for example, a hosting or infrastructure provider change), it gets added to the table within 30 days of becoming active. The table is intentionally exhaustive so that "what does the site have a commercial relationship with" can be answered by reading one place.
+
+If a reader believes a commercial relationship is undisclosed or misrepresented, email is the right channel for raising it. We treat independence claims with the same correction discipline as factual content — if the disclosure is wrong, it gets corrected on the same timeline as any other material correction.
+
+## Corrections Policy
+
+When an error is identified — whether in factual content, methodology, sourcing, or accessibility — the policy is unambiguous.
+
+(1) Fix immediately in the article. The corrected content replaces the original; the original is not preserved in the published version (it is preserved in git history for audit).
+
+(2) Update last-reviewed date in the article frontmatter so the corrected content carries the date of correction.
+
+(3) Log the correction at [/corrections/](/corrections/) with: the original claim verbatim, the corrected claim, the date, the affected article URL, the source supporting the correction, and (with the reporter's explicit consent) attribution to the reader who reported.
+
+(4) Notify the reporter (when correction was reader-initiated) that the correction has been published. Provide a link to the corrections page entry and offer attribution.
+
+The corrections page is public, indexed, and discoverable. The deliberate visibility of corrections is part of the editorial commitment: accuracy is a higher priority than ego, and a visible correction log creates incentive to publish carefully in the first place.
+
+We respond to all correction reports within 14 days. Material methodology disagreements that require longer evaluation get an acknowledgment within 14 days and a substantive response within 60 days.
+
+## Accessibility Standards
+
+The site is designed to be usable across reading abilities, devices, and assistive technologies.
+
+<DataTable
+  caption="Accessibility targets enforced across all published content"
+  columns={[
+    { key: 'category', label: 'Category' },
+    { key: 'target', label: 'Target' },
+    { key: 'verification', label: 'Verification' },
+  ]}
+  rows={[
+    {
+      category: 'Reading level',
+      target: 'Flesch reading ease 50-65 (high school graduate)',
+      verification: 'Sampled during editorial review',
+    },
+    {
+      category: 'Color contrast',
+      target: 'WCAG AA (4.5:1 for normal text, 3:1 for large text)',
+      verification: 'Tailwind palette verified at design-token level',
+    },
+    {
+      category: 'Mobile viewport',
+      target: 'Functional at 375px width (iPhone SE baseline)',
+      verification: 'Browser DevTools mobile emulation during review',
+    },
+    {
+      category: 'Screen reader',
+      target: 'Functional with VoiceOver (iOS/macOS) and NVDA (Windows)',
+      verification: 'Spot-checked during stage 4 review',
+    },
+    {
+      category: 'Keyboard navigation',
+      target: 'All interactive elements reachable via Tab, with visible focus indicators',
+      verification: 'Manual test during stage 4 review',
+    },
+    {
+      category: 'Image alt text',
+      target: 'Descriptive alt text on every image; SVG with title and desc elements',
+      verification: 'Hard rule enforced in editorial standards',
+    },
+    {
+      category: 'Heading structure',
+      target: 'Exactly one H1, hierarchical H2-H4 structure, no skipped levels',
+      verification: 'Hard rule enforced in editorial standards',
+    },
+    {
+      category: 'Table accessibility',
+      target: 'Caption tag, scope=col on th elements, semantic markup',
+      verification: 'Built into DataTable component',
+    },
+    {
+      category: 'Link descriptiveness',
+      target: 'No "click here" / "read more" / generic anchor text',
+      verification: 'Hard rule in editorial standards',
+    },
+  ]}
+/>
+
+Accessibility verification happens at stage 4 of the review process (mobile and accessibility review). Issues identified at stage 4 block publication until resolved. Recurring accessibility issues trigger updates to the component library so the issue cannot recur on future articles.
+
+## Reader Feedback Process
+
+Reader questions, corrections, and methodology feedback are welcomed via the [contact page](/contact/).
+
+Feedback categories handled:
+
+(1) Methodology corrections. A specific numeric value, formula, or methodology choice disagrees with the cited primary source. These are highest priority and processed within the corrections policy timeline.
+
+(2) Methodology disagreements. A reasonable practitioner disagrees with a methodology interpretation. These get evaluated against the source, either implemented or defended with citation, and (where the disagreement is genuinely contested) documented as a known editorial position rather than fact.
+
+(3) Out-of-date information. A standard has been updated or a regulatory program has changed, and the site does not yet reflect it. Updates are batched into the next quarterly review cycle except for critical safety or program-deadline updates which are handled faster.
+
+(4) Topic suggestions. A reader requests coverage of a topic not yet on the site. Suggestions inform the editorial roadmap but do not necessarily produce immediate coverage. Topics aligning with the site's strategic content plan get higher priority.
+
+(5) Accessibility issues. A reader reports difficulty using the site with assistive technology or on a specific device. These are treated as bugs and prioritized for fixing in the next maintenance cycle.
+
+We respond to substantive feedback within 14 days. Routine inquiries are acknowledged but may not receive detailed individual responses; the site is small and individual sizing consultation is outside scope.
+
+</article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-30" />
+</div>
+
+</Container>

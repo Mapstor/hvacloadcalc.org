@@ -1,36 +1,462 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { Sources } from '@/components/article/Sources';
+import { SourceCite } from '@/components/article/SourceCite';
+import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { Callout } from '@/components/article/Callout';
+import { DataTable } from '@/components/data/DataTable';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { DoeRValueByZone } from '@/components/svg/building-science/DoeRValueByZone';
+import { ClimateZonesQuickReference } from '@/components/svg/shared/ClimateZonesQuickReference';
 
 export const metadata = {
-  title: 'Insulation Reference: R-Value, Climate Zones, and Methodology | hvacloadcalc.org',
+  alternates: { canonical: "/building-science/insulation/" },
+  title: 'Residential Insulation: R-Values, Materials, Installation',
   description:
-    'Residential insulation reference: attic, wall, and basement R-value by climate zone, material R-per-inch, air-sealing primacy, and DOE/IECC recommendations.',
+    'Residential insulation reference — R-values by IECC climate zone, R-per-inch by material, attic vs wall vs floor guidance, air-sealing primacy, installation quality factors.',
+  openGraph: {
+    title: 'Residential Insulation: A Sourced Reference',
+    description:
+      'R-values by climate zone, material comparison, air-sealing primacy, and installation quality factors that determine real-world envelope performance.',
+    type: 'article',
+    publishedTime: '2026-05-30',
+    modifiedTime: '2026-05-30',
+    authors: ['Jonathan Stowe'],
+    images: ['/opengraph-image'],
+  },
 };
 
-<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Building science', url: '/building-science/' }, { name: 'Insulation' }]} />
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'Building Science', url: '/building-science/' },
+  { name: 'Insulation' },
+];
 
-<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Building science', url: '/building-science/' }, { name: 'Insulation' }]} />
+export const HEADINGS = [
+  { id: 'what-insulation-does', text: 'What Insulation Does (and What It Cannot Do)', level: 2 },
+  { id: 'r-value-by-material', text: 'R-Value by Insulation Material', level: 2 },
+  { id: 'doe-recommended-r-values', text: 'DOE Recommended R-Values by Climate Zone and Location', level: 2 },
+  { id: 'air-sealing-versus-insulation', text: 'Air Sealing Versus Insulation: Which First?', level: 2 },
+  { id: 'thermal-bridging', text: 'Thermal Bridging: The Reason Effective Whole-Wall R is Less Than Cavity R', level: 2 },
+  { id: 'installation-quality', text: 'Installation Quality: Why Catalog R Often Does Not Reach the Field', level: 2 },
+  { id: 'attic-wall-floor-foundation', text: 'Where to Insulate: Attic, Wall, Floor, Foundation', level: 2 },
+  { id: 'when-insulation-pays-back', text: 'When Insulation Pays Back (and When It Does Not)', level: 2 },
+  { id: 'what-this-cluster-covers', text: 'What This Sub-Hub Covers', level: 2 },
+];
+
+export const SOURCES = [
+  {
+    id: 'doe-recommended-r-values',
+    title: 'Insulation: Recommended R-Values for Existing Homes by ZIP Code',
+    publisher: 'US Department of Energy / ENERGY STAR',
+    year: 2024,
+    url: 'https://www.energystar.gov/saveathome/seal_insulate/methodology',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'doe-insulation',
+    title: 'Types of Insulation (consumer guide)',
+    publisher: 'US Department of Energy, Office of Energy Efficiency and Renewable Energy',
+    year: 2024,
+    url: 'https://www.energy.gov/energysaver/types-insulation',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'iecc-2021-envelope',
+    title: 'International Energy Conservation Code (IECC) 2021, Section R402 (Envelope Requirements)',
+    publisher: 'International Code Council',
+    year: 2021,
+    url: 'https://codes.iccsafe.org/content/IECC2021P2',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'ashrae-fundamentals-ch26',
+    title: 'ASHRAE Handbook of Fundamentals 2021, Chapter 26 (Heat, Air, and Moisture Control in Building Assemblies — Material Properties)',
+    publisher: 'ASHRAE',
+    year: 2021,
+    url: 'https://www.ashrae.org/technical-resources/ashrae-handbook',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'doe-air-sealing',
+    title: 'Air Sealing Your Home',
+    publisher: 'US Department of Energy, Office of Energy Efficiency and Renewable Energy',
+    year: 2024,
+    url: 'https://www.energy.gov/energysaver/air-sealing-your-home',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'irs-25c-fact-sheet',
+    title: 'IRA Section 25C — Energy Efficient Home Improvement Credit (Fact Sheet FS-2022-40)',
+    publisher: 'US Internal Revenue Service',
+    year: 2023,
+    url: 'https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'lbnl-thermal-bridging',
+    title: 'Thermal Bridging Research and Effective R-Value Calculations',
+    publisher: 'Lawrence Berkeley National Laboratory',
+    year: 2018,
+    url: 'https://buildings.lbl.gov/publications',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+];
+
+export const FAQ_ITEMS = [
+  {
+    q: 'What R-value should I aim for in the attic?',
+    a: 'DOE recommends R-30 to R-49 in zones 1-3, R-38 to R-60 in zone 4, and R-49 to R-60 in zones 5-8. Existing homes with less than R-30 in the attic should add insulation in any climate; the payback is fastest in cold climates and slower but still positive in warm climates. The ENERGY STAR target of R-49 to R-60 represents "well-insulated" residential attics and is achievable with 14-18 inches of blown cellulose or fiberglass.',
+  },
+  {
+    q: 'Should I do air sealing or insulation first?',
+    a: 'Air sealing first, always. Insulation slows conductive heat flow through solid surfaces; it does almost nothing to stop air leakage through gaps, holes, and penetrations. A house with R-49 attic insulation and 12 ACH50 air leakage performs worse than the same house with R-30 insulation and 4 ACH50. The DOE consumer guidance is explicit: "Seal air leaks before insulating." Air sealing typically produces 10-25% load reduction at lower cost than insulation, and insulation works much better when it sits in a tight envelope.',
+  },
+  {
+    q: 'What is the cheapest way to add insulation?',
+    a: 'For attics: blown cellulose ($1.50-$2.50 per square foot installed for R-30 to R-49). It is the cheapest material per R-value, settles uniformly into existing irregular spaces, and is dense enough that wind washing through soffit vents barely affects it. For walls: dense-pack cellulose ($3-$5 per square foot wall) is the cheapest retrofit option for existing walls that already have batts; small holes are drilled and cellulose is blown into cavities at high density. Spray foam is more expensive per R-value but provides air sealing as part of the install.',
+  },
+  {
+    q: 'Will spray foam degrade or off-gas over time?',
+    a: 'Closed-cell spray foam typically holds its R-value for 25+ years with minor drift (less than 5%). Open-cell spray foam holds R-value indefinitely because it does not contain expanding blowing agents that escape over time. Both products off-gas during cure (a few days to a few weeks); after cure they are inert. Modern spray foams use HFO-based blowing agents with low global warming potential, replacing earlier HFC blowing agents with high GWP.',
+  },
+  {
+    q: 'Does the IRS Section 25C credit apply to insulation?',
+    a: "Yes. The IRS 25C credit returns 30% of installed insulation costs up to $1,200 per year, with no cap on the material category (insulation has its own $1,200 sub-cap separate from the heat pump $2,000 cap). The insulation must meet IECC 2021 minimum requirements, which means roughly R-30 in attics, R-13+ in walls, and R-19+ in floors over unconditioned space. The credit applies to materials and professional installation labor; DIY installation only qualifies for the material cost.",
+  },
+  {
+    q: 'How do I know if my existing wall insulation is adequate?',
+    a: 'Three rough indicators. (1) Construction era: pre-1980 walls typically have R-7 or less (often just plaster + lath or empty cavity). 1980s-1990s walls typically have R-13 batts in 2x4 cavities. 2010+ walls in cold climates often have R-15 batts plus R-5 to R-7.5 continuous foam. (2) Outlet plate inspection: pull an outlet cover on an exterior wall and shine a light into the box; you can usually see the back of the cavity and identify the insulation type. (3) Thermal imaging in winter: a $250-$400 infrared camera shows cold spots that indicate insulation gaps or missing batts.',
+  },
+  {
+    q: 'Can I add insulation over existing insulation?',
+    a: "Yes for attics — blown cellulose or fiberglass can be added directly over existing batt or blown insulation, and the R-values add. For walls it depends on construction: dense-pack cellulose can be added into walls that already have batts (densifying the assembly), but spray foam or rigid foam cannot be added to existing walls without removing the drywall. Always verify the assembly is dry first; trapping moisture in an existing insulated cavity can produce rot, mold, and structural damage. A blower-door test and infrared scan are inexpensive ways to verify before any wall upgrade.",
+  },
+  {
+    q: 'What is the difference between batts, blown, and spray foam?',
+    a: 'Batt insulation (fiberglass or mineral wool) comes in pre-cut rolls or panels installed between framing members; works well in new construction where cavities are clean and accessible. Blown insulation (cellulose or fiberglass) is sprayed loose into open cavities (attics, dense-pack walls); fills irregular spaces well and adapts to obstructions. Spray foam (open-cell or closed-cell) expands into all crevices and provides air sealing as part of the install; highest R per inch but highest cost. The right choice depends on application, accessibility, and whether air sealing is part of the goal.',
+  },
+];
+
+export const RELATED = [
+  {
+    title: 'Attic R-value reference',
+    url: '/building-science/insulation/attic-r-value/',
+    description:
+      'Detailed coverage of attic insulation: DOE recommendations, materials, depth measurement, air-sealing protocols.',
+  },
+  {
+    title: 'Window U-factor reference',
+    url: '/building-science/windows/u-factor/',
+    description:
+      'The fenestration counterpart to wall insulation — windows and doors dominate non-opaque envelope losses.',
+  },
+  {
+    title: 'HERS Index',
+    url: '/building-science/hers-index/',
+    description:
+      'Whole-home performance score that integrates insulation, air sealing, equipment, and ductwork into one rating.',
+  },
+  {
+    title: 'Manual J load calculation',
+    url: '/manual-j/',
+    description:
+      'Takes insulation R-values as primary inputs to compute heating and cooling loads.',
+  },
+];
+
+export const FRONTMATTER = {
+  title: 'Residential Insulation: R-Values, Materials, Installation',
+  h1: 'Residential Insulation Reference',
+  meta_description:
+    'A reference hub for residential insulation — R-values by climate zone (DOE recommendations), R-per-inch by material, attic vs wall vs floor vs foundation guidance, air-sealing primacy, and the installation-quality factors that determine actual installed R-value.',
+  url: '/building-science/insulation/',
+  date_published: '2026-05-30',
+  last_reviewed: '2026-05-30',
+  target_keyword: 'home insulation',
+  secondary_keywords: ['r-value', 'attic insulation', 'wall insulation', 'spray foam', 'cellulose insulation', 'fiberglass batt'],
+  sources: SOURCES,
+  faq: FAQ_ITEMS,
+  parent_title: 'Building Science',
+};
+
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={2400} />
+
+<JsonLdBreadcrumb items={BREADCRUMBS} />
+
+<Container>
+
+<Breadcrumbs items={BREADCRUMBS} />
+
+<ArticleHeader
+  h1="Residential Insulation Reference"
+  description="R-values by climate zone, R-per-inch by material, attic vs wall vs floor vs foundation guidance, air-sealing primacy, and the installation-quality factors that determine actual installed R-value."
+  datePublished="2026-05-30"
+  lastReviewed="2026-05-30"
+  readingTimeMinutes={10}
+/>
+
+<KeyTakeaways
+  items={[
+    'Insulation slows conductive heat flow through solid envelope surfaces — it does almost nothing to stop air leakage. Air sealing must come before or alongside insulation for either to work as designed.',
+    'R-per-inch ranges from 3.0 (loose-fill rockwool) to 7.0 (closed-cell spray foam); the cheapest R per square foot is typically blown cellulose at $1.50-$2.50 per sq ft installed.',
+    'DOE-recommended attic R-values range from R-30 (zone 1) to R-60 (zones 7-8); wall recommendations range from R-13 cavity (zone 1) to R-21 cavity + R-7.5 continuous (zone 7).',
+    'Effective whole-wall R is typically 15-40% lower than cavity R because of thermal bridging through wood studs (16" on-center 2x4 framing reduces R-13 cavity to roughly R-9 whole-wall).',
+    'IRS Section 25C returns 30% of installed insulation cost up to $1,200/year, with the cap separate from the heat pump credit cap — making insulation one of the highest-leverage envelope upgrades under the federal incentive stack.',
+  ]}
+/>
+
+<ClimateZonesQuickReference />
+
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
 
 <article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
 
-# Insulation Reference
+## What Insulation Does (and What It Cannot Do)
 
-Insulation slows conductive heat flow through the building envelope. R-value rates that slowing on a steady-state basis: higher R = more resistance, less heat flow. The envelope's overall thermal performance is the weighted sum of every surface's R-value, plus the air leakage that bypasses insulation entirely.
+Insulation reduces conductive heat flow through solid surfaces.<SourceCite id="ashrae-fundamentals-ch26" number={4} /> A material's thermal resistance R-value characterizes how strongly it resists that heat flow: higher R-value = less heat per square foot per degree Fahrenheit per hour. Doubling R-value cuts conductive heat loss in half through that surface.
 
-This section covers insulation R-values by climate zone, the major insulation types and their R-per-inch, and the air-sealing work that must accompany any insulation upgrade.
+<Callout type="warn" title="What insulation does NOT stop">
+**Air leakage.** A house with R-49 attic insulation but a leaky envelope (more than 7-10 ACH50) loses substantially more energy to air infiltration than to conduction through the insulated surfaces. Insulation is one of two complementary envelope strategies; air sealing is the other. Doing only one and ignoring the other is a partial solution at best.
+</Callout>
 
-## Articles in this section
+The physical mechanism behind R-value is straightforward. All insulation materials work by trapping still air (or a less-conductive gas like argon or krypton) in small cells or pockets. Still air has very low thermal conductivity (~0.025 W/m·K) compared to the solid materials it displaces. The R-value of any insulation is proportional to its thickness and inversely proportional to the conductivity of the trapped-air-plus-material composite.
 
-- [Attic R-value](/building-science/insulation/attic-r-value/) — DOE recommendations by zone, insulation types, how to measure, why air sealing matters
+**The implications for selection.** Higher density materials (closed-cell spray foam, rigid foam, mineral wool) have smaller air pockets and higher R per inch. Lower density materials (fiberglass batts, open-cell spray foam, blown cellulose) have larger air pockets but more total air volume — they achieve high overall R-value through thickness rather than per-inch density. The right choice depends on space available, moisture conditions, and budget.
 
-## Calculators
+## R-Value by Insulation Material
+
+<DataTable
+  caption="R-values per inch for common residential insulation materials (source: ASHRAE Fundamentals 2021 Ch. 26, DOE Energy Saver consumer guide)"
+  columns={[
+    { key: 'material', label: 'Material' },
+    { key: 'rPerInch', label: 'R per inch', align: 'right' },
+    { key: 'density', label: 'Density (pcf)', align: 'right' },
+    { key: 'cost', label: 'Installed cost per sq ft', align: 'right' },
+    { key: 'bestUse', label: 'Best application' },
+  ]}
+  rows={[
+    { material: 'Fiberglass batt (R-13 cavity)', rPerInch: '3.1–3.4', density: '0.5–1.0', cost: '$0.50–$1.00', bestUse: 'New construction wall cavities, attic between joists' },
+    { material: 'Fiberglass batt (R-15 cavity)', rPerInch: '3.7', density: '0.8–1.3', cost: '$0.70–$1.20', bestUse: 'New construction; higher density compressed into 3.5" cavity' },
+    { material: 'Blown fiberglass', rPerInch: '2.2–2.7', density: '0.5–0.8', cost: '$1.00–$1.80', bestUse: 'Attic floor over open joists; cheaper than batts at high R' },
+    { material: 'Blown cellulose', rPerInch: '3.2–3.8', density: '1.5–2.5', cost: '$1.50–$2.50', bestUse: 'Attic floor (most common attic retrofit); dense-pack walls' },
+    { material: 'Open-cell spray foam', rPerInch: '3.5–3.8', density: '0.5–0.8', cost: '$1.50–$3.00', bestUse: 'Wall cavities, rim joists, attic flat below roof deck' },
+    { material: 'Closed-cell spray foam', rPerInch: '6.0–7.0', density: '1.8–2.5', cost: '$3.00–$6.00', bestUse: 'Limited-thickness cavities, foundations, moisture-prone areas' },
+    { material: 'Mineral wool batt', rPerInch: '3.0–3.7', density: '2.0–4.0', cost: '$0.80–$1.50', bestUse: 'Fire-rated walls, sound insulation, exterior continuous insulation' },
+    { material: 'Mineral wool board (rigid)', rPerInch: '4.0–4.2', density: '6.0–8.0', cost: '$2.00–$3.50', bestUse: 'Exterior continuous insulation, foundation walls' },
+    { material: 'Expanded polystyrene (EPS)', rPerInch: '3.6–4.2', density: '1.0–2.0', cost: '$0.60–$1.20', bestUse: 'Under slab, foundation exterior, some roof applications' },
+    { material: 'Extruded polystyrene (XPS)', rPerInch: '5.0', density: '1.5–2.5', cost: '$1.20–$2.50', bestUse: 'Below-grade foundations, ground-contact applications' },
+    { material: 'Polyiso (PIR)', rPerInch: '5.7–6.5 (room temp)', density: '2.0–3.0', cost: '$1.50–$3.00', bestUse: 'Roof boards, exterior wall sheathing in warm/mixed climates' },
+    { material: 'Polyiso (cold)', rPerInch: '4.5–5.0 (at 25°F)', density: '2.0–3.0', cost: 'Same as above', bestUse: 'Performance derates at low temps; less ideal for cold climates exterior' },
+  ]}
+/>
+
+**The cost-per-R-value-per-square-foot ranking changes the cheapest-by-thickness ranking.** Per dollar of installed insulation, blown cellulose is typically the leader (cellulose at R-3.5/inch × 14 inches = R-49 attic at $2.00/sqft = $0.041 per R-value-square-foot).
+
+Fiberglass batt is similar in cost-per-R-square-foot but is less convenient in retrofit applications. Closed-cell spray foam, while having the highest R per inch, is roughly 3-4× the cost per R-value-square-foot of cellulose or open-cell foam.<SourceCite id="doe-insulation" number={2} />
+
+The right material depends on application, not on which has the highest R per inch in isolation. For attic floors with unlimited depth, cellulose wins on cost. For 2x4 wall cavities where 3.5 inches is the maximum thickness, closed-cell foam wins because of the highest R-per-inch. For exterior continuous insulation under siding, rigid foam (polyiso or mineral wool board) wins because of structural rigidity and moisture tolerance.
+
+## DOE Recommended R-Values by Climate Zone and Location
+
+The attic R-value targets that drive most residential insulation decisions are summarized below. Lower end of each range corresponds to existing-home retrofit recommendations; upper end corresponds to new construction targets and ENERGY STAR Northern Climate specifications.
+
+<DoeRValueByZone />
+
+<DataTable
+  caption="DOE / ENERGY STAR recommended R-values by climate zone and envelope element (uninsulated baseline; source: DOE Insulation: Recommended R-Values for Existing Homes)"
+  columns={[
+    { key: 'zone', label: 'Climate zone' },
+    { key: 'attic', label: 'Attic', align: 'right' },
+    { key: 'wall', label: 'Wall (cavity + continuous)', align: 'right' },
+    { key: 'floor', label: 'Floor over unconditioned', align: 'right' },
+    { key: 'foundation', label: 'Foundation wall', align: 'right' },
+  ]}
+  rows={[
+    { zone: '1 (Miami FL, Honolulu HI)', attic: 'R-30 to R-49', wall: 'R-13 to R-15', floor: 'R-13', foundation: 'R-0 to R-5' },
+    { zone: '2 (Houston TX, Phoenix AZ)', attic: 'R-30 to R-60', wall: 'R-13 to R-15', floor: 'R-13', foundation: 'R-0 to R-5' },
+    { zone: '3 (Atlanta GA, San Diego CA)', attic: 'R-30 to R-60', wall: 'R-13 to R-20', floor: 'R-19 to R-25', foundation: 'R-5 to R-13' },
+    { zone: '4 (Kansas City MO, San Francisco CA)', attic: 'R-38 to R-60', wall: 'R-13 to R-20 + R-5 c.i.', floor: 'R-25 to R-30', foundation: 'R-10 to R-13' },
+    { zone: '5 (Chicago IL, Denver CO, Boston MA)', attic: 'R-38 to R-60', wall: 'R-13 to R-21 + R-5 c.i.', floor: 'R-25 to R-30', foundation: 'R-15' },
+    { zone: '6 (Minneapolis MN, Burlington VT)', attic: 'R-49 to R-60', wall: 'R-20 + R-5 c.i.', floor: 'R-25 to R-30', foundation: 'R-15' },
+    { zone: '7 (Duluth MN, International Falls MN)', attic: 'R-49 to R-60', wall: 'R-20 + R-7.5 c.i.', floor: 'R-30 to R-38', foundation: 'R-15 to R-19' },
+    { zone: '8 (Fairbanks AK, Anchorage AK)', attic: 'R-60', wall: 'R-30+ assembly', floor: 'R-30 to R-38', foundation: 'R-19+' },
+  ]}
+/>
+
+The DOE recommendations are practical retrofit targets, not regulatory requirements.<SourceCite id="doe-recommended-r-values" number={1} /> New construction must meet IECC 2021 minimums (which match the lower end of the DOE ranges in most zones).<SourceCite id="iecc-2021-envelope" number={3} /> The recommendations are intentionally conservative — meeting them puts a house in the upper third of US envelope performance for its climate.
+
+The continuous insulation ("c.i.") notation matters in zones 4-7. A wall labeled "R-13 + R-5 c.i." means R-13 cavity insulation between the studs plus R-5 of continuous foam board on the outside of the sheathing, before the siding. The continuous layer interrupts the thermal bridge through the studs (covered next section) — without continuous insulation, the effective whole-wall R is much lower than the cavity R.
+
+## Air Sealing Versus Insulation: Which First?
+
+The conventional advice "seal before you insulate" is correct, but the reasoning matters because it determines the order and magnitude of work.
+
+Insulation slows conductive heat transfer through a surface; it has minimal effect on air leakage. If air bypasses the insulation through gaps, holes, or penetrations, the insulation's R-value barely affects the bypassed flow. A typical 12 ACH50 leaky house with R-49 attic insulation loses roughly the same amount of energy as the same house with R-19 attic insulation, because air leakage dominates the loss budget at that tightness.<SourceCite id="doe-air-sealing" number={5} />
+
+<Callout type="info" title="The cost-effectiveness ranking">
+Per dollar spent, air sealing produces 3-5× more energy savings than insulation in a typical pre-1990 US home. The reason is the relative cost and impact: $500-$1,500 in air sealing typically cuts 10-25% off heating and cooling load, while $2,000-$5,000 in attic insulation typically cuts 5-10% off the same load. The DOE guidance is explicit: air sealing first, insulation second.
+</Callout>
+
+The major air leakage locations in a typical residential building are well documented and prioritized in DOE guidance:
+
+1. Attic floor penetrations: bath fan housings, recessed lights, plumbing chases, electrical wires, attic hatch — these typically leak 30-50% of total envelope air loss.
+2. Rim joist (basement ceiling perimeter): the junction between basement walls and first-floor framing — typically 10-20% of total leakage.
+3. Sill plate at foundation: gap between wall framing bottom plate and foundation top — typically 5-15%.
+4. Windows and exterior doors: weatherstripping failures, frame-to-rough-opening gaps — typically 5-10%.
+5. Plumbing and electrical penetrations to exterior: where pipes and wires exit the envelope — typically 3-8%.
+6. Dropped ceilings and soffits: especially over showers — typically 2-5%.
+
+Addressing the top three accounts for 75% of typical leakage and is achievable in 1-2 days of contractor labor for $500-$1,500 in a typical 2,000 sq ft house. The remaining items add another 1-2 days for $300-$800. The total $800-$2,300 of air sealing work typically reduces ACH50 from 10-12 to 4-6 and saves 15-25% on heating and cooling load.<SourceCite id="doe-air-sealing" number={5} />
+
+## Thermal Bridging: The Reason Effective Whole-Wall R is Less Than Cavity R
+
+Insulation only resists heat where the insulation is. In a wood-frame wall, the wood studs themselves are thermal bridges — paths of higher conductivity through the otherwise-insulated assembly.
+
+<DataTable
+  caption="Whole-wall effective R-value vs cavity R-value with thermal bridging accounted (16-inch on-center 2x4 framing, source: LBNL thermal bridging research)"
+  columns={[
+    { key: 'cavityR', label: 'Cavity insulation' },
+    { key: 'sheathing', label: 'Sheathing + continuous' },
+    { key: 'wholeWallR', label: 'Whole-wall effective R', align: 'right' },
+    { key: 'bridging', label: 'Bridging loss', align: 'right' },
+  ]}
+  rows={[
+    { cavityR: 'R-13 fiberglass batt', sheathing: '½" plywood + ½" gypsum (no foam)', wholeWallR: 'R-9.2', bridging: '-29%' },
+    { cavityR: 'R-15 fiberglass high-density', sheathing: '½" plywood + ½" gypsum (no foam)', wholeWallR: 'R-10.5', bridging: '-30%' },
+    { cavityR: 'R-13 + R-5 continuous foam', sheathing: '½" plywood + R-5 polyiso + ½" gypsum', wholeWallR: 'R-15.7', bridging: '-13%' },
+    { cavityR: 'R-19 fiberglass batt (2x6 wall)', sheathing: '½" plywood + ½" gypsum (no foam)', wholeWallR: 'R-13.7', bridging: '-28%' },
+    { cavityR: 'R-21 high-density (2x6 wall)', sheathing: '½" plywood + ½" gypsum (no foam)', wholeWallR: 'R-15.1', bridging: '-28%' },
+    { cavityR: 'R-21 + R-7.5 continuous (2x6 wall)', sheathing: '½" plywood + R-7.5 polyiso + ½" gypsum', wholeWallR: 'R-22.6', bridging: '-22%' },
+    { cavityR: 'Closed-cell foam (2x4 cavity)', sheathing: '½" plywood + ½" gypsum (no foam)', wholeWallR: 'R-13.1', bridging: '-32%' },
+    { cavityR: 'Double stud wall, R-39 cavity', sheathing: '½" plywood + ½" gypsum', wholeWallR: 'R-32.5', bridging: '-17%' },
+  ]}
+/>
+
+The 13-32% bridging penalty matters because it determines what wall assembly actually performs.<SourceCite id="lbnl-thermal-bridging" number={7} /> A "R-21 wall" with no continuous insulation has whole-wall R closer to 15. The same wall with R-7.5 continuous foam shifts the whole-wall R to roughly 23 — the continuous layer interrupts the bridge through the studs, dramatically raising effective performance.
+
+Modern high-performance assemblies (PHIUS, Passive House, Zero Energy Ready) typically rely on continuous insulation or double-stud construction to reduce bridging penalties to 10-15%. Standard IECC 2021 construction in cold climates (zones 5-8) requires continuous insulation precisely for this reason — without it, the effective whole-wall R falls below code targets even when the cavity insulation alone meets nominal R-value.
+
+Steel-stud framing has roughly 5× the thermal-bridging penalty of wood-stud framing because steel conducts heat about 300× faster than wood. Commercial buildings using steel framing therefore rely heavily on continuous insulation; residential steel-framed houses are rare and require continuous insulation to compete with wood-framed equivalents.
+
+## Installation Quality: Why Catalog R Often Does Not Reach the Field
+
+The R-value printed on an insulation product label is measured in a laboratory under standardized test conditions: uniform density, no compression, no gaps, no air leakage around the sample. Real installation routinely fails to achieve those conditions.
+
+Common installation failures that reduce actual installed R-value:
+
+Fiberglass batts compressed in undersized cavities. A R-19 batt compressed into a 3.5-inch 2x4 cavity (the batt is 6.25 inches thick) loses roughly 30-40% of its R-value. The catalog number is for the batt at full loft, not at compressed depth.
+
+**Voids around obstructions.** A batt installed around a junction box, plumbing pipe, or electrical wire leaves small air spaces unless carefully cut and stuffed. Even small voids (5-10% of the wall area) can drop whole-wall R by 20-30% because the air bypasses through the void.
+
+**Sloppy attic blown-in.** Blown insulation that fails to reach corners and edges leaves uninsulated zones near the eaves and along ridge beams. Field measurements often find R-19 to R-30 in the open attic floor but R-3 to R-7 along the eaves where the depth has thinned.
+
+**Wind washing at eaves.** Soffit-vent airflow can blow loose insulation away from the attic perimeter, reducing depth and disturbing settled cellulose. Baffles (vent channels) installed to direct soffit air over the insulation prevent the loss but are often skipped in older installations.
+
+**Settling over time.** Blown cellulose settles 10-20% over the first 5-10 years; blown fiberglass settles 5-10%. The catalog R is the installed R, not the long-term R. Specifying 14 inches of cellulose at install gets roughly 12 inches after settling — still R-42, but lower than the R-49 specified.
+
+**The cumulative effect:** actual installed R in a typical residential wall or attic is often 70-85% of nameplate. High-quality installation (with care for compression, voids, and edge effects) recovers most of the loss; sloppy installation produces field performance that is dramatically below catalog claims. The cheapest envelope-improvement investment a homeowner can make is often paying for a careful installation rather than a higher-spec material.<SourceCite id="doe-insulation" number={2} />
+
+## Where to Insulate: Attic, Wall, Floor, Foundation
+
+The four envelope locations have different return profiles, costs, and accessibility.
+
+**Attic.** The most cost-effective insulation target in most US homes. Attic floors are typically accessible, blown insulation goes in quickly, and the building physics favors attic insulation because (1) heat rises, (2) attic temperatures swing more than indoor temperatures, and (3) attic insulation work can typically be done without disrupting living space. Most existing-home retrofits start in the attic.
+
+**Walls.** The second-largest envelope element by area, but the hardest to upgrade in existing homes because the cavity is enclosed. Dense-pack cellulose can be added via small holes drilled through siding or drywall, raising R-value 30-40% in many cases. Full upgrade requires either tearing off siding (to add exterior continuous insulation) or tearing off drywall (to add cavity insulation), both of which are expensive. Wall upgrades are usually done during other renovations rather than as standalone projects.
+
+**Floor over unconditioned space.** Common in homes with unheated crawlspaces or basements. Adding R-19 to R-30 of batt or rigid foam insulation between joists is straightforward if the floor is accessible. Critical detail: insulation must be supported in place permanently (mesh stretched across joists or rigid foam mechanically fastened); just stuffing batts up between joists fails because the batts fall down over time.
+
+**Foundation walls and slab.** Increasingly important in new construction, less commonly retrofitted. A basement wall with no insulation loses 8-15% of total home heating load to the surrounding soil at deep-winter conditions; adding R-10 to R-15 of foam to the basement wall cuts that to 2-4%. Slabs benefit most from perimeter insulation (the slab-to-foundation edge accounts for most heat loss); under-slab insulation matters mostly for slabs above heated soil rather than below frostline.
+
+## When Insulation Pays Back (and When It Does Not)
+
+The financial return on insulation upgrades depends on climate, baseline insulation, fuel cost, and incentive availability.
+
+<DataTable
+  caption="Typical insulation upgrade payback periods at 2026 fuel prices (source: ENERGY STAR retrofit case studies, DOE Building America datasets)"
+  columns={[
+    { key: 'upgrade', label: 'Upgrade' },
+    { key: 'climate', label: 'Climate', align: 'right' },
+    { key: 'cost', label: 'Cost', align: 'right' },
+    { key: 'savings', label: 'Annual savings', align: 'right' },
+    { key: 'paybackBefore', label: 'Payback before incentives', align: 'right' },
+    { key: 'paybackAfter', label: 'Payback after 25C credit', align: 'right' },
+  ]}
+  rows={[
+    { upgrade: 'Add R-30 over R-19 attic', climate: 'Zone 5-6 (cold)', cost: '$1,500–$2,500', savings: '$150–$250', paybackBefore: '8–12 years', paybackAfter: '5–8 years' },
+    { upgrade: 'Add R-30 over R-19 attic', climate: 'Zone 3-4 (mixed)', cost: '$1,500–$2,500', savings: '$80–$150', paybackBefore: '12–20 years', paybackAfter: '7–13 years' },
+    { upgrade: 'Add R-30 over R-19 attic', climate: 'Zone 1-2 (hot)', cost: '$1,500–$2,500', savings: '$70–$120', paybackBefore: '14–25 years', paybackAfter: '9–17 years' },
+    { upgrade: 'Air seal whole house (12→5 ACH50)', climate: 'All climates', cost: '$800–$2,000', savings: '$150–$400', paybackBefore: '3–7 years', paybackAfter: '2–5 years' },
+    { upgrade: 'Dense-pack walls (R-7 to R-13)', climate: 'Zone 5-7', cost: '$5,000–$10,000', savings: '$200–$400', paybackBefore: '15–25 years', paybackAfter: '10–17 years' },
+    { upgrade: 'Foundation wall R-15', climate: 'Zone 5-7', cost: '$2,500–$5,000', savings: '$100–$200', paybackBefore: '15–30 years', paybackAfter: '10–20 years' },
+    { upgrade: 'Window replacement (single→triple)', climate: 'Zone 5-7', cost: '$10,000–$25,000', savings: '$200–$500', paybackBefore: '25–50 years', paybackAfter: '20–35 years' },
+  ]}
+/>
+
+The 25C tax credit shifts every payback by roughly 30% — meaningful but not transformative. The bigger lever is climate: cold climates produce 2-3× faster payback than hot climates on the same upgrade because heating-fuel costs are higher per delivered BTU than electricity-cooling costs at most fuel-price ratios. Insulation in cold climates almost always pays back; in hot humid climates the math is closer.
+
+**Insulation upgrades make most economic sense when bundled with other work that opens up the envelope:**
+
+- **Re-siding a house?** Add R-5 to R-7.5 continuous foam under the new siding.
+- **Replacing the roof?** Add R-30 to R-49 of rigid foam above the roof deck.
+- **Finishing a basement?** Insulate the foundation walls before drywall.
+
+Each of these scenarios reduces the marginal cost of the insulation work to a fraction of the standalone project cost, and the payback improves dramatically.
+
+## What This Sub-Hub Covers
+
+### Articles
+
+- [Attic R-value reference](/building-science/insulation/attic-r-value/) — detailed coverage of attic insulation: DOE recommendations, materials, depth measurement, air-sealing primacy
+
+### Planned articles
+
+- Wall insulation methods (planned) — batt vs dense-pack vs continuous, retrofit strategies
+- Basement and foundation insulation (planned) — exterior vs interior insulation, moisture management
+- Floor over unconditioned space insulation (planned) — batt vs rigid foam, support methods
+
+### Related load and equipment topics
+
+- [Building science fundamentals](/building-science/) — the parent hub for envelope thermal performance
+- [Window U-factor reference](/building-science/windows/u-factor/) — the fenestration counterpart
+- [HERS Index](/building-science/hers-index/) — whole-home performance score
+- [Manual J load calculation](/manual-j/) — uses R-values as primary inputs
+
+### Calculators
 
 - [Attic R-value calculator](/tools/attic-r-value-calculator/) — multi-layer R-value computation with zone-specific upgrade recommendations
-
-## Related topics
-
-- [Window U-factor](/building-science/windows/u-factor/) — the closely related fenestration metric
-- [HERS Index](/building-science/hers-index/) — whole-home performance score
-- [Manual J load calculation](/manual-j/) — uses R-values as primary input
+- [Manual J load calculator](/tools/manual-j-calculator/) — full envelope load math that takes insulation R-values as inputs
 
 </article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<Sources sources={SOURCES} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-30" />
+</div>
+
+</Container>

@@ -4,6 +4,11 @@ export const SITE = {
   description:
     'Educational HVAC reference covering load calculation, heat pump sizing, and building science.',
   shortDescription: 'Educational HVAC sizing reference site.',
+  /** Short header tagline. Single line, ≤45 characters. */
+  tagline: 'Sourced HVAC sizing for homeowners',
+  /** Full positioning statement for hero/about contexts. */
+  longTagline:
+    'Manual J load calculation, equipment sizing, and building science — every claim sourced to ACCA, ASHRAE, AHRI.',
   copyrightYear: 2026,
 } as const;
 
@@ -11,12 +16,12 @@ export const FOOTER_DISCLAIMER =
   'hvacloadcalc.org provides educational information about residential HVAC systems. Content is not professional engineering advice. Consult a licensed HVAC contractor for system design, equipment specification, and permit-grade load calculations.';
 
 export const AUTHOR = {
-  name: 'Jonathan S.',
+  name: 'Jonathan Stowe',
   url: '/authors/jonathan-s/',
-  imageUrl: '/authors/jonathan-s.jpg',
-  imageAlt: 'Jonathan S., author and researcher at hvacloadcalc.org',
+  imageUrl: '/authors/jonathan-stowe.jpg',
+  imageAlt: 'Jonathan Stowe, author and researcher at hvacloadcalc.org',
   shortBio:
-    'Jonathan S. writes about residential HVAC design, building science, and heat pump installation, translating ACCA standards into homeowner-friendly guidance.',
+    'Jonathan Stowe writes about residential HVAC design, building science, and heat pump installation, translating ACCA standards into homeowner-friendly guidance.',
 } as const;
 
 export type NavItem = {

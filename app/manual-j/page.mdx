@@ -10,6 +10,7 @@ import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
 import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { JsonLdLearningResource } from '@/components/seo/JsonLdLearningResource';
 import { HeroManualJFlow } from '@/components/svg/manual-j/HeroManualJFlow';
 import { HeatLossComponents } from '@/components/svg/manual-j/HeatLossComponents';
 import { DesignTempMap } from '@/components/svg/manual-j/DesignTempMap';
@@ -18,6 +19,7 @@ import { OversizingImpact } from '@/components/svg/manual-j/OversizingImpact';
 import { WhenYouNeedManualJDecision } from '@/components/svg/manual-j/WhenYouNeedManualJDecision';
 
 export const metadata = {
+  alternates: { canonical: "/manual-j/" },
   title: 'Manual J Load Calculation: What It Is and Why It Matters',
   description:
     'Manual J is the ACCA standard for residential HVAC load calculations. Learn what it covers, how it works, and why it determines correct equipment sizing.',
@@ -28,7 +30,7 @@ export const metadata = {
     type: 'article',
     publishedTime: '2026-05-18',
     modifiedTime: '2026-05-18',
-    authors: ['Jonathan S.'],
+    authors: ['Jonathan Stowe'],
     images: ['/opengraph-image'],
   },
 };
@@ -205,6 +207,19 @@ export const FRONTMATTER = {
 
 <JsonLdBreadcrumb items={BREADCRUMBS} />
 
+<JsonLdLearningResource
+  resource={{
+    name: 'Manual J Load Calculation Methodology',
+    description: 'ACCA Manual J 8th Edition residential load calculation methodology — Heat Transfer Multipliers, infiltration, internal gains, workflow.',
+    url: '/manual-j/',
+    about: 'ACCA Manual J 8th Edition residential heating and cooling load calculation',
+    learningResourceType: 'Tutorial',
+    educationalLevel: 'Intermediate',
+    datePublished: '2026-05-18',
+    dateModified: '2026-05-30',
+  }}
+/>
+
 <Container>
 
 <Breadcrumbs items={BREADCRUMBS} />
@@ -241,7 +256,9 @@ This article covers what Manual J is, how it works, when you actually need one, 
 
 ## What Manual J Actually Is
 
-Manual J is the ANSI/ACCA standard for residential load calculation. It defines a methodology that determines how much heating and cooling capacity a home actually needs based on its physical characteristics and the local climate. The current edition is the 8th, published in 2016 as ANSI/ACCA 2 Manual J (2016).<SourceCite id="acca-manual-j-8" number={1} /> Earlier editions go back decades; the 8th edition is the version every code reference and modern HVAC contractor works from. See [ACCA's Manual J standard page](https://www.acca.org/standards/technical-manuals/manual-j) for the authoritative reference.
+Manual J is the ANSI/ACCA standard for residential load calculation. It defines a methodology that determines how much heating and cooling capacity a home actually needs based on its physical characteristics and the local climate.
+
+The current edition is the 8th, published in 2016 as ANSI/ACCA 2 Manual J (2016).<SourceCite id="acca-manual-j-8" number={1} /> Earlier editions go back decades; the 8th edition is the version every code reference and modern HVAC contractor works from. See [ACCA's Manual J standard page](https://www.acca.org/standards/technical-manuals/manual-j) for the authoritative reference.
 
 A common misunderstanding: Manual J is a methodology, not a piece of software. The Air Conditioning Contractors of America (ACCA) is the trade association that maintains the standard. Software vendors implement the methodology in their products, and ACCA maintains an approved-software list, but the calculation itself is the standard. A pencil-and-paper Manual J is just as valid as a software-generated one if both follow the methodology correctly.
 
@@ -255,7 +272,9 @@ Manual J produces two design loads, each in BTU per hour.
 
 The design heating load is the total heat the home loses to the outside at the 99% heating design temperature, the temperature exceeded 99% of hours in a typical year for a given location. The home's heating system must replace that heat continuously to maintain indoor setpoint. Heating loads are sensible-only: Manual J does not include a humidification load.
 
-The design cooling load has two components. Sensible cooling is the heat removed to lower air temperature. Latent cooling is the moisture removed to lower humidity. The ratio of sensible to total is the sensible heat ratio (SHR), and it varies sharply by climate: a Phoenix home might run SHR 0.85 (mostly sensible), while a Houston home runs SHR 0.65 (significant latent). Cooling equipment is selected to match both components, which is partly why one-size-fits-all sizing fails.
+The design cooling load has two components. Sensible cooling is the heat removed to lower air temperature. Latent cooling is the moisture removed to lower humidity.
+
+The ratio of sensible to total is the sensible heat ratio (SHR), and it varies sharply by climate: a Phoenix home might run SHR 0.85 (mostly sensible), while a Houston home runs SHR 0.65 (significant latent). Cooling equipment is selected to match both components, which is partly why one-size-fits-all sizing fails.
 
 <HeatLossComponents />
 
@@ -325,13 +344,17 @@ Manual N covers commercial load calculations; that's a different document and be
 
 ## Why Oversizing Is So Common
 
-Residential HVAC in the United States is, on average, oversized by 30 to 50 percent. The reasons are structural, not malicious. Contractors face real risk if a system can't cool a home in a 100°F heat wave, and very little risk if it cycles too quickly. Distributors stock common sizes; downsizing means waiting for special orders. Rule-of-thumb sizing — one ton of cooling per 600 square feet — is fast, requires no inputs, and produces a defensible number. The customer is happy because the salesperson promised plenty of capacity. The customer is unhappy two summers later when the bedrooms are humid and the system runs in bursts.
+Residential HVAC in the United States is, on average, oversized by 30 to 50 percent. The reasons are structural, not malicious. Contractors face real risk if a system can't cool a home in a 100°F heat wave, and very little risk if it cycles too quickly. Distributors stock common sizes; downsizing means waiting for special orders.
+
+Rule-of-thumb sizing — one ton of cooling per 600 square feet — is fast, requires no inputs, and produces a defensible number. The customer is happy because the salesperson promised plenty of capacity. The customer is unhappy two summers later when the bedrooms are humid and the system runs in bursts.
 
 Lawrence Berkeley National Laboratory studies have documented this pattern across thousands of US homes.<SourceCite id="lbnl-2019-oversizing" number={6} /> The percentage varies by home type and climate, but the direction is consistent: most homes have systems noticeably larger than a proper Manual J would specify. DOE has been pushing right-sizing initiatives in response.<SourceCite id="doe-rite-sizing" number={5} />
 
 <OversizingImpact />
 
-The cost of oversizing shows up in three ways. Short cycling: the unit reaches setpoint before completing a normal run, shuts off, then restarts a few minutes later. Each start has motor-inrush losses, refrigerant settling time, and blower spin-up that all reduce efficiency. Poor humidity control: cooling humidity removal requires sustained runtime. A system that cycles every few minutes never runs long enough to drop the indoor dew point. Equipment life: more starts means more wear on contactors, compressors, and motors.
+The cost of oversizing shows up in three ways. Short cycling: the unit reaches setpoint before completing a normal run, shuts off, then restarts a few minutes later. Each start has motor-inrush losses, refrigerant settling time, and blower spin-up that all reduce efficiency.
+
+Poor humidity control: cooling humidity removal requires sustained runtime. A system that cycles every few minutes never runs long enough to drop the indoor dew point. Equipment life: more starts means more wear on contactors, compressors, and motors.
 
 A heat pump oversized for its cooling load suffers worse than a furnace oversized for heating, because heat pump cycling impacts dehumidification directly. Variable-speed inverter equipment can modulate output and partially compensate for oversizing, but it is not a substitute for correct sizing.
 

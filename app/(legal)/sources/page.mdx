@@ -1,104 +1,808 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { Callout } from '@/components/article/Callout';
+import { DataTable } from '@/components/data/DataTable';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
 
 export const metadata = {
-  title: 'Sources and References',
+  alternates: { canonical: "/sources/" },
+  title: 'Sources: Complete Bibliography of Standards and References',
   description:
-    'Authoritative HVAC standards and references cited across hvacloadcalc.org. ACCA, ASHRAE, NEEP, DOE, AHRI, and more.',
+    'Complete bibliography of standards, government regulations, research lab publications, and trade resources cited across hvacloadcalc.org. Organized by category with publisher, year, URL, and tier classification for every source.',
+  openGraph: {
+    title: 'hvacloadcalc.org Source Bibliography',
+    description:
+      'Every standards body, regulatory publication, and research source cited across the site, organized by category and tier.',
+    type: 'article',
+    publishedTime: '2026-05-30',
+    modifiedTime: '2026-05-30',
+    authors: ['Jonathan Stowe'],
+    images: ['/opengraph-image'],
+  },
 };
 
-<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Sources' }]} />
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'Sources' },
+];
 
-<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Sources' }]} />
+export const HEADINGS = [
+  { id: 'tier-classification', text: 'Tier Classification: Tier 1 vs Tier 2', level: 2 },
+  { id: 'industry-standards-tier-1', text: 'Industry Standards (Tier 1)', level: 2 },
+  { id: 'federal-regulatory-tier-1', text: 'Federal Regulatory Publications (Tier 1)', level: 2 },
+  { id: 'government-data-tier-1', text: 'Government Data Sources (Tier 1)', level: 2 },
+  { id: 'national-research-labs-tier-2', text: 'National Research Laboratories (Tier 2)', level: 2 },
+  { id: 'state-utility-programs', text: 'State and Utility Program Documentation', level: 2 },
+  { id: 'building-science-publications', text: 'Building Science Publications and Research', level: 2 },
+  { id: 'trade-publications', text: 'Trade Publications', level: 2 },
+  { id: 'access-and-paywalls', text: 'Access and Paywalls', level: 2 },
+];
 
-# Sources and References
+export const FAQ_ITEMS = [
+  {
+    q: 'Why publish a sources list at all?',
+    a: "Because the site's credibility depends on it. Every numeric claim, every formula, every methodology choice has to trace to a primary authority — ACCA, ASHRAE, AHRI, NEEP, DOE, EPA, IRS, NFRC, RESNET. Publishing the bibliography makes the citation chain auditable. A reader who wants to verify any specific claim can follow the inline citation to the SOURCES entry and from there to the original document.",
+  },
+  {
+    q: 'What does "tier 1" mean and why does it matter?',
+    a: "Tier 1 sources are standards documents (ANSI/ACCA, AHRI, ASHRAE, NFRC, AMCA, ASTM), federal regulatory publications (DOE 10 CFR 430, EPA AIM Act, IRS Fact Sheets), and government data (EIA energy statistics, NOAA climate data). Tier 2 sources are peer-reviewed academic papers, federally-funded research labs (NREL, ORNL, LBNL), and trade publications with rigorous editorial standards. We cite tier 1 wherever possible because primary standards are the authoritative source. Tier 2 fills gaps where tier 1 does not address a specific question.",
+  },
+  {
+    q: 'Are these all the sources you use?',
+    a: 'This is the master list at the site level. Individual articles cite a subset of these plus occasional source-specific references (a manufacturer expanded performance table, a specific NREL technical report, a state energy office program page). Every article has its own SOURCES block at the bottom listing exactly which sources that article draws from. The site-level bibliography here is the union of all article-level lists.',
+  },
+  {
+    q: 'How often is this list updated?',
+    a: 'Quarterly review minimum. Standards updates (new editions of ACCA Manuals, new versions of ENERGY STAR specifications, new NEEP CCASHP versions) trigger immediate updates to the relevant entries. Major regulatory changes (DOE final rules, EPA AIM Act milestones, IRS guidance changes) also trigger immediate updates. The last-reviewed date at the bottom of this page reflects the most recent review.',
+  },
+  {
+    q: 'Some of these standards are paywalled — what do you do about that?',
+    a: 'The ACCA technical manuals and the ASHRAE Handbook are paywalled (typically $50-$300 per document for individual purchase). We cite them by title, edition, and section so that professionals with access can verify. For homeowners without access, the methodology articles on this site reproduce the relevant formulas and tables — the citations point to authoritative source, while the practical content is freely available here. Library access to ASHRAE Handbook is common; ACCA standards can also be requested through trade associations.',
+  },
+  {
+    q: 'Why no Wikipedia or generic web references?',
+    a: 'Wikipedia is a tertiary source — it summarizes content from other sources. For factual content on the site, we want primary sources (the standards, government publications, manufacturer test data) rather than the secondary summaries. Wikipedia can be a useful starting point for topic exploration, but it is not the right citation source for a reference site whose credibility depends on traceable primary citations.',
+  },
+];
 
-This is the master bibliography of authoritative sources cited across hvacloadcalc.org. Individual articles cite specific sources inline; this page provides the canonical reference list.
+export const RELATED = [
+  {
+    title: 'Methodology',
+    url: '/methodology/',
+    description:
+      'How the sources listed here are used in each calculator and article.',
+  },
+  {
+    title: 'Editorial standards',
+    url: '/editorial-standards/',
+    description:
+      'The editorial process behind citing and verifying sources.',
+  },
+  {
+    title: 'Corrections',
+    url: '/corrections/',
+    description:
+      'Log of source-related corrections and updates.',
+  },
+  {
+    title: 'About',
+    url: '/about/',
+    description:
+      'About the site, the author, and the funding model.',
+  },
+];
 
-## Industry standards
+export const FRONTMATTER = {
+  title: 'Sources: Complete Bibliography of Standards and References',
+  h1: 'Sources: Complete Bibliography',
+  meta_description:
+    'Complete bibliography of standards, government regulations, research lab publications, and trade resources cited across hvacloadcalc.org. Organized by category with publisher, year, URL, and tier classification for every source.',
+  url: '/sources/',
+  date_published: '2026-05-30',
+  last_reviewed: '2026-05-30',
+  target_keyword: 'hvac standards sources',
+  secondary_keywords: ['acca manual j source', 'ashrae handbook citation', 'ahri 210/240 standard', 'neep ccashp specification'],
+  sources: [],
+  faq: FAQ_ITEMS,
+  parent_title: 'Home',
+};
 
-### ACCA — Air Conditioning Contractors of America
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={2000} />
 
-- [Manual J 8th Edition — Residential Load Calculation](https://www.acca.org/standards/technical-manuals/manual-j) (ANSI/ACCA 2 Manual J — 2016)
-- [Manual S — Residential Equipment Selection](https://www.acca.org/standards/technical-manuals/manual-s) (ANSI/ACCA 3 Manual S — 2014)
-- [Manual D — Residential Duct Systems](https://www.acca.org/standards/technical-manuals/manual-d) (ANSI/ACCA 1 Manual D — 2016)
-- [Manual T — Air Distribution Basics](https://www.acca.org/standards/technical-manuals/manual-t)
-- [Manual N — Commercial Load Calculation](https://www.acca.org/standards/technical-manuals/manual-n)
+<JsonLdBreadcrumb items={BREADCRUMBS} />
 
-### ASHRAE — American Society of Heating, Refrigerating and Air-Conditioning Engineers
+<Container>
 
-- [ASHRAE Handbook of Fundamentals 2021](https://www.ashrae.org/technical-resources/ashrae-handbook)
-- [ANSI/ASHRAE Standard 169-2021 — Climatic Data for Building Design Standards](https://www.ashrae.org/technical-resources/standards-and-guidelines)
-- [ASHRAE Standard 62.2 — Ventilation and Acceptable Indoor Air Quality in Residential Buildings](https://www.ashrae.org/technical-resources/standards-and-guidelines)
-- [ASHRAE Standard 90.1 / 90.2 — Energy Standard](https://www.ashrae.org/technical-resources/standards-and-guidelines)
+<Breadcrumbs items={BREADCRUMBS} />
 
-### AHRI — Air-Conditioning, Heating and Refrigeration Institute
+<ArticleHeader
+  h1="Sources: Complete Bibliography"
+  description="The complete bibliography of standards, government regulations, research lab publications, and trade resources cited across the site. Every source classified by tier (tier 1 primary, tier 2 secondary) with publisher, year, URL, and access notes."
+  datePublished="2026-05-30"
+  lastReviewed="2026-05-30"
+  readingTimeMinutes={9}
+/>
 
-- [ANSI/AHRI Standard 210/240-2023 — Performance Rating of Unitary Air-Conditioning and Air-Source Heat Pump Equipment](https://www.ahrinet.org/search-standards/ahri-210240-2023-performance-rating-unitary-air-conditioning-air-source-heat-pump)
-- [AHRI Directory of Certified Product Performance](https://www.ahridirectory.org/)
+<KeyTakeaways
+  items={[
+    'This bibliography is the master list of sources cited across the site. Individual articles cite a subset of these in their own SOURCES blocks. Every numeric claim, formula, or methodology choice on the site traces to one of these entries.',
+    'Tier 1 sources (preferred) include ACCA technical manuals, ASHRAE standards and handbook, AHRI rating standards, NFRC fenestration standards, DOE 10 CFR 430 efficiency rules, EPA refrigerant regulations, IRS Section 25C tax credit guidance, IECC energy code, and NEEP CCASHP specification.',
+    'Tier 2 sources (used to fill gaps) include national research lab publications (LBNL, NREL, ORNL), peer-reviewed academic research, and trade publications with rigorous editorial standards (Building Science Corporation, Energy Vanguard, GreenBuildingAdvisor).',
+    'Some standards are paywalled (ACCA manuals, ASHRAE Handbook); we cite them by title, edition, and section so professionals with access can verify. The methodology articles reproduce relevant formulas freely.',
+    'This list is reviewed quarterly minimum, with immediate updates when referenced standards revise. The last-reviewed date on each entry reflects the most recent verification of accuracy and URL validity.',
+  ]}
+/>
 
-### IECC — International Energy Conservation Code
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
 
-- [2021 IECC](https://codes.iccsafe.org/content/IECC2021P2)
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
 
-## Government agencies
+## Tier Classification: Tier 1 vs Tier 2
 
-### US DOE — Department of Energy
+The site uses a two-tier classification for sources to make citation hierarchy explicit.
 
-- [Energy Saver: Heat Pump Systems](https://www.energy.gov/energysaver/heat-pump-systems)
-- [Residential Cold Climate Heat Pump Challenge](https://www.energy.gov/eere/buildings/residential-cold-climate-heat-pump-challenge)
-- [Building America Solution Center](https://basc.pnnl.gov/)
+Tier 1 — primary authoritative sources. Industry standards published by ANSI-accredited standards development organizations (ACCA, ASHRAE, AHRI, NFRC, AMCA, ASTM), federal regulatory publications (DOE Final Rules in 10 CFR 430, EPA AIM Act regulations, IRS Fact Sheets for tax credit interpretation), and government statistical agencies (EIA, NOAA, Census Bureau). When tier 1 sources exist for a claim, we cite tier 1.
 
-### EIA — Energy Information Administration
+Tier 2 — secondary authoritative sources. Peer-reviewed academic literature, federally-funded research lab technical reports (Lawrence Berkeley National Laboratory, National Renewable Energy Laboratory, Oak Ridge National Laboratory), industry research institutes (Building Science Corporation, RDH Building Science, GreenBuildingAdvisor), and trade publications with strong editorial review. Tier 2 sources are used to fill gaps where tier 1 does not address a specific topic or where tier 2 research extends tier 1 with field validation.
 
-- [Electricity Monthly Update](https://www.eia.gov/electricity/monthly/)
-- [Residential Energy Consumption Survey (RECS)](https://www.eia.gov/consumption/residential/)
+<Callout type="info" title="What we do not cite as a source">
+Wikipedia, manufacturer marketing pages, contractor blog posts, retail product listings, opaque calculator output, news articles summarizing other sources, and unsourced rule-of-thumb publications. These can be useful for context but do not have the editorial review or methodology transparency required for citation on a reference site.
+</Callout>
 
-### ENERGY STAR (US EPA)
+The site's editorial standards (covered at [/editorial-standards/](/editorial-standards/)) specify the citation hierarchy and the review process for adding new sources to the bibliography.
 
-- [ENERGY STAR Heat Pump Specification Version 6.0](https://www.energystar.gov/products/spec/central_air_conditioner_and_heat_pump_specification_version_6_0_pd)
-- [ENERGY STAR Most Efficient](https://www.energystar.gov/products/most_efficient)
+## Industry Standards (Tier 1)
 
-### NOAA / NWS
+The primary standards documents that define US residential HVAC methodology and equipment certification.
 
-- [Climate Data Online (CDO)](https://www.ncei.noaa.gov/cdo-web/)
-- [Heating and Cooling Degree Day data](https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/cdus/degree_days/)
+<DataTable
+  caption="ACCA technical manuals — the residential design methodology stack"
+  columns={[
+    { key: 'document', label: 'Document' },
+    { key: 'year', label: 'Year', align: 'right' },
+    { key: 'scope', label: 'Scope' },
+    { key: 'url', label: 'Link' },
+  ]}
+  rows={[
+    {
+      document: 'Manual J — Residential Load Calculation, 8th Edition (ANSI/ACCA 2 Manual J)',
+      year: '2016',
+      scope: 'Residential heating and cooling load calculation',
+      url: 'acca.org/standards/technical-manuals/manual-j',
+    },
+    {
+      document: 'Manual S — Residential Equipment Selection (ANSI/ACCA 3 Manual S)',
+      year: '2014',
+      scope: 'Equipment matching to Manual J loads',
+      url: 'acca.org/standards/technical-manuals/manual-s',
+    },
+    {
+      document: 'Manual D — Residential Duct Systems (ANSI/ACCA 1 Manual D)',
+      year: '2016',
+      scope: 'Residential duct system design',
+      url: 'acca.org/standards/technical-manuals/manual-d',
+    },
+    {
+      document: 'Manual T — Air Distribution Basics for Residential and Small Commercial',
+      year: '2010',
+      scope: 'Register and grille selection',
+      url: 'acca.org/standards/technical-manuals/manual-t',
+    },
+    {
+      document: 'Manual N — Commercial Load Calculation',
+      year: '2014',
+      scope: 'Non-residential load calculation',
+      url: 'acca.org/standards/technical-manuals/manual-n',
+    },
+    {
+      document: 'ACCA Approved Software List',
+      year: 'Updated annually',
+      scope: 'Permit-grade Manual J software certification',
+      url: 'acca.org/standards/approved-software',
+    },
+  ]}
+/>
 
-## Specialized programs and databases
+<DataTable
+  caption="ASHRAE handbook and standards — the engineering reference layer"
+  columns={[
+    { key: 'document', label: 'Document' },
+    { key: 'year', label: 'Year', align: 'right' },
+    { key: 'scope', label: 'Scope' },
+    { key: 'url', label: 'Link' },
+  ]}
+  rows={[
+    {
+      document: 'ASHRAE Handbook of Fundamentals 2021',
+      year: '2021',
+      scope: 'Psychrometrics, climatic data, fenestration, infiltration, duct design — the master engineering reference',
+      url: 'ashrae.org/technical-resources/ashrae-handbook',
+    },
+    {
+      document: 'ANSI/ASHRAE Standard 169-2021, Climatic Data for Building Design Standards',
+      year: '2021',
+      scope: 'US climate zone definitions and county-level assignments',
+      url: 'ashrae.org/technical-resources/standards-and-guidelines',
+    },
+    {
+      document: 'ANSI/ASHRAE Standard 55-2023, Thermal Environmental Conditions for Human Occupancy',
+      year: '2023',
+      scope: 'Indoor comfort criteria (temperature, humidity, air velocity, PMV/PPD)',
+      url: 'ashrae.org/technical-resources/standards-and-guidelines/standard-55',
+    },
+    {
+      document: 'ANSI/ASHRAE Standard 62.2-2022, Ventilation and Acceptable Indoor Air Quality in Residential Buildings',
+      year: '2022',
+      scope: 'Residential mechanical ventilation requirements',
+      url: 'ashrae.org/technical-resources/standards-and-guidelines/standard-62-2',
+    },
+    {
+      document: 'ANSI/ASHRAE Standard 34-2022, Designation and Safety Classification of Refrigerants',
+      year: '2022',
+      scope: 'Refrigerant numbering and safety classification (A1, A2L, B1, etc.)',
+      url: 'ashrae.org/technical-resources/standards-and-guidelines',
+    },
+    {
+      document: 'ANSI/ASHRAE Standard 90.1 / 90.2, Energy Standard for Buildings',
+      year: '2022',
+      scope: 'Commercial / residential building energy efficiency standards',
+      url: 'ashrae.org/technical-resources/standards-and-guidelines',
+    },
+  ]}
+/>
 
-### NEEP — Northeast Energy Efficiency Partnerships
+<DataTable
+  caption="AHRI equipment rating standards"
+  columns={[
+    { key: 'document', label: 'Document' },
+    { key: 'year', label: 'Year', align: 'right' },
+    { key: 'scope', label: 'Scope' },
+    { key: 'url', label: 'Link' },
+  ]}
+  rows={[
+    {
+      document: 'ANSI/AHRI Standard 210/240-2023, Performance Rating of Unitary AC and Air-Source Heat Pump Equipment',
+      year: '2023',
+      scope: 'SEER2, HSPF2, EER2 test conditions for residential split systems',
+      url: 'ahrinet.org/search-standards/ahri-210240-2023',
+    },
+    {
+      document: 'ANSI/AHRI Standard 310/380, Standard for Packaged Terminal Air-Conditioners',
+      year: '2022',
+      scope: 'PTAC equipment rating (motel-style room units)',
+      url: 'ahrinet.org',
+    },
+    {
+      document: 'AHRI Directory of Certified Product Performance',
+      year: 'Live database',
+      scope: 'Public AHRI Reference Number (ARN) directory for all certified matchups',
+      url: 'ahridirectory.org',
+    },
+  ]}
+/>
 
-- [Cold Climate Air Source Heat Pump Specification](https://neep.org/heating-electrification/ccashp-specification-product-list)
-- [Cold Climate Heat Pump Product List](https://ashp.neep.org/)
+<DataTable
+  caption="Other industry standards bodies"
+  columns={[
+    { key: 'document', label: 'Document' },
+    { key: 'year', label: 'Year', align: 'right' },
+    { key: 'scope', label: 'Scope' },
+    { key: 'url', label: 'Link' },
+  ]}
+  rows={[
+    {
+      document: 'IECC 2021 — International Energy Conservation Code',
+      year: '2021',
+      scope: 'Federal energy code adopted by most US jurisdictions',
+      url: 'codes.iccsafe.org/content/IECC2021P2',
+    },
+    {
+      document: 'NFRC certification methodology (Energy Performance Label)',
+      year: '2024',
+      scope: 'Window U-factor, SHGC, VT, AL, CR certification',
+      url: 'nfrc.org/energy-performance-labels',
+    },
+    {
+      document: 'NEEP Cold Climate Air Source Heat Pump Specification v4.0',
+      year: '2024',
+      scope: 'Cold-climate heat pump certification and product list',
+      url: 'neep.org/heating-electrification/ccashp-specification-product-list',
+    },
+    {
+      document: 'SMACNA Residential Sheet Metal Guidelines, 4th Edition',
+      year: '2019',
+      scope: 'Sheet metal duct fabrication and installation',
+      url: 'smacna.org/technical/technical-publications',
+    },
+    {
+      document: 'AMCA Standard 211 — Certified Ratings Program (air outlet products)',
+      year: '2020',
+      scope: 'Register and grille performance certification',
+      url: 'amca.org/certify-ratings-program-air-outlet-products.html',
+    },
+    {
+      document: 'ASTM E779-19 — Test Method for Determining Air Leakage Rate by Fan Pressurization',
+      year: '2019',
+      scope: 'Blower door test methodology',
+      url: 'astm.org/e0779-19.html',
+    },
+    {
+      document: 'ASTM E1554-22 — Test Method for Determining Air Leakage of Air Distribution Systems',
+      year: '2022',
+      scope: 'Duct leakage testing methodology',
+      url: 'astm.org/e1554-22.html',
+    },
+    {
+      document: 'ANSI Z21.47 / CSA 2.3 — Gas-Fired Central Furnaces (Safety/Efficiency)',
+      year: '2021',
+      scope: 'Gas furnace safety and AFUE test methodology',
+      url: 'csagroup.org/store',
+    },
+    {
+      document: 'RESNET ANSI/RESNET/ICC 301 — HERS Index Standard',
+      year: '2022',
+      scope: 'HERS Index methodology and calculation procedure',
+      url: 'resnet.us/hers-index',
+    },
+    {
+      document: 'BPI Standards (Building Analyst, Envelope Professional)',
+      year: '2024',
+      scope: 'Energy auditor certification standards',
+      url: 'bpi.org/standards',
+    },
+  ]}
+/>
 
-### National Laboratories
+## Federal Regulatory Publications (Tier 1)
 
-- [Lawrence Berkeley National Laboratory (LBNL) Building Technologies](https://buildings.lbl.gov/)
-- [Oak Ridge National Laboratory (ORNL) Buildings](https://www.ornl.gov/division/btric)
-- [National Renewable Energy Laboratory (NREL) Buildings Research](https://www.nrel.gov/buildings/)
+US federal agencies that publish regulations and program documentation affecting residential HVAC.
 
-### State energy programs
+<DataTable
+  caption="DOE, EPA, and IRS publications cited across the site"
+  columns={[
+    { key: 'document', label: 'Document' },
+    { key: 'agency', label: 'Agency' },
+    { key: 'year', label: 'Year', align: 'right' },
+    { key: 'url', label: 'Link' },
+  ]}
+  rows={[
+    {
+      document: '10 CFR Part 430 — Energy Conservation Standards for Residential Central Air Conditioners and Heat Pumps (Final Rule, January 2023)',
+      agency: 'US Department of Energy',
+      year: '2023',
+      url: 'energy.gov/eere/buildings/articles/doe-finalizes-stronger-efficiency-standards-residential-central-air',
+    },
+    {
+      document: '10 CFR Part 430 — Energy Conservation Standards for Residential Furnaces (Final Rule, effective 2028-2029)',
+      agency: 'US Department of Energy',
+      year: '2023',
+      url: 'energy.gov/eere/buildings/articles/doe-finalizes-energy-efficiency-standards-residential-furnaces',
+    },
+    {
+      document: 'Heat Pump Systems (consumer guide)',
+      agency: 'US DOE Office of Energy Efficiency and Renewable Energy',
+      year: '2024',
+      url: 'energy.gov/energysaver/heat-pump-systems',
+    },
+    {
+      document: 'Right-Sizing Heating and Cooling Systems',
+      agency: 'US DOE',
+      year: '2023',
+      url: 'energy.gov/scep/articles/right-sizing-heating-and-cooling-systems',
+    },
+    {
+      document: 'Residential Cold Climate Heat Pump Challenge, Technical Specification',
+      agency: 'US DOE Building Technologies Office',
+      year: '2023',
+      url: 'energy.gov/eere/buildings/residential-cold-climate-heat-pump-challenge',
+    },
+    {
+      document: 'Home Electrification and Appliance Rebates (HEEHRA), IRA Section 50122',
+      agency: 'US DOE',
+      year: '2024',
+      url: 'energy.gov/scep/home-energy-rebates-programs',
+    },
+    {
+      document: 'Air Sealing Your Home (consumer guide)',
+      agency: 'US DOE Energy Saver',
+      year: '2024',
+      url: 'energy.gov/energysaver/air-sealing-your-home',
+    },
+    {
+      document: 'Insulation: Recommended R-Values for Existing Homes by ZIP Code',
+      agency: 'US DOE / ENERGY STAR',
+      year: '2024',
+      url: 'energystar.gov/saveathome/seal_insulate/methodology',
+    },
+    {
+      document: 'Geothermal Heat Pumps (consumer guide)',
+      agency: 'US DOE Energy Saver',
+      year: '2024',
+      url: 'energy.gov/energysaver/geothermal-heat-pumps',
+    },
+    {
+      document: 'AIM Act — Phasedown of Hydrofluorocarbons, Final Rule (Residential AC/HP, effective January 1, 2025)',
+      agency: 'US EPA',
+      year: '2023',
+      url: 'epa.gov/climate-hfcs-reduction',
+    },
+    {
+      document: 'Carbon Monoxide\'s Impact on Indoor Air Quality',
+      agency: 'US EPA',
+      year: '2024',
+      url: 'epa.gov/indoor-air-quality-iaq/carbon-monoxides-impact-indoor-air-quality',
+    },
+    {
+      document: 'ENERGY STAR Central AC and Heat Pump Specification V6.1',
+      agency: 'US EPA / ENERGY STAR',
+      year: '2024',
+      url: 'energystar.gov/products/spec/central_air_conditioner_and_heat_pump_specification_version_6_1_pd',
+    },
+    {
+      document: 'ENERGY STAR Residential Windows, Doors, and Skylights V7.0',
+      agency: 'US EPA / ENERGY STAR',
+      year: '2023',
+      url: 'energystar.gov/products/spec/residential_windows_doors_and_skylights_specification_version_7_0_pd',
+    },
+    {
+      document: 'ENERGY STAR Residential Furnaces V5.0',
+      agency: 'US EPA / ENERGY STAR',
+      year: '2024',
+      url: 'energystar.gov/products/spec/residential_furnaces_specification_version_5_0_pd',
+    },
+    {
+      document: 'ENERGY STAR Room Air Conditioners V4.2',
+      agency: 'US EPA / ENERGY STAR',
+      year: '2024',
+      url: 'energystar.gov/products/spec/room_air_conditioners_specification_version_4_2_pd',
+    },
+    {
+      document: 'IRA Section 25C — Energy Efficient Home Improvement Credit (Fact Sheet FS-2022-40)',
+      agency: 'US IRS',
+      year: '2023',
+      url: 'irs.gov/credits-deductions/energy-efficient-home-improvement-credit',
+    },
+  ]}
+/>
 
-- [Massachusetts Clean Energy Center (MassCEC)](https://www.masscec.com/)
-- [NYSERDA — New York State Energy Research and Development](https://www.nyserda.ny.gov/)
+## Government Data Sources (Tier 1)
 
-## Building science publications
+Federal statistical agencies that provide data used in operating-cost calculations and climate analysis.
 
-- [Building Science Corporation](https://www.buildingscience.com/)
-- [Energy Vanguard](https://www.energyvanguard.com/blog)
-- [Green Building Advisor](https://www.greenbuildingadvisor.com/)
-- [ACEEE — American Council for an Energy-Efficient Economy](https://www.aceee.org/)
+<DataTable
+  caption="Government data sources (EIA, NOAA, Census Bureau)"
+  columns={[
+    { key: 'document', label: 'Dataset' },
+    { key: 'agency', label: 'Agency' },
+    { key: 'year', label: 'Year', align: 'right' },
+    { key: 'url', label: 'Link' },
+  ]}
+  rows={[
+    {
+      document: 'Average Price of Electricity to Ultimate Customers, Table 5.6.A (Residential)',
+      agency: 'US Energy Information Administration',
+      year: '2025',
+      url: 'eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_6_a',
+    },
+    {
+      document: 'Natural Gas Prices: Residential Sector',
+      agency: 'US Energy Information Administration',
+      year: '2025',
+      url: 'eia.gov/dnav/ng/ng_pri_sum_dcu_nus_m.htm',
+    },
+    {
+      document: 'State Heating Oil and Propane Program Weekly Prices',
+      agency: 'US Energy Information Administration',
+      year: '2025',
+      url: 'eia.gov/petroleum/heatingoilpropane',
+    },
+    {
+      document: 'Residential Energy Consumption Survey (RECS) 2020',
+      agency: 'US EIA',
+      year: '2023',
+      url: 'eia.gov/consumption/residential/data/2020',
+    },
+    {
+      document: 'Heating and Cooling Degree Day Data',
+      agency: 'NOAA Climate Prediction Center',
+      year: '2025',
+      url: 'cpc.ncep.noaa.gov/products/analysis_monitoring/cdus/degree_days',
+    },
+    {
+      document: 'Climate Data Online (CDO)',
+      agency: 'NOAA / NCEI',
+      year: 'Live database',
+      url: 'ncei.noaa.gov/cdo-web',
+    },
+    {
+      document: 'American Community Survey housing data',
+      agency: 'US Census Bureau',
+      year: '2024',
+      url: 'census.gov/programs-surveys/acs',
+    },
+  ]}
+/>
 
-## Trade publications
+## National Research Laboratories (Tier 2)
 
-- [ACHR News (The Air Conditioning, Heating & Refrigeration News)](https://www.achrnews.com/)
-- [Journal of Light Construction (JLC)](https://www.jlconline.com/)
-- [Contracting Business](https://www.contractingbusiness.com/)
+Federally-funded research labs that publish HVAC and building science research used as Tier 2 sources where primary standards do not address a specific question.
 
-## Note on access
+<DataTable
+  caption="National research lab buildings programs"
+  columns={[
+    { key: 'lab', label: 'Lab' },
+    { key: 'program', label: 'Program' },
+    { key: 'url', label: 'Link' },
+  ]}
+  rows={[
+    {
+      lab: 'Lawrence Berkeley National Laboratory (LBNL)',
+      program: 'Windows and Daylighting Group, Buildings Technology Department',
+      url: 'windows.lbl.gov, buildings.lbl.gov',
+    },
+    {
+      lab: 'National Renewable Energy Laboratory (NREL)',
+      program: 'Buildings Research — cold climate heat pumps, building energy modeling',
+      url: 'nrel.gov/buildings',
+    },
+    {
+      lab: 'Oak Ridge National Laboratory (ORNL)',
+      program: 'Building Technologies Research and Integration Center (BTRIC)',
+      url: 'ornl.gov/division/btric',
+    },
+    {
+      lab: 'Pacific Northwest National Laboratory (PNNL)',
+      program: 'Building America Solution Center, energy codes research',
+      url: 'pnnl.gov/buildings, basc.pnnl.gov',
+    },
+  ]}
+/>
 
-Some sources (particularly ACCA and ASHRAE standards) are paywalled. The site cites them by title, edition, and section so that professionals with access can verify, and homeowners can request copies through libraries or trade associations if needed.
+## State and Utility Program Documentation
 
----
+State energy offices and utilities publish program documentation cited in incentive and rebate discussions.
 
-**Last reviewed**: May 18, 2026
+<DataTable
+  caption="Major state and utility energy program sources"
+  columns={[
+    { key: 'program', label: 'Program' },
+    { key: 'state', label: 'State/Region' },
+    { key: 'scope', label: 'Scope' },
+    { key: 'url', label: 'Link' },
+  ]}
+  rows={[
+    {
+      program: 'Mass Save',
+      state: 'Massachusetts',
+      scope: 'Whole-home heat pump conversions, weatherization rebates',
+      url: 'masssave.com',
+    },
+    {
+      program: 'NYSERDA',
+      state: 'New York',
+      scope: 'Comfort Home program, EmPower NY weatherization, NY-Sun',
+      url: 'nyserda.ny.gov',
+    },
+    {
+      program: 'Massachusetts Clean Energy Center (MassCEC)',
+      state: 'Massachusetts',
+      scope: 'Whole-home electrification research, demonstration projects',
+      url: 'masscec.com',
+    },
+    {
+      program: 'BayREN (Bay Area Regional Energy Network)',
+      state: 'California / Bay Area',
+      scope: 'Home+ program for heat pump installations and weatherization',
+      url: 'bayren.org',
+    },
+    {
+      program: 'Connecticut Energize CT',
+      state: 'Connecticut',
+      scope: 'Home Energy Solutions, heat pump rebates',
+      url: 'energizect.com',
+    },
+    {
+      program: 'PG&E energy efficiency programs',
+      state: 'California',
+      scope: 'Utility rebates for high-efficiency equipment',
+      url: 'pge.com/en_US/residential/save-energy-money',
+    },
+    {
+      program: 'SoCal Edison',
+      state: 'California',
+      scope: 'Utility rebates and DR programs',
+      url: 'sce.com',
+    },
+  ]}
+/>
+
+## Building Science Publications and Research
+
+Industry research publications and educational resources cited for building science topics not fully covered by standards.
+
+<DataTable
+  caption="Building science research and publication sources"
+  columns={[
+    { key: 'publication', label: 'Publication / Institution' },
+    { key: 'scope', label: 'Scope' },
+    { key: 'tier', label: 'Tier' },
+    { key: 'url', label: 'Link' },
+  ]}
+  rows={[
+    {
+      publication: 'Building Science Corporation',
+      scope: 'Joe Lstiburek\'s firm; envelope and HVAC research, technical reports',
+      tier: '2',
+      url: 'buildingscience.com',
+    },
+    {
+      publication: 'Energy Vanguard',
+      scope: 'Allison Bailes\' blog; load calc, ductwork, building science from an HVAC engineering perspective',
+      tier: '2',
+      url: 'energyvanguard.com/blog',
+    },
+    {
+      publication: 'Green Building Advisor',
+      scope: 'Practical building science and HVAC retrofit case studies',
+      tier: '2',
+      url: 'greenbuildingadvisor.com',
+    },
+    {
+      publication: 'American Council for an Energy-Efficient Economy (ACEEE)',
+      scope: 'Energy efficiency research and policy analysis',
+      tier: '2',
+      url: 'aceee.org',
+    },
+    {
+      publication: 'RDH Building Science',
+      scope: 'Envelope research, especially high-performance walls and moisture management',
+      tier: '2',
+      url: 'rdh.com',
+    },
+    {
+      publication: 'Passive House Institute (PHI / PHIUS)',
+      scope: 'High-performance construction standards and certification methodology',
+      tier: '2',
+      url: 'passiv.de, phius.org',
+    },
+  ]}
+/>
+
+## Trade Publications
+
+Industry trade publications cited occasionally for market context and trend data.
+
+<DataTable
+  caption="HVAC and construction trade publications"
+  columns={[
+    { key: 'publication', label: 'Publication' },
+    { key: 'scope', label: 'Scope' },
+    { key: 'url', label: 'Link' },
+  ]}
+  rows={[
+    {
+      publication: 'ACHR News (Air Conditioning, Heating & Refrigeration News)',
+      scope: 'HVAC industry trade publication; equipment trends, regulatory developments',
+      url: 'achrnews.com',
+    },
+    {
+      publication: 'Journal of Light Construction (JLC)',
+      scope: 'Residential construction trade publication; HVAC and envelope intersection',
+      url: 'jlconline.com',
+    },
+    {
+      publication: 'Contracting Business',
+      scope: 'HVAC contracting trade publication; field practice and business operations',
+      url: 'contractingbusiness.com',
+    },
+    {
+      publication: 'Engineered Systems Magazine',
+      scope: 'Commercial and high-performance residential mechanical systems',
+      url: 'esmagazine.com',
+    },
+  ]}
+/>
+
+## Access and Paywalls
+
+Some authoritative sources are paywalled and require purchase, library access, or trade association membership to view in full.
+
+<DataTable
+  caption="Paywall status and access options for major cited sources"
+  columns={[
+    { key: 'source', label: 'Source' },
+    { key: 'access', label: 'Access' },
+    { key: 'workaround', label: 'Alternative access' },
+  ]}
+  rows={[
+    {
+      source: 'ACCA Manual J, S, D, T, N',
+      access: 'Paid ($50-$150 per document)',
+      workaround: 'ACCA member access, trade school libraries, public library document delivery',
+    },
+    {
+      source: 'ASHRAE Handbook of Fundamentals',
+      access: 'Paid (~$300 for hardcover or PDF)',
+      workaround: 'Many public libraries carry reference copy; ASHRAE student/professional membership',
+    },
+    {
+      source: 'ASHRAE Standards 55, 62.2, 90.1, 169',
+      access: 'Free PDF for older editions; current editions paid',
+      workaround: 'Older free editions usually sufficient for educational reference',
+    },
+    {
+      source: 'AHRI standards 210/240',
+      access: 'Free PDF',
+      workaround: 'No barrier',
+    },
+    {
+      source: 'AHRI Directory of certified products',
+      access: 'Free, public',
+      workaround: 'No barrier',
+    },
+    {
+      source: 'IECC code',
+      access: 'Free read-only access; paid for editable/copy',
+      workaround: 'Most municipal building departments have local copies',
+    },
+    {
+      source: 'NFRC certification database',
+      access: 'Free, public',
+      workaround: 'No barrier',
+    },
+    {
+      source: 'NEEP CCASHP specification and product list',
+      access: 'Free, public',
+      workaround: 'No barrier',
+    },
+    {
+      source: 'DOE / ENERGY STAR consumer guides',
+      access: 'Free, public',
+      workaround: 'No barrier',
+    },
+    {
+      source: 'EIA data tables',
+      access: 'Free, public',
+      workaround: 'No barrier',
+    },
+    {
+      source: 'IRS Section 25C Fact Sheet',
+      access: 'Free, public',
+      workaround: 'No barrier',
+    },
+    {
+      source: 'EPA AIM Act final rules',
+      access: 'Free, public (Federal Register)',
+      workaround: 'No barrier',
+    },
+  ]}
+/>
+
+The methodology articles on this site reproduce the relevant formulas and tables from paywalled sources at the level needed to use them — the citations point to the authoritative source for verification by professionals with access, while the practical content is freely available here. This is the same approach taken by educational reference texts that summarize standards without reproducing them verbatim.
+
+For homeowners without access to paywalled standards, the articles on this site, combined with the free DOE consumer guides and the free portions of ASHRAE/AHRI/NEEP/NFRC publications, are typically sufficient for planning-grade understanding. For permit-grade work, the paywalled standards must be consulted (or a contractor with access must be engaged).
+
+</article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-30" />
+</div>
+
+</Container>

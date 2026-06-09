@@ -1,40 +1,290 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { Callout } from '@/components/article/Callout';
+import { DataTable } from '@/components/data/DataTable';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
 
 export const metadata = {
-  title: 'Corrections',
+  alternates: { canonical: "/corrections/" },
+  title: 'Corrections: Public Log of Editorial Fixes and Methodology Updates',
   description:
-    'Public log of corrections made to content on hvacloadcalc.org. Errors get fixed promptly with attribution where applicable.',
+    'Public log of corrections to hvacloadcalc.org articles, calculators, and methodology. Severity classification, response timeline, attribution policy, and the live correction log itself.',
+  openGraph: {
+    title: 'hvacloadcalc.org Corrections Log',
+    description:
+      'Public log of editorial corrections with original claim, corrected claim, date, and reporter attribution.',
+    type: 'article',
+    publishedTime: '2026-05-30',
+    modifiedTime: '2026-05-30',
+    authors: ['Jonathan Stowe'],
+    images: ['/opengraph-image'],
+  },
 };
 
-<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Corrections' }]} />
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'Corrections' },
+];
 
-<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Corrections' }]} />
+export const HEADINGS = [
+  { id: 'why-publish-corrections', text: 'Why Publish Corrections', level: 2 },
+  { id: 'correction-categories', text: 'Correction Categories and Response Timelines', level: 2 },
+  { id: 'how-to-report-an-error', text: 'How to Report an Error', level: 2 },
+  { id: 'attribution-policy', text: 'Reporter Attribution Policy', level: 2 },
+  { id: 'public-correction-log', text: 'Public Correction Log', level: 2 },
+  { id: 'standards-update-log', text: 'Standards-Triggered Update Log', level: 2 },
+];
 
-# Corrections
+export const FAQ_ITEMS = [
+  {
+    q: 'Why have a corrections page at all?',
+    a: "Because publishing a visible correction log creates accountability that abstract editorial standards cannot. Anyone who finds an error has a public record of how the site handles corrections; anyone evaluating the site's editorial rigor can see the corrections actually published over time. The deliberate visibility makes it harder to quietly revise content when no one is watching.",
+  },
+  {
+    q: 'What counts as an error worth correcting?',
+    a: "Any factual claim, numeric value, formula, sourcing attribution, or methodology choice that disagrees with the cited primary source. Errors range from typos (low severity, fixed quickly without major log entry) to material methodology corrections (high severity, full log entry with original and corrected claim, attribution, and date). The severity classification is published below.",
+  },
+  {
+    q: 'How fast do you respond to correction reports?',
+    a: "Acknowledgment within 14 days of receipt. Implementation timeline depends on severity: critical safety corrections (CO thresholds, code requirements) within 14 days of receipt; material methodology corrections within 30 days; typos and copyedits within 7 days. Methodology disagreements that require substantive evaluation get an acknowledgment within 14 days and a substantive response within 60 days, with the original content left in place until the evaluation concludes.",
+  },
+  {
+    q: 'What if I disagree with how you fixed something?',
+    a: "Tell me. The corrections process is iterative — a correction that introduces a different error or that I implemented incorrectly can be re-reported through the same process, and the corrected correction gets logged as a new entry with reference to the original. The goal is accuracy, not perfectionism about the first attempt at fixing.",
+  },
+  {
+    q: 'Do you attribute every correction to the reporter?',
+    a: "With the reporter's explicit consent. The default is no attribution unless the reporter affirmatively opts in by writing 'attribute as [name, affiliation]' in their correction report. The reason for the opt-in default is privacy — some reporters prefer not to be publicly associated with their HVAC commentary. The opt-in form is in the correction acknowledgment we send within 14 days.",
+  },
+  {
+    q: 'What if a "correction" turns out to be a difference of opinion?',
+    a: "Real methodology disagreements (reasonable practitioners reading the same standard and reaching different conclusions) are evaluated and documented as such rather than implemented as corrections. The original article either gets a note explaining the alternative position and its source, or — when the disagreement is broadly contested — the article presents multiple positions as legitimate alternatives. The corrections log entry in those cases marks the entry as 'methodology disagreement, documented' rather than 'corrected'.",
+  },
+];
 
-When an error is identified on hvacloadcalc.org, it gets fixed promptly and the correction is logged here. This page exists to make the site's accuracy track record auditable.
+export const RELATED = [
+  {
+    title: 'Editorial standards',
+    url: '/editorial-standards/',
+    description:
+      'The full editorial process behind which the corrections policy operates.',
+  },
+  {
+    title: 'Methodology',
+    url: '/methodology/',
+    description:
+      'How calculator methodology errors are classified and addressed.',
+  },
+  {
+    title: 'Sources',
+    url: '/sources/',
+    description:
+      'The bibliography against which factual corrections are checked.',
+  },
+  {
+    title: 'About',
+    url: '/about/',
+    description:
+      'About the site and the editorial mission.',
+  },
+];
 
-## Correction policy
+export const FRONTMATTER = {
+  title: 'Corrections: Public Log of Editorial Fixes and Methodology Updates',
+  h1: 'Corrections',
+  meta_description:
+    'Public log of corrections to hvacloadcalc.org articles, calculators, and methodology. Severity classification, response timeline, attribution policy, and the live correction log itself.',
+  url: '/corrections/',
+  date_published: '2026-05-30',
+  last_reviewed: '2026-05-30',
+  target_keyword: 'hvacloadcalc.org corrections',
+  secondary_keywords: ['hvac correction log', 'editorial corrections', 'error reporting'],
+  sources: [],
+  faq: FAQ_ITEMS,
+  parent_title: 'Home',
+};
 
-- **Errors get fixed immediately**, not on a publication schedule
-- **The article's "Last reviewed" date is updated** when content is corrected
-- **A summary is logged here** with the date, article URL, and nature of the correction
-- **Reader/expert contributions get attribution** unless the contributor requests anonymity
-- **Methodology errors are flagged prominently** in the relevant article for at least 30 days after correction
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={1500} />
 
-## How to report an error
+<JsonLdBreadcrumb items={BREADCRUMBS} />
 
-Use the [contact form](/contact/) with subject category "Correction". Include:
+<Container>
 
-- The article URL
-- The specific claim or calculation in question
-- The correct information and (where possible) the authoritative source
+<Breadcrumbs items={BREADCRUMBS} />
 
-## Correction log
+<ArticleHeader
+  h1="Corrections"
+  description="The public log of editorial corrections, methodology updates triggered by standards revisions, and reporter attribution where consent was given. The deliberate visibility of corrections is part of the editorial accountability commitment."
+  datePublished="2026-05-30"
+  lastReviewed="2026-05-30"
+  readingTimeMinutes={6}
+/>
 
-*No corrections logged yet. The first correction will appear here when made.*
+<KeyTakeaways
+  items={[
+    'When an error is identified on the site, it gets fixed within the timeline appropriate to severity (7 days for typos, 14 days for safety corrections, 30 days for methodology corrections) and logged here with the original claim, the corrected claim, the date, and (with reporter consent) attribution.',
+    'Correction reports go through the [contact page](/contact/) with subject category "Correction" — see "How to Report an Error" below for the structured information that produces fastest resolution.',
+    'Reporter attribution is opt-in: the default is no attribution unless the reporter explicitly requests attribution with name and affiliation. Privacy is the default; visibility requires consent.',
+    'Standards-triggered updates (when ACCA, ASHRAE, NEEP, NFRC, DOE, EPA, IRS revise their published documents) are logged separately because they reflect the world changing rather than editorial errors — same audit trail, different category.',
+    'The corrections log is intentionally public and indexable. Anyone evaluating the site\'s editorial track record can see exactly which corrections have been made and what they covered.',
+  ]}
+/>
 
----
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
 
-**Last reviewed**: May 18, 2026
+<article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+## Why Publish Corrections
+
+Publishing a visible correction log creates accountability that abstract editorial standards cannot. Anyone who finds an error on the site has a public record of how corrections are handled. Anyone evaluating the site's editorial rigor can see the corrections actually published over time. The deliberate visibility makes silent revision impossible — which makes silent error tolerance also impossible.
+
+<Callout type="info" title="What this page commits to">
+Every material correction to factual content, methodology, or sourcing on the site appears on this page. Typos and minor copyedits do not always produce a log entry, but anything that changes meaning, math, or attribution does. The page is updated as corrections happen, not on a publication schedule.
+</Callout>
+
+The corrections page is part of a broader transparency commitment that includes the [methodology page](/methodology/), the [sources page](/sources/), and the [editorial standards page](/editorial-standards/). Together they make the editorial process inspectable: a reader can see what sources we cite, how we cite them, what review process we follow, and what we have corrected when we got it wrong. The deliberate construction of this paper trail is what makes the site's claims defensible.
+
+## Correction Categories and Response Timelines
+
+Corrections fall into five categories with different urgency and response timelines.
+
+<DataTable
+  caption="Correction categories and response targets"
+  columns={[
+    { key: 'category', label: 'Category' },
+    { key: 'examples', label: 'Examples' },
+    { key: 'severity', label: 'Severity' },
+    { key: 'targetTimeline', label: 'Implementation target', align: 'right' },
+  ]}
+  rows={[
+    {
+      category: 'Critical safety / regulatory',
+      examples: 'CO exposure thresholds; refrigerant handling requirements; code-mandated minimums',
+      severity: 'Highest',
+      targetTimeline: '14 days',
+    },
+    {
+      category: 'Material methodology',
+      examples: 'Formula error in a calculator; wrong R-value in a data table; incorrect AHRI rating point cited',
+      severity: 'High',
+      targetTimeline: '30 days',
+    },
+    {
+      category: 'Sourcing attribution',
+      examples: 'Wrong source cited for a correct claim; missing inline citation; outdated source URL',
+      severity: 'Medium',
+      targetTimeline: '30 days',
+    },
+    {
+      category: 'Out-of-date content',
+      examples: 'Standard has been revised and our content reflects the previous version; tax credit thresholds changed',
+      severity: 'Medium-low',
+      targetTimeline: '60 days (or next regular review)',
+    },
+    {
+      category: 'Typo and copyedit',
+      examples: 'Wrong word, misspelling, broken markdown formatting',
+      severity: 'Low',
+      targetTimeline: '7 days',
+    },
+  ]}
+/>
+
+The severity classification determines log-entry depth. Critical and high severity entries include the original claim verbatim, the corrected claim, the supporting source, and the implementation date. Medium severity entries summarize the change and reference the article URL. Low severity entries (typos and copyedits) are typically not logged individually unless they appeared in published headings or summaries.
+
+Methodology disagreements (covered in the FAQ above) are not "corrections" in the editorial-standards sense — they are documented as alternative positions when reasonable practitioners disagree. The log entry for a methodology disagreement marks it as "methodology disagreement, documented" rather than "corrected," and the affected article gets a note explaining the alternative position.
+
+## How to Report an Error
+
+Use the [contact page](/contact/) with subject category "Correction" and include the following information for fastest resolution.
+
+(1) Article URL. The specific page where the error appears (e.g., /heat-pump/sizing/, /tools/btu-calculator/, /glossary/).
+
+(2) Quoted original text. The exact text on the page that you believe is incorrect, copy-pasted from the page (not paraphrased). Quotation makes the correction unambiguous.
+
+(3) Proposed corrected text. The text you believe is correct. Direct replacement is fine; suggesting the corrected wording is also fine.
+
+(4) Supporting source. The primary source supporting the correction. Tier 1 sources (ACCA, ASHRAE, AHRI, NFRC, NEEP, DOE, EPA, IRS, NOAA, EIA) are strongly preferred. Tier 2 sources (NREL, LBNL, ORNL, peer-reviewed academic literature) are acceptable when tier 1 does not address the specific point.
+
+(5) Attribution preference. Whether you want to be credited by name in the correction log (and if so, with what affiliation if any). Default is no attribution unless you affirmatively opt in.
+
+The acknowledgment confirming receipt arrives within 14 days. Resolution timeline depends on severity per the table above. If the report turns out to identify a methodology disagreement rather than a clear-cut error, the response explains the evaluation and either implements an alternative-position note or defends the original content with citation.
+
+## Reporter Attribution Policy
+
+**Reporter attribution is opt-in.** Default treatment is no attribution: the correction log records what was corrected and when, but does not name the reporter.
+
+When a reporter opts in (by writing "attribute as [name, affiliation]" in their correction report), the log entry includes the attribution. Examples of attribution format: "Reported by Dr. Sarah Chen, RESNET HERS rater", "Reported by Mike Rodriguez, HVAC contractor", "Reported by anonymous building scientist", "Reported by reader (anonymous by request)".
+
+<Callout type="info" title="Why opt-in by default">
+Some reporters prefer not to be publicly associated with their HVAC commentary — they may be active in industry where commenting on a competitor's resource carries professional risk. The opt-in default treats the privacy preference as the safer assumption. Reporters who want public credit can affirmatively request it; the credit is given when requested without question.
+</Callout>
+
+Editorial commitment around reporter privacy: we do not share reporter identity with third parties without explicit consent, do not aggregate reporter identity data for any business purpose, and do not retain identity data longer than necessary to complete the correction (typically the data is purged from working systems within 90 days of correction publication, while the attribution itself remains on the correction log when the reporter opted in).
+
+## Public Correction Log
+
+The correction log will populate here as corrections are made. Each entry includes: date of correction, affected URL, category, severity, original claim (quoted), corrected claim (quoted), supporting source, and attribution where given.
+
+<Callout type="planning-grade" title="Current status of the log">
+The site launched with rigorous source citation from day one and has not yet logged any material corrections. The empty log is a state, not a permanent claim — corrections will appear here as they happen, with full detail. The empty status itself is auditable: a reader who suspects we are hiding corrections can compare git history of any article against current content to verify.
+</Callout>
+
+<DataTable
+  caption="Material corrections log (correction date · affected URL · category · original → corrected · source · attribution)"
+  columns={[
+    { key: 'date', label: 'Date' },
+    { key: 'url', label: 'URL' },
+    { key: 'category', label: 'Category' },
+    { key: 'change', label: 'Change' },
+    { key: 'source', label: 'Source' },
+    { key: 'attribution', label: 'Attribution' },
+  ]}
+  rows={[
+    { date: '—', url: '—', category: '—', change: 'No corrections logged yet.', source: '—', attribution: '—' },
+  ]}
+/>
+
+## Standards-Triggered Update Log
+
+When a referenced standard is revised (new edition of an ACCA Manual, new ENERGY STAR Version, new NEEP CCASHP Version, new DOE Final Rule, new IRS Section 25C Fact Sheet), the affected articles are updated and the update is logged here. These are not "corrections" in the strict sense — the world changed, the content tracks the change. But the same audit trail discipline applies.
+
+<DataTable
+  caption="Standards-triggered updates log"
+  columns={[
+    { key: 'date', label: 'Date' },
+    { key: 'standard', label: 'Standard updated' },
+    { key: 'change', label: 'Change in standard' },
+    { key: 'affectedUrls', label: 'Affected articles' },
+  ]}
+  rows={[
+    { date: '—', standard: '—', change: 'No standards-triggered updates logged yet.', affectedUrls: '—' },
+  ]}
+/>
+
+The standards-triggered log will populate as standards bodies revise their published documents. The standards most likely to trigger near-term updates are AHRI 210/240 (if revised before the next typical 5-year cycle), NEEP CCASHP (revision typically every 2-3 years), ENERGY STAR Version 6.x/7.x (revision typically every 3-5 years), and IRS Section 25C Fact Sheet (revised annually).
+
+</article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-30" />
+</div>
+
+</Container>

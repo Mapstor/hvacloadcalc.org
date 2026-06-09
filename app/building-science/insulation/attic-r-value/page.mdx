@@ -19,9 +19,10 @@ import { AirLeakVsRValue } from '@/components/svg/attic-r-value/AirLeakVsRValue'
 import { InsulationUpgradeDecisionTree } from '@/components/svg/attic-r-value/InsulationUpgradeDecisionTree';
 
 export const metadata = {
+  alternates: { canonical: "/building-science/insulation/attic-r-value/" },
   title: 'Attic R-Value: Recommendations by Climate Zone and Why It Matters',
   description:
-    "Recommended attic R-values range from R-30 in warm climates to R-60 in cold climates. Here's what the numbers mean and how to verify what you actually have.",
+    "DOE recommended attic R-values by IECC climate zone (R-30 in warm climates to R-60 in cold), R-per-inch by material, payback analysis, and air sealing primacy.ates. Here's what the numbers mean and how to verify what you actually have.",
   openGraph: {
     title: 'Attic R-Value: Recommendations and How to Measure Yours',
     description:
@@ -29,7 +30,7 @@ export const metadata = {
     type: 'article',
     publishedTime: '2026-05-18',
     modifiedTime: '2026-05-18',
-    authors: ['Jonathan S.'],
+    authors: ['Jonathan Stowe'],
     images: ['/opengraph-image'],
   },
 };
@@ -193,7 +194,7 @@ export const FRONTMATTER = {
   title: 'Attic R-Value: Recommendations by Climate Zone and Why It Matters',
   h1: 'Attic R-Value Explained',
   meta_description:
-    "Recommended attic R-values range from R-30 in warm climates to R-60 in cold climates. Here's what the numbers mean and how to verify what you actually have.",
+    "DOE recommended attic R-values by IECC climate zone (R-30 in warm climates to R-60 in cold), R-per-inch by material, payback analysis, and air sealing primacy.ates. Here's what the numbers mean and how to verify what you actually have.",
   url: '/building-science/insulation/attic-r-value/',
   date_published: '2026-05-18',
   last_reviewed: '2026-05-18',
@@ -230,7 +231,7 @@ export const FRONTMATTER = {
 
 <ArticleHeader
   h1="Attic R-Value Explained"
-  description="Recommended attic R-values range from R-30 in warm climates to R-60 in cold climates. Here's what the numbers mean and how to verify what you actually have."
+  description="DOE recommended attic R-values by IECC climate zone (R-30 in warm climates to R-60 in cold), R-per-inch by material, payback analysis, and air sealing primacy.ates. Here's what the numbers mean and how to verify what you actually have."
   datePublished="2026-05-18"
   lastReviewed="2026-05-18"
   readingTimeMinutes={11}
@@ -380,7 +381,9 @@ For the full DIY procedure with attic safety considerations, see [how to measure
 
 ## Air Sealing Comes First
 
-Insulation slows conductive heat flow. It does not stop air movement. If your attic has unsealed penetrations — recessed lights, plumbing chases, top plates, the attic hatch — warm air escapes through those holes and cold air enters through other ones, and the R-49 insulation you just paid for sits there watching it happen. Field studies routinely find that attics with code-level insulation but no specific air sealing perform like attics with 50-70% of the rated R-value.<SourceCite id="rdh-attic-air-sealing" number={8} /> The fix is cheap (caulk, foam, gasket) and almost always more cost-effective than adding more insulation on top of a leaky attic.
+Insulation slows conductive heat flow. It does not stop air movement. If your attic has unsealed penetrations — recessed lights, plumbing chases, top plates, the attic hatch — warm air escapes through those holes and cold air enters through other ones, and the R-49 insulation you just paid for sits there watching it happen.
+
+Field studies routinely find that attics with code-level insulation but no specific air sealing perform like attics with 50-70% of the rated R-value.<SourceCite id="rdh-attic-air-sealing" number={8} /> The fix is cheap (caulk, foam, gasket) and almost always more cost-effective than adding more insulation on top of a leaky attic.
 
 <AirLeakVsRValue />
 

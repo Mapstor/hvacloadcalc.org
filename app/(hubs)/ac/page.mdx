@@ -1,45 +1,568 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { Sources } from '@/components/article/Sources';
+import { SourceCite } from '@/components/article/SourceCite';
+import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { Callout } from '@/components/article/Callout';
+import { DataTable } from '@/components/data/DataTable';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { HeroAcBtuChartVisual } from '@/components/svg/ac-btu-chart/HeroAcBtuChartVisual';
+import { BtuByClimateZoneMap } from '@/components/svg/ac-btu-chart/BtuByClimateZoneMap';
+import { WindowVsPortableVsMiniSplit } from '@/components/svg/ac-btu-chart/WindowVsPortableVsMiniSplit';
+import { Seer2AnnualCost } from '@/components/svg/ac/Seer2AnnualCost';
 
 export const metadata = {
-  title: 'Air Conditioner Sizing and Reference | hvacloadcalc.org',
+  alternates: { canonical: "/ac/" },
+  title: 'Air Conditioners: How They Are Rated, Sized, and Operated',
   description:
-    'Residential air conditioner sizing, BTU-per-square-foot charts, short cycling diagnosis, and AC selection reference. Methodology-transparent, no rule-of-thumb.',
+    'Residential AC reference — AHRI 210/240 cooling ratings, SEER2 federal minimums, sensible vs latent, BTU per sq ft by climate, system types, 2025 R-410A phaseout.',
+  openGraph: {
+    title: 'Air Conditioners: A Reference Hub Built on Primary Sources',
+    description:
+      'AHRI 210/240 cooling ratings, SEER2 minimums, BTU-per-sqft data by climate, system types, and the 2025 R-410A phaseout — every number cited.',
+    type: 'article',
+    publishedTime: '2026-05-30',
+    modifiedTime: '2026-05-30',
+    authors: ['Jonathan Stowe'],
+    images: ['/opengraph-image'],
+  },
 };
 
-<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'AC' }]} />
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'AC' },
+];
 
-<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'AC' }]} />
+export const HEADINGS = [
+  { id: 'what-an-ac-actually-does', text: 'What an Air Conditioner Actually Does', level: 2 },
+  { id: 'how-ac-capacity-and-efficiency-are-rated', text: 'How AC Capacity and Efficiency Are Rated', level: 2 },
+  { id: 'sensible-versus-latent-cooling', text: 'Sensible Versus Latent Cooling (and Why It Matters in Humid Climates)', level: 2 },
+  { id: 'btu-per-square-foot-by-climate', text: 'BTU per Square Foot by Climate (and Why Rule of Thumb Misleads)', level: 2 },
+  { id: 'the-four-residential-ac-types', text: 'The Four Residential AC Types and How to Pick', level: 2 },
+  { id: 'sizing-errors-cost-real-money', text: 'Why Sizing Errors Cost Real Money', level: 2 },
+  { id: 'operating-cost-of-running-the-ac', text: 'The Operating Cost of Running the AC', level: 2 },
+  { id: 'common-problems-and-what-they-mean', text: 'Common Problems and What They Actually Mean', level: 2 },
+  { id: '2025-refrigerant-transition', text: 'The 2025 R-410A Phaseout', level: 2 },
+  { id: 'what-this-cluster-covers', text: 'What This Cluster Covers', level: 2 },
+];
+
+export const SOURCES = [
+  {
+    id: 'ahri-210-240',
+    title: 'ANSI/AHRI Standard 210/240-2023, Performance Rating of Unitary Air-Conditioning and Air-Source Heat Pump Equipment',
+    publisher: 'Air-Conditioning, Heating and Refrigeration Institute (AHRI)',
+    year: 2023,
+    url: 'https://www.ahrinet.org/search-standards/ahri-210240-2023-performance-rating-unitary-air-conditioning-air-source-heat-pump',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'doe-min-efficiency-2023',
+    title: '10 CFR Part 430 — Energy Conservation Standards for Residential Central Air Conditioners and Heat Pumps (effective January 1, 2023)',
+    publisher: 'US Department of Energy',
+    year: 2023,
+    url: 'https://www.energy.gov/eere/buildings/articles/doe-finalizes-stronger-efficiency-standards-residential-central-air',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'energystar-ac-spec',
+    title: 'ENERGY STAR Program Requirements for Central Air Conditioners and Heat Pumps, Version 6.1',
+    publisher: 'US EPA / ENERGY STAR',
+    year: 2024,
+    url: 'https://www.energystar.gov/products/spec/central_air_conditioner_and_heat_pump_specification_version_6_1_pd',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'energystar-room-ac',
+    title: 'ENERGY STAR Program Requirements for Room Air Conditioners, Version 4.2',
+    publisher: 'US EPA / ENERGY STAR',
+    year: 2024,
+    url: 'https://www.energystar.gov/products/spec/room_air_conditioners_specification_version_4_2_pd',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'acca-manual-j-8',
+    title: 'Manual J — Residential Load Calculation, 8th Edition (ANSI/ACCA 2 Manual J - 2016)',
+    publisher: 'Air Conditioning Contractors of America (ACCA)',
+    year: 2016,
+    url: 'https://www.acca.org/standards/technical-manuals/manual-j',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'acca-manual-s',
+    title: 'Manual S — Residential Equipment Selection (ANSI/ACCA 3 Manual S - 2014)',
+    publisher: 'Air Conditioning Contractors of America',
+    year: 2014,
+    url: 'https://www.acca.org/standards/technical-manuals/manual-s',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'ashrae-fundamentals-2021-psychro',
+    title: 'ASHRAE Handbook of Fundamentals 2021, Chapter 1 (Psychrometrics)',
+    publisher: 'American Society of Heating, Refrigerating and Air-Conditioning Engineers',
+    year: 2021,
+    url: 'https://www.ashrae.org/technical-resources/ashrae-handbook',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'ashrae-fundamentals-2021-design',
+    title: 'ASHRAE Handbook of Fundamentals 2021, Chapter 14 (Climatic Design Information, including 1% and 0.4% cooling design temperatures)',
+    publisher: 'American Society of Heating, Refrigerating and Air-Conditioning Engineers',
+    year: 2021,
+    url: 'https://www.ashrae.org/technical-resources/ashrae-handbook',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'doe-ac-buying',
+    title: 'Central Air Conditioning (consumer guide)',
+    publisher: 'US Department of Energy, Office of Energy Efficiency and Renewable Energy',
+    year: 2024,
+    url: 'https://www.energy.gov/energysaver/central-air-conditioning',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'eia-electricity-table-5-6-a',
+    title: 'Average Price of Electricity to Ultimate Customers by End-Use Sector, Table 5.6.A (Residential)',
+    publisher: 'US Energy Information Administration',
+    year: 2025,
+    url: 'https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_6_a',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'eia-recs-2020',
+    title: 'Residential Energy Consumption Survey (RECS) 2020 — Air Conditioning Use and Equipment',
+    publisher: 'US Energy Information Administration',
+    year: 2023,
+    url: 'https://www.eia.gov/consumption/residential/data/2020/',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'epa-aim-act-2025',
+    title: 'AIM Act — Phasedown of Hydrofluorocarbons, Final Rule (Residential AC and Heat Pumps, effective January 1, 2025)',
+    publisher: 'US Environmental Protection Agency',
+    year: 2023,
+    url: 'https://www.epa.gov/climate-hfcs-reduction/final-rule-phasedown-hydrofluorocarbons-establishing-allowance-allocation',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'irs-25c-fact-sheet',
+    title: 'IRA Section 25C — Energy Efficient Home Improvement Credit (Fact Sheet FS-2022-40)',
+    publisher: 'US Internal Revenue Service',
+    year: 2023,
+    url: 'https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+];
+
+export const FAQ_ITEMS = [
+  {
+    q: 'What size air conditioner do I need?',
+    a: 'The right answer for a specific home comes from a Manual J load calculation, not a square-footage rule of thumb. For a planning-grade estimate, a tight 2,000 sq ft home in a moderate climate (zone 4) typically needs about 2 tons (24,000 BTU/hr) of cooling capacity, while a leaky 2,000 sq ft home in a hot-humid climate (zone 2) can need 3.5 tons (42,000 BTU/hr). The same home in two climates can differ by 50%, and the same square footage in the same climate can differ by 75% between tight and leaky envelopes. Always check the specific calculation before signing a quote.',
+  },
+  {
+    q: 'What is the difference between SEER and SEER2?',
+    a: 'SEER2 replaced SEER under AHRI 210/240-2023, with a test procedure change that raised the assumed external static pressure to better match actual ducted installations. The same equipment that rated SEER 16 under the old procedure typically rates about SEER2 15.2 under the new one (roughly a 4-5% lower number for unchanged performance). Federal minimums and ENERGY STAR thresholds are both written in SEER2 now, and product labels show the SEER2 figure.',
+  },
+  {
+    q: 'What is the federal minimum SEER2 for new central AC?',
+    a: 'Since January 1, 2023, the federal minimum for residential split-system central AC is 13.4 SEER2 in the northern US and 14.3 SEER2 in the southern and southwestern US. Packaged units (where the compressor and air handler are in one outdoor cabinet) have a 13.4 SEER2 minimum nationwide. ENERGY STAR Version 6.1 currently requires 15.2 SEER2 or better.',
+  },
+  {
+    q: 'How much does it cost to install a new central AC in 2026?',
+    a: "Typical installed cost ranges from $4,000 to $8,000 for a basic 2-3 ton split-system replacement in an existing house with usable ductwork, $7,000 to $12,000 for a higher-efficiency variable-speed unit or a more complex install, and $3,000 to $8,000 per zone for a ductless mini-split. The IRS Section 25C tax credit returns up to $600 for a qualifying high-efficiency central AC (15.2 SEER2 or better with EER2 thresholds), and state and utility rebates often add $200-$1,000 on top.",
+  },
+  {
+    q: 'Why does my AC remove water? Is that normal?',
+    a: 'Yes. About 15-30% of the cooling work an AC does in a humid climate is latent cooling — condensing water out of the indoor air as it passes over the cold evaporator coil. A correctly sized AC in a humid climate condenses 1-3 gallons of water per day during cooling season, which drains via the condensate line. No condensate during humid weather suggests refrigerant problems or a clogged drain pan; excessive condensate flooding suggests a blocked drain line, not a unit problem.',
+  },
+  {
+    q: 'How long should my AC last?',
+    a: 'The US Department of Energy cites a typical operational life of 15-20 years for a residential central AC, with the compressor as the most common end-of-life part. Lifespan is shortened by oversizing (causing short cycling), refrigerant leaks, dirty coils, and outdoor units exposed to coastal salt air. Annual professional servicing extends life by catching small problems before they become expensive.',
+  },
+  {
+    q: 'What is short cycling and why is it a problem?',
+    a: 'Short cycling is the pattern of the AC turning on, running briefly (typically less than 10 minutes), shutting off, then restarting a few minutes later — repeating that pattern through the cooling period. It is most often caused by oversizing (the unit hits temperature setpoint before fully dehumidifying), low refrigerant, dirty filters, or thermostat placement near a supply register. Short cycling damages the compressor (which is rated for a finite number of starts), produces uncomfortable humidity swings, and dramatically lowers seasonal efficiency.',
+  },
+  {
+    q: 'Will I have to replace my AC just because of R-410A?',
+    a: 'No. The EPA AIM Act stopped the manufacture of new R-410A residential equipment as of January 1, 2025, but existing R-410A systems are explicitly allowed to remain in service. Service refrigerant supply continues, though R-410A prices have started rising. If you are replacing the equipment, the new install uses R-454B or R-32; mixing refrigerants across an indoor coil and outdoor unit is not permitted, so a "swap one component" job typically becomes a full system replacement.',
+  },
+  {
+    q: 'Should I get a heat pump instead of replacing my AC?',
+    a: 'In most cases the math favors a heat pump if you are already replacing the AC, because the heat pump replaces both the AC and (eventually) the furnace from a single piece of equipment. The 25C tax credit for heat pumps ($2,000) is larger than for AC ($600), and HEEHRA rebates for qualifying households apply to heat pumps but not to standalone AC. Where heat pumps fall behind is in very cold climates with cheap natural gas where the homeowner intends to keep the gas furnace; in that case standard AC + gas furnace remains a common combination.',
+  },
+];
+
+export const RELATED = [
+  {
+    title: 'AC BTU chart by square footage',
+    url: '/ac/btu/chart/',
+    description:
+      'Reference chart of BTU per square foot by climate, ceiling height, insulation level, and space type, with worked examples.',
+  },
+  {
+    title: 'AC short cycling diagnosis',
+    url: '/ac/short-cycling/',
+    description:
+      'Causes, consequences, and a step-by-step diagnostic path for ACs that cycle too quickly.',
+  },
+  {
+    title: 'Mini-split sizing for a garage',
+    url: '/ac/btu/garage-mini-split/',
+    description:
+      'Garage-specific sizing methodology that accounts for higher BTU per square foot from limited insulation.',
+  },
+  {
+    title: 'Heat pump reference hub',
+    url: '/heat-pump/',
+    description:
+      'Heat pumps deliver cooling identical to AC and add winter heat — most US AC replacements should compare both options.',
+  },
+  {
+    title: 'Manual J load calculation',
+    url: '/manual-j/',
+    description:
+      'The ACCA methodology that produces the cooling load any honest AC quote should reference.',
+  },
+];
+
+export const FRONTMATTER = {
+  title: 'Air Conditioners: How They Are Rated, Sized, and Operated',
+  h1: 'Air Conditioners: A Reference Built on Primary Sources',
+  meta_description:
+    'A reference hub for residential air conditioners covering AHRI 210/240 cooling ratings, SEER2 federal minimums, sensible vs latent cooling, BTU-per-square-foot guidance by climate, system types, and the 2025 R-410A refrigerant transition.',
+  url: '/ac/',
+  date_published: '2026-05-30',
+  last_reviewed: '2026-05-30',
+  target_keyword: 'air conditioner',
+  secondary_keywords: ['ac sizing', 'seer2', 'btu per square foot', 'central air conditioner', 'r-410a phaseout'],
+  sources: SOURCES,
+  faq: FAQ_ITEMS,
+  parent_title: 'Home',
+};
+
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={3000} />
+
+<JsonLdBreadcrumb items={BREADCRUMBS} />
+
+<Container>
+
+<Breadcrumbs items={BREADCRUMBS} />
+
+<ArticleHeader
+  h1="Air Conditioners: A Reference Built on Primary Sources"
+  description="AHRI 210/240 cooling rating points, SEER2 federal minimums, BTU-per-square-foot data by climate, the four residential AC types, sensible-vs-latent cooling, and the 2025 R-410A phaseout — every figure on this page traces to ACCA, ASHRAE, AHRI, DOE, EIA, EPA, or IRS publications."
+  datePublished="2026-05-30"
+  lastReviewed="2026-05-30"
+  readingTimeMinutes={13}
+/>
+
+<KeyTakeaways
+  items={[
+    'A "1 ton" air conditioner removes 12,000 BTU per hour of heat at AHRI 95°F outdoor / 80°F indoor test conditions — a definition rooted in the heat needed to melt one ton of ice in 24 hours.',
+    'Federal minimums since January 2023 are 13.4 SEER2 in the north and 14.3 SEER2 in the south/southwest for split-system AC, with ENERGY STAR Version 6.1 requiring 15.2 SEER2 or better.',
+    'In humid climates roughly 15-30% of an AC\'s cooling work is removing moisture rather than dropping temperature — which is why oversized units cool quickly but leave the house sticky.',
+    'BTU per square foot ranges roughly 20 BTU/sqft in cold climates with strong envelopes to 40+ BTU/sqft in hot-humid climates with weak envelopes — a factor-of-two spread that rules of thumb mask.',
+    'New residential AC sold in the US after January 1, 2025 uses R-454B or R-32 refrigerant under the EPA AIM Act final rule; existing R-410A systems remain serviceable but cannot be manufactured new.',
+  ]}
+/>
+
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
 
 <article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
 
-# Air Conditioner Sizing and Reference
+## What an Air Conditioner Actually Does
 
-Air conditioner sizing is more often wrong than right. The 30-second method most contractors use — square footage times a number — overshoots in well-insulated homes and undershoots in poorly-sealed ones. The result is either an oversized unit that short-cycles, dehumidifies poorly, and shortens its own life, or an undersized one that runs constantly without keeping up.
+An air conditioner is a vapor-compression heat pump operating in cooling mode. A refrigerant loop carries heat from indoors (where the evaporator coil sits) to outdoors (where the condenser coil sits), moved by a compressor that elevates the refrigerant's pressure and temperature between the two coils.<SourceCite id="doe-ac-buying" number={9} /> The same hardware that defines a heat pump in cooling mode is, with the four-way reversing valve removed, what a dedicated air conditioner is.
 
-This section covers correct sizing methodology, the BTU-per-square-foot ranges by climate, the diagnostic patterns for short cycling and undersizing, and the practical steps a homeowner can take to verify a contractor quote.
+<HeroAcBtuChartVisual />
 
-## Articles in this section
+The cooling load any AC must handle is the rate at which heat enters the conditioned space. Heat enters through three pathways: conduction through walls, ceilings, floors, and glass; air infiltration through cracks and openings; and internal generation from people, lights, appliances, and solar gain.<SourceCite id="acca-manual-j-8" number={5} /> A correct AC sizing answers one question — what is the peak rate of heat gain at the design outdoor condition — and provides equipment capacity that matches it.
 
-### Sizing
+<Callout type="info" title="The 'ton' is older than refrigeration">
+"One ton of refrigeration" equals 12,000 BTU/hr because that is the heat needed to melt one short ton (2,000 lb) of ice in 24 hours at 32°F. The latent heat of fusion of ice is 144 BTU/lb, so 2,000 lb × 144 BTU/lb = 288,000 BTU over 24 hours, or exactly 12,000 BTU/hr. The unit predates mechanical refrigeration; it described the cooling work an ice delivery truck used to do.
+</Callout>
 
-- [AC BTU chart](/ac/btu/chart/) — reference chart by square footage with climate, ceiling, sun, insulation, and space-type adjustments
-- [Mini split for garage](/ac/btu/garage-mini-split/) — sizing methodology specific to garages (2-3× the BTU per sqft vs interior space)
+## How AC Capacity and Efficiency Are Rated
 
-### Troubleshooting and operation
+AHRI Standard 210/240-2023 defines the test conditions for residential AC capacity and efficiency.<SourceCite id="ahri-210-240" number={1} /> Cooling capacity is measured at 95°F outdoor dry bulb and 80°F indoor dry bulb (67°F indoor wet bulb to fix latent conditions). That single point produces the nameplate "tons" or BTU/hr figure shown on the equipment label.
 
-- [AC short cycling](/ac/short-cycling/) — causes (oversizing, refrigerant, sensor), consequences (humidity, equipment life), and diagnostic steps
+<DataTable
+  caption="AHRI 210/240-2023 cooling rating points for residential central AC"
+  columns={[
+    { key: 'point', label: 'Test point' },
+    { key: 'outdoor', label: 'Outdoor', align: 'right' },
+    { key: 'indoor', label: 'Indoor', align: 'right' },
+    { key: 'produces', label: 'Produces' },
+  ]}
+  rows={[
+    { point: 'A2 (full load)', outdoor: '95°F DB', indoor: '80°F DB / 67°F WB', produces: 'Nominal cooling capacity (the "tons" label)' },
+    { point: 'B2 (part load)', outdoor: '82°F DB', indoor: '80°F DB / 67°F WB', produces: 'Part-load capacity (contributes to SEER2)' },
+    { point: 'EER2 (steady state)', outdoor: '95°F DB', indoor: '80°F DB / 67°F WB', produces: 'Energy Efficiency Ratio at design condition' },
+    { point: 'SEER2 (seasonal)', outdoor: 'Weighted bin distribution', indoor: '80°F DB / 67°F WB', produces: 'Seasonal Energy Efficiency Ratio' },
+  ]}
+/>
 
-## Calculators
+**Two efficiency metrics matter, and they measure different things.** EER2 is the steady-state cooling-per-watt at the 95°F design point — a number that lets you compare equipment at peak load. SEER2 is the seasonal weighted average across many outdoor temperatures, capturing how the unit cycles and modulates across a typical cooling season.<SourceCite id="ahri-210-240" number={1} />
 
-- [AC size calculator](/tools/ac-size-calculator/) — AC equipment sizing with window/portable/mini split/central recommendations
-- [BTU calculator](/tools/btu-calculator/) — general BTU sizing for any room or space
-- [Manual J load calculator](/tools/manual-j-calculator/) — full envelope load math for whole-house central AC planning
+A high SEER2 with low EER2 indicates an inverter unit that performs well at part load but is less efficient at design; a high EER2 with lower SEER2 (rare in current production) indicates the opposite.
 
-## Related topics
+<DataTable
+  caption="Federal minimum and ENERGY STAR efficiency requirements for central AC (split system, 2026)"
+  columns={[
+    { key: 'tier', label: 'Tier' },
+    { key: 'region', label: 'Region' },
+    { key: 'seer2', label: 'SEER2 min', align: 'right' },
+    { key: 'eer2', label: 'EER2 min', align: 'right' },
+    { key: 'source', label: 'Source' },
+  ]}
+  rows={[
+    { tier: 'Federal minimum (split)', region: 'North', seer2: '13.4', eer2: '—', source: 'DOE 10 CFR 430' },
+    { tier: 'Federal minimum (split)', region: 'South / Southwest', seer2: '14.3', eer2: 'EER 11.7 in SW', source: 'DOE 10 CFR 430' },
+    { tier: 'Federal minimum (packaged)', region: 'All US', seer2: '13.4', eer2: '—', source: 'DOE 10 CFR 430' },
+    { tier: 'ENERGY STAR v6.1', region: 'All US', seer2: '15.2', eer2: 'EER2 ≥ 12.0', source: 'ENERGY STAR program' },
+    { tier: 'IRS 25C qualifying ($600 credit)', region: 'All US', seer2: '≥ 16.0 (CEE Tier)', eer2: '≥ 12.0', source: 'IRS Fact Sheet 25C' },
+  ]}
+/>
 
-- [Heat pump reference](/heat-pump/) — combined heating and cooling
-- [Manual J load calculation](/manual-j/) — sizing methodology
-- [Building science](/building-science/) — envelope drivers of cooling load
+**The SEER → SEER2 number conversion matters for anyone shopping based on older labels.** The new test procedure raised assumed external static pressure from 0.10 in. wc to 0.50 in. wc, which is a more realistic value for installed ducted systems and which lowers measured efficiency by roughly 4-5%.<SourceCite id="ahri-210-240" number={1} />
+
+A SEER 16 unit under the old rules is roughly SEER2 15.2 under the new rules. Manufacturers republish all current production under the new rating, and the AHRI Certified Reference Number (ARN) on the equipment label maps to a public verified row in the AHRI directory.
+
+## Sensible Versus Latent Cooling (and Why It Matters in Humid Climates)
+
+Cooling work splits into two categories. Sensible cooling lowers air temperature — what a thermometer reads. Latent cooling removes water vapor from the air by condensing it on the cold evaporator coil. Both consume cooling capacity, and the split between them depends on the indoor humidity ratio at the entering air.<SourceCite id="ashrae-fundamentals-2021-psychro" number={7} />
+
+The ratio is called sensible heat ratio (SHR): SHR = sensible cooling / total cooling. In a dry climate at design conditions, SHR can be 0.85-0.95 (most of the work is dropping temperature). In a humid climate, SHR drops to 0.65-0.75 (one-quarter to one-third of the cooling work is removing water vapor).<SourceCite id="acca-manual-s" number={6} />
+
+<Callout type="warn" title="The oversized AC dehumidification trap">
+An oversized AC in a humid climate cools the air fast and shuts off before it has been running long enough to condense significant moisture. The thermostat reads "satisfied" while indoor humidity stays above 60% RH. Right-sized equipment that runs longer cycles dehumidifies properly and produces a 50-55% RH indoor environment at the same temperature — which feels cooler and lets you set the thermostat 2-3°F higher for the same comfort.
+</Callout>
+
+**The capacity-rating implication is concrete.** Manufacturer spec sheets publish "total" and "sensible" capacity separately at AHRI conditions; latent capacity is the difference.
+
+A 3-ton (36,000 BTU/hr) unit might publish 27,000 BTU/hr sensible and 9,000 BTU/hr latent at the 80°F / 67°F WB rating point, meaning SHR = 0.75. At a hotter, drier indoor condition (say 78°F / 60°F WB), the same unit might shift to SHR 0.85 with almost no latent capacity.
+
+This is why Manual S equipment selection compares both sensible AND latent capacities against the Manual J loads, not just total tonnage.<SourceCite id="acca-manual-s" number={6} />
+
+## BTU per Square Foot by Climate (and Why Rule of Thumb Misleads)
+
+The most common AC sizing question is "how many BTU per square foot do I need?" The answer is not a single number — it is a range that depends on climate, envelope, ceiling height, sun exposure, and how the space is used.
+
+<BtuByClimateZoneMap />
+
+<DataTable
+  caption="Planning-grade BTU-per-square-foot ranges by IECC climate zone (assumes 8-foot ceilings, average envelope, average insulation, average sun exposure)"
+  columns={[
+    { key: 'zone', label: 'Climate zone' },
+    { key: 'example', label: 'Example city' },
+    { key: 'cooldd', label: 'Cooling design temp (1%)', align: 'right' },
+    { key: 'btusqft', label: 'Planning BTU/sqft', align: 'right' },
+    { key: 'tons2000', label: 'Tons for 2,000 sqft', align: 'right' },
+  ]}
+  rows={[
+    { zone: 'Zone 1 (very hot/humid)', example: 'Miami, FL', cooldd: '90°F', btusqft: '28–35', tons2000: '4.7–5.8' },
+    { zone: 'Zone 2 (hot)', example: 'Houston, TX', cooldd: '95°F', btusqft: '28–35', tons2000: '4.7–5.8' },
+    { zone: 'Zone 3 (warm)', example: 'Atlanta, GA', cooldd: '92°F', btusqft: '25–30', tons2000: '4.2–5.0' },
+    { zone: 'Zone 4 (mixed)', example: 'Kansas City, MO', cooldd: '94°F', btusqft: '22–28', tons2000: '3.7–4.7' },
+    { zone: 'Zone 5 (cool)', example: 'Chicago, IL', cooldd: '91°F', btusqft: '20–25', tons2000: '3.3–4.2' },
+    { zone: 'Zone 6 (cold)', example: 'Minneapolis, MN', cooldd: '88°F', btusqft: '18–24', tons2000: '3.0–4.0' },
+    { zone: 'Zone 7 (very cold)', example: 'Duluth, MN', cooldd: '83°F', btusqft: '15–22', tons2000: '2.5–3.7' },
+  ]}
+/>
+
+These are planning numbers, not Manual J replacements. The same 2,000 sq ft home in zone 4 can vary from about 24,000 BTU/hr (a tight 2018 build with R-49 attic insulation and triple-pane windows) to about 48,000 BTU/hr (a 1965 ranch with R-13 attic, single-pane windows, and 10 ACH50 air leakage) — the same square footage, the same climate, double the cooling load.<SourceCite id="acca-manual-j-8" number={5} />
+
+The variables that move the load most strongly:
+
+- **Window area and U-factor** — a south-facing wall of single-pane glass can add 15-25% to total load.
+- **Attic insulation R-value** — R-49 versus R-13 attic shifts total cooling load by 8-15%.
+- **Infiltration measured in ACH50** — 3 ACH50 versus 10 ACH50 shifts load by 10-20%.
+
+The [AC BTU chart](/ac/btu/chart/) article walks through these adjustment factors with worked examples; the [Manual J load calculator](/tools/manual-j-calculator/) takes the inputs and produces a planning estimate.
+
+## The Four Residential AC Types and How to Pick
+
+<WindowVsPortableVsMiniSplit />
+
+<DataTable
+  caption="Comparison of the four residential AC types (typical 2026 ranges; source: DOE Energy Saver, ENERGY STAR room AC spec)"
+  columns={[
+    { key: 'type', label: 'Type' },
+    { key: 'capacity', label: 'Typical capacity range', align: 'right' },
+    { key: 'cost', label: 'Installed cost', align: 'right' },
+    { key: 'efficiency', label: 'Efficiency range', align: 'right' },
+    { key: 'bestFor', label: 'Best fit' },
+  ]}
+  rows={[
+    {
+      type: 'Central split-system',
+      capacity: '18,000–60,000 BTU/hr (1.5–5 tons)',
+      cost: '$4,000–$10,000',
+      efficiency: 'SEER2 13.4–22.0',
+      bestFor: 'Whole-house cooling in homes with existing ducts',
+    },
+    {
+      type: 'Packaged unit (rooftop or pad)',
+      capacity: '24,000–60,000 BTU/hr',
+      cost: '$5,000–$11,000',
+      efficiency: 'SEER2 13.4–16.0',
+      bestFor: 'Homes with no indoor space for an air handler, manufactured homes',
+    },
+    {
+      type: 'Ductless mini-split',
+      capacity: '6,000–48,000 BTU/hr (per zone)',
+      cost: '$3,000–$8,000 per zone',
+      efficiency: 'SEER2 16.0–28.0',
+      bestFor: 'Homes without ducts, additions, one-room solutions',
+    },
+    {
+      type: 'Window or portable unit',
+      capacity: '5,000–25,000 BTU/hr',
+      cost: '$200–$800',
+      efficiency: 'CEER 11.0–12.5',
+      bestFor: 'Single rooms, rentals, temporary or supplemental cooling',
+    },
+  ]}
+/>
+
+Central split-systems dominate US residential cooling because they share ductwork with the heating system. The outdoor condenser unit sits on a concrete pad or roof; the indoor evaporator coil sits above the furnace or air handler; refrigerant lines connect them through a copper line-set. Efficiency varies widely across the SEER2 13.4-22.0 range, and ductwork condition matters: a leaky duct system loses 20-30% of any AC's output to unconditioned space regardless of nameplate efficiency.<SourceCite id="doe-ac-buying" number={9} />
+
+Packaged units combine the condenser, compressor, and evaporator into one outdoor cabinet, with conditioned air ducted into the house through a single supply and return penetration. They are common in manufactured housing, in low-ceiling spaces where there is no room for an indoor air handler, and in rooftop commercial applications.<SourceCite id="doe-ac-buying" number={9} /> Efficiency is typically lower than split-systems because the design must fit one cabinet.
+
+Ductless mini-splits put a single indoor head on a wall (or ceiling) connected to an outdoor compressor by refrigerant lines. They are the dominant solution in houses without ductwork (most pre-1960 Northeast housing stock) and in additions where extending the duct system is impractical. ENERGY STAR mini-splits typically achieve SEER2 18-22, well above central split-system equivalents at the same capacity.
+
+Window and portable units are room solutions, not whole-house solutions. A window unit fits a standard double-hung opening and serves a single room of up to about 600 sq ft. Portable units sit on the floor and exhaust hot air through a flexible duct to a window vent; their efficiency is roughly 20-30% lower than window units of equivalent capacity because some of the exhaust air pulls already-cooled room air out of the house.<SourceCite id="energystar-room-ac" number={4} />
+
+## Why Sizing Errors Cost Real Money
+
+AC sizing errors cost in three ways: higher equipment cost (oversized), higher operating cost (undersized), and worse comfort (both). The cost magnitudes are not equal — oversizing penalties are typically larger than undersizing penalties in cooling-dominated climates, while undersizing penalties dominate in extreme heat.
+
+**Oversizing penalty.** A 30%-oversized AC reaches the thermostat setpoint quickly and shuts off, then restarts a few minutes later when temperature drifts up by a degree or two. That short-cycle pattern produces three failures simultaneously: humidity is not removed (because runtime is too short), the compressor wears out from frequent starts (rated for a finite cycle count), and indoor temperature swings 2-3°F between cycles instead of holding steady.<SourceCite id="acca-manual-s" number={6} /> A correctly sized AC runs longer continuous cycles, removes moisture properly, and holds temperature within 1°F.
+
+<Callout type="planning-grade" title="The Manual S tolerance">
+ACCA Manual S permits the installed AC's nominal cooling capacity at AHRI conditions to exceed the Manual J cooling load by no more than 15% for single-stage equipment and no more than 25% for two-stage or variable-speed equipment. Beyond those tolerances the install is technically out of compliance with Manual S — and starts producing the short-cycling and humidity problems described above.
+</Callout>
+
+**Undersizing penalty.** An undersized AC runs continuously on hot days but cannot pull indoor temperature down to setpoint. The compressor runs at 100% for 8-12 hours straight, then the indoor temperature drifts up another degree by mid-afternoon and stays there until evening cooling. Humidity is typically fine (extended runtime favors latent removal), but sensible cooling fails on the hottest 1-3% of cooling hours. The fix is bigger equipment, which is rarely a small expense.
+
+Costing it out at the US average. A 4-ton AC running 1,500 cooling-season hours at SEER2 14 consumes about 4,286 kWh per year, costing about $699 at the 2024 US average residential rate of $0.163/kWh.<SourceCite id="eia-electricity-table-5-6-a" number={10} /> The same load handled by a SEER2 18 unit consumes about 3,333 kWh per year, costing about $543. The $156 annual saving over 15 years totals $2,340 — usually more than the SEER2 18 price premium.
+
+## The Operating Cost of Running the AC
+
+Operating cost depends on cooling load, equipment efficiency, hours of operation, and local electricity price. Equipment efficiency and load are fixed once installed; runtime and price drive year-to-year variation.
+
+<Seer2AnnualCost />
+
+<DataTable
+  caption="Estimated annual cooling-season electricity cost for a 3-ton AC by region (1,500 cooling hours, 75% average load factor; sources: EIA residential electricity prices, ASHRAE climate data)"
+  columns={[
+    { key: 'city', label: 'City' },
+    { key: 'hours', label: 'Cooling hours', align: 'right' },
+    { key: 'seer2', label: 'SEER2', align: 'right' },
+    { key: 'kwh', label: 'Annual kWh', align: 'right' },
+    { key: 'rate', label: 'Rate', align: 'right' },
+    { key: 'cost', label: 'Annual cost', align: 'right' },
+  ]}
+  rows={[
+    { city: 'Phoenix, AZ', hours: '2,800', seer2: '14.3', kwh: '5,283', rate: '$0.135/kWh', cost: '$713' },
+    { city: 'Houston, TX', hours: '2,400', seer2: '14.3', kwh: '4,529', rate: '$0.145/kWh', cost: '$657' },
+    { city: 'Atlanta, GA', hours: '1,800', seer2: '14.3', kwh: '3,397', rate: '$0.135/kWh', cost: '$459' },
+    { city: 'Kansas City, MO', hours: '1,200', seer2: '14.3', kwh: '2,264', rate: '$0.125/kWh', cost: '$283' },
+    { city: 'Chicago, IL', hours: '900', seer2: '14.3', kwh: '1,698', rate: '$0.165/kWh', cost: '$280' },
+    { city: 'Boston, MA', hours: '700', seer2: '14.3', kwh: '1,321', rate: '$0.295/kWh', cost: '$390' },
+    { city: 'Seattle, WA', hours: '300', seer2: '14.3', kwh: '566', rate: '$0.115/kWh', cost: '$65' },
+  ]}
+/>
+
+The same equipment in the same operating condition can run from $65 to $713 per year depending entirely on climate and local electricity price. Phoenix runs the AC year-round and pays moderate rates; Seattle barely uses cooling but its few hours run on cheap hydropower-sourced electricity; Boston has a short cooling season but pays Massachusetts retail electricity prices that are roughly double the national average.<SourceCite id="eia-electricity-table-5-6-a" number={10} />
+
+**The variable-speed equipment efficiency premium pays back fastest in long-runtime climates.** A SEER2 14.3 to SEER2 20 upgrade in Phoenix saves roughly 1,500 kWh per year (~$200), paying back a $1,500 efficiency premium in 7-8 years.
+
+The same upgrade in Seattle saves about 170 kWh per year (~$20), which never pays back over the equipment's useful life. **Match efficiency tier to runtime, not to the salesperson's profit margin on the high-tier unit.**
+
+## Common Problems and What They Actually Mean
+
+Three patterns account for the majority of AC service calls: short cycling, weak airflow, and high humidity at setpoint. Each has a small set of likely root causes.
+
+**Short cycling** (runs under 10 minutes, off 5-15 minutes, repeat). Most common cause is oversizing combined with low cooling load conditions — the unit hits setpoint fast and shuts off. Second most common is low refrigerant charge causing the low-pressure switch to trip the compressor. Third is dirty evaporator coil restricting airflow and triggering high-pressure trip. The [AC short cycling](/ac/short-cycling/) article walks through the full diagnostic sequence.
+
+**Weak airflow at registers.** Usually a filter or coil problem, not a compressor problem. Replace filter first (clogged filters can reduce airflow by 30-50%). Check evaporator coil for biofilm or dust accumulation. Check for closed dampers, kinked flex duct in the attic, or collapsed return-side ducts. If airflow is uniform across all registers but low overall, the blower may be wrong-sized for the duct system's static pressure.
+
+**High humidity at setpoint** (cool but sticky). Almost always oversizing in a humid climate. The AC removes sensible heat faster than latent heat at design conditions; an oversized unit hits the thermostat setpoint before it has been running long enough to condense significant moisture out of the air. Solutions in order of cost: raise the thermostat 2°F (longer cycles, more latent removal), add a whole-house dehumidifier ($1,500-$3,000 install), or replace with right-sized variable-speed equipment that can run continuously at low capacity for dehumidification.
+
+## The 2025 R-410A Phaseout
+
+The EPA AIM Act final rule banned the manufacture of new residential AC equipment using R-410A refrigerant after January 1, 2025.<SourceCite id="epa-aim-act-2025" number={12} /> R-410A had been the residential standard since the early 2000s phase-out of R-22 ("Freon"). The reason is global warming potential: R-410A has GWP 2,088, meaning each pound of leaked refrigerant warms the atmosphere as much as 2,088 lb of CO2.
+
+Two replacement refrigerants dominate. R-454B (commercial name Opteon XL41) has GWP 466 — about 78% lower than R-410A. R-32 has GWP 675 — about 68% lower than R-410A.<SourceCite id="epa-aim-act-2025" number={12} /> Both are A2L-classified (mildly flammable, lower-toxicity) under ASHRAE Standard 34, which is a step up from R-410A's A1 (non-flammable) classification but a step down from older R-22's higher-toxicity rating.
+
+<Callout type="info" title="What R-410A phaseout does and does not change for owners">
+Does NOT change: existing R-410A systems can continue running, and service refrigerant supply continues for repair work at least through 2030. Does change: new residential equipment installed after January 1, 2025 uses R-454B or R-32, mixing across an indoor and outdoor unit of different refrigerant families is not permitted, and install cost rises by a typical $200-$500 per system for the additional A2L installation requirements (line-set purging, larger setback distances, brazing protocols).
+</Callout>
+
+**Technician implications.** A2L refrigerants require nitrogen purge during brazing to prevent ignition of any residual refrigerant, larger outdoor clearance distances to windows and openings, and slightly different line-set sizing rules. None of this is hard or dangerous — the work is well understood from a decade of R-32 use in Asia and Europe — but it does add a few materials cost and a small labor premium that shows up in 2026 install quotes.
+
+## What This Cluster Covers
+
+The cluster organizes AC content into three functional areas.
+
+### Sizing references
+
+- [AC BTU chart by square footage](/ac/btu/chart/) — reference table with climate, ceiling height, insulation, and space-type adjustments
+- [Mini-split for garage sizing](/ac/btu/garage-mini-split/) — garage-specific load math (typically 2-3× the BTU per sq ft of interior space)
+
+### Troubleshooting
+
+- [AC short cycling](/ac/short-cycling/) — diagnostic sequence for the most common service call pattern
+
+### Related load and equipment topics
+
+- [Heat pump reference](/heat-pump/) — combined heating and cooling from one piece of equipment
+- [Manual J load calculation](/manual-j/) — the underlying load methodology
+- [Manual S equipment selection](/manual-s/) — capacity matching rules and Manual S tolerances
+- [Building science fundamentals](/building-science/) — envelope drivers (R-value, U-factor, infiltration, climate zones) that move cooling load
+
+### Calculators
+
+- [AC size calculator](/tools/ac-size-calculator/) — AC-specific sizing with window, portable, mini-split, and central recommendations
+- [BTU calculator](/tools/btu-calculator/) — general BTU sizing for a room or whole house
+- [Manual J load calculator](/tools/manual-j-calculator/) — full envelope load math approximating Manual J for planning purposes
 
 </article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<Sources sources={SOURCES} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-30" />
+</div>
+
+</Container>

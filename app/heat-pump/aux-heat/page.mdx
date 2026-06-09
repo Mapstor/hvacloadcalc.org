@@ -17,9 +17,10 @@ import { CostComparisonBar } from '@/components/svg/aux-heat/CostComparisonBar';
 import { NormalVsProblemDecision } from '@/components/svg/aux-heat/NormalVsProblemDecision';
 
 export const metadata = {
+  alternates: { canonical: "/heat-pump/aux-heat/" },
   title: 'Heat Pump Auxiliary Heat: What It Is and When It Should Run',
   description:
-    "Auxiliary heat kicks in when your heat pump can't meet demand alone. Learn what triggers it, what it costs, and when constant aux heat signals a problem.",
+    "Heat pump auxiliary heat explained — when aux fires normally, when frequent aux signals a problem, balance point, aux strip sizing, troubleshooting checklist.'t meet demand alone. Learn what triggers it, what it costs, and when constant aux heat signals a problem.",
   openGraph: {
     title: "Heat Pump Auxiliary Heat: When It Should Run (and When It Shouldn't)",
     description:
@@ -27,7 +28,7 @@ export const metadata = {
     type: 'article',
     publishedTime: '2026-05-18',
     modifiedTime: '2026-05-18',
-    authors: ['Jonathan S.'],
+    authors: ['Jonathan Stowe'],
     images: ['/opengraph-image'],
   },
 };
@@ -186,7 +187,7 @@ export const FRONTMATTER = {
   title: 'Heat Pump Auxiliary Heat: What It Is and When It Should Run',
   h1: 'Heat Pump Auxiliary Heat Explained',
   meta_description:
-    "Auxiliary heat kicks in when your heat pump can't meet demand alone. Learn what triggers it, what it costs, and when constant aux heat signals a problem.",
+    "Heat pump auxiliary heat explained — when aux fires normally, when frequent aux signals a problem, balance point, aux strip sizing, troubleshooting checklist.'t meet demand alone. Learn what triggers it, what it costs, and when constant aux heat signals a problem.",
   url: '/heat-pump/aux-heat/',
   date_published: '2026-05-18',
   last_reviewed: '2026-05-18',
@@ -209,7 +210,7 @@ export const FRONTMATTER = {
 
 <ArticleHeader
   h1="Heat Pump Auxiliary Heat Explained"
-  description="Auxiliary heat kicks in when your heat pump can't meet demand alone. Learn what triggers it, what it costs, and when constant aux heat signals a problem."
+  description="Heat pump auxiliary heat explained — when aux fires normally, when frequent aux signals a problem, balance point, aux strip sizing, troubleshooting checklist.'t meet demand alone. Learn what triggers it, what it costs, and when constant aux heat signals a problem."
   datePublished="2026-05-18"
   lastReviewed="2026-05-18"
   readingTimeMinutes={11}
@@ -311,7 +312,9 @@ Aux heat in mild weather is not normal. Four patterns warrant troubleshooting; t
 
 ## What Aux Heat Costs to Run
 
-The cost story comes down to coefficient of performance (COP). A heat pump operating at COP 3.0 delivers three units of heat for every unit of electricity it consumes. A resistance heat strip operating at COP 1.0 delivers exactly one unit of heat per unit of electricity. The strips do not waste energy; they just do not pull off the trick the heat pump does.<SourceCite id="doe-heat-pump-basics" number={4} /> Heat pumps typically operate in the COP 2.5-4.0 range; resistance strips are fixed at 1.0 by definition.
+The cost story comes down to coefficient of performance (COP). A heat pump operating at COP 3.0 delivers three units of heat for every unit of electricity it consumes. A resistance heat strip operating at COP 1.0 delivers exactly one unit of heat per unit of electricity.
+
+The strips do not waste energy; they just do not pull off the trick the heat pump does.<SourceCite id="doe-heat-pump-basics" number={4} /> Heat pumps typically operate in the COP 2.5-4.0 range; resistance strips are fixed at 1.0 by definition.
 
 Consider a single hour of operation with the heat pump and aux heat running together. The aux strip draws 5 kW. At the 2024 US average residential electricity rate of $0.16 per kWh,<SourceCite id="eia-residential-electricity-2025" number={1} /> that is:
 
@@ -349,7 +352,9 @@ See [the full breakdown of aux heat vs emergency heat](/heat-pump/aux-heat/emerg
 
 Any thermostat with aux heat capability exposes a few configuration parameters that determine when the strips engage and how often.
 
-The most important is the aux heat lockout temperature. Above this outdoor temperature, the thermostat will not call for aux heat regardless of how far indoor temperature drops below setpoint. Set this to 35-40°F in most climates and aux heat will not engage during routine cool weather. Set it too low (or leave it disabled) and aux heat runs more freely. The thermostat aux configuration is usually found under installer settings; on consumer-facing UIs, look for "comfort" or "advanced" sections.
+The most important is the aux heat lockout temperature. Above this outdoor temperature, the thermostat will not call for aux heat regardless of how far indoor temperature drops below setpoint. Set this to 35-40°F in most climates and aux heat will not engage during routine cool weather.
+
+Set it too low (or leave it disabled) and aux heat runs more freely. The thermostat aux configuration is usually found under installer settings; on consumer-facing UIs, look for "comfort" or "advanced" sections.
 
 The stage 2 droop or differential controls how far indoor temperature has to fall below setpoint before the thermostat calls stage 2. Typical settings: 2-3°F. Tighter droop means aux heat engages sooner; wider droop means the heat pump gets more time to recover.
 
@@ -361,7 +366,9 @@ For brand-specific walkthroughs, see how to [configure aux heat on Ecobee thermo
 
 ## When Aux Heat Usage Justifies a System Upgrade
 
-Before replacing a heat pump that runs aux heat frequently, run through these in order: thermostat aux heat lockout temperature, air filter cleanliness, duct leakage, refrigerant charge, and outdoor unit clearance from snow and debris. Most heavy-aux-heat complaints resolve at one of those steps. If diagnostics pass and aux heat still runs heavily in mild weather, the heat pump is likely undersized for the home and an upgrade may be justified. Check your current system size against your home's load with the [heat pump sizing calculator](/tools/heat-pump-size-calculator/). See [heat pump short cycling diagnostics](/heat-pump/troubleshooting/short-cycling/) if your aux heat issue coincides with short cycling.
+Before replacing a heat pump that runs aux heat frequently, run through these in order: thermostat aux heat lockout temperature, air filter cleanliness, duct leakage, refrigerant charge, and outdoor unit clearance from snow and debris. Most heavy-aux-heat complaints resolve at one of those steps.
+
+If diagnostics pass and aux heat still runs heavily in mild weather, the heat pump is likely undersized for the home and an upgrade may be justified. Check your current system size against your home's load with the [heat pump sizing calculator](/tools/heat-pump-size-calculator/). See [heat pump short cycling diagnostics](/heat-pump/troubleshooting/short-cycling/) if your aux heat issue coincides with short cycling.
 
 </article>
 

@@ -18,6 +18,7 @@ import { WindowVsPortableVsMiniSplit } from '@/components/svg/ac-btu-chart/Windo
 import { OversizingVsUndersizing } from '@/components/svg/ac-btu-chart/OversizingVsUndersizing';
 
 export const metadata = {
+  alternates: { canonical: "/ac/btu/chart/" },
   title: 'AC BTU Chart: BTU Needed by Square Footage with Adjustments',
   description:
     'AC BTU chart by square footage from 100 to 3,000+ sq ft, with adjustments for ceiling height, climate, sun exposure, occupancy, and insulation. Updated for 2024.',
@@ -28,7 +29,7 @@ export const metadata = {
     type: 'article',
     publishedTime: '2026-05-18',
     modifiedTime: '2026-05-18',
-    authors: ['Jonathan S.'],
+    authors: ['Jonathan Stowe'],
     images: ['/opengraph-image'],
   },
 };
@@ -210,7 +211,9 @@ export const FRONTMATTER = {
 
 An AC BTU chart pairs the size of your room with the cooling capacity you need. For a 200 square foot bedroom, you need around 6,000 BTU. For a 1,000 square foot space, around 18,000 BTU. For a 2,000 square foot whole-house central AC, around 36,000 BTU or three tons. The chart below covers room sizes from 100 to 3,000-plus square feet.
 
-Chart values are starting points calibrated to standard 8-foot ceilings, moderate climate, normal occupancy, and average insulation. Your room is probably different from at least one of those baselines. The sections after the chart cover how to adjust for high ceilings, hot or cool climates, sun exposure, kitchens, more or fewer occupants, and better or worse insulation. Apply the relevant adjustments and you'll have a sizing recommendation that's good enough for buying a window or portable AC. For central AC installation, the chart gives you a planning estimate; the actual sizing should come from a Manual J load calculation done by your installer or independent rater.
+Chart values are starting points calibrated to standard 8-foot ceilings, moderate climate, normal occupancy, and average insulation. Your room is probably different from at least one of those baselines. The sections after the chart cover how to adjust for high ceilings, hot or cool climates, sun exposure, kitchens, more or fewer occupants, and better or worse insulation.
+
+Apply the relevant adjustments and you'll have a sizing recommendation that's good enough for buying a window or portable AC. For central AC installation, the chart gives you a planning estimate; the actual sizing should come from a Manual J load calculation done by your installer or independent rater.
 
 For [AC BTU sizing fundamentals](/ac/btu/) at the hub level, that article covers the underlying methodology. This article is the reference chart with adjustments.
 
@@ -427,7 +430,9 @@ For [portable AC vs window AC sizing](/ac/btu/portable-vs-window/) comparison in
 
 ## When Charts Aren't Enough
 
-For a window unit going in a single room, this chart is plenty. For a portable AC bound for the same single room, this chart works too. For a ductless mini split serving one zone, also fine. For a central AC system that's going to be installed in your home for the next 15 to 20 years and cost you five to ten thousand dollars, this chart is a starting point, not a finishing one. The right tool for central AC sizing is a Manual J load calculation, which accounts for things this chart cannot capture: orientation, room-by-room loads, ductwork, infiltration tested with a blower door, internal gains from specific equipment. The chart will get you within 20 to 30 percent. Manual J gets you within 5 to 10. For an expensive permanent installation, the difference matters.<SourceCite id="acca-manual-j-8" number={3} />
+For a window unit going in a single room, this chart is plenty. For a portable AC bound for the same single room, this chart works too. For a ductless mini split serving one zone, also fine. For a central AC system that's going to be installed in your home for the next 15 to 20 years and cost you five to ten thousand dollars, this chart is a starting point, not a finishing one.
+
+The right tool for central AC sizing is a Manual J load calculation, which accounts for things this chart cannot capture: orientation, room-by-room loads, ductwork, infiltration tested with a blower door, internal gains from specific equipment. The chart will get you within 20 to 30 percent. Manual J gets you within 5 to 10. For an expensive permanent installation, the difference matters.<SourceCite id="acca-manual-j-8" number={3} />
 
 When to upgrade from chart to full Manual J:
 - **Central AC purchase**: equipment cost is high enough that a 20-30% size error costs real money over the equipment's life

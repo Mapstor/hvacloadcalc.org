@@ -1,49 +1,301 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { Callout } from '@/components/article/Callout';
+import { DataTable } from '@/components/data/DataTable';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
 import { JsonLdPerson } from '@/components/seo/JsonLdPerson';
 
 export const metadata = {
-  title: 'Jonathan S. — Author at hvacloadcalc.org',
+  alternates: { canonical: "/authors/jonathan-s/" },
+  title: 'Jonathan Stowe — Author and Researcher at hvacloadcalc.org',
   description:
-    'Jonathan S. writes about residential HVAC design, building science, and heat pump installation, translating ACCA standards into homeowner-friendly guidance.',
+    'Author bio for Jonathan Stowe — background, research approach, editorial commitments, published article inventory, and how to send corrections or feedback.',
+  openGraph: {
+    title: 'Jonathan Stowe — Author at hvacloadcalc.org',
+    description:
+      'Background, research approach, editorial commitments, and published article inventory.',
+    type: 'profile',
+    images: ['/opengraph-image'],
+  },
 };
 
-<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Jonathan S.' }]} />
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'Jonathan Stowe' },
+];
+
+export const HEADINGS = [
+  { id: 'background', text: 'Background', level: 2 },
+  { id: 'why-this-site-exists', text: 'Why This Site Exists', level: 2 },
+  { id: 'research-approach', text: 'Research Approach', level: 2 },
+  { id: 'how-i-work', text: 'How I Work', level: 2 },
+  { id: 'scope-and-limits', text: 'Scope and Limits', level: 2 },
+  { id: 'published-articles', text: 'Published Articles', level: 2 },
+  { id: 'corrections-and-feedback', text: 'Corrections and Feedback', level: 2 },
+];
+
+export const FAQ_ITEMS = [
+  {
+    q: 'What is your professional background?',
+    a: 'I am a writer-researcher specializing in residential HVAC methodology — load calculation, equipment selection, duct design, and the building science that drives sizing. The site does not claim professional engineering authority; it relies on rigorous citation of ACCA, ASHRAE, AHRI, NEEP, DOE, EPA, IRS, NFRC, and RESNET primary publications. Where authoritative expertise is needed, the relevant standard is cited directly.',
+  },
+  {
+    q: 'How did you learn HVAC methodology if you are not a professional?',
+    a: 'Long-form reading of primary sources: ACCA Manual J 8th Edition, the relevant chapters of ASHRAE Handbook of Fundamentals 2021, NEEP CCASHP specifications, DOE Energy Saver consumer guides and Building America technical reports, AHRI 210/240 test methodology, NFRC certification documentation, and field-practice resources like Energy Vanguard and Green Building Advisor. The site\'s sourcing standards (every claim cited inline) reflect that research approach.',
+  },
+  {
+    q: 'How can I tell if you have any conflicts of interest?',
+    a: 'The editorial standards page (/editorial-standards/) documents commercial relationships across every category of party referenced in the content. The corrections page (/corrections/) shows the public history of error correction; the methodology page (/methodology/) documents the source citation approach. If you think a relationship is undisclosed or misrepresented, tell me and I will document or correct it.',
+  },
+  {
+    q: 'Can you do a Manual J for my house?',
+    a: 'No. I do not provide individual Manual J consultations, equipment sizing recommendations, contractor referrals, or paid consulting. The calculators on the site produce planning-grade output that is sufficient for evaluating contractor quotes and understanding magnitudes. For permit-grade Manual J in a specific home, hire a credentialed party using ACCA-approved software.',
+  },
+  {
+    q: 'How do you respond to corrections?',
+    a: 'Corrections emailed to info@hvacloadcalc.org get an acknowledgment within 14 days. If the correction is valid, the article is updated, the source list is verified, and the correction is logged at /corrections/ with the original claim, the corrected claim, the date, and (with the reporter\'s explicit consent) attribution. The corrections process is designed to be visible — fixing errors publicly is part of the accountability commitment.',
+  },
+];
+
+export const RELATED = [
+  {
+    title: 'About the site',
+    url: '/about/',
+    description:
+      'The site\'s editorial mission, audience, and funding model.',
+  },
+  {
+    title: 'Editorial standards',
+    url: '/editorial-standards/',
+    description:
+      'The full editorial process behind the content I write.',
+  },
+  {
+    title: 'Methodology',
+    url: '/methodology/',
+    description:
+      'How the calculators implement the methodology I research.',
+  },
+  {
+    title: 'Sources',
+    url: '/sources/',
+    description:
+      'The complete bibliography of primary sources I draw from.',
+  },
+  {
+    title: 'Corrections',
+    url: '/corrections/',
+    description:
+      'Public log of corrections to my published work.',
+  },
+];
 
 <JsonLdPerson />
 
-<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Jonathan S.' }]} />
+<JsonLdBreadcrumb items={BREADCRUMBS} />
 
-<header className="mb-8 flex items-center gap-5">
+<Container>
+
+<Breadcrumbs items={BREADCRUMBS} />
+
+<header className="not-prose mb-8 flex items-center gap-5">
   <div
     role="img"
-    aria-label="Jonathan S., author and researcher at hvacloadcalc.org"
-    className="flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-full bg-brand text-2xl font-bold text-white"
+    aria-label="Jonathan Stowe, author and researcher at hvacloadcalc.org"
+    className="flex h-24 w-24 flex-shrink-0 items-center justify-center rounded-full bg-brand text-3xl font-bold text-white"
   >
     JS
   </div>
   <div>
-    <h1 className="text-3xl font-bold text-ink-900">Jonathan S.</h1>
-    <p className="mt-1 text-sm text-ink-500">Author and researcher</p>
+    <h1 className="text-3xl font-bold text-ink-900 sm:text-4xl">Jonathan Stowe</h1>
+    <p className="mt-2 text-ink-500">Author and researcher · hvacloadcalc.org · Last reviewed 2026-05-30</p>
   </div>
 </header>
 
+<KeyTakeaways
+  items={[
+    'Writer-researcher specializing in residential HVAC sizing, ACCA Manual J/S/D/T methodology, heat pump systems, and building science. The site claims research rigor and primary-source citation rather than in-house engineering authority.',
+    'Site started after personal experience with contradictory HVAC contractor quotes during a system upgrade — three quotes spanning 2.5 to 4 tons for the same house, with no Manual J performed on any of them.',
+    'Research approach: read primary sources (ACCA Manual J 8th Edition, ASHRAE Fundamentals 2021, AHRI 210/240-2023, NEEP CCASHP v4.0, DOE Energy Saver, NFRC, RESNET, EIA, IRS, EPA) and translate into methodology-transparent educational content with every claim cited inline.',
+    'Operational scope: I do not provide individual Manual J consultations, do not maintain a contractor directory, and do not recommend specific equipment brands or models for specific homes. Corrections to published work are welcomed by email and logged at /corrections/.',
+    '15 launch articles and 11 reference hubs published as of 2026-05-30, plus five live calculators implementing ACCA methodology with 61 worked-example URLs.',
+  ]}
+/>
+
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
+
 <article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
 
-Jonathan S. is a homeowner-turned-researcher who writes about residential HVAC design, building science, and heat pump installation. He started hvacloadcalc.org to help other homeowners level up from "I have no idea what my contractor is talking about" to "I can verify whether this quote makes sense."
+## Background
 
-The site began as a personal project. After dealing with three contradictory HVAC quotes during a system upgrade — one recommending 2.5 tons, another 4 tons, a third unwilling to do a load calculation at all — Jonathan started reading. The ACCA Manual J, NEEP cold-climate specifications, ASHRAE Handbook of Fundamentals, DOE building science publications. Months of reading later, he had a working understanding of why the quotes diverged and which one was closest to right.
+I am a homeowner who got tired of contradictory HVAC contractor quotes during a system upgrade and decided to learn the underlying methodology myself. Three contractors visited; three different tonnage recommendations came back — 2.5 tons, 3.5 tons, and 4 tons for the same house. None of them performed a Manual J calculation. None of them documented their reasoning. One said "rule of thumb is 1 ton per 600 square feet" and quoted from that.
 
-Most of what he learned wasn't in HVAC blog posts or YouTube videos. It was in dense standards documents, peer-reviewed papers, and building-science publications that assume the reader is a professional. The educational content aimed at homeowners stopped at "you need 20 BTU per square foot," which is barely better than guessing.
+The disparity bothered me enough to start reading. The primary sources I worked through:
 
-hvacloadcalc.org exists to bridge that gap. The goal is methodology-transparent education — every calculator shows its math, every recommendation cites its source, every claim links back to the standard it comes from. Homeowners shouldn't have to take a contractor's word for it, and contractors shouldn't be the only people with access to the math.
+- **ACCA Manual J 8th Edition** — the standard methodology for residential load calculation in the US.
+- **ASHRAE Handbook of Fundamentals 2021** — psychrometrics, design temperatures, and climatic data the Manual J calculation depends on.
+- **NEEP CCASHP specifications** — cold-climate heat pump performance data that mattered for my specific climate.
+- **DOE Energy Saver consumer guides** — the federal incentive landscape.
+- **NFRC certification documentation** — window U-factor and SHGC ratings that drove envelope calculations.
 
-Jonathan is not a licensed contractor, not a professional engineer, not ACCA-certified, and not selling anything. The site does not generate leads for installers, does not recommend specific brands, and does not earn affiliate commissions. It is funded entirely by display advertising and is independent of every HVAC manufacturer, contractor, and software vendor.
+After a few months of reading, I had a working understanding of why my three quotes diverged: one contractor was sizing aggressively (probably padding for callbacks), one was rule-of-thumb, one was closer to a real Manual J but still missing infiltration measurement. I picked equipment that matched what the actual Manual J indicated, with a contractor willing to work to those numbers.
 
-If you find something inaccurate on the site, the corrections policy is straightforward: errors get fixed, fast, with a public correction note. If a building scientist or HVAC professional reading this disagrees with something Jonathan has written, the [contact form](/contact/) is the best way to raise it; substantive corrections always get attribution.
+The experience left me with two beliefs that drive this site. First, the methodology is learnable for non-professionals willing to read primary sources. Second, the educational gap between rule-of-thumb online calculators and permit-grade ACCA-approved software leaves homeowners without a useful middle ground. hvacloadcalc.org tries to be that middle ground.
 
-## Articles
+## Why This Site Exists
 
-Articles published by Jonathan S. will appear here as they ship. The launch set is in progress.
+The HVAC reference space online has three structural problems and one missing piece.
+
+Calculator sites (Calculator.net, Omnicalculator, MiniWebtool) publish "Manual J calculators" that use rule-of-thumb math with no documented methodology and no acknowledgment of uncertainty. The output is misleading to homeowners who think they have a load calculation when they have a square-footage-times-a-constant guess.
+
+Contractor software (Cool Calc, AutoHVAC, ServiceTitan) is paywalled, homeowner-hostile, and B2B-only. The methodology is good — these are ACCA-approved tools — but the access model excludes the homeowner audience entirely.
+
+Manufacturer sites (Trane, Carrier, Lennox) carry built-in bias toward their own equipment. Even when content is technically accurate, the framing pushes purchase decisions. The marketing-first approach makes them poor sources for objective comparative research.
+
+**The missing piece:** a methodology-transparent, primary-source-cited, homeowner-first reference covering Manual J / Manual S / Manual D / Manual T plus the building science that drives sizing. That is what hvacloadcalc.org is trying to be.
+
+The audience I write for is homeowners who want to verify whether a contractor recommendation makes sense, understand whether a heat pump or furnace upgrade is appropriate for their specific situation, learn the underlying methodology well enough to ask better contractor questions, and look up authoritative reference data (R-values, design temperatures, federal incentive amounts) when they need it.
+
+## Research Approach
+
+My research approach has three rules.
+
+(1) Primary sources first. When a claim has a tier 1 source available (ACCA Manual, ASHRAE Handbook, AHRI standard, NFRC documentation, DOE Final Rule, EPA regulation, IRS Fact Sheet), I cite tier 1 even if a tier 2 source explains the same fact more accessibly. Tier 1 sources are revision-tracked by standards organizations and remain authoritative through revision cycles.
+
+(2) Read the standard, not the summary. The temptation when writing reference content is to summarize a secondary summary. I try to read the primary standard directly. When ACCA Manual J Section 8 covers infiltration methodology, I read Section 8 rather than reading a contractor's summary of Section 8. The depth of citation reflects that — every inline SourceCite resolves to the actual primary document, not to a derivative explanation.
+
+(3) Quote-extractable language. Every definition, every formula, every threshold is written so it can be lifted out of context and stand on its own. An LLM extracting "what is HSPF2" should be able to take the first sentence of my definition and have a coherent, sourced statement. The constraint forces clarity at the sentence level and avoids the wandering paragraph problem common in technical writing.
+
+<Callout type="info" title="What I do when sources disagree">
+Standards bodies do not always agree, and reasonable practitioners sometimes disagree even when reading the same standard. When I encounter a disagreement (for example, whether dual-fuel hybrid systems beat pure heat pump installs in cold climates), I present the major positions with their respective sources and explain the tradeoffs rather than declaring one position correct. The article labels the editorial position (if any) as such rather than asserting it as fact.
+</Callout>
+
+**The research approach is slow.** A hero-depth article takes 8-15 hours of editorial work plus the underlying primary-source reading, which can be substantially longer for novel topics. The slowness is the cost of accountability — every claim is defensible against a primary-source check, and that defensibility requires that the author actually read the primary source.
+
+## How I Work
+
+A few things about how I work that shape what you'll find on the site (and what you won't).
+
+I write reference content, not consultations. The calculators and articles produce planning-grade output sufficient for evaluating contractor quotes and understanding magnitudes. For permit-grade Manual J on a specific home, hire a credentialed party using ACCA-approved software — I do not offer one-on-one consulting on a paid or unpaid basis, and individual sizing requests by email get redirected to the relevant calculator.
+
+I do not recommend specific equipment brands or models for specific homes. Equipment performance for any specific household depends on local climate, electricity and gas prices, contractor availability, and other factors I cannot evaluate from a contact email. The content points at authoritative product lists (ENERGY STAR Most Efficient, NEEP CCASHP product list, AHRI Directory) where every qualifying model is independently verified.
+
+I do not maintain a contractor directory. Readers looking for a contractor should start with their state HVAC licensing board, credentialing programs (RESNET HERS raters, BPI Building Analysts, NEEP CCASHP installer locator), or their state energy office's list of HEEHRA-participating contractors. Those sources have screening and accountability that an editorial reference site cannot provide.
+
+I do read every substantive correction and methodology feedback. The corrections process is documented at [/corrections/](/corrections/) and the editorial process at [/editorial-standards/](/editorial-standards/). If you find something wrong, tell me — the site improves through reader feedback and the credit for catching errors gets attributed publicly when reporters opt in.
+
+## Scope and Limits
+
+To be explicit about what this site is and is not.
+
+This is a reference site for residential HVAC sizing and methodology, written for homeowners and produced through primary-source research. It is not a substitute for credentialed professional work where credentialed work is required: permit-grade Manual J calculations need ACCA-approved software run by a contractor or HERS rater, equipment installation requires a licensed HVAC contractor, and safety-critical work (refrigerant handling, electrical, gas connections) requires the relevant trade credential.
+
+The calculators on the site produce planning-grade output appropriate for understanding magnitudes (2-ton vs 3-ton, R-30 vs R-49), evaluating contractor quotes, and budgeting equipment purchases. They are not appropriate for permit applications, rebate documentation, or anything where ACCA-approved software output is required. The [methodology page](/methodology/) describes the accuracy bands the calculators claim and the verification against ACCA reference cases.
+
+What I do claim: that rigorous research into primary sources produces educational content that helps non-specialists make better decisions about residential HVAC. The claim is testable — every article has SOURCES, every claim has SourceCite, every conclusion can be verified against the cited source. If the source check fails, the claim is wrong and the [corrections process](/corrections/) applies.
+
+## Published Articles
+
+The published content set as of 2026-05-30:
+
+<DataTable
+  caption="Reference hubs published"
+  columns={[
+    { key: 'hub', label: 'Hub' },
+    { key: 'url', label: 'URL' },
+    { key: 'topic', label: 'Topic' },
+  ]}
+  rows={[
+    { hub: 'Heat pump', url: '/heat-pump/', topic: 'Refrigerant cycle, AHRI ratings, NEEP CCASHP, federal incentives' },
+    { hub: 'AC', url: '/ac/', topic: 'SEER2, sensible vs latent cooling, BTU per sqft, R-410A phaseout' },
+    { hub: 'Furnace', url: '/furnace/', topic: 'AFUE, 80 vs 95 comparison, fuel cost, heat pump alternative' },
+    { hub: 'Tools', url: '/tools/', topic: 'Calculator methodology, accuracy claims, 61 worked examples' },
+    { hub: 'Building science', url: '/building-science/', topic: 'R-values, U-factors, ACH50, climate zones, psychrometrics, HERS' },
+    { hub: 'Manual D', url: '/manual-d/', topic: 'Friction rate, equivalent length, static pressure, duct sizing' },
+    { hub: 'Manual S', url: '/manual-s/', topic: 'AHRI matchup, SHR, tolerances, cold-climate selection' },
+    { hub: 'Manual T', url: '/manual-t/', topic: 'Throw and spread, face velocity, register selection' },
+    { hub: 'Glossary', url: '/glossary/', topic: '60+ HVAC and building science terms with sourced definitions' },
+    { hub: 'Building science / Insulation', url: '/building-science/insulation/', topic: 'R-values by climate zone, materials, air sealing primacy' },
+    { hub: 'Building science / Windows', url: '/building-science/windows/', topic: 'U-factor, SHGC, NFRC labels, climate-zone selection' },
+  ]}
+/>
+
+<DataTable
+  caption="Launch articles (15) and methodology pages published"
+  columns={[
+    { key: 'article', label: 'Article' },
+    { key: 'url', label: 'URL' },
+  ]}
+  rows={[
+    { article: 'Manual J load calculation methodology', url: '/manual-j/' },
+    { article: 'Heat pump sizing methodology', url: '/heat-pump/sizing/' },
+    { article: 'Heat pump auxiliary heat', url: '/heat-pump/aux-heat/' },
+    { article: 'Aux heat vs emergency heat (thermostat meaning)', url: '/heat-pump/aux-heat/meaning/' },
+    { article: 'Heat pump defrost cycle', url: '/heat-pump/cold-climate/defrost-cycle/' },
+    { article: 'Seasonal performance factor (SPF)', url: '/heat-pump/performance/seasonal-performance-factor/' },
+    { article: 'AC short cycling diagnosis', url: '/ac/short-cycling/' },
+    { article: 'AC BTU chart by square footage', url: '/ac/btu/chart/' },
+    { article: 'Mini-split sizing for garage', url: '/ac/btu/garage-mini-split/' },
+    { article: 'Attic R-value reference', url: '/building-science/insulation/attic-r-value/' },
+    { article: 'Window U-factor reference', url: '/building-science/windows/u-factor/' },
+    { article: 'Wet bulb temperature', url: '/building-science/psychrometrics/wet-bulb/' },
+    { article: 'HERS Index', url: '/building-science/hers-index/' },
+    { article: 'Return air sizing', url: '/manual-d/return-air-sizing/' },
+    { article: 'How we verify Manual J methodology', url: '/methodology/how-we-verify-manual-j/' },
+  ]}
+/>
+
+<DataTable
+  caption="Live calculators with worked-example URL counts"
+  columns={[
+    { key: 'calc', label: 'Calculator' },
+    { key: 'url', label: 'URL' },
+    { key: 'examples', label: 'Examples', align: 'right' },
+  ]}
+  rows={[
+    { calc: 'BTU calculator', url: '/tools/btu-calculator/', examples: '16' },
+    { calc: 'AC size calculator', url: '/tools/ac-size-calculator/', examples: '15' },
+    { calc: 'Heat pump size calculator', url: '/tools/heat-pump-size-calculator/', examples: '6' },
+    { calc: 'Attic R-value calculator', url: '/tools/attic-r-value-calculator/', examples: '12' },
+    { calc: 'Manual J load calculator', url: '/tools/manual-j-calculator/', examples: '12' },
+  ]}
+/>
+
+The publishing pace targets one new article or hub per week with occasional bursts for clustered topics. The total content set grows over time; the existing content gets annual review with updates when standards revise.
+
+## Corrections and Feedback
+
+If you find something inaccurate on the site, email **info@hvacloadcalc.org** with subject "Correction" and include:
+
+(1) The specific URL where the error appears.
+
+(2) The exact quoted text you believe is incorrect.
+
+(3) The corrected text you believe is right.
+
+(4) The source supporting the correction (a primary source if possible; tier 2 sources if tier 1 does not address the specific point).
+
+I acknowledge correction reports within 14 days. Valid corrections are implemented (article updated, last-reviewed date refreshed) and logged at [/corrections/](/corrections/) with the original claim, the corrected claim, the date, and — with your explicit consent — attribution by name and affiliation. If you prefer not to be attributed, the correction is still logged but without your name.
+
+For methodology disagreements (where reasonable practitioners might read the same standard and reach different conclusions), I evaluate the disagreement against the source, either implement the suggested change or defend the original position with citation, and respond substantively within 60 days. If the disagreement is genuinely contested in the field, the article gets a note documenting the position rather than asserting one position as fact.
+
+For non-correction feedback (general questions, topic suggestions, methodology questions), the response timeline is best-effort rather than guaranteed. The site is small and individual question response is not always possible, but substantive feedback is read.
 
 </article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+</Container>

@@ -1,50 +1,635 @@
+import { Container } from '@/components/layout/Container';
+import { ArticleHeader } from '@/components/article/ArticleHeader';
+import { KeyTakeaways } from '@/components/article/KeyTakeaways';
+import { TableOfContents } from '@/components/article/TableOfContents';
+import { FAQ } from '@/components/article/FAQ';
+import { RelatedArticles } from '@/components/article/RelatedArticles';
+import { Sources } from '@/components/article/Sources';
+import { SourceCite } from '@/components/article/SourceCite';
+import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { Callout } from '@/components/article/Callout';
+import { DataTable } from '@/components/data/DataTable';
+import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
+import { CapacityVsOutdoorTemperature } from '@/components/svg/heat-pump-sizing/CapacityVsOutdoorTemperature';
+import { HeatingVsCoolingLoadByClimate } from '@/components/svg/heat-pump-sizing/HeatingVsCoolingLoadByClimate';
+import { HeatingCostByZone } from '@/components/svg/heat-pump/HeatingCostByZone';
 
 export const metadata = {
-  title: 'Heat Pump Sizing, Performance, and Reference | hvacloadcalc.org',
+  alternates: { canonical: "/heat-pump/" },
+  title: 'Heat Pumps: How They Work, How They Are Rated, How They Are Sized',
   description:
-    'Heat pump sizing methodology, balance point, auxiliary heat, cold-climate performance, and troubleshooting reference for homeowners and pros.',
+    'Residential heat pump reference — refrigerant cycle, AHRI 210/240 ratings, NEEP CCASHP cold-climate performance, system types, and 2026 federal incentives.',
+  openGraph: {
+    title: 'Heat Pumps: A Reference Hub Built on Primary Sources',
+    description:
+      'Refrigerant-cycle operation, AHRI 210/240 rating points, NEEP CCASHP cold-temperature data, system types, and 2026 federal incentives — every number cited.',
+    type: 'article',
+    publishedTime: '2026-05-30',
+    modifiedTime: '2026-05-30',
+    authors: ['Jonathan Stowe'],
+    images: ['/opengraph-image'],
+  },
 };
 
-<JsonLdBreadcrumb items={[{ name: 'Home', url: '/' }, { name: 'Heat pump' }]} />
+export const BREADCRUMBS = [
+  { name: 'Home', url: '/' },
+  { name: 'Heat Pump' },
+];
 
-<Breadcrumbs items={[{ name: 'Home', url: '/' }, { name: 'Heat pump' }]} />
+export const HEADINGS = [
+  { id: 'what-a-heat-pump-is', text: 'What a Heat Pump Is and Why It Beats Resistance Heat', level: 2 },
+  { id: 'how-heat-pumps-are-rated', text: 'How Heat Pumps Are Rated (and What Those Numbers Actually Mean)', level: 2 },
+  { id: 'capacity-drops-with-cold', text: 'Capacity Drops as Outdoor Temperature Drops', level: 2 },
+  { id: 'the-four-system-types', text: 'The Four System Types and How to Pick Between Them', level: 2 },
+  { id: 'federal-and-state-incentives', text: 'Federal and State Incentives in 2026', level: 2 },
+  { id: 'operating-cost-versus-alternatives', text: 'Operating Cost Versus Furnaces and Resistance Heat', level: 2 },
+  { id: 'when-a-heat-pump-makes-economic-sense', text: 'When a Heat Pump Makes Economic Sense', level: 2 },
+  { id: 'sizing-and-aux-heat-overview', text: 'Sizing and Aux Heat: The Two Decisions That Dominate Outcomes', level: 2 },
+  { id: 'refrigerant-transition-2025', text: 'The 2025 Refrigerant Transition and What It Means for Buyers', level: 2 },
+  { id: 'what-this-cluster-covers', text: 'What This Cluster Covers', level: 2 },
+];
+
+export const SOURCES = [
+  {
+    id: 'ahri-210-240',
+    title: 'ANSI/AHRI Standard 210/240-2023, Performance Rating of Unitary Air-Conditioning and Air-Source Heat Pump Equipment',
+    publisher: 'Air-Conditioning, Heating and Refrigeration Institute (AHRI)',
+    year: 2023,
+    url: 'https://www.ahrinet.org/search-standards/ahri-210240-2023-performance-rating-unitary-air-conditioning-air-source-heat-pump',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'doe-min-efficiency-2023',
+    title: '10 CFR Part 430 — Energy Conservation Program: Energy Conservation Standards for Residential Central Air Conditioners and Heat Pumps (Final Rule, effective January 1, 2023)',
+    publisher: 'US Department of Energy',
+    year: 2023,
+    url: 'https://www.energy.gov/eere/buildings/articles/doe-finalizes-stronger-efficiency-standards-residential-central-air',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'energystar-hp-v6-1',
+    title: 'ENERGY STAR Program Requirements for Central Air Conditioners and Air-Source Heat Pumps, Version 6.1',
+    publisher: 'US EPA / ENERGY STAR',
+    year: 2024,
+    url: 'https://www.energystar.gov/products/spec/central_air_conditioner_and_heat_pump_specification_version_6_1_pd',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'neep-cchp-spec-v4',
+    title: 'Cold Climate Air Source Heat Pump Specification, Version 4.0',
+    publisher: 'Northeast Energy Efficiency Partnerships (NEEP)',
+    year: 2024,
+    url: 'https://neep.org/heating-electrification/ccashp-specification-product-list',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'nrel-cchp-2022',
+    title: 'Cold-Climate Air-Source Heat Pump Laboratory and Field Performance',
+    publisher: 'US National Renewable Energy Laboratory (NREL)',
+    year: 2022,
+    url: 'https://www.nrel.gov/buildings/cold-climate-heat-pumps.html',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'doe-heat-pump-systems',
+    title: 'Heat Pump Systems (consumer guide)',
+    publisher: 'US Department of Energy, Office of Energy Efficiency and Renewable Energy',
+    year: 2024,
+    url: 'https://www.energy.gov/energysaver/heat-pump-systems',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'irs-25c-fact-sheet',
+    title: 'IRA Section 25C — Energy Efficient Home Improvement Credit (Fact Sheet FS-2022-40)',
+    publisher: 'US Internal Revenue Service',
+    year: 2023,
+    url: 'https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'doe-heehra',
+    title: 'Home Electrification and Appliance Rebates (HEEHRA), IRA Section 50122',
+    publisher: 'US Department of Energy',
+    year: 2024,
+    url: 'https://www.energy.gov/scep/home-energy-rebates-programs',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'eia-electricity-table-5-6-a',
+    title: 'Average Price of Electricity to Ultimate Customers by End-Use Sector, Table 5.6.A (Residential)',
+    publisher: 'US Energy Information Administration',
+    year: 2025,
+    url: 'https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_6_a',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'eia-natural-gas-residential',
+    title: 'Natural Gas Prices: Residential Sector (Henry Hub and average city-gate prices)',
+    publisher: 'US Energy Information Administration',
+    year: 2025,
+    url: 'https://www.eia.gov/dnav/ng/ng_pri_sum_dcu_nus_m.htm',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'ashrae-fundamentals-2021',
+    title: 'ASHRAE Handbook of Fundamentals 2021, Chapter 14 (Climatic Design Information)',
+    publisher: 'American Society of Heating, Refrigerating and Air-Conditioning Engineers',
+    year: 2021,
+    url: 'https://www.ashrae.org/technical-resources/ashrae-handbook',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'epa-aim-act-2025',
+    title: 'AIM Act — Phasedown of Hydrofluorocarbons, Final Rule Transitioning to Lower-GWP Refrigerants (Residential AC and Heat Pumps, effective January 1, 2025)',
+    publisher: 'US Environmental Protection Agency',
+    year: 2023,
+    url: 'https://www.epa.gov/climate-hfcs-reduction/final-rule-phasedown-hydrofluorocarbons-establishing-allowance-allocation',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'acca-manual-j-8',
+    title: 'Manual J — Residential Load Calculation, 8th Edition (ANSI/ACCA 2 Manual J - 2016)',
+    publisher: 'Air Conditioning Contractors of America (ACCA)',
+    year: 2016,
+    url: 'https://www.acca.org/standards/technical-manuals/manual-j',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+  {
+    id: 'doe-ghp-systems',
+    title: 'Geothermal Heat Pumps (consumer guide)',
+    publisher: 'US Department of Energy, Office of Energy Efficiency and Renewable Energy',
+    year: 2024,
+    url: 'https://www.energy.gov/energysaver/geothermal-heat-pumps',
+    accessed: '2026-05-30',
+    tier: 1,
+  },
+];
+
+export const FAQ_ITEMS = [
+  {
+    q: 'What is a heat pump in simple terms?',
+    a: 'A heat pump is an air-conditioner that runs in reverse on demand. Instead of generating heat by burning fuel or passing current through a resistor, it moves heat from one place to another using a refrigerant loop. In summer it moves heat out of your house; in winter it pulls heat from outdoor air, ground, or water and delivers it indoors. Because moving heat takes less energy than generating it, a heat pump typically delivers 2-4 times as much heat per unit of electricity as a baseboard heater.',
+  },
+  {
+    q: 'Do heat pumps work in cold climates?',
+    a: 'Yes, but the equipment matters. A standard air-source heat pump loses roughly 40% of its rated capacity by the time outdoor temperature drops to 17°F. A cold-climate certified heat pump on the NEEP product list must retain at least 70% of its 47°F capacity at 17°F and at least 58% at 5°F. Models that meet those thresholds run effectively all winter in Maine, Minnesota, and Alaska without freezing residents out, and many homes there now use heat pumps as primary heat with no fossil backup.',
+  },
+  {
+    q: 'How much does a heat pump cost to install?',
+    a: "Installed cost depends on system type and home complexity, but typical 2026 ranges are $5,000 to $10,000 for a central air-source heat pump replacing an existing AC and furnace, $3,000 to $8,000 per zone for a ductless mini-split, and $20,000 to $30,000 for a ground-source (geothermal) system. The federal 25C tax credit returns up to $2,000, and HEEHRA point-of-sale rebates up to $8,000 are available to qualifying households through 2032. Get a Manual J load calc before you buy, because oversizing inflates equipment cost and undersizing inflates electricity bills.",
+  },
+  {
+    q: 'What is the difference between SEER, SEER2, HSPF, and HSPF2?',
+    a: 'SEER and HSPF were the legacy seasonal efficiency metrics for cooling and heating respectively. SEER2 and HSPF2 are the current metrics, introduced by AHRI 210/240-2023 to reflect a higher external static pressure test condition that better matches installed conditions. The federal minimum since January 2023 is 14.3 SEER2 / 7.5 HSPF2 for split-system heat pumps in the northern US and 15.2 SEER2 / 7.5 HSPF2 in the southern US. ENERGY STAR Version 6.1 requires at least 15.2 SEER2 and 8.1 HSPF2. Higher numbers mean lower electricity bills, with each 1.0 HSPF2 difference representing roughly 10-12% less winter heating energy at typical conditions.',
+  },
+  {
+    q: 'Is a heat pump cheaper to run than a gas furnace?',
+    a: 'It depends on the local price of electricity versus natural gas and the seasonal efficiency of each system. At the US 2024-2025 average residential electricity price of about 16 cents per kilowatt-hour and an average natural gas price of about $1.30 per therm, a modern heat pump (HSPF2 8.5) costs about the same to run as a 95% AFUE gas furnace at typical winter conditions. In states with cheap electricity (Washington, Tennessee) the heat pump wins clearly. In states with expensive electricity and cheap gas (parts of the Midwest), gas wins. Check local rates before assuming either.',
+  },
+  {
+    q: 'Will I need to keep my old furnace as backup?',
+    a: 'In a moderate or warm climate, no. A properly sized heat pump with right-sized resistance aux strips handles every winter hour without help. In a cold climate, you have two options: (1) a cold-climate certified heat pump sized to a low balance point with electric aux for the few hours below that point, or (2) a "dual fuel" setup that keeps the existing gas furnace as backup below a chosen lockout temperature. Both work; the right answer depends on the price of aux electricity versus gas, plus what equipment you already have installed.',
+  },
+  {
+    q: 'How long do heat pumps last?',
+    a: 'The US Department of Energy cites a typical operational life of 15 years for a residential air-source heat pump and 20-25 years for the indoor components of a ground-source system, with the buried ground loop expected to last 50+ years. Compressor failure is the most common end-of-life event for air-source units. Lifespan is shorter when the unit is chronically oversized (cycling wears compressors) or chronically undersized (running continuously also wears them). Annual coil cleaning and filter changes extend life noticeably.',
+  },
+  {
+    q: 'What refrigerant do new heat pumps use?',
+    a: 'Heat pumps manufactured for sale in the US after January 1, 2025 must use a refrigerant with global warming potential (GWP) below 700, per the EPA AIM Act final rule. The two dominant replacements are R-454B (GWP 466) and R-32 (GWP 675), both mildly flammable (A2L classification) but more efficient than the R-410A they replace. Older R-410A equipment continues to be serviceable, but new R-410A units cannot be manufactured for residential AC and heat pump applications.',
+  },
+  {
+    q: 'How do I know if my contractor sized the heat pump correctly?',
+    a: 'Three checks. First, ask for the Manual J report; a real one is a multi-page document with room-by-room loads, not a rule-of-thumb spreadsheet. Second, look at the proposed equipment\'s AHRI rating point capacities at 47°F and 17°F (and 5°F for cold climates), then check that the 17°F or design-temp capacity covers the Manual J heating load at that temperature with a reasonable aux margin. Third, the cooling capacity at AHRI should not exceed Manual J cooling load by more than the Manual S tolerance (typically 15-25% depending on equipment type). If any of those fail, ask the contractor to re-spec.',
+  },
+];
+
+export const RELATED = [
+  {
+    title: 'Heat pump sizing',
+    url: '/heat-pump/sizing/',
+    description:
+      'The cornerstone sizing article, covering balance-point methodology and the dual-load problem in depth.',
+  },
+  {
+    title: 'Heat pump auxiliary heat',
+    url: '/heat-pump/aux-heat/',
+    description:
+      'When the resistance strips engage, what they cost, and when frequent aux runtime signals a real problem.',
+  },
+  {
+    title: 'Heat pump defrost cycle',
+    url: '/heat-pump/cold-climate/defrost-cycle/',
+    description:
+      'Why outdoor coils ice over, what defrost actually does, and how CCASHP equipment manages it differently.',
+  },
+  {
+    title: 'Seasonal performance factor (SPF)',
+    url: '/heat-pump/performance/seasonal-performance-factor/',
+    description:
+      'The whole-system seasonal-COP metric that captures real-world performance including aux runtime.',
+  },
+  {
+    title: 'Manual J load calculation',
+    url: '/manual-j/',
+    description:
+      'The ACCA methodology that produces the heating and cooling loads any honest heat pump quote must reference.',
+  },
+];
+
+export const FRONTMATTER = {
+  title: 'Heat Pumps: How They Work, How They Are Rated, How They Are Sized',
+  h1: 'Heat Pumps: A Reference Built on Primary Sources',
+  meta_description:
+    'Residential heat pump reference — refrigerant cycle, AHRI 210/240 ratings, NEEP CCASHP cold-climate performance, system types, and 2026 federal incentives.',
+  url: '/heat-pump/',
+  date_published: '2026-05-30',
+  last_reviewed: '2026-05-30',
+  target_keyword: 'heat pump',
+  secondary_keywords: ['heat pump cost', 'heat pump efficiency', 'cold climate heat pump', 'heat pump vs furnace', 'air source heat pump'],
+  sources: SOURCES,
+  faq: FAQ_ITEMS,
+  parent_title: 'Home',
+};
+
+<JsonLdArticle frontmatter={FRONTMATTER} wordCount={3100} />
+
+<JsonLdBreadcrumb items={BREADCRUMBS} />
+
+<Container>
+
+<Breadcrumbs items={BREADCRUMBS} />
+
+<ArticleHeader
+  h1="Heat Pumps: A Reference Built on Primary Sources"
+  description="Refrigerant-cycle operation, AHRI 210/240 rating points, NEEP cold-climate data, system types, and 2026 federal incentives — every figure on this page traces to ACCA, ASHRAE, AHRI, NEEP, DOE, EIA, EPA, or IRS publications."
+  datePublished="2026-05-30"
+  lastReviewed="2026-05-30"
+  readingTimeMinutes={14}
+/>
+
+<KeyTakeaways
+  items={[
+    'A heat pump moves heat rather than generating it, which is why a modern unit delivers roughly 2-4 units of heat per unit of electricity consumed, compared to exactly 1 for electric resistance.',
+    'Federal minimum efficiency since January 2023 is 14.3 SEER2 / 7.5 HSPF2 in the north and 15.2 SEER2 / 7.5 HSPF2 in the south; ENERGY STAR Version 6.1 requires 15.2 SEER2 / 8.1 HSPF2 or better.',
+    'Standard air-source heat pumps lose roughly 40-45% of nominal capacity by 17°F outdoor; NEEP-listed cold-climate units must retain at least 70% of 47°F capacity at 17°F and at least 58% at 5°F.',
+    'The 2026 federal incentive stack (IRA Section 25C $2,000 tax credit plus HEEHRA point-of-sale rebates up to $8,000 for qualifying low-and-moderate-income households) can reduce installed cost by $2,000 to $10,000 depending on income.',
+    'All new US residential heat pumps sold after January 1, 2025 use lower-GWP refrigerants (R-454B or R-32) under the EPA AIM Act; R-410A units can still be serviced but no longer manufactured for new installations.',
+  ]}
+/>
+
+<div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
 
 <article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
 
-# Heat Pump Sizing, Performance, and Reference
+## What a Heat Pump Is and Why It Beats Resistance Heat
 
-Heat pumps now match or beat gas furnaces in most US climates, but sizing them correctly is harder than sizing a single-stage air conditioner. Compressor capacity falls as outdoor temperature falls, the system has a balance point below which auxiliary heat carries part of the load, and the wrong size produces either short-cycling in mild weather or aux-heat-dominated bills in cold weather.
+A heat pump is a refrigerant-cycle machine that moves thermal energy from one reservoir to another. The same hardware that cools your house in summer reverses in winter, pulling heat from outdoor air, ground, or water and delivering it indoors.<SourceCite id="doe-heat-pump-systems" number={6} /> The compressor, condenser, expansion valve, and evaporator are identical to an air conditioner; a four-way reversing valve flips the refrigerant flow direction on demand.
 
-This section covers the methodology for sizing heat pumps, the performance metrics that matter (HSPF2, COP, balance point, NEEP cold-climate data), and the troubleshooting patterns for the most common failure modes.
+<Callout type="info" title="The physics in one sentence">
+Moving an existing unit of heat from cold to warm with a vapor-compression cycle costs less electricity than creating that unit of heat from scratch with a resistor, which is why heat pumps deliver coefficient-of-performance (COP) values above 1.0 in heating mode while electric resistance is exactly 1.0 by definition.
+</Callout>
 
-## Articles in this section
+The efficiency advantage shows up directly in the seasonal metric. A heat pump rated at HSPF2 8.5 delivers 8.5 BTU of heating per Wh of electricity averaged across a standard heating season, equivalent to a seasonal COP of about 2.49 since 3.41 BTU/Wh corresponds to COP 1.0.<SourceCite id="ahri-210-240" number={1} /> Electric baseboard, by contrast, is fixed at exactly 3.41 BTU/Wh (COP 1.0) no matter the outdoor temperature.
+
+<DataTable
+  caption="How heat output per kilowatt-hour compares across common heating systems (source: AHRI 210/240, DOE Energy Saver guidance)"
+  columns={[
+    { key: 'system', label: 'System' },
+    { key: 'metric', label: 'Rating metric' },
+    { key: 'value', label: 'Typical 2026 value', align: 'right' },
+    { key: 'btuPerKwh', label: 'BTU per kWh delivered', align: 'right' },
+  ]}
+  rows={[
+    { system: 'Electric resistance baseboard', metric: 'COP', value: '1.00', btuPerKwh: '3,412' },
+    { system: 'Federal-minimum split-system heat pump (north)', metric: 'HSPF2', value: '7.5', btuPerKwh: '7,500' },
+    { system: 'ENERGY STAR Version 6.1 heat pump', metric: 'HSPF2', value: '≥ 8.1', btuPerKwh: '≥ 8,100' },
+    { system: 'CCASHP-listed cold-climate heat pump (typical)', metric: 'HSPF2', value: '9.0–11.0', btuPerKwh: '9,000–11,000' },
+    { system: 'Ground-source heat pump (residential)', metric: 'COP @ 32°F EWT', value: '3.5–4.5', btuPerKwh: '11,940–15,354' },
+  ]}
+/>
+
+**The practical implication is concrete.** A house that needs 30,000 BTU/hr at design temperature consumes about 8.8 kW continuous from electric baseboard, roughly 3.6 kW from a federal-minimum heat pump, and roughly 2.5 kW from an ENERGY STAR unit running at its seasonal average.<SourceCite id="energystar-hp-v6-1" number={3} />
+
+Over a 1,500-hour heating season, the 1.1 kW gap between federal-minimum and ENERGY STAR equates to roughly 1,650 kWh saved per year, or about $269 at the US 2024 average residential electricity price.<SourceCite id="eia-electricity-table-5-6-a" number={9} />
+
+## How Heat Pumps Are Rated (and What Those Numbers Actually Mean)
+
+AHRI Standard 210/240-2023 defines the test conditions under which manufacturers measure capacity and efficiency.<SourceCite id="ahri-210-240" number={1} /> Cooling capacity is rated at 95°F outdoor dry bulb and 80°F indoor dry bulb (with 67°F indoor wet bulb to fix latent conditions). Heating "high-temperature" capacity is rated at 47°F outdoor and 70°F indoor. A "low-temperature" heating rating at 17°F is also required, and cold-climate certified units publish an additional point at 5°F.
+
+<DataTable
+  caption="AHRI 210/240-2023 rating conditions and the metric each test produces"
+  columns={[
+    { key: 'test', label: 'Test' },
+    { key: 'outdoor', label: 'Outdoor', align: 'right' },
+    { key: 'indoor', label: 'Indoor', align: 'right' },
+    { key: 'metric', label: 'Metric produced' },
+  ]}
+  rows={[
+    { test: 'Cooling A2', outdoor: '95°F DB', indoor: '80°F DB / 67°F WB', metric: 'Nominal cooling capacity, SEER2' },
+    { test: 'Cooling B2', outdoor: '82°F DB', indoor: '80°F DB / 67°F WB', metric: 'Part-load cooling, contributes to SEER2' },
+    { test: 'Heating H1', outdoor: '47°F DB', indoor: '70°F DB', metric: 'Nominal heating capacity, contributes to HSPF2' },
+    { test: 'Heating H2', outdoor: '35°F DB', indoor: '70°F DB', metric: 'Frost-defrost cycle data' },
+    { test: 'Heating H3', outdoor: '17°F DB', indoor: '70°F DB', metric: 'Low-temperature heating capacity' },
+    { test: 'Heating H4 (CCASHP)', outdoor: '5°F DB', indoor: '70°F DB', metric: 'Cold-climate heating capacity' },
+  ]}
+/>
+
+These rating points matter because heat pump capacity is not constant across outdoor temperature. The label says "3 tons" (36,000 BTU/hr) and that figure refers strictly to the 47°F heating point or the 95°F cooling point. At any other temperature, you read the manufacturer's published expanded performance data, not the nameplate.
+
+The seasonal metrics (SEER2 for cooling, HSPF2 for heating) are weighted averages across many bin temperatures, accounting for capacity drop, defrost penalty, and part-load behavior.<SourceCite id="ahri-210-240" number={1} /> SEER2 replaced SEER under AHRI 210/240-2023, and the change was not cosmetic: the test now uses higher external static pressure to better reflect installed ductwork, which lowered reported efficiency numbers across the board by roughly 4-5% even though equipment performance was unchanged.
+
+<DataTable
+  caption="Federal minimum and ENERGY STAR efficiency requirements for residential heat pumps (split system, 2026)"
+  columns={[
+    { key: 'tier', label: 'Tier' },
+    { key: 'region', label: 'Region' },
+    { key: 'seer2', label: 'SEER2 min', align: 'right' },
+    { key: 'hspf2', label: 'HSPF2 min', align: 'right' },
+    { key: 'source', label: 'Source' },
+  ]}
+  rows={[
+    { tier: 'Federal minimum', region: 'North', seer2: '14.3', hspf2: '7.5', source: 'DOE 10 CFR 430' },
+    { tier: 'Federal minimum', region: 'South / Southwest', seer2: '15.2', hspf2: '7.5', source: 'DOE 10 CFR 430' },
+    { tier: 'ENERGY STAR v6.1', region: 'All US', seer2: '15.2', hspf2: '8.1', source: 'ENERGY STAR program' },
+    { tier: 'ENERGY STAR v6.1 Cold Climate', region: 'Northern climate option', seer2: '15.2', hspf2: '9.0', source: 'ENERGY STAR program' },
+    { tier: 'IRA 25C qualifying', region: 'All US', seer2: '≥ 15.2 (CEE Tier)', hspf2: '≥ 8.1 (CEE Tier)', source: 'IRS Fact Sheet 25C' },
+  ]}
+/>
+
+Reading manufacturer spec sheets: the AHRI Certified Reference Number (ARN) on the equipment label maps to a row in the public AHRI directory at ahridirectory.org. That row lists SEER2, HSPF2, EER2, and the H1 / H3 capacity points, all independently verified figures, not marketing claims.<SourceCite id="ahri-210-240" number={1} /> If a contractor quotes capacity numbers that conflict with the AHRI directory, the directory wins.
+
+## Capacity Drops as Outdoor Temperature Drops
+
+Every air-source heat pump loses heating capacity as it gets colder outside, because there is less heat available in the outdoor air to extract. How fast capacity drops separates a standard heat pump from a cold-climate heat pump.
+
+<CapacityVsOutdoorTemperature />
+
+A standard residential split-system heat pump nominally rated at 36,000 BTU/hr (3 tons) at 47°F typically delivers about 19,000-22,000 BTU/hr at 17°F (53-61% of rated) and 12,000-14,000 BTU/hr at 5°F (33-39% of rated).<SourceCite id="nrel-cchp-2022" number={5} />
+
+A NEEP-listed cold-climate unit of the same nominal size must deliver at least 25,200 BTU/hr at 17°F (70% of 47°F capacity) and at least 20,880 BTU/hr at 5°F (58%) to qualify for the Version 4.0 specification.<SourceCite id="neep-cchp-spec-v4" number={4} />
+
+The implication for sizing is direct. In a Minneapolis design temperature of −11°F, a standard heat pump rated 36,000 BTU/hr at 47°F provides only about 8,000-10,000 BTU/hr at design. A 36,000 BTU/hr CCASHP unit holds roughly 18,000-22,000 BTU/hr at the same temperature, more than double the standard equipment's output drawn from the same nameplate tonnage.<SourceCite id="neep-cchp-spec-v4" number={4} />
+
+<Callout type="warn" title="Don't read the nameplate as a winter promise">
+The "3-ton" label on a heat pump is a 47°F heating (or 95°F cooling) figure. At your local 99% heating design temperature you may be getting half that or less. Always check the spec sheet's H3 (17°F) and, for cold climates, H4 (5°F) capacity points before signing a quote.
+</Callout>
+
+**The seasonal efficiency hit at low temperature is also meaningful.** A standard heat pump's COP drops from roughly 3.5 at 47°F to about 1.8-2.0 at 17°F and 1.2-1.5 at 5°F. A cold-climate unit holds COP closer to 2.5 at 17°F and 2.0 at 5°F.<SourceCite id="nrel-cchp-2022" number={5} />
+
+A COP of 2.0 still beats electric resistance (COP 1.0) by a factor of two, which is why CCASHP equipment can carry the heating load all the way down to single-digit temperatures without aux heat in most US locations.
+
+## The Four System Types and How to Pick Between Them
+
+US residential heat pumps come in four configurations, distinguished by heat source (air, ground, water) and distribution method (ducted, ductless).
+
+<DataTable
+  caption="Comparison of the four residential heat pump system types (typical 2026 ranges; source: DOE Energy Saver guides)"
+  columns={[
+    { key: 'type', label: 'System type' },
+    { key: 'heatSource', label: 'Heat source' },
+    { key: 'distribution', label: 'Distribution' },
+    { key: 'installCost', label: 'Installed cost (typical)', align: 'right' },
+    { key: 'efficiency', label: 'Seasonal efficiency', align: 'right' },
+    { key: 'bestFor', label: 'Best fit' },
+  ]}
+  rows={[
+    {
+      type: 'Air-source ducted (split system)',
+      heatSource: 'Outdoor air',
+      distribution: 'Existing ductwork',
+      installCost: '$5,000–$10,000',
+      efficiency: 'HSPF2 7.5–10.5',
+      bestFor: 'Homes with existing AC ductwork',
+    },
+    {
+      type: 'Air-source ductless (mini-split)',
+      heatSource: 'Outdoor air',
+      distribution: 'Per-zone wall/ceiling head',
+      installCost: '$3,000–$8,000 per zone',
+      efficiency: 'HSPF2 8.5–12.0',
+      bestFor: 'Homes without ducts, additions, retrofits',
+    },
+    {
+      type: 'Ground-source (closed loop)',
+      heatSource: 'Below-frost-line earth',
+      distribution: 'Existing ductwork or hydronic',
+      installCost: '$20,000–$30,000',
+      efficiency: 'COP 3.5–4.5 (steady)',
+      bestFor: 'New construction, high heating demand, owner-occupied long term',
+    },
+    {
+      type: 'Water-source / open loop',
+      heatSource: 'Well, pond, aquifer',
+      distribution: 'Ductwork or hydronic',
+      installCost: '$15,000–$25,000',
+      efficiency: 'COP 4.0–5.0',
+      bestFor: 'Properties with abundant clean water',
+    },
+  ]}
+/>
+
+Air-source ducted units dominate US installations because most existing houses already have ductwork from a prior furnace or AC. The retrofit is straightforward: swap the outdoor condenser and the indoor coil, keep the duct system in place, and the new equipment runs.<SourceCite id="doe-heat-pump-systems" number={6} /> Where ducts leak heavily (more than ~15% loss to unconditioned space), duct sealing is the prerequisite, since a leaky duct system wastes 20-30% of any heat pump's output regardless of efficiency tier.
+
+Air-source ductless mini-splits skip ductwork entirely. A single-zone unit puts one indoor head on one wall; a multi-zone unit links several heads to one outdoor compressor via refrigerant lineset. They make sense for houses without ducts (most pre-1960 homes in the Northeast, for example), for additions, and for converting electric-baseboard houses to heat pumps.<SourceCite id="doe-heat-pump-systems" number={6} /> Per-zone control is the major comfort advantage; the visible indoor head is the major aesthetic disadvantage.
+
+**Ground-source (geothermal) systems** exchange heat with the earth at a stable 45-55°F year-round, instead of with outdoor air that swings from −20°F to 95°F.
+
+Because the source temperature is steady, the COP is steady, typically 3.5-4.5 in heating and 4.0-5.0 in cooling, with no winter capacity loss.<SourceCite id="doe-ghp-systems" number={14} /> The installation cost is dominated by the buried ground loop, which is why new construction (where excavation is happening anyway) is the natural fit.
+
+Water-source heat pumps exchange heat with a well, pond, or aquifer. They are uncommon in retrofits because they require a suitable water resource and local permitting, but where the resource exists they outperform ground-source systems on both cost and efficiency.<SourceCite id="doe-ghp-systems" number={14} /> Open-loop systems pull water continuously from a source and return it downstream; closed-loop submerged-pond systems are essentially ground-source with the pipe in water instead of earth.
+
+## Federal and State Incentives in 2026
+
+Two distinct federal programs apply to heat pump installations in 2026, and they stack with each other and with state and utility rebates.
+
+<DataTable
+  caption="Federal heat pump incentives available in 2026 (IRS and DOE program documentation)"
+  columns={[
+    { key: 'program', label: 'Program' },
+    { key: 'amount', label: 'Maximum amount', align: 'right' },
+    { key: 'mechanism', label: 'How it works' },
+    { key: 'eligibility', label: 'Eligibility / requirements' },
+  ]}
+  rows={[
+    {
+      program: 'IRA Section 25C (Energy Efficient Home Improvement Credit)',
+      amount: '$2,000 per year',
+      mechanism: 'Non-refundable tax credit, 30% of installed cost up to cap',
+      eligibility: 'Equipment must meet CEE highest tier (typically ENERGY STAR Cold Climate or HSPF2 ≥ 8.1)',
+    },
+    {
+      program: 'IRA Section 50122 (HEEHRA point-of-sale rebate)',
+      amount: '$8,000',
+      mechanism: 'Reduced sticker price at install, administered by state energy office',
+      eligibility: 'Household income ≤ 80% Area Median Income for full rebate; 80-150% AMI for 50% rebate',
+    },
+    {
+      program: 'IRA Section 50121 (HOMES rebate)',
+      amount: 'Up to $8,000 (modeled) / $4,000 (measured)',
+      mechanism: 'Whole-home performance rebate based on energy savings',
+      eligibility: 'Project must achieve modeled or measured energy reduction ≥ 20-35%',
+    },
+  ]}
+/>
+
+**The 25C tax credit is the simplest path** and is available to any taxpayer regardless of income, but it requires the equipment to meet the Consortium for Energy Efficiency's highest performance tier — in practice ENERGY STAR Version 6.1 Cold Climate or equivalent (HSPF2 ≥ 8.1, SEER2 ≥ 15.2) for split-systems.<SourceCite id="irs-25c-fact-sheet" number={7} />
+
+The credit is non-refundable, meaning it can zero out federal tax liability but cannot produce a refund larger than tax owed; unused credit does not roll forward to future years for Section 25C as of 2026.
+
+HEEHRA is administered at the state level and rolled out unevenly through 2024 and 2025; most states began accepting applications in 2025-2026.<SourceCite id="doe-heehra" number={8} /> The income test uses Area Median Income (AMI) by household size for the applicant's county, which means the same income qualifies in different ways depending on where the household lives. Check your state energy office's program page for current intake status.
+
+State and utility rebates layer on top. Mass Save offers up to $10,000 per home for whole-house heat pump conversions in Massachusetts. NYSERDA's Comfort Home program offers structured rebates for heat pump installations in New York. Most western utilities (PG&E, SoCal Edison, NV Energy) offer $500-$1,500 per ton for ENERGY STAR heat pumps. The stack (25C + HEEHRA + state + utility) can reduce out-of-pocket cost by $5,000-$15,000 for a qualifying household.
+
+## Operating Cost Versus Furnaces and Resistance Heat
+
+The headline cost-per-BTU comparison depends entirely on local utility prices, but the math is portable to any zip code.
+
+<HeatingCostByZone />
+
+Calculating it for the US average: a federal-minimum heat pump (HSPF2 7.5) delivers 7,500 BTU per kWh of electricity consumed seasonally. At the 2024-2025 US residential average of $0.163/kWh, that comes to about $21.73 per million BTU delivered.<SourceCite id="eia-electricity-table-5-6-a" number={9} />
+
+A 95% AFUE natural gas furnace delivers 0.95 × 100,000 = 95,000 BTU per therm of gas consumed; at the US average residential gas price of about $1.30 per therm, that comes to about $13.68 per million BTU delivered.<SourceCite id="eia-natural-gas-residential" number={10} />
+
+<DataTable
+  caption="Cost per million BTU of delivered heat by system type at US 2024-2025 average utility prices (residential)"
+  columns={[
+    { key: 'system', label: 'System' },
+    { key: 'efficiency', label: 'Seasonal efficiency', align: 'right' },
+    { key: 'fuelPrice', label: 'Fuel price (US avg)', align: 'right' },
+    { key: 'costPerMmbtu', label: 'Cost per MMBTU delivered', align: 'right' },
+  ]}
+  rows={[
+    { system: 'Electric resistance baseboard', efficiency: 'COP 1.00', fuelPrice: '$0.163/kWh', costPerMmbtu: '$47.77' },
+    { system: 'Federal-minimum heat pump', efficiency: 'HSPF2 7.5', fuelPrice: '$0.163/kWh', costPerMmbtu: '$21.73' },
+    { system: 'ENERGY STAR v6.1 heat pump', efficiency: 'HSPF2 8.1', fuelPrice: '$0.163/kWh', costPerMmbtu: '$20.12' },
+    { system: 'CCASHP heat pump (typical)', efficiency: 'HSPF2 9.5', fuelPrice: '$0.163/kWh', costPerMmbtu: '$17.16' },
+    { system: '80% AFUE natural gas furnace', efficiency: '80%', fuelPrice: '$1.30/therm', costPerMmbtu: '$16.25' },
+    { system: '95% AFUE natural gas furnace', efficiency: '95%', fuelPrice: '$1.30/therm', costPerMmbtu: '$13.68' },
+    { system: 'Oil furnace (138,500 BTU/gal)', efficiency: '85%', fuelPrice: '$3.85/gal', costPerMmbtu: '$32.69' },
+    { system: 'Propane furnace (91,500 BTU/gal)', efficiency: '95%', fuelPrice: '$2.85/gal', costPerMmbtu: '$32.79' },
+  ]}
+/>
+
+At national average prices, natural gas at 95% AFUE still beats heat pumps slightly on raw operating cost. But that ranking flips quickly with local conditions. In states with electricity below $0.12/kWh (most Pacific Northwest, Tennessee, Kentucky) a federal-minimum heat pump beats gas. In states with electricity above $0.25/kWh (California, Massachusetts, Hawaii) gas wins comfortably unless the heat pump is high-HSPF2.
+
+<HeatingVsCoolingLoadByClimate />
+
+The other reason heat pumps win in many cases is that they deliver cooling as well as heating from the same equipment. A house with both AC and gas furnace is paying for two systems; a heat pump replaces both. When the heat pump install cost is compared against the combined replacement cost of AC plus furnace (rather than furnace alone), the breakeven on operating cost moves substantially in the heat pump's favor.
+
+Electric prices are also decoupling from heating prices via solar PV. A household with rooftop solar that exports excess summer generation effectively buys winter heating electricity at the avoided-cost rate, often below the residential retail rate.<SourceCite id="eia-electricity-table-5-6-a" number={9} /> Where net metering is favorable, heat pump operating cost can fall by 30-50% relative to grid-only rates.
+
+## When a Heat Pump Makes Economic Sense
+
+The heat pump versus fossil furnace decision is rarely about climate alone in 2026. The decision turns on five variables: existing equipment age, fuel prices, electricity prices, incentive eligibility, and whether the home already has central AC.
+
+<Callout type="info" title="Five-question decision frame">
+1. Is your existing furnace or AC over 12 years old? (If yes, replacement is happening anyway, so compare against new equipment, not against keeping the old.)
+2. Is your local electricity rate above or below $0.18/kWh?
+3. Is your local natural gas rate above or below $1.50/therm? (If you don't have gas service, this question is moot.)
+4. Does your household qualify for HEEHRA at 80% or 150% AMI?
+5. Do you live in a climate that needs both heating and cooling, or just one?
+</Callout>
+
+Households replacing a 15-year-old AC and a 20-year-old gas furnace in a climate with both heating and cooling demand typically come out ahead with a heat pump on lifecycle cost, because one piece of equipment replaces two.<SourceCite id="doe-heat-pump-systems" number={6} /> Households with a brand-new gas furnace and no AC face a harder math problem; the heat pump install displaces equipment that has 15 years of useful life remaining.
+
+The climate test is more nuanced than the conventional wisdom suggests. Air-source heat pumps work effectively in every US climate zone provided the equipment is appropriately specified. Northern installations need CCASHP-rated equipment sized to a low balance point, plus electric or fossil aux for the coldest hours. Southern installations don't need CCASHP-rated equipment and can use standard heat pumps with very low aux runtime.<SourceCite id="neep-cchp-spec-v4" number={4} />
+
+The eligibility test changes the calculation substantially. A household qualifying for full HEEHRA at 80% AMI receives up to $8,000 off the install at the point of sale, plus the $2,000 25C tax credit, plus typically $1,000-$3,000 in state or utility rebates, bringing a $10,000 standard heat pump install to roughly net $0 to $3,000 out of pocket.<SourceCite id="doe-heehra" number={8} /> At those prices, the operating cost question becomes secondary.
+
+## Sizing and Aux Heat: The Two Decisions That Dominate Outcomes
+
+Two decisions made before any equipment ships determine whether a heat pump installation succeeds or fails: the size of the equipment, and how much aux heat it relies on. Both decisions are downstream of a single document, the Manual J load calculation.<SourceCite id="acca-manual-j-8" number={13} />
+
+**Sizing decision.** Heat pumps must handle two loads (heating and cooling) that are rarely equal at the same house. In Miami the cooling load is typically 3-4× the heating load; in Minneapolis it is the reverse. The size that perfectly matches one load almost certainly mismatches the other, which is why every honest heat pump quote starts from a Manual J that reports both numbers.
+
+<Callout type="planning-grade" title="The Manual J test">
+Ask the contractor: "Can you send me the Manual J report?" A real Manual J is a multi-page room-by-room document with heating and cooling loads for each room and totals for the house. If what comes back is a one-line "rule of thumb says 3 tons," the sizing was not done, and the equipment was probably picked from a square-footage chart.
+</Callout>
+
+**Aux heat decision.** Aux heat is electric resistance backup (typically 5, 10, 15, or 20 kW strip kits, occasionally a gas furnace in "dual fuel" installations) that supplements the heat pump when outdoor temperature drops below the balance point. The balance point is the temperature at which the heat pump's available capacity equals the home's heating load; above it the heat pump alone keeps up, below it aux fills the gap.<SourceCite id="neep-cchp-spec-v4" number={4} /> Picking a higher balance point means smaller, cheaper equipment but more aux runtime; picking a lower balance point means larger equipment or CCASHP equipment with less aux.
+
+**Cost implication.** At the US average electricity price, electric aux heat runs at roughly $47.77 per million BTU delivered, more than three times the cost per BTU of the heat pump itself running at HSPF2 8. A heat pump that runs aux 200 hours per winter at 10 kW delivers 2,000 kWh × $0.163 = $326 of aux electricity per year; the same heating delivered by the heat pump alone would cost roughly $115. Over a 15-year equipment life, that aux-heavy install pays an extra $3,000 in electricity that a CCASHP unit at the same install location would have avoided.
+
+For the detailed methodology, the [heat pump sizing](/heat-pump/sizing/) article walks through balance-point design with worked examples. For aux-heat behavior in detail, [auxiliary heat](/heat-pump/aux-heat/) covers the four scenarios when aux is normal and the four scenarios when it signals a problem.
+
+## The 2025 Refrigerant Transition and What It Means for Buyers
+
+The EPA's AIM Act final rule banned the manufacture of new residential AC and heat pump equipment using R-410A refrigerant after January 1, 2025.<SourceCite id="epa-aim-act-2025" number={12} /> The transition is the largest refrigerant change in two decades and affects every heat pump quote in 2026.
+
+Two refrigerants dominate the replacement landscape. R-454B (sold as Opteon XL41) has a global warming potential of 466, compared to R-410A's GWP of 2,088. R-32 (used widely in Asia for a decade and now in US Daikin, Mitsubishi, Carrier and others) has a GWP of 675.<SourceCite id="epa-aim-act-2025" number={12} /> Both are classified A2L, meaning mildly flammable but lower-toxicity, with stricter installation requirements than the A1-classified R-410A they replace.
+
+<Callout type="warn" title="What this changes for buyers in 2026">
+New residential equipment must use the new refrigerants. Existing R-410A systems remain serviceable and can be repaired (refrigerant supply continues for service through at least 2030, though prices for R-410A have already begun to rise). If you are replacing equipment, the new install uses R-454B or R-32. Mixing refrigerants across an indoor and outdoor unit is not permitted; line-set replacement or flushing is typically required when switching refrigerant families.
+</Callout>
+
+**Technician implications matter for buyers** because the A2L classification adds installation requirements that R-410A did not have. Outdoor unit setbacks from windows and openings are larger, indoor unit line-set length limits are different, and brazing requires a nitrogen purge to prevent ignition of residual refrigerant.
+
+None of this changes the equipment's operating characteristics for the homeowner, but it changes the install cost slightly, typically $200-$500 per system above the 2024 baseline for the additional materials and labor.
+
+Efficiency implications are positive. R-32 in particular allows higher-pressure operation and tighter heat exchangers, which is why several manufacturers' R-32 models report HSPF2 numbers 0.5-1.0 higher than equivalent R-410A predecessors at the same nominal tonnage.<SourceCite id="energystar-hp-v6-1" number={3} /> The seasonal efficiency improvement partially offsets the slightly higher install cost and entirely offsets it over the equipment's life via reduced electricity consumption.
+
+## What This Cluster Covers
+
+The cluster organizes heat pump content into four functional areas, each with its own depth.
 
 ### Sizing and selection
 
-- [Heat pump sizing](/heat-pump/sizing/) — the cornerstone article: dual-load methodology, climate-specific tradeoffs, Manual J + Manual S workflow
-- [Seasonal performance factor (SPF)](/heat-pump/performance/seasonal-performance-factor/) — season-averaged efficiency including defrost and aux
+- [Heat pump sizing](/heat-pump/sizing/) — balance-point methodology, dual-load problem, when CCASHP equipment changes the math
+- [Heat pump aux heat](/heat-pump/aux-heat/) — when resistance strips engage, what they cost, when frequent aux signals an undersized unit
+- [Aux heat vs emergency heat](/heat-pump/aux-heat/meaning/) — automatic vs manual operation, thermostat configuration
 
-### Auxiliary heat
+### Performance metrics
 
-- [Auxiliary heat](/heat-pump/aux-heat/) — the comprehensive hub on aux heat: sizing, electrical, operating cost
-- [What aux heat means on your thermostat](/heat-pump/aux-heat/meaning/) — direct answer to the worried-homeowner question
+- [Seasonal performance factor](/heat-pump/performance/seasonal-performance-factor/) — the whole-system seasonal-COP metric that captures real-world performance including aux runtime
 
-### Cold climate
+### Cold-climate operation
 
-- [Heat pump defrost cycle](/heat-pump/cold-climate/defrost-cycle/) — how reverse-cycle defrost works, when to worry, when to call a pro
+- [Heat pump defrost cycle](/heat-pump/cold-climate/defrost-cycle/) — why coils ice over, what defrost does, how CCASHP units manage it
 
-## Calculators
+### Related load and equipment topics
 
-- [Heat pump size calculator](/tools/heat-pump-size-calculator/) — dual-load sizing with balance point and CCASHP toggle
-- [BTU calculator](/tools/btu-calculator/) — general BTU sizing for a room or whole house
-- [Manual J load calculator](/tools/manual-j-calculator/) — full envelope load math
+- [Manual J load calculation](/manual-j/) — the ACCA methodology that produces the loads any heat pump quote should reference
+- [Manual S equipment selection](/manual-s/) — the rules for matching nameplate capacity to Manual J load
+- [Building science fundamentals](/building-science/) — envelope drivers (R-value, U-factor, infiltration) that shift the loads
 
-## Related topics
+### Calculators
 
-- [Air conditioner reference](/ac/) — cooling-only systems and AC-specific sizing
-- [Manual J load calculation](/manual-j/) — underlying load methodology
-- [Building science](/building-science/) — envelope, insulation, climate zones
+- [Heat pump size calculator](/tools/heat-pump-size-calculator/) — dual-load math with balance-point estimate, CCASHP toggle, and 6 worked examples by home size
+- [BTU calculator](/tools/btu-calculator/) — coarser whole-house or single-room sizing
+- [Manual J load calculator](/tools/manual-j-calculator/) — full envelope load math approximating Manual J for planning purposes
 
 </article>
+
+<aside className="lg:block">
+  <TableOfContents headings={HEADINGS} sticky />
+</aside>
+
+</div>
+
+<FAQ items={FAQ_ITEMS} />
+
+<RelatedArticles items={RELATED} />
+
+<Sources sources={SOURCES} />
+
+<div className="mt-12 border-t border-ink-300 pt-8">
+  <AuthorByline lastReviewed="2026-05-30" />
+</div>
+
+</Container>
