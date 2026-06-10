@@ -170,7 +170,7 @@ export const heatPumpExamples: readonly HeatPumpExample[] = [
         bestFor: 'Zones 5–7, all-electric homes',
         pros: [
           'Minimal aux heat use through winter',
-          'Qualifies for $2,000 IRA 25C tax credit',
+          'Was §25C eligible (HVAC scope expired Dec 31, 2025; verify current IRS guidance)',
           'Stronger rebates than standard in cold zones',
         ],
         cons: [
@@ -641,7 +641,7 @@ export const heatPumpExamples: readonly HeatPumpExample[] = [
         bestFor: 'Zones 5–7, all-electric homes',
         pros: [
           'Minimal aux heat use through winter',
-          'Qualifies for $2,000 IRA 25C tax credit',
+          'Was §25C eligible (HVAC scope expired Dec 31, 2025; verify current IRS guidance)',
           'Strong state and utility rebates',
         ],
         cons: [
@@ -1111,7 +1111,7 @@ export const heatPumpExamples: readonly HeatPumpExample[] = [
         bestFor: 'Zones 5–7, all-electric homes',
         pros: [
           'Minimal aux heat use through winter',
-          'Qualifies for $2,000 IRA 25C tax credit',
+          'Was §25C eligible (HVAC scope expired Dec 31, 2025; verify current IRS guidance)',
           'Strong state and utility rebates available',
         ],
         cons: [
@@ -1583,7 +1583,7 @@ export const heatPumpExamples: readonly HeatPumpExample[] = [
         bestFor: 'Zones 5–7, all-electric homes',
         pros: [
           'Minimal aux heat use through winter',
-          'Qualifies for $2,000 IRA 25C tax credit',
+          'Was §25C eligible (HVAC scope expired Dec 31, 2025; verify current IRS guidance)',
           'Strong state and utility rebates',
         ],
         cons: [
@@ -2054,7 +2054,7 @@ export const heatPumpExamples: readonly HeatPumpExample[] = [
         bestFor: 'Zones 5–7, all-electric homes',
         pros: [
           'Minimal aux heat use through winter',
-          'Qualifies for $2,000 IRA 25C tax credit',
+          'Was §25C eligible (HVAC scope expired Dec 31, 2025; verify current IRS guidance)',
           'Variable-speed available at 4-ton size',
         ],
         cons: [

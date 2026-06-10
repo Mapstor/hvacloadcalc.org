@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { INVENTORY } from '@/lib/seo/inventory';
 
 export const dynamic = 'force-static';
 
@@ -16,7 +17,7 @@ export function GET() {
 
 ## Calculators
 
-- [BTU Calculator](https://hvacloadcalc.org/tools/btu-calculator/): Free planning-grade BTU calculator implementing ACCA Manual J methodology with climate, ceiling, insulation, sun, and occupancy adjustments. 16 worked-example URLs.
+- [BTU Calculator](https://hvacloadcalc.org/tools/btu-calculator/): Free planning-grade BTU calculator implementing ACCA Manual J methodology with climate, ceiling, insulation, sun, and occupancy adjustments. ${INVENTORY.perCalculatorExamples.btu} worked-example URLs.
 - [AC Size Calculator](https://hvacloadcalc.org/tools/ac-size-calculator/): AC capacity in BTU and tonnage with equipment class recommendation (window, portable, mini-split, central), Manual S tolerance band, SEER2 cost comparison.
 - [Heat Pump Size Calculator](https://hvacloadcalc.org/tools/heat-pump-size-calculator/): Dual-load (cooling + heating) sizing with balance point, aux heat capacity, and standard vs NEEP CCASHP cold-climate equipment comparison.
 - [Attic R-Value Calculator](https://hvacloadcalc.org/tools/attic-r-value-calculator/): Multi-layer R-value calculation with DOE recommended R-values by climate zone and upgrade depth by material.
@@ -32,8 +33,8 @@ export function GET() {
 - [Manual D](https://hvacloadcalc.org/manual-d/): Friction rate, equivalent length, static pressure budget, trunk and branch sizing, flex vs metal trade-offs.
 - [Manual T](https://hvacloadcalc.org/manual-t/): Throw and spread, face velocity targets, register selection, return air placement.
 - [Building Science](https://hvacloadcalc.org/building-science/): R-values, U-factors, ACH50 infiltration, IECC climate zones, psychrometrics, HERS/RESNET energy audits.
-- [Tools Hub](https://hvacloadcalc.org/tools/): Five live calculators with methodology and 61 worked-example URLs. Planning-grade vs permit-grade explained.
-- [Glossary](https://hvacloadcalc.org/glossary/): 60+ HVAC and building science terms with sourced definitions, formulas, and source citations.
+- [Tools Hub](https://hvacloadcalc.org/tools/): Five live calculators with methodology and worked-example URLs. Planning-grade vs permit-grade explained.
+- [Glossary](https://hvacloadcalc.org/glossary/): ${INVENTORY.glossaryTermsApprox}+ HVAC and building science terms with sourced definitions, formulas, and source citations.
 
 ## In-depth articles
 
@@ -67,7 +68,7 @@ export function GET() {
 
 ## Primary sources behind the content
 
-ACCA (Manual J/S/D/T), ASHRAE (Fundamentals, Standard 169), AHRI (210/240 ratings), NEEP (CCASHP v4.0), DOE (10 CFR 430, Building America), EPA (AIM Act, ENERGY STAR), IRS (Section 25C), NFRC (window labels), RESNET (HERS), EIA (utility prices), IECC (climate zones), ASTM (testing standards).
+ACCA (Manual J/S/D/T), ASHRAE (Fundamentals, Standard 169), AHRI (210/240 ratings), NEEP (CCASHP v4.0), DOE (10 CFR 430, Building America), EPA (AIM Act, ENERGY STAR), IRS (Section 25C — current guidance: FS-2025-05, supersedes FS-2022-40; §25C HVAC scope expired Dec 31, 2025 after One Big Beautiful Bill Act), NFRC (window labels), RESNET (HERS), EIA (utility prices), IECC (climate zones), ASTM (testing standards).
 
 Full bibliography with documents, URLs, and access dates: https://hvacloadcalc.org/sources/
 `;

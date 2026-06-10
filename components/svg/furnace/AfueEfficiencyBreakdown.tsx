@@ -8,7 +8,7 @@ export function AfueEfficiencyBreakdown() {
     { afue: 80, useful: 80, loss: 20, savings: 0, note: 'Baseline (pre-2028 minimum)' },
     { afue: 90, useful: 90, loss: 10, savings: 137, note: 'Mid-efficiency condensing' },
     { afue: 95, useful: 95, loss: 5, savings: 205, note: '2028 federal minimum' },
-    { afue: 97, useful: 97, loss: 3, savings: 237, note: 'ENERGY STAR / 25C-eligible' },
+    { afue: 97, useful: 97, loss: 3, savings: 237, note: 'ENERGY STAR (was §25C-eligible thru Dec 31, 2025)' },
   ];
   const W = 1000;
   const H = 380;
@@ -198,7 +198,7 @@ export function AfueEfficiencyBreakdown() {
         load) using US-average natural-gas price ($1.30/therm). Higher-load homes in colder
         zones save more; lower-load homes in milder zones save less. Source: ANSI/ASHRAE
         Standard 103 furnace AFUE test method; DOE 10 CFR 430 efficiency standards; IRS
-        Section 25C Fact Sheet FS-2022-40.
+        Section 25C Fact Sheet FS-2025-05 (supersedes FS-2022-40; §25C HVAC scope expired Dec 31, 2025).
       </figcaption>
     </figure>
   );

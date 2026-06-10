@@ -218,7 +218,7 @@ export function HeatingCostByZone() {
         gas). Local prices change the ranking — at $0.12/kWh, federal-minimum heat pumps beat
         95% gas across all zones; at $0.25/kWh, CCASHP is needed for heat pumps to beat gas in
         zones 5-6. Source: EIA Tables 5.6.A and Natural Gas Residential, ASHRAE climate data,
-        IRS Section 25C heat-pump performance thresholds.
+        IRS Section 25C heat-pump performance thresholds (FS-2025-05; HVAC scope expired Dec 31, 2025).
       </figcaption>
     </figure>
   );

@@ -8,6 +8,7 @@ import { Callout } from '@/components/article/Callout';
 import { DataTable } from '@/components/data/DataTable';
 import { BtuPerSqftByZone } from '@/components/svg/homepage/BtuPerSqftByZone';
 import { ALL_HUBS } from '@/lib/seo/site';
+import { INVENTORY } from '@/lib/seo/inventory';
 import { ClimateZonesQuickReference } from '@/components/svg/shared/ClimateZonesQuickReference';
 
 export const metadata: Metadata = {
@@ -43,9 +44,9 @@ const HUB_DESCRIPTIONS: Record<string, string> = {
   '/building-science/':
     'R-values, U-factors, ACH50 infiltration, IECC climate zones, psychrometric basics, HERS/RESNET energy audits.',
   '/tools/':
-    'Five live calculators (BTU, AC, heat pump, attic R-value, Manual J) plus 61 worked-example URLs. Planning-grade vs permit-grade explained.',
+    `${INVENTORY.calculators} live calculators (BTU, AC, heat pump, attic R-value, Manual J) plus ${INVENTORY.workedExamples} worked-example URLs. Planning-grade vs permit-grade explained.`,
   '/glossary/':
-    '60+ HVAC and building science terms with sourced definitions, formulas, and source citations.',
+    `${INVENTORY.glossaryTermsApprox}+ HVAC and building science terms with sourced definitions, formulas, and source citations.`,
 };
 
 const CALCULATORS = [
@@ -218,14 +219,14 @@ const QUICK_REFERENCE = [
     href: '/building-science/insulation/attic-r-value/',
   },
   {
-    title: '2026 federal incentive stack (qualifying heat pump install)',
+    title: 'Federal incentive stack — status update',
     rows: [
-      { label: 'IRA §25C tax credit', value: 'Up to $2,000' },
-      { label: 'HEEHRA point-of-sale rebate', value: 'Up to $8,000' },
-      { label: 'State / utility rebates', value: '$500 – $10,000 typical' },
-      { label: 'Combined out-of-pocket reduction', value: '$5,000 – $15,000' },
+      { label: 'IRA §25C tax credit (HVAC scope)', value: 'Expired Dec 31, 2025' },
+      { label: 'HEEHRA point-of-sale rebate', value: 'State-administered (verify status)' },
+      { label: 'State / utility rebates', value: 'Vary by program' },
+      { label: 'Current 2026 status', value: 'Verify IRS guidance directly' },
     ],
-    source: 'IRS Fact Sheet FS-2022-40 + DOE HEEHRA program',
+    source: 'IRS Fact Sheet FS-2025-05 (supersedes FS-2022-40)',
     href: '/heat-pump/',
   },
 ];
@@ -264,7 +265,7 @@ const PRIMARY_SOURCES = [
   {
     abbr: 'IRS',
     name: 'US Internal Revenue Service',
-    scope: 'Section 25C Energy Efficient Home Improvement Credit, Fact Sheet FS-2022-40',
+    scope: 'Section 25C Energy Efficient Home Improvement Credit; current guidance: Fact Sheet FS-2025-05 (supersedes FS-2022-40 after One Big Beautiful Bill Act)',
   },
   {
     abbr: 'NFRC',
@@ -499,9 +500,9 @@ export default function HomePage() {
 
           <KeyTakeaways
             items={[
-              'Five live calculators implementing ACCA Manual J 8th Edition methodology: BTU, AC size, heat pump size (with NEEP CCASHP toggle), attic R-value, and full Manual J load.',
-              '15 in-depth articles covering heat pump aux heat, defrost cycle, SPF, sizing, AC short-cycling, Manual J, wet bulb temperature, attic R-value, window U-factor, HERS Index, return air sizing, mini-split sizing, Manual J verification, aux heat meaning, and AC BTU chart.',
-              '11 reference hubs across heat pump, AC, furnace, Manual J/S/D/T methodology, building science, calculators, and HVAC glossary — every figure on every hub sourced.',
+              `${INVENTORY.calculators} live calculators implementing ACCA Manual J 8th Edition methodology: BTU, AC size, heat pump size (with NEEP CCASHP toggle), attic R-value, and full Manual J load.`,
+              `${INVENTORY.inDepthArticles} in-depth articles covering heat pump aux heat, defrost cycle, SPF, sizing, AC short-cycling, Manual J, wet bulb temperature, attic R-value, window U-factor, HERS Index, return air sizing, mini-split sizing, Manual J verification, aux heat meaning, and AC BTU chart.`,
+              `${INVENTORY.hubs} reference hubs across heat pump, AC, furnace, Manual J/S/D/T methodology, building science, calculators, and HVAC glossary — every figure on every hub sourced.`,
               'Methodology built on ACCA, ASHRAE, AHRI, NEEP, DOE, EPA, IRS, NFRC, RESNET primary publications; the site is intentionally not ACCA-approved because approval applies to permit-grade software with annual certification fees.',
               'No account creation, no sign-up, no email gate — calculators and articles are free to use directly.',
             ]}
@@ -772,29 +773,30 @@ export default function HomePage() {
               Federal HVAC programs the site tracks
             </h2>
             <p className="mt-3 max-w-prose text-ink-700">
-              Federal program categories that drive most 2026 residential HVAC
-              decisions. Incentive amounts and qualifying-equipment thresholds are
-              updated when the underlying regulations change.
+              Federal program categories that drive residential HVAC decisions. Status
+              and amounts shift with legislative action; verify current IRS and DOE
+              guidance before relying on any specific incentive figure for a purchase
+              decision.
             </p>
             <DataTable
-              caption="2026 federal HVAC programs tracked across the site (source: IRS, DOE, EPA primary publications)"
+              caption="Federal HVAC programs tracked across the site, with 2026 status (source: IRS, DOE, EPA primary publications)"
               columns={[
                 { key: 'program', label: 'Program' },
-                { key: 'maxAmount', label: 'Max benefit', align: 'right' },
+                { key: 'maxAmount', label: '2026 status', align: 'right' },
                 { key: 'scope', label: 'Scope' },
                 { key: 'source', label: 'Source' },
               ]}
               rows={[
                 {
                   program: 'IRA Section 25C (Energy Efficient Home Improvement Credit)',
-                  maxAmount: '$2,000 (heat pump) + $1,200 other',
-                  scope: 'Tax credit for high-efficiency equipment and envelope improvements',
-                  source: 'IRS Fact Sheet FS-2022-40',
+                  maxAmount: 'Expired Dec 31, 2025 (HVAC scope)',
+                  scope: 'Was a tax credit for high-efficiency equipment and envelope improvements; last claimable on 2025 tax return for installs completed by Dec 31, 2025',
+                  source: 'IRS Fact Sheet FS-2025-05 (supersedes FS-2022-40)',
                 },
                 {
                   program: 'IRA Section 50122 (HEEHRA point-of-sale rebate)',
-                  maxAmount: '$8,000 (heat pump) + $14,000 total',
-                  scope: 'Income-qualified point-of-sale rebates for electrification',
+                  maxAmount: 'State-administered (verify status by state)',
+                  scope: 'Income-qualified point-of-sale rebates for electrification; status varies by state program funding',
                   source: 'DOE Home Energy Rebates Programs',
                 },
                 {
@@ -886,16 +888,17 @@ export default function HomePage() {
             <h2 className="text-2xl font-bold text-ink-900">About the site</h2>
             <p className="mt-4 text-ink-700">
               hvacloadcalc.org is an independent educational reference written and
-              maintained by{' '}
+              maintained under the pen name{' '}
               <Link
                 href="/authors/jonathan-s/"
                 className="text-brand hover:underline"
               >
                 Jonathan Stowe
-              </Link>
-              , a writer-researcher who specializes in residential HVAC methodology and
-              learned the field after receiving contradictory contractor quotes for his
-              own home. The full editorial process is documented in the{' '}
+              </Link>{' '}
+              by a single independent operator — a developer based in the EU who
+              specializes in residential HVAC methodology through sustained primary-source
+              reading. The pseudonym disclosure and full editorial process are documented
+              in the{' '}
               <Link
                 href="/editorial-standards/"
                 className="text-brand hover:underline"

@@ -14,16 +14,17 @@ import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
 import { BtuPerSqftByZone } from '@/components/svg/homepage/BtuPerSqftByZone';
 import { ClimateZonesQuickReference } from '@/components/svg/shared/ClimateZonesQuickReference';
+import { INVENTORY } from '@/lib/seo/inventory';
 
 export const metadata = {
   alternates: { canonical: "/tools/" },
   title: 'HVAC Calculators: Methodology, Accuracy, and How to Use Them',
   description:
-    'Five HVAC calculators (BTU, AC, heat pump, attic R-value, Manual J) with documented methodology, primary-source data tables, and 61 worked example URLs. Planning-grade accuracy vs permit-grade Manual J explained.',
+    `Five HVAC calculators (BTU, AC, heat pump, attic R-value, Manual J) with documented methodology, primary-source data tables, and ${INVENTORY.workedExamples} worked-example URLs. Planning-grade accuracy vs permit-grade Manual J explained.`,
   openGraph: {
     title: 'HVAC Calculators: A Reference Hub for Methodology and Accuracy',
     description:
-      'Five calculators built on ACCA Manual J 8th Edition methodology, with 61 worked examples and explicit accuracy bands vs permit-grade software.',
+      `Five calculators built on ACCA Manual J 8th Edition methodology, with ${INVENTORY.workedExamples} worked examples and explicit accuracy bands vs permit-grade software.`,
     type: 'article',
     publishedTime: '2026-05-30',
     modifiedTime: '2026-05-30',
@@ -42,7 +43,7 @@ export const HEADINGS = [
   { id: 'the-five-calculators', text: 'The Five Calculators and What Each One Computes', level: 2 },
   { id: 'how-the-math-works', text: 'How the Math Works (Methodology Transparency)', level: 2 },
   { id: 'accuracy-versus-permit-grade', text: 'Accuracy: Planning-Grade vs Permit-Grade Manual J', level: 2 },
-  { id: 'sixty-one-worked-examples', text: 'The 61 Worked-Example URLs', level: 2 },
+  { id: 'sixty-one-worked-examples', text: 'The Worked-Example URLs', level: 2 },
   { id: 'when-the-calculator-is-not-enough', text: 'When the Calculator Is Not Enough', level: 2 },
   { id: 'commercial-software-comparison', text: 'How These Compare to Professional Manual J Software', level: 2 },
   { id: 'open-source-data-and-formulas', text: 'Open-Source Data and Formulas', level: 2 },
@@ -205,7 +206,7 @@ export const FRONTMATTER = {
   title: 'HVAC Calculators: Methodology, Accuracy, and How to Use Them',
   h1: 'HVAC Calculators: How They Work and How Accurate They Are',
   meta_description:
-    'Five HVAC calculators (BTU, AC, heat pump, attic R-value, Manual J) with documented methodology, primary-source data tables, and 61 worked example URLs. Planning-grade accuracy vs permit-grade Manual J explained.',
+    `Five HVAC calculators (BTU, AC, heat pump, attic R-value, Manual J) with documented methodology, primary-source data tables, and ${INVENTORY.workedExamples} worked-example URLs. Planning-grade accuracy vs permit-grade Manual J explained.`,
   url: '/tools/',
   date_published: '2026-05-30',
   last_reviewed: '2026-05-30',
@@ -226,7 +227,7 @@ export const FRONTMATTER = {
 
 <ArticleHeader
   h1="HVAC Calculators: How They Work and How Accurate They Are"
-  description="Five HVAC calculators built on ACCA Manual J 8th Edition, ASHRAE Fundamentals 2021, AHRI 210/240-2023, NEEP CCASHP v4.0, and DOE/ENERGY STAR efficiency standards. Methodology, accuracy bands, and 61 worked-example URLs documented openly."
+  description={`Five HVAC calculators built on ACCA Manual J 8th Edition, ASHRAE Fundamentals 2021, AHRI 210/240-2023, NEEP CCASHP v4.0, and DOE/ENERGY STAR efficiency standards. Methodology, accuracy bands, and ${INVENTORY.workedExamples} worked-example URLs documented openly.`}
   datePublished="2026-05-30"
   lastReviewed="2026-05-30"
   readingTimeMinutes={12}

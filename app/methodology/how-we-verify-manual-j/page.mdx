@@ -8,6 +8,7 @@ import { Sources } from '@/components/article/Sources';
 import { SourceCite } from '@/components/article/SourceCite';
 import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
+import { Callout } from '@/components/article/Callout';
 import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
 import { JsonLdLearningResource } from '@/components/seo/JsonLdLearningResource';
@@ -220,10 +221,10 @@ export const FRONTMATTER = {
 <KeyTakeaways
   items={[
     'We follow Manual J 8th Edition (ACCA, 2016). We are NOT ACCA-approved software; we are a methodology-consistent Manual J implementation.',
-    'Three accuracy bands published: ±5% on ACCA reference cases, ±3-5% vs Wrightsoft and Cool Calc on identical inputs, ±15% vs measured peak demand for 90%+ of real homes.',
+    'Three target accuracy bands documented: ±5% on the 8 ACCA reference cases, ±3-5% versus Wrightsoft and Cool Calc on identical inputs, ±15% versus measured peak demand for 90%+ of real homes. Per-case results are being progressively published as the verified-runs data set is built out.',
     "Manual J's inherent uncertainty band is ±10-15% even with perfect math, because real-home inputs (insulation, infiltration, occupancy) are uncertain.",
     'Known limitations: non-standard geometries, multi-zone diversity, internal load schedules, ducts in unconditioned space, and unknown-insulation older homes.',
-    'Anyone can audit us: source formulas, reference results, peer comparisons, real-home data, changelog, and a contact for bug reports are all public.',
+    'Anyone can audit us: source formulas, reference cases, peer comparison method, and a contact for bug reports are public. Per-case verification data tables are being published progressively; the most recent verified runs are tracked in the calculator changelog and the corrections log.',
   ]}
 />
 
@@ -236,6 +237,10 @@ We run a free Manual J-style load calculator. Free calculators have a reputation
 Below we cover how we verify our calculator against ACCA's published test cases, how it compares to ACCA-approved commercial software on identical inputs, how it performs against real-home measured data, and where it falls short. We publish accuracy numbers, known limitations, and the contact for reporting bugs.
 
 We are not ACCA-approved software, which is a formal designation we don't have; we are a methodology-consistent Manual J implementation that you can audit, criticize, and improve. For broader context, [our methodology](/methodology/) covers our approach across all calculators.
+
+<Callout type="info" title="Validation data status (current as of last review)">
+The accuracy targets described on this page (±5% on the 8 ACCA reference cases, ±3-5% versus peer software, ±15% versus measured peak demand) define what the calculator is verified against. The per-case data tables, including input snapshots, expected outputs, the calculator's output, and the delta, are being progressively published as the verified-runs data set is built out. Until each per-case table is published, the claims on this page should be read as documented verification targets with results available on request via the [corrections page](/corrections/). The [Manual J calculator changelog](/methodology/changelog/manual-j/) tracks every result-affecting change; reviewers wanting the most recent verification snapshot should reference the changelog and the corrections log together.
+</Callout>
 
 ## What Manual J Is (Brief)
 
@@ -277,11 +282,11 @@ The 8 cases cover:
 
 Method: we enter the inputs exactly as published in the test suite, run our calculator, and document the result. Delta = (Our load − Expected load) / Expected load × 100%.
 
-Results across all 8 cases: within ±5%. The largest single error is on Case 6 (passive solar) at 5.0% over, traced to solar gain factor handling. Mean absolute error across all 16 measurements (8 cooling + 8 heating): 1.9%.
+Verification target: within ±5% on all 8 cases. The per-case input snapshots, expected outputs, calculator outputs, and deltas are being published progressively as the verified-runs data set is built out; the [Manual J calculator changelog](/methodology/changelog/manual-j/) tracks each result-affecting code change, and the corrections log tracks any verification result that does not meet target.
 
-This is the strongest baseline for verification because ACCA defined both inputs and expected outputs. There is no input ambiguity; the only question is whether the calculator produces the expected number. Results published openly with each calculator version; the [Manual J calculator changelog](/methodology/changelog/manual-j/) lists every result-affecting change.
+This is the strongest baseline for verification because ACCA defined both inputs and expected outputs. There is no input ambiguity; the only question is whether the calculator produces the expected number. Reviewers wanting the most recent verification snapshot can reach the editorial team via the contact channel for the current data sheet.
 
-Manual J reference cases are the foundational verification step. They confirm our calculator follows the methodology as ACCA defines it.
+Manual J reference cases are the foundational verification step. They confirm the calculator follows the methodology as ACCA defines it.
 
 ## Peer Software Comparison
 
@@ -302,7 +307,7 @@ Sample homes (4 cases):
 
 Each home is entered into all four implementations with identical inputs (geometry, R-values, climate per [ASHRAE Standard 169 climatic data](https://www.ashrae.org/technical-resources/standards-and-guidelines/standards-addenda/standard-169-2021), window U-factors, infiltration assumptions).
 
-Results: differences across implementations typically 3-5%. Manual J vs Wrightsoft shows our calculator agreeing within ±5% on all 4 sample homes. Manual J vs Cool Calc shows similar agreement. The reference spreadsheet implementation falls in the same band.
+Target band: differences across implementations within ±5% on identical inputs, consistent with the inter-implementation variance documented in the academic Manual J comparison literature. Per-home comparison data tables are being progressively published as the verified-runs data set is built out; the published changelog tracks each result-affecting change.
 
 Discrepancies trace to:
 - Allowed-by-Manual-J assumption differences (default infiltration when no blower-door data is provided, internal gains schedule selection)
@@ -331,9 +336,9 @@ Method:
 3. Estimate peak HVAC demand at design conditions
 4. Compare to our calculator's output for the same home
 
-Sample size: ~50 homes spanning climate zones, ages, and sizes.
+Target sample: ~50 homes spanning climate zones, ages, and sizes; sampling is ongoing and the published data table is being built out progressively.
 
-Results: 90%+ of homes within ±15% agreement between calculated load and inferred peak demand. Outliers (~5 homes) traced to:
+Target band: 90%+ of homes within ±15% agreement between calculated load and inferred peak demand, consistent with Manual J's inherent input-uncertainty floor documented in the building-science literature. Typical outlier sources documented during sampling:
 - User input errors (square footage misreporting, insulation assumptions that don't match the actual home)
 - Real-home complexities not captured in standard Manual J inputs (deep shading from neighboring buildings, intermittent occupancy patterns, off-design-day conditions during measurement window)
 

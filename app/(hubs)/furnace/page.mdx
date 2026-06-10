@@ -9,6 +9,7 @@ import { SourceCite } from '@/components/article/SourceCite';
 import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
 import { Callout } from '@/components/article/Callout';
+import { IncentiveStatusAlert } from '@/components/article/IncentiveStatusAlert';
 import { DataTable } from '@/components/data/DataTable';
 import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
@@ -143,7 +144,7 @@ export const SOURCES = [
   },
   {
     id: 'irs-25c-fact-sheet',
-    title: 'IRA Section 25C — Energy Efficient Home Improvement Credit (Fact Sheet FS-2022-40)',
+    title: 'IRA Section 25C — Energy Efficient Home Improvement Credit (Fact Sheet FS-2025-05, supersedes FS-2022-40)',
     publisher: 'US Internal Revenue Service',
     year: 2023,
     url: 'https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit',
@@ -164,7 +165,7 @@ export const SOURCES = [
 export const FAQ_ITEMS = [
   {
     q: 'What AFUE rating should I buy for a new gas furnace?',
-    a: 'In most US climates the right answer is 95-97% AFUE (a "condensing" furnace) because the efficiency improvement over an 80% unit typically pays back in 5-10 years through reduced gas use, and federal Section 25C tax credits return $600 for qualifying ≥97% AFUE installations. The exception is a household in a warm climate (zone 1-2) using the furnace only 20-30 days per year, where the gas savings cannot recover the $1,500-$3,000 cost premium for a condensing unit; 80% AFUE is reasonable there if the furnace runs rarely.',
+    a: 'In most US climates the right answer is 95-97% AFUE (a "condensing" furnace) because the efficiency improvement over an 80% unit typically pays back in 5-10 years through reduced gas use. For installs completed by December 31, 2025 the federal Section 25C tax credit returned $600 for qualifying ≥97% AFUE installations; §25C is not available for 2026 installs under current IRS guidance. The exception to the high-AFUE recommendation is a household in a warm climate (zone 1-2) using the furnace only 20-30 days per year, where the gas savings cannot recover the $1,500-$3,000 cost premium for a condensing unit; 80% AFUE is reasonable there if the furnace runs rarely.',
   },
   {
     q: 'How much does it cost to install a new furnace in 2026?',
@@ -184,7 +185,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: 'Should I replace my old furnace with a heat pump instead?',
-    a: 'In most US climates with both heating and cooling demand, replacing an aging furnace plus an aging AC with a single heat pump produces the lowest 15-year ownership cost, especially with the 25C credit ($2,000) and HEEHRA rebates (up to $8,000 for qualifying households). Where heat pumps lag: very cold climates with cheap natural gas and high electricity prices (parts of the upper Midwest), or households that just replaced the AC last year and have a brand-new gas furnace with 15 years of remaining life. The [heat pump reference](/heat-pump/) covers the full comparison.',
+    a: 'In most US climates with both heating and cooling demand, replacing an aging furnace plus an aging AC with a single heat pump produces the lowest 15-year ownership cost. For installs completed by December 31, 2025 the federal §25C credit added up to $2,000 for qualifying heat pumps; §25C is not available for 2026 installs. HEEHRA rebates (up to $8,000 for qualifying households) remain state-administered where funding is available — verify your state program. Where heat pumps lag: very cold climates with cheap natural gas and high electricity prices (parts of the upper Midwest), or households that just replaced the AC last year and have a brand-new gas furnace with 15 years of remaining life. The [heat pump reference](/heat-pump/) covers the full comparison.',
   },
   {
     q: 'What is a "dual fuel" or "hybrid" heating system?',
@@ -272,6 +273,8 @@ export const FRONTMATTER = {
 
 <article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
 
+<IncentiveStatusAlert />
+
 ## What a Furnace Is and How It Differs from a Boiler
 
 A furnace is a forced-air heating appliance that burns fuel (natural gas, propane, fuel oil, or in older units coal or wood) inside a metal heat exchanger, then blows indoor air across the outside of that exchanger to warm it.<SourceCite id="doe-furnace-buying" number={2} /> Combustion gases leave through a flue vent; conditioned air leaves through the duct system. The distinction between a furnace and a boiler is the heat-transfer medium: furnaces use air, boilers use water (hot water or steam).
@@ -357,7 +360,7 @@ Annual savings range from $77 (light heating, zone 2) to $539 (very cold, zone 7
 
 A $2,000 premium pays back in 4 years at zone 7 use, 6-7 years at zone 5, 10-11 years at zone 4, and 25+ years at zone 2.
 
-The 25C tax credit shifts the math substantially. The IRS Section 25C credit returns 30% of the installed cost up to $600 for a qualifying ≥97% AFUE gas furnace, which directly reduces the effective premium by up to $600.<SourceCite id="irs-25c-fact-sheet" number={11} /> In a zone 4 install, a $2,000 premium minus $600 credit becomes a $1,400 net premium with $205 annual savings — a 7-year payback rather than a 10-year one.
+For installs completed on or before December 31, 2025 the §25C credit shifted the math substantially. The IRS Section 25C credit returned 30% of the installed cost up to $600 for a qualifying ≥97% AFUE gas furnace, which directly reduced the effective premium by up to $600.<SourceCite id="irs-25c-fact-sheet" number={11} /> In a zone 4 install, a $2,000 premium minus $600 credit became a $1,400 net premium with $205 annual savings — a 7-year payback rather than a 10-year one. For 2026 installs the credit is not available under current IRS guidance, so the unsubsidized payback math applies; verify current incentive status before assuming a credit.
 
 The non-financial considerations also favor condensing units. The PVC sidewall vent can exit a basement or first-floor wall at any convenient location, freeing up the chimney for water heater venting or removal. Indoor air quality improves because sealed combustion eliminates back-drafting risk during high-wind events that can pull flue gases back into atmospheric units.
 
@@ -483,38 +486,38 @@ Dual-fuel (hybrid) systems split the difference. A heat pump handles all heating
 Federal incentives for furnace replacement are smaller than for heat pumps but still meaningful for households committed to staying on natural gas.
 
 <DataTable
-  caption="2026 federal incentives for high-efficiency furnaces (source: IRS Fact Sheet 25C, DOE HEEHRA program documentation)"
+  caption="Federal incentive programs for high-efficiency furnaces — status snapshot (verify current IRS and DOE guidance before relying on specific amounts)"
   columns={[
     { key: 'program', label: 'Program' },
     { key: 'qualifying', label: 'Qualifying equipment' },
-    { key: 'amount', label: 'Maximum amount', align: 'right' },
-    { key: 'mechanism', label: 'How it works' },
+    { key: 'amount', label: '2026 status', align: 'right' },
+    { key: 'mechanism', label: 'How it worked / works' },
   ]}
   rows={[
     {
       program: 'IRA Section 25C — Gas/Propane/Oil Furnace',
       qualifying: '≥ 97% AFUE gas, ≥ 95% AFUE oil',
-      amount: '$600 per year',
-      mechanism: 'Non-refundable tax credit, 30% of installed cost up to cap',
+      amount: 'Expired Dec 31, 2025 (was $600/yr)',
+      mechanism: 'Was a non-refundable tax credit, 30% of installed cost up to $600. Last claimable on 2025 tax return for installs by Dec 31, 2025.',
     },
     {
       program: 'HEEHRA Section 50122',
       qualifying: 'Heat pump only (no furnace eligibility)',
-      amount: '$8,000 (heat pump)',
+      amount: 'State-administered (verify by state)',
       mechanism: 'Point-of-sale rebate for income-qualifying households',
     },
     {
       program: 'HOMES Section 50121',
       qualifying: 'Whole-home retrofit, modeled or measured savings',
-      amount: 'Up to $8,000 / $4,000',
+      amount: 'State-administered (verify by state)',
       mechanism: 'Performance-based rebate, can include furnace replacement as part of package',
     },
   ]}
 />
 
-The 25C credit applies only to ≥97% AFUE gas or ≥95% AFUE oil furnaces — federal-minimum 80% units are not eligible, and condensing 95% AFUE units fall just short of the 97% threshold for gas.<SourceCite id="irs-25c-fact-sheet" number={11} /> This effectively pushes high-efficiency-tier buyers toward the 97-98% AFUE options where the credit applies and away from the 95% AFUE tier where it does not.
+When active (installs ≤ Dec 31, 2025), the §25C credit applied only to ≥97% AFUE gas or ≥95% AFUE oil furnaces — federal-minimum 80% units were not eligible, and condensing 95% AFUE units fell just short of the 97% threshold for gas.<SourceCite id="irs-25c-fact-sheet" number={11} /> That eligibility test effectively pushed high-efficiency-tier buyers toward the 97-98% AFUE options where the credit applied. For 2026 installs the federal credit is not available under current IRS guidance.
 
-HEEHRA point-of-sale rebates do not cover furnaces — the program is heat-pump-only by design, intentionally accelerating electrification of US heating. A qualifying household replacing a furnace with a heat pump can stack the $2,000 25C heat pump credit with up to $8,000 HEEHRA, while the same household replacing a furnace with a new furnace cannot stack — and is limited to $600 maximum.<SourceCite id="doe-heehra" number={8} />
+HEEHRA point-of-sale rebates do not cover furnaces — the program is heat-pump-only by design, intentionally accelerating electrification of US heating. State HEEHRA program status varies; verify with your state energy office.<SourceCite id="doe-heehra" number={8} />
 
 State and utility incentives vary widely. Mass Save offers $1,000-$3,000 for 97% AFUE gas furnaces in Massachusetts. CenterPoint Energy offers $200-$500 in Minnesota and Texas. Most Pacific Northwest utilities offer zero gas furnace rebates as they push customers toward heat pumps. Check your state energy office and local gas utility for current programs.
 

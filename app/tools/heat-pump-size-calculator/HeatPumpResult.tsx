@@ -20,7 +20,7 @@ const EQUIPMENT_REC_INFO: Record<
   'cold-climate-recommended': {
     label: 'Cold-climate certified (CCASHP) recommended',
     description:
-      "Cold-climate certified equipment from the NEEP CCASHP product list will produce noticeably lower aux heat runtime in this climate. The premium over standard equipment ($2,000-$5,000 typical) usually pays back in 6-12 years through reduced electricity costs for aux heat operation below the balance point. The 25C federal tax credit ($2,000) applies to ENERGY STAR Cold Climate qualifying units.",
+      "Cold-climate certified equipment from the NEEP CCASHP product list will produce noticeably lower aux heat runtime in this climate. The premium over standard equipment ($2,000-$5,000 typical) usually pays back in 6-12 years through reduced electricity costs for aux heat operation below the balance point. The federal §25C tax credit ($2,000) applied to ENERGY STAR Cold Climate qualifying units installed by Dec 31, 2025; not available for 2026 installs under current IRS guidance — verify with the IRS Energy Efficient Home Improvement Credit page.",
   },
   'cold-climate-required': {
     label: 'Cold-climate certified (CCASHP) required',
@@ -338,10 +338,10 @@ export function HeatPumpResult({ result, inputs }: Props) {
             </thead>
             <tbody>
               <tr className="border-b border-ink-100">
-                <td className="px-4 py-2 text-ink-900">IRA 25C tax credit</td>
-                <td className="px-4 py-2 text-right font-mono font-semibold text-ink-900">$2,000</td>
+                <td className="px-4 py-2 text-ink-900">IRA §25C tax credit (HVAC scope)</td>
+                <td className="px-4 py-2 text-right font-mono font-semibold text-amber-700">Expired Dec 31, 2025</td>
                 <td className="px-4 py-2 text-xs text-ink-700">
-                  Heat pump must meet CEE highest tier (typically ENERGY STAR Cold Climate or HSPF2 ≥ 8.1)
+                  Was up to $2,000 for installs completed by Dec 31, 2025 meeting CEE highest tier; not available for 2026 installs. Verify current status with IRS Energy Efficient Home Improvement Credit page.
                 </td>
               </tr>
               <tr className="border-b border-ink-100">

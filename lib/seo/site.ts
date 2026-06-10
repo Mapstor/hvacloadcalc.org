@@ -1,5 +1,5 @@
 export const SITE = {
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://hvacloadcalc.org',
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hvacloadcalc.org',
   name: 'hvacloadcalc.org',
   description:
     'Educational HVAC reference covering load calculation, heat pump sizing, and building science.',

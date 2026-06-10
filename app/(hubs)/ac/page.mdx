@@ -9,6 +9,7 @@ import { SourceCite } from '@/components/article/SourceCite';
 import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
 import { Callout } from '@/components/article/Callout';
+import { IncentiveStatusAlert } from '@/components/article/IncentiveStatusAlert';
 import { DataTable } from '@/components/data/DataTable';
 import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
@@ -163,7 +164,7 @@ export const SOURCES = [
   },
   {
     id: 'irs-25c-fact-sheet',
-    title: 'IRA Section 25C — Energy Efficient Home Improvement Credit (Fact Sheet FS-2022-40)',
+    title: 'IRA Section 25C — Energy Efficient Home Improvement Credit (Fact Sheet FS-2025-05, supersedes FS-2022-40)',
     publisher: 'US Internal Revenue Service',
     year: 2023,
     url: 'https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit',
@@ -187,7 +188,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: 'How much does it cost to install a new central AC in 2026?',
-    a: "Typical installed cost ranges from $4,000 to $8,000 for a basic 2-3 ton split-system replacement in an existing house with usable ductwork, $7,000 to $12,000 for a higher-efficiency variable-speed unit or a more complex install, and $3,000 to $8,000 per zone for a ductless mini-split. The IRS Section 25C tax credit returns up to $600 for a qualifying high-efficiency central AC (15.2 SEER2 or better with EER2 thresholds), and state and utility rebates often add $200-$1,000 on top.",
+    a: "Typical installed cost ranges from $4,000 to $8,000 for a basic 2-3 ton split-system replacement in an existing house with usable ductwork, $7,000 to $12,000 for a higher-efficiency variable-speed unit or a more complex install, and $3,000 to $8,000 per zone for a ductless mini-split. For installs completed by December 31, 2025 the IRS Section 25C tax credit returned up to $600 for a qualifying high-efficiency central AC (15.2 SEER2 or better with EER2 thresholds); §25C is not available for 2026 installs under current IRS guidance. Verify state and utility rebates with your local programs — they often add $200-$1,000 on top and are administered independent of federal program changes.",
   },
   {
     q: 'Why does my AC remove water? Is that normal?',
@@ -207,7 +208,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: 'Should I get a heat pump instead of replacing my AC?',
-    a: 'In most cases the math favors a heat pump if you are already replacing the AC, because the heat pump replaces both the AC and (eventually) the furnace from a single piece of equipment. The 25C tax credit for heat pumps ($2,000) is larger than for AC ($600), and HEEHRA rebates for qualifying households apply to heat pumps but not to standalone AC. Where heat pumps fall behind is in very cold climates with cheap natural gas where the homeowner intends to keep the gas furnace; in that case standard AC + gas furnace remains a common combination.',
+    a: 'In most cases the math favors a heat pump if you are already replacing the AC, because the heat pump replaces both the AC and (eventually) the furnace from a single piece of equipment. While §25C was active (installs through December 31, 2025) the credit for heat pumps ($2,000) was larger than for AC ($600); §25C is not available for 2026 installs. HEEHRA rebates for qualifying households apply to heat pumps but not to standalone AC where state programs remain funded — verify state status. Where heat pumps fall behind is in very cold climates with cheap natural gas where the homeowner intends to keep the gas furnace; in that case standard AC + gas furnace remains a common combination.',
   },
 ];
 
@@ -289,6 +290,8 @@ export const FRONTMATTER = {
 
 <article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
 
+<IncentiveStatusAlert />
+
 ## What an Air Conditioner Actually Does
 
 An air conditioner is a vapor-compression heat pump operating in cooling mode. A refrigerant loop carries heat from indoors (where the evaporator coil sits) to outdoors (where the condenser coil sits), moved by a compressor that elevates the refrigerant's pressure and temperature between the two coils.<SourceCite id="doe-ac-buying" number={9} /> The same hardware that defines a heat pump in cooling mode is, with the four-way reversing valve removed, what a dedicated air conditioner is.
@@ -339,7 +342,7 @@ A high SEER2 with low EER2 indicates an inverter unit that performs well at part
     { tier: 'Federal minimum (split)', region: 'South / Southwest', seer2: '14.3', eer2: 'EER 11.7 in SW', source: 'DOE 10 CFR 430' },
     { tier: 'Federal minimum (packaged)', region: 'All US', seer2: '13.4', eer2: '—', source: 'DOE 10 CFR 430' },
     { tier: 'ENERGY STAR v6.1', region: 'All US', seer2: '15.2', eer2: 'EER2 ≥ 12.0', source: 'ENERGY STAR program' },
-    { tier: 'IRS 25C qualifying ($600 credit)', region: 'All US', seer2: '≥ 16.0 (CEE Tier)', eer2: '≥ 12.0', source: 'IRS Fact Sheet 25C' },
+    { tier: 'IRS 25C qualifying (installs ≤ Dec 31, 2025)', region: 'All US', seer2: '≥ 16.0 (CEE Tier)', eer2: '≥ 12.0', source: 'IRS FS-2025-05 (supersedes FS-2022-40)' },
   ]}
 />
 

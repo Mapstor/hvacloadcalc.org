@@ -36,6 +36,7 @@ export const BREADCRUMBS = [
 export const HEADINGS = [
   { id: 'editorial-mission', text: 'Editorial Mission and Approach', level: 2 },
   { id: 'who-writes-the-content', text: 'Who Writes the Content', level: 2 },
+  { id: 'drafting-process-and-ai', text: 'Drafting Process and AI Assistance', level: 2 },
   { id: 'sourcing-standards', text: 'Sourcing Standards: The Tier System', level: 2 },
   { id: 'six-stage-review-process', text: 'The Six-Stage Article Review Process', level: 2 },
   { id: 'hard-rules', text: 'Hard Rules That Cannot Be Bypassed', level: 2 },
@@ -50,6 +51,14 @@ export const FAQ_ITEMS = [
   {
     q: 'Why publish editorial standards in this much detail?',
     a: "Because a homeowner reaching the site has no reason to trust an unverified source. The detailed editorial standards make accountability concrete: when a methodology error is found, the process for fixing and disclosing is documented; when a potential conflict of interest exists, the disclosure is published; when a source tier is unclear, the criteria for inclusion are defined. Editorial standards in the abstract are not credible — published process is.",
+  },
+  {
+    q: 'Is "Jonathan Stowe" the operator\'s real name?',
+    a: '"Jonathan Stowe" is a pen name. The site is researched, written, and maintained by a single independent operator — a developer based in the EU — who publishes under a pseudonym for personal privacy. The pseudonym is disclosed on the author page, the about page, and this editorial standards page. Editorial accountability does not depend on the author\'s identity; it depends on the inline primary-source citation behind every claim, the public corrections log, and the auditable content history in the git repository.',
+  },
+  {
+    q: 'Is the content written by AI?',
+    a: 'Prose is drafted with the assistance of large-language-model tools (Claude by Anthropic, OpenAI\'s GPT family) operating against article briefs the operator has written, then fact-checked against cited primary sources and edited before publication. Calculator math, data tables, and numeric thresholds are written directly by the operator in version-controlled source files; AI tools are not in the data path of any number that appears in a calculator or sourced data table. Every published claim has been verified against the cited primary source by the operator before publication. The full disclosure is in the "Drafting Process and AI Assistance" section below.',
   },
   {
     q: 'How do you decide which sources count as authoritative?',
@@ -167,11 +176,42 @@ The brand voice document specifies forbidden phrases (marketing fluff like "navi
 
 ## Who Writes the Content
 
-All content is written by Jonathan Stowe (the [author page](/authors/jonathan-s/)), a writer-researcher specializing in residential HVAC methodology. The site does not claim professional engineering authority — it claims that rigorous research into ACCA, ASHRAE, NEEP, DOE, and other primary sources produces content that helps non-specialists make better decisions.
+The site is researched, written, and maintained under the pen name [Jonathan Stowe](/authors/jonathan-s/) by a single independent operator — a developer based in the EU who publishes under a pseudonym for personal privacy. The pseudonym is disclosed on the author page, the about page, and this editorial standards page.
 
-When subject-matter expertise beyond the author's reading is required, the relevant source is cited directly. The site relies on authoritative standards for the substance of every claim. When a methodology question requires reasoning beyond what standards explicitly address, the article either presents the major reasonable-practitioner positions (with their respective sources) or labels the editorial position as such rather than asserting it as fact.
+<Callout type="info" title="Where editorial accountability actually lives">
+The accountability mechanism for the site is not the author's identity. It is (1) the inline primary-source citation behind every disputable claim, (2) the public corrections log at [/corrections/](/corrections/), and (3) the auditable content and source-code history in the git repository. Anyone can verify a specific claim against its cited source without knowing anything about who wrote it.
+</Callout>
 
-Editorial contributions from external practitioners are welcome but currently rare. The editorial process for accepting a guest perspective requires the contributor to follow the source tier system, the brief format, and the review process; we have not yet established a guest-contributor channel.
+The site does not claim professional engineering authority — it claims that rigorous research into ACCA, ASHRAE, NEEP, DOE, and other primary sources produces content that helps non-specialists make better decisions about residential HVAC.
+
+When subject-matter expertise beyond the operator's reading is required, the relevant source is cited directly. The site relies on authoritative standards for the substance of every claim. When a methodology question requires reasoning beyond what standards explicitly address, the article either presents the major reasonable-practitioner positions (with their respective sources) or labels the editorial position as such rather than asserting it as fact.
+
+Editorial contributions from external practitioners are welcome but currently rare. The editorial process for accepting a guest perspective requires the contributor to follow the source tier system, the brief format, and the review process; a guest-contributor channel has not yet been established.
+
+## Drafting Process and AI Assistance
+
+Prose on this site is drafted with the assistance of large-language-model tools — primarily Claude (Anthropic) and the GPT family (OpenAI) — operating against article briefs that the operator has written and checked into the repository at `/content/briefs/`. Drafted prose is then fact-checked against the cited primary sources, edited for the site's voice and structural rules, and verified against the editorial gate checklist before publication.
+
+Calculator math, data tables, and numeric thresholds are not produced by AI. They live in version-controlled TypeScript and JSON source files under `/lib/calculators/`, `/data/`, and the calculator route directories, and they are written directly by the operator from primary-source documents. Numbers that appear in calculators and `<DataTable>` rows trace to specific cited standards (ACCA Manual J tables, ASHRAE Handbook chapters, AHRI Directory entries, NEEP CCASHP database fields, IRS Fact Sheets, NFRC certifications), not to AI generation.
+
+<DataTable
+  caption="What AI assistance is and is not used for on this site"
+  columns={[
+    { key: 'used', label: 'AI is used for' },
+    { key: 'notUsed', label: 'AI is not used for' },
+  ]}
+  rows={[
+    { used: 'Drafting prose against an operator-written brief', notUsed: 'Producing factual claims that bypass the source-tier system' },
+    { used: 'Rewording for readability and brand voice', notUsed: 'Generating numeric values that appear in calculators or data tables' },
+    { used: 'Surfacing internal-link opportunities across the site', notUsed: 'Producing citations or generating source references' },
+    { used: 'Proposing alternative phrasings during editorial review', notUsed: 'Making editorial decisions about scope or position on contested topics' },
+    { used: 'Generating SVG diagram code from operator-supplied data', notUsed: 'Replacing primary-source reading in research workflow' },
+  ]}
+/>
+
+This disclosure pattern is consistent with how IEEE, BMJ, the Associated Press, and other publishers handle AI-assisted-drafting workflows: the AI is a drafting and editing aid; the human operator is responsible for verifying every published claim against the cited primary source before it appears on the site.
+
+The six-stage review process documented below applies to every article regardless of how the draft was produced. Stage 3 (editorial review) specifically verifies that every numeric claim has a primary-source citation, every cited source resolves to the actual document at the referenced URL, and every claim that could be disputed is traceable to a tier 1 or tier 2 source. AI-drafted prose that fails any of these checks does not get published.
 
 ## Sourcing Standards: The Tier System
 

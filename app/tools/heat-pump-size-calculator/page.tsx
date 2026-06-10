@@ -65,7 +65,7 @@ const SOFTWARE_APP = {
     'Capacity-vs-temperature SVG chart visualizing both equipment classes',
     'Climate-aware sizing strategy recommendations (standard / CCASHP recommended / CCASHP required)',
     'Annual operating cost comparison vs gas furnace, oil furnace, electric resistance',
-    'Federal 25C tax credit and HEEHRA rebate eligibility documented',
+    'Federal §25C status (expired Dec 31, 2025) and HEEHRA rebate eligibility documented',
     '6 worked-example URLs by home size (1000-3000 sq ft)',
   ],
 };
@@ -148,7 +148,7 @@ const CONCEPTS = [
     description:
       'NEEP-listed cold-climate (CCASHP) heat pumps deliver 85 percent of rated capacity at 17°F vs 60 percent for standard equipment. The difference shows up directly in balance point and aux runtime.',
     detail:
-      'CCASHP equipment costs $2,000–$5,000 more than standard at typical residential sizes. Federal IRA 25C tax credit returns up to $2,000; many state and utility rebates favor CCASHP. Premium often pays back in 6–12 years.',
+      'CCASHP equipment costs $2,000–$5,000 more than standard at typical residential sizes. Federal §25C tax credit returned up to $2,000 for installs completed by Dec 31, 2025 (not available for 2026 installs under current IRS guidance); many state and utility rebates continue to favor CCASHP. Premium often pays back in 6–12 years even without §25C, depending on state incentives and electric rates.',
   },
 ];
 
@@ -308,22 +308,22 @@ const MISTAKES = [
 
 const INCENTIVES = [
   {
-    name: 'Federal IRA 25C tax credit',
-    amount: 'Up to $2,000',
+    name: 'Federal IRA §25C tax credit (HVAC scope expired Dec 31, 2025)',
+    amount: 'Expired Dec 31, 2025',
     description:
-      "30 percent of project cost up to a $2,000 cap for qualifying heat pumps. ENERGY STAR Most Efficient or CCASHP-listed equipment typically qualifies. Applied as a non-refundable tax credit on federal income tax return.",
+      "Was 30 percent of project cost up to a $2,000 cap for qualifying heat pumps. ENERGY STAR Most Efficient or CCASHP-listed equipment qualified. Last claimable on the 2025 tax return for installs completed by Dec 31, 2025; not available for 2026 installs under current IRS guidance (IRS FS-2025-05, supersedes FS-2022-40 after One Big Beautiful Bill Act). Verify the IRS Energy Efficient Home Improvement Credit page before assuming a 2026 credit.",
   },
   {
-    name: 'IRA High-Efficiency Electric Home Rebate (HEEHR)',
-    amount: 'Up to $8,000',
+    name: 'IRA High-Efficiency Electric Home Rebate (HEEHR / HEEHRA)',
+    amount: 'State-administered',
     description:
-      'Income-tiered rebate for low and moderate income households. Up to $8,000 for heat pump installations. Administered by states; rollout varies by jurisdiction through 2024-2026.',
+      'Income-tiered rebate for low and moderate income households, up to $8,000 for heat pump installations. Administered by states; status and funding vary by state. Verify your state energy office before assuming a specific rebate amount.',
   },
   {
     name: 'State and utility rebates',
     amount: '$500–$5,000+',
     description:
-      'Examples: NYSERDA Clean Heat, Mass Save, Efficiency Vermont, Energize CT, ComEd, Xcel Energy, NW Natural Smart Energy. Stack with federal credit; oil-furnace replacement programs often pay more.',
+      'Examples: NYSERDA Clean Heat, Mass Save, Efficiency Vermont, Energize CT, ComEd, Xcel Energy, NW Natural Smart Energy. Administered independent of federal program changes; oil-furnace replacement programs often pay more.',
   },
 ];
 
@@ -366,11 +366,11 @@ const FAQ_ITEMS = [
   },
   {
     q: 'Do I need a Manual J load calculation?',
-    a: "For early planning, comparing contractor quotes, or sanity-check before buying equipment, this calculator's output is sufficient. For permit submission, IRA 25C tax credit applications (increasingly required), state rebate documentation, manufacturer warranty claims, or installations with significant envelope changes, get a full Manual J done by a certified contractor.",
+    a: "For early planning, comparing contractor quotes, or sanity-check before buying equipment, this calculator's output is sufficient. For permit submission, state rebate documentation, manufacturer warranty claims, or installations with significant envelope changes, get a full Manual J done by a certified contractor. (Federal §25C tax credit applications used to require Manual J documentation; §25C HVAC scope expired Dec 31, 2025 — verify current IRS guidance before assuming credit eligibility.)",
   },
   {
     q: 'How much does a heat pump cost?',
-    a: 'Single-family residential heat pumps run $4,500 (small standard) to $25,000 (large multi-zone CCASHP) installed. Typical 2.5–3.5 ton residential CCASHP installation: $8,500–$13,000. Federal IRA 25C tax credit returns up to $2,000; state/utility rebates add $500-$5,000+. See the specific example page for your home size for detailed cost breakdowns.',
+    a: 'Single-family residential heat pumps run $4,500 (small standard) to $25,000 (large multi-zone CCASHP) installed. Typical 2.5–3.5 ton residential CCASHP installation: $8,500–$13,000. Federal §25C tax credit returned up to $2,000 for installs completed by Dec 31, 2025 (not available for 2026 installs under current IRS guidance — verify with IRS); state/utility rebates continue to add $500-$5,000+. See the specific example page for your home size for detailed cost breakdowns.',
   },
   {
     q: 'How long does a heat pump last?',
@@ -800,7 +800,7 @@ export default function Page() {
             <ul className="mt-4 space-y-2.5 text-sm">
               {[
                 'Multi-zone or whole-home equipment matching',
-                'IRA 25C tax credit applications (increasingly required)',
+                'Federal §25C tax credit applications (for installs completed on or before Dec 31, 2025; verify current IRS guidance for 2026 installs)',
                 'State / utility rebate documentation (NYSERDA, Mass Save, etc.)',
                 'After significant envelope retrofit invalidating prior load',
                 'Dual-fuel architecture with precise crossover setting',

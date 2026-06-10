@@ -330,8 +330,9 @@ export default function Page() {
         </p>
         <p>
           This calculator answers the narrow question &quot;what is my attic R-value and how
-          does it compare to recommendations?&quot;. For HEEHRA rebate eligibility, IRA 25C
-          tax credit documentation, and HERS-based new-construction certification, a
+          does it compare to recommendations?&quot;. For HEEHRA rebate eligibility, historical
+          §25C tax credit documentation (the §25C HVAC scope expired Dec 31, 2025; verify
+          current IRS guidance for 2026), and HERS-based new-construction certification, a
           credentialed audit is required. The{' '}
           <a className="text-brand underline" href="/building-science/hers-index/">
             HERS Index article

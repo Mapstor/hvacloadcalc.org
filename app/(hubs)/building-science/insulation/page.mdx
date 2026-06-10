@@ -9,6 +9,7 @@ import { SourceCite } from '@/components/article/SourceCite';
 import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
 import { Callout } from '@/components/article/Callout';
+import { IncentiveStatusAlert } from '@/components/article/IncentiveStatusAlert';
 import { DataTable } from '@/components/data/DataTable';
 import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
@@ -98,7 +99,7 @@ export const SOURCES = [
   },
   {
     id: 'irs-25c-fact-sheet',
-    title: 'IRA Section 25C — Energy Efficient Home Improvement Credit (Fact Sheet FS-2022-40)',
+    title: 'IRA Section 25C — Energy Efficient Home Improvement Credit (Fact Sheet FS-2025-05, supersedes FS-2022-40)',
     publisher: 'US Internal Revenue Service',
     year: 2023,
     url: 'https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit',
@@ -135,7 +136,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: 'Does the IRS Section 25C credit apply to insulation?',
-    a: "Yes. The IRS 25C credit returns 30% of installed insulation costs up to $1,200 per year, with no cap on the material category (insulation has its own $1,200 sub-cap separate from the heat pump $2,000 cap). The insulation must meet IECC 2021 minimum requirements, which means roughly R-30 in attics, R-13+ in walls, and R-19+ in floors over unconditioned space. The credit applies to materials and professional installation labor; DIY installation only qualifies for the material cost.",
+    a: "For installs completed on or before December 31, 2025, yes — the IRS Section 25C credit returned 30% of installed insulation costs up to $1,200 per year, with insulation having its own $1,200 sub-cap separate from the heat pump $2,000 cap. The insulation had to meet IECC 2021 minimum requirements (roughly R-30 in attics, R-13+ in walls, R-19+ in floors over unconditioned space). The credit applied to materials and professional installation labor; DIY installation only qualified for the material cost. For 2026 installs the §25C credit is not available under current IRS guidance — verify the IRS Energy Efficient Home Improvement Credit page before assuming a credit applies.",
   },
   {
     q: 'How do I know if my existing wall insulation is adequate?',
@@ -215,7 +216,7 @@ export const FRONTMATTER = {
     'R-per-inch ranges from 3.0 (loose-fill rockwool) to 7.0 (closed-cell spray foam); the cheapest R per square foot is typically blown cellulose at $1.50-$2.50 per sq ft installed.',
     'DOE-recommended attic R-values range from R-30 (zone 1) to R-60 (zones 7-8); wall recommendations range from R-13 cavity (zone 1) to R-21 cavity + R-7.5 continuous (zone 7).',
     'Effective whole-wall R is typically 15-40% lower than cavity R because of thermal bridging through wood studs (16" on-center 2x4 framing reduces R-13 cavity to roughly R-9 whole-wall).',
-    'IRS Section 25C returns 30% of installed insulation cost up to $1,200/year, with the cap separate from the heat pump credit cap — making insulation one of the highest-leverage envelope upgrades under the federal incentive stack.',
+    'IRS §25C returned 30% of installed insulation cost up to $1,200/year for installs completed by December 31, 2025; §25C is not available for 2026 installs under current IRS guidance — verify the current incentive status with the IRS and your state energy office.',
   ]}
 />
 
@@ -224,6 +225,8 @@ export const FRONTMATTER = {
 <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
 
 <article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+<IncentiveStatusAlert />
 
 ## What Insulation Does (and What It Cannot Do)
 
@@ -394,7 +397,7 @@ The financial return on insulation upgrades depends on climate, baseline insulat
     { key: 'cost', label: 'Cost', align: 'right' },
     { key: 'savings', label: 'Annual savings', align: 'right' },
     { key: 'paybackBefore', label: 'Payback before incentives', align: 'right' },
-    { key: 'paybackAfter', label: 'Payback after 25C credit', align: 'right' },
+    { key: 'paybackAfter', label: 'Payback (historical, with §25C — installs ≤ Dec 31, 2025)', align: 'right' },
   ]}
   rows={[
     { upgrade: 'Add R-30 over R-19 attic', climate: 'Zone 5-6 (cold)', cost: '$1,500–$2,500', savings: '$150–$250', paybackBefore: '8–12 years', paybackAfter: '5–8 years' },
@@ -407,7 +410,7 @@ The financial return on insulation upgrades depends on climate, baseline insulat
   ]}
 />
 
-The 25C tax credit shifts every payback by roughly 30% — meaningful but not transformative. The bigger lever is climate: cold climates produce 2-3× faster payback than hot climates on the same upgrade because heating-fuel costs are higher per delivered BTU than electricity-cooling costs at most fuel-price ratios. Insulation in cold climates almost always pays back; in hot humid climates the math is closer.
+When active (installs ≤ Dec 31, 2025), the §25C tax credit shifted every payback by roughly 30% — meaningful but not transformative. The credit is not available for 2026 installs under current IRS guidance. The bigger lever is climate: cold climates produce 2-3× faster payback than hot climates on the same upgrade because heating-fuel costs are higher per delivered BTU than electricity-cooling costs at most fuel-price ratios. Insulation in cold climates almost always pays back even without the credit; in hot humid climates the math is closer.
 
 **Insulation upgrades make most economic sense when bundled with other work that opens up the envelope:**
 

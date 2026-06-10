@@ -9,6 +9,7 @@ import { Callout } from '@/components/article/Callout';
 import { DataTable } from '@/components/data/DataTable';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
 import { JsonLdPerson } from '@/components/seo/JsonLdPerson';
+import { INVENTORY } from '@/lib/seo/inventory';
 
 export const metadata = {
   alternates: { canonical: "/authors/jonathan-s/" },
@@ -41,11 +42,15 @@ export const HEADINGS = [
 
 export const FAQ_ITEMS = [
   {
-    q: 'What is your professional background?',
-    a: 'I am a writer-researcher specializing in residential HVAC methodology — load calculation, equipment selection, duct design, and the building science that drives sizing. The site does not claim professional engineering authority; it relies on rigorous citation of ACCA, ASHRAE, AHRI, NEEP, DOE, EPA, IRS, NFRC, and RESNET primary publications. Where authoritative expertise is needed, the relevant standard is cited directly.',
+    q: 'Is "Jonathan Stowe" your real name?',
+    a: '"Jonathan Stowe" is a pen name. The site is researched, written, and maintained by a single independent operator — a developer based in the EU — who publishes under a pseudonym for personal privacy. The pseudonym is disclosed at the top of this page and in the editorial standards. Nothing about the editorial process, sourcing standards, or corrections policy depends on the author\'s identity; the accountability mechanism is the inline primary-source citation behind every claim, plus the public corrections log.',
   },
   {
-    q: 'How did you learn HVAC methodology if you are not a professional?',
+    q: 'What is the operator\'s professional background?',
+    a: 'A developer who builds data-driven reference tools, specializing in residential HVAC methodology — load calculation, equipment selection, duct design, and the building science that drives sizing — through sustained primary-source reading. The site does not claim professional engineering authority; it relies on rigorous citation of ACCA, ASHRAE, AHRI, NEEP, DOE, EPA, IRS, NFRC, and RESNET primary publications. Where authoritative expertise is needed, the relevant standard is cited directly.',
+  },
+  {
+    q: 'How did the operator learn HVAC methodology without being a professional?',
     a: 'Long-form reading of primary sources: ACCA Manual J 8th Edition, the relevant chapters of ASHRAE Handbook of Fundamentals 2021, NEEP CCASHP specifications, DOE Energy Saver consumer guides and Building America technical reports, AHRI 210/240 test methodology, NFRC certification documentation, and field-practice resources like Energy Vanguard and Green Building Advisor. The site\'s sourcing standards (every claim cited inline) reflect that research approach.',
   },
   {
@@ -113,17 +118,21 @@ export const RELATED = [
   </div>
   <div>
     <h1 className="text-3xl font-bold text-ink-900 sm:text-4xl">Jonathan Stowe</h1>
-    <p className="mt-2 text-ink-500">Author and researcher · hvacloadcalc.org · Last reviewed 2026-05-30</p>
+    <p className="mt-2 text-ink-500">Author and researcher (pen name) · hvacloadcalc.org · Last reviewed 2026-06-10</p>
   </div>
 </header>
+
+<Callout type="info" title='"Jonathan Stowe" is a pen name'>
+The site is researched, written, and maintained by a single independent operator — a developer based in the EU — who publishes under a pseudonym for personal privacy. Nothing else on this page is fictional: the research method, the sourcing standards, the scope limits, and the [corrections record](/corrections/) are literally true and independently checkable. Editorial accountability does not rest on the author's identity; it rests on the primary-source citation behind every claim and the public corrections log.
+</Callout>
 
 <KeyTakeaways
   items={[
     'Writer-researcher specializing in residential HVAC sizing, ACCA Manual J/S/D/T methodology, heat pump systems, and building science. The site claims research rigor and primary-source citation rather than in-house engineering authority.',
-    'Site started after personal experience with contradictory HVAC contractor quotes during a system upgrade — three quotes spanning 2.5 to 4 tons for the same house, with no Manual J performed on any of them.',
+    'Site exists to fill a structural gap in the HVAC reference space: between rule-of-thumb calculator sites with no documented methodology, paywalled contractor software (Cool Calc, AutoHVAC) that is B2B-only, and manufacturer-marketing sites with built-in equipment bias.',
     'Research approach: read primary sources (ACCA Manual J 8th Edition, ASHRAE Fundamentals 2021, AHRI 210/240-2023, NEEP CCASHP v4.0, DOE Energy Saver, NFRC, RESNET, EIA, IRS, EPA) and translate into methodology-transparent educational content with every claim cited inline.',
-    'Operational scope: I do not provide individual Manual J consultations, do not maintain a contractor directory, and do not recommend specific equipment brands or models for specific homes. Corrections to published work are welcomed by email and logged at /corrections/.',
-    '15 launch articles and 11 reference hubs published as of 2026-05-30, plus five live calculators implementing ACCA methodology with 61 worked-example URLs.',
+    'Operational scope: no individual Manual J consultations, no contractor directory, no equipment recommendations for specific homes. Corrections to published work are welcomed by email and logged at /corrections/.',
+    '11 reference hubs, 15 in-depth articles, and five calculators with worked-example URLs published — the live inventory counts are sourced from the repository at build time.',
   ]}
 />
 
@@ -133,19 +142,22 @@ export const RELATED = [
 
 ## Background
 
-I am a homeowner who got tired of contradictory HVAC contractor quotes during a system upgrade and decided to learn the underlying methodology myself. Three contractors visited; three different tonnage recommendations came back — 2.5 tons, 3.5 tons, and 4 tons for the same house. None of them performed a Manual J calculation. None of them documented their reasoning. One said "rule of thumb is 1 ton per 600 square feet" and quoted from that.
+The site exists because the residential HVAC reference space online splits into three structurally limited categories, and none of them serve the homeowner who wants to understand sizing methodology well enough to evaluate a contractor quote.
 
-The disparity bothered me enough to start reading. The primary sources I worked through:
+Calculator sites (Calculator.net, Omnicalculator, MiniWebtool) publish "Manual J calculators" that use rule-of-thumb math with no documented methodology, no source citations, and no acknowledgment of uncertainty. Contractor software (Cool Calc, AutoHVAC, ServiceTitan) is paywalled, B2B-only, and behind account-verification gates. Manufacturer sites (Trane, Carrier, Lennox, Mitsubishi, Daikin) carry built-in bias toward their own equipment, which makes them useful for product specs and not useful for objective comparative research.
+
+The gap is a free, methodology-transparent, primary-source-cited reference covering Manual J / Manual S / Manual D / Manual T plus the building science that drives sizing. That is the gap hvacloadcalc.org is built to fill.
+
+The build approach is informed by data-driven reference work in domains outside HVAC: read the primary standards directly, structure content so individual claims are quote-extractable and source-verifiable, and treat the [corrections log](/corrections/) as a first-class accountability mechanism rather than an afterthought. The primary sources the site draws from:
 
 - **ACCA Manual J 8th Edition** — the standard methodology for residential load calculation in the US.
-- **ASHRAE Handbook of Fundamentals 2021** — psychrometrics, design temperatures, and climatic data the Manual J calculation depends on.
-- **NEEP CCASHP specifications** — cold-climate heat pump performance data that mattered for my specific climate.
-- **DOE Energy Saver consumer guides** — the federal incentive landscape.
-- **NFRC certification documentation** — window U-factor and SHGC ratings that drove envelope calculations.
+- **ASHRAE Handbook of Fundamentals 2021** — psychrometrics, design temperatures, and climatic data Manual J depends on.
+- **NEEP CCASHP v4.0 specifications** — cold-climate heat pump performance data.
+- **AHRI 210/240-2023** — equipment performance rating methodology.
+- **DOE Energy Saver and Building America technical reports** — consumer-facing federal guidance and applied research.
+- **NFRC certification documentation** — window U-factor and SHGC ratings.
 
-After a few months of reading, I had a working understanding of why my three quotes diverged: one contractor was sizing aggressively (probably padding for callbacks), one was rule-of-thumb, one was closer to a real Manual J but still missing infiltration measurement. I picked equipment that matched what the actual Manual J indicated, with a contractor willing to work to those numbers.
-
-The experience left me with two beliefs that drive this site. First, the methodology is learnable for non-professionals willing to read primary sources. Second, the educational gap between rule-of-thumb online calculators and permit-grade ACCA-approved software leaves homeowners without a useful middle ground. hvacloadcalc.org tries to be that middle ground.
+The article-level depth reflects sustained primary-source reading rather than secondary summarization. Where standards disagree or practitioners read the same standard differently, articles present the positions with their respective sources rather than asserting one as correct.
 
 ## Why This Site Exists
 
@@ -163,19 +175,19 @@ The audience I write for is homeowners who want to verify whether a contractor r
 
 ## Research Approach
 
-My research approach has three rules.
+The research approach has three rules.
 
-(1) Primary sources first. When a claim has a tier 1 source available (ACCA Manual, ASHRAE Handbook, AHRI standard, NFRC documentation, DOE Final Rule, EPA regulation, IRS Fact Sheet), I cite tier 1 even if a tier 2 source explains the same fact more accessibly. Tier 1 sources are revision-tracked by standards organizations and remain authoritative through revision cycles.
+(1) Primary sources first. When a claim has a tier 1 source available (ACCA Manual, ASHRAE Handbook, AHRI standard, NFRC documentation, DOE Final Rule, EPA regulation, IRS Fact Sheet), the article cites tier 1 even if a tier 2 source explains the same fact more accessibly. Tier 1 sources are revision-tracked by standards organizations and remain authoritative through revision cycles.
 
-(2) Read the standard, not the summary. The temptation when writing reference content is to summarize a secondary summary. I try to read the primary standard directly. When ACCA Manual J Section 8 covers infiltration methodology, I read Section 8 rather than reading a contractor's summary of Section 8. The depth of citation reflects that — every inline SourceCite resolves to the actual primary document, not to a derivative explanation.
+(2) Read the standard, not the summary. The temptation when writing reference content is to summarize a secondary summary. The standard gets read directly. When ACCA Manual J Section 8 covers infiltration methodology, the citation resolves to Section 8 rather than to a contractor's summary of Section 8. The depth of citation reflects that — every inline SourceCite resolves to the actual primary document, not to a derivative explanation.
 
-(3) Quote-extractable language. Every definition, every formula, every threshold is written so it can be lifted out of context and stand on its own. An LLM extracting "what is HSPF2" should be able to take the first sentence of my definition and have a coherent, sourced statement. The constraint forces clarity at the sentence level and avoids the wandering paragraph problem common in technical writing.
+(3) Quote-extractable language. Every definition, every formula, every threshold is written so it can be lifted out of context and stand on its own. An LLM extracting "what is HSPF2" should be able to take the first sentence of the definition and have a coherent, sourced statement. The constraint forces clarity at the sentence level and avoids the wandering paragraph problem common in technical writing.
 
-<Callout type="info" title="What I do when sources disagree">
-Standards bodies do not always agree, and reasonable practitioners sometimes disagree even when reading the same standard. When I encounter a disagreement (for example, whether dual-fuel hybrid systems beat pure heat pump installs in cold climates), I present the major positions with their respective sources and explain the tradeoffs rather than declaring one position correct. The article labels the editorial position (if any) as such rather than asserting it as fact.
+<Callout type="info" title="What to do when sources disagree">
+Standards bodies do not always agree, and reasonable practitioners sometimes disagree even when reading the same standard. When a disagreement arises (for example, whether dual-fuel hybrid systems beat pure heat pump installs in cold climates), the article presents the major positions with their respective sources and explains the tradeoffs rather than declaring one position correct. The editorial position (if any) is labeled as such rather than asserted as fact.
 </Callout>
 
-**The research approach is slow.** A hero-depth article takes 8-15 hours of editorial work plus the underlying primary-source reading, which can be substantially longer for novel topics. The slowness is the cost of accountability — every claim is defensible against a primary-source check, and that defensibility requires that the author actually read the primary source.
+**The research approach is deliberately slow.** Every claim has to be defensible against a primary-source check, which means the underlying source actually has to have been read. That requirement is what produces the depth, and it is what makes the [corrections process](/corrections/) meaningful when readers find issues.
 
 ## How I Work
 
@@ -201,7 +213,7 @@ What I do claim: that rigorous research into primary sources produces educationa
 
 ## Published Articles
 
-The published content set as of 2026-05-30:
+The published content set as of 2026-06-10:
 
 <DataTable
   caption="Reference hubs published"
@@ -214,12 +226,12 @@ The published content set as of 2026-05-30:
     { hub: 'Heat pump', url: '/heat-pump/', topic: 'Refrigerant cycle, AHRI ratings, NEEP CCASHP, federal incentives' },
     { hub: 'AC', url: '/ac/', topic: 'SEER2, sensible vs latent cooling, BTU per sqft, R-410A phaseout' },
     { hub: 'Furnace', url: '/furnace/', topic: 'AFUE, 80 vs 95 comparison, fuel cost, heat pump alternative' },
-    { hub: 'Tools', url: '/tools/', topic: 'Calculator methodology, accuracy claims, 61 worked examples' },
+    { hub: 'Tools', url: '/tools/', topic: `Calculator methodology, accuracy claims, ${INVENTORY.workedExamples} worked examples` },
     { hub: 'Building science', url: '/building-science/', topic: 'R-values, U-factors, ACH50, climate zones, psychrometrics, HERS' },
     { hub: 'Manual D', url: '/manual-d/', topic: 'Friction rate, equivalent length, static pressure, duct sizing' },
     { hub: 'Manual S', url: '/manual-s/', topic: 'AHRI matchup, SHR, tolerances, cold-climate selection' },
     { hub: 'Manual T', url: '/manual-t/', topic: 'Throw and spread, face velocity, register selection' },
-    { hub: 'Glossary', url: '/glossary/', topic: '60+ HVAC and building science terms with sourced definitions' },
+    { hub: 'Glossary', url: '/glossary/', topic: `${INVENTORY.glossaryTermsApprox}+ HVAC and building science terms with sourced definitions` },
     { hub: 'Building science / Insulation', url: '/building-science/insulation/', topic: 'R-values by climate zone, materials, air sealing primacy' },
     { hub: 'Building science / Windows', url: '/building-science/windows/', topic: 'U-factor, SHGC, NFRC labels, climate-zone selection' },
   ]}
@@ -258,11 +270,11 @@ The published content set as of 2026-05-30:
     { key: 'examples', label: 'Examples', align: 'right' },
   ]}
   rows={[
-    { calc: 'BTU calculator', url: '/tools/btu-calculator/', examples: '16' },
-    { calc: 'AC size calculator', url: '/tools/ac-size-calculator/', examples: '15' },
-    { calc: 'Heat pump size calculator', url: '/tools/heat-pump-size-calculator/', examples: '6' },
-    { calc: 'Attic R-value calculator', url: '/tools/attic-r-value-calculator/', examples: '12' },
-    { calc: 'Manual J load calculator', url: '/tools/manual-j-calculator/', examples: '12' },
+    { calc: 'BTU calculator', url: '/tools/btu-calculator/', examples: '19' },
+    { calc: 'AC size calculator', url: '/tools/ac-size-calculator/', examples: '18' },
+    { calc: 'Heat pump size calculator', url: '/tools/heat-pump-size-calculator/', examples: '9' },
+    { calc: 'Attic R-value calculator', url: '/tools/attic-r-value-calculator/', examples: '15' },
+    { calc: 'Manual J load calculator', url: '/tools/manual-j-calculator/', examples: '15' },
   ]}
 />
 

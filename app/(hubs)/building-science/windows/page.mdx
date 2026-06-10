@@ -9,6 +9,7 @@ import { SourceCite } from '@/components/article/SourceCite';
 import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
 import { Callout } from '@/components/article/Callout';
+import { IncentiveStatusAlert } from '@/components/article/IncentiveStatusAlert';
 import { DataTable } from '@/components/data/DataTable';
 import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
@@ -143,8 +144,8 @@ export const FAQ_ITEMS = [
     a: "In cold climates (zones 5-8) the math typically favors triple-pane over double-pane low-E. The U-factor drop from ~0.30 to ~0.18 reduces window heat loss by 40% — at typical fuel prices, that saves $50-$150 per window per year in heating cost, paying back the $200-$500 per window premium in 4-10 years. In warm climates (zones 1-3) the U-factor improvement is less valuable than the SHGC reduction, and triple-pane low-SHGC double-pane often outperform triple-pane on cooling load reduction. Look at climate, not at glazing layer count.",
   },
   {
-    q: 'What does the IRS 25C credit cover for windows?',
-    a: 'The IRS Section 25C credit returns 30% of the installed cost of windows and skylights, up to $600 per year. Skylights have their own $250 sub-cap within the window category. The windows must meet ENERGY STAR Version 7.0 thresholds (U ≤ 0.30 in zones 4-7, U ≤ 0.27 in zone 8 with appropriate SHGC by zone). The credit is non-refundable but the $600 sub-cap is reset each tax year, so a homeowner replacing windows over multiple years can claim the credit multiple times.',
+    q: 'What did the IRS 25C credit cover for windows, and is it still available?',
+    a: 'For installs completed on or before December 31, 2025, the IRS Section 25C credit returned 30% of the installed cost of windows and skylights up to $600 per year (skylights had their own $250 sub-cap). Eligible windows had to meet ENERGY STAR Version 7.0 thresholds (U ≤ 0.30 in zones 4-7, U ≤ 0.27 in zone 8 with appropriate SHGC by zone). The credit is not available for 2026 installs under current IRS guidance — verify current incentive status with the IRS Energy Efficient Home Improvement Credit page before assuming any specific credit amount.',
   },
   {
     q: 'What about storm windows or window films?',
@@ -224,7 +225,7 @@ export const FRONTMATTER = {
     'The NFRC label reports five performance fields: U-factor (heat flow), SHGC (solar gain), VT (visible light), AL (air leakage), CR (condensation resistance) — every certified US window carries this label with independently-verified values.',
     'ENERGY STAR Version 7.0 climate-zone requirements: U ≤ 0.40 / SHGC ≤ 0.25 in zones 1-2; U ≤ 0.30 / SHGC ≤ 0.25 in zone 3; U ≤ 0.30 / SHGC ≤ 0.40 in zone 4; U ≤ 0.27 in zones 5-8 (SHGC any value in cold climates).',
     'Whole-window U ranges from 1.2 (single-pane aluminum frame) to 0.10 (high-performance quad-pane), with the frame contributing 20-30% of whole-window area and dominating U for aluminum-frame designs.',
-    'IRS Section 25C returns 30% of installed window cost up to $600 per year ($250 sub-cap on skylights), with reset annual caps allowing multi-year window replacement programs to claim the credit multiple times.',
+    'IRS §25C returned 30% of installed window cost up to $600 per year ($250 sub-cap on skylights) for installs completed by December 31, 2025; §25C is not available for 2026 installs under current IRS guidance — verify the current status with the IRS before relying on a specific credit amount.',
   ]}
 />
 
@@ -233,6 +234,8 @@ export const FRONTMATTER = {
 <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
 
 <article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+<IncentiveStatusAlert />
 
 ## Why Windows Dominate Envelope Heat Flow
 
@@ -304,7 +307,7 @@ Every certified residential window sold in the US carries an NFRC Energy Perform
 
 The labeling system is administered by NFRC, an independent third-party certifying organization.<SourceCite id="nfrc-100" number={2} /> Each manufacturer submits products for testing at certified labs; the results are published in the NFRC Certified Products Directory (cpd.nfrc.org) and the values must appear on the physical label attached to each window when sold. Manufacturer marketing claims that conflict with NFRC values are not credible — the directory is the authoritative source.
 
-ENERGY STAR uses NFRC-rated values to determine qualification. A window qualifying for ENERGY STAR has its NFRC U-factor and SHGC below the relevant climate-zone thresholds (covered below). The IRS Section 25C tax credit similarly uses NFRC values to determine eligibility — the printed NFRC numbers determine federal incentive availability, not the manufacturer's marketing copy.
+ENERGY STAR uses NFRC-rated values to determine qualification. A window qualifying for ENERGY STAR has its NFRC U-factor and SHGC below the relevant climate-zone thresholds (covered below). For installs completed by December 31, 2025 the IRS Section 25C tax credit used NFRC values to determine eligibility — the printed NFRC numbers determined federal incentive availability, not the manufacturer's marketing copy. §25C is not available for 2026 installs under current IRS guidance; state-level incentive programs still use NFRC ratings the same way.
 
 ## U-Factor by Glazing and Frame Combination
 
@@ -389,7 +392,7 @@ The ENERGY STAR Version 7.0 specification defines minimum U-factor and SHGC by c
 
 ENERGY STAR Version 7.0 thresholds are tighter than IECC 2021 code minimums in most zones. IECC Table R402.1.2 sets the minimum U-factor at 0.40 in zones 1-2, 0.30 in zones 3-8, and SHGC ≤ 0.25 in zones 1-3.<SourceCite id="iecc-2021-envelope" number={6} /> ENERGY STAR aims for performance levels above code minimum, typically representing the upper third of US window performance for the climate.
 
-**The IRS Section 25C credit** uses the ENERGY STAR Version 7.0 thresholds as the eligibility test, with one adjustment: the credit applies only to windows meeting both the U-factor and SHGC criteria for the climate zone where the windows are installed.<SourceCite id="irs-25c-fact-sheet" number={7} />
+**The IRS Section 25C credit** (for installs completed on or before December 31, 2025) used the ENERGY STAR Version 7.0 thresholds as the eligibility test, with one adjustment: the credit applied only to windows meeting both the U-factor and SHGC criteria for the climate zone where the windows were installed.<SourceCite id="irs-25c-fact-sheet" number={7} /> The credit is not available for 2026 installs under current IRS guidance.
 
 A homeowner in zone 5 (Chicago) installing windows with U-factor 0.25 and any SHGC qualifies for the $600 per year credit; the same homeowner installing windows with U-factor 0.28 does not qualify in zone 5 even though those windows would qualify in zone 4 a few hundred miles south.
 
@@ -434,7 +437,7 @@ Window replacement is the most expensive envelope improvement per BTU/hr saved.
     { key: 'savingsHeating', label: 'Annual heating savings', align: 'right' },
     { key: 'savingsCooling', label: 'Annual cooling savings', align: 'right' },
     { key: 'paybackBefore', label: 'Payback before incentives', align: 'right' },
-    { key: 'paybackAfter', label: 'Payback after 25C credit', align: 'right' },
+    { key: 'paybackAfter', label: 'Payback (historical, with §25C — installs ≤ Dec 31, 2025)', align: 'right' },
   ]}
   rows={[
     { upgrade: 'Single-pane → ENERGY STAR double-pane (vinyl)', cost: '$10,000', savingsHeating: '$200-350', savingsCooling: '$50-100', paybackBefore: '22-40 years', paybackAfter: '18-32 years' },

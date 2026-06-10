@@ -9,6 +9,7 @@ import { SourceCite } from '@/components/article/SourceCite';
 import { AuthorByline } from '@/components/article/AuthorByline';
 import { Breadcrumbs } from '@/components/article/Breadcrumbs';
 import { Callout } from '@/components/article/Callout';
+import { IncentiveStatusAlert } from '@/components/article/IncentiveStatusAlert';
 import { DataTable } from '@/components/data/DataTable';
 import { JsonLdArticle } from '@/components/seo/JsonLdArticle';
 import { JsonLdBreadcrumb } from '@/components/seo/JsonLdBreadcrumb';
@@ -108,7 +109,7 @@ export const SOURCES = [
   },
   {
     id: 'irs-25c-fact-sheet',
-    title: 'IRA Section 25C — Energy Efficient Home Improvement Credit (Fact Sheet FS-2022-40)',
+    title: 'IRA Section 25C — Energy Efficient Home Improvement Credit (Fact Sheet FS-2025-05, supersedes FS-2022-40)',
     publisher: 'US Internal Revenue Service',
     year: 2023,
     url: 'https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit',
@@ -191,7 +192,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: 'How much does a heat pump cost to install?',
-    a: "Installed cost depends on system type and home complexity, but typical 2026 ranges are $5,000 to $10,000 for a central air-source heat pump replacing an existing AC and furnace, $3,000 to $8,000 per zone for a ductless mini-split, and $20,000 to $30,000 for a ground-source (geothermal) system. The federal 25C tax credit returns up to $2,000, and HEEHRA point-of-sale rebates up to $8,000 are available to qualifying households through 2032. Get a Manual J load calc before you buy, because oversizing inflates equipment cost and undersizing inflates electricity bills.",
+    a: "Installed cost depends on system type and home complexity, but typical 2026 ranges are $5,000 to $10,000 for a central air-source heat pump replacing an existing AC and furnace, $3,000 to $8,000 per zone for a ductless mini-split, and $20,000 to $30,000 for a ground-source (geothermal) system. Federal §25C credit was last claimable for installs completed by December 31, 2025 (last claimable on the 2025 tax return); 2026 installs are not eligible under current IRS guidance. HEEHRA point-of-sale rebates remain state-administered; status varies by state and current funding. Verify current incentives with the IRS and your state energy office before assuming any specific dollar amount. Get a Manual J load calc before you buy, because oversizing inflates equipment cost and undersizing inflates electricity bills.",
   },
   {
     q: 'What is the difference between SEER, SEER2, HSPF, and HSPF2?',
@@ -288,7 +289,7 @@ export const FRONTMATTER = {
     'A heat pump moves heat rather than generating it, which is why a modern unit delivers roughly 2-4 units of heat per unit of electricity consumed, compared to exactly 1 for electric resistance.',
     'Federal minimum efficiency since January 2023 is 14.3 SEER2 / 7.5 HSPF2 in the north and 15.2 SEER2 / 7.5 HSPF2 in the south; ENERGY STAR Version 6.1 requires 15.2 SEER2 / 8.1 HSPF2 or better.',
     'Standard air-source heat pumps lose roughly 40-45% of nominal capacity by 17°F outdoor; NEEP-listed cold-climate units must retain at least 70% of 47°F capacity at 17°F and at least 58% at 5°F.',
-    'The 2026 federal incentive stack (IRA Section 25C $2,000 tax credit plus HEEHRA point-of-sale rebates up to $8,000 for qualifying low-and-moderate-income households) can reduce installed cost by $2,000 to $10,000 depending on income.',
+    'Federal §25C tax credit was last claimable for installs completed by December 31, 2025; 2026 installs are not eligible under current IRS guidance. HEEHRA point-of-sale rebates remain state-administered and vary by state. Verify current incentive status with the IRS and your state energy office before assuming a specific reduction.',
     'All new US residential heat pumps sold after January 1, 2025 use lower-GWP refrigerants (R-454B or R-32) under the EPA AIM Act; R-410A units can still be serviced but no longer manufactured for new installations.',
   ]}
 />
@@ -296,6 +297,8 @@ export const FRONTMATTER = {
 <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
 
 <article className="prose prose-slate max-w-prose prose-headings:text-ink-900 prose-a:text-brand prose-strong:text-ink-900">
+
+<IncentiveStatusAlert />
 
 ## What a Heat Pump Is and Why It Beats Resistance Heat
 
@@ -368,7 +371,7 @@ The seasonal metrics (SEER2 for cooling, HSPF2 for heating) are weighted average
     { tier: 'Federal minimum', region: 'South / Southwest', seer2: '15.2', hspf2: '7.5', source: 'DOE 10 CFR 430' },
     { tier: 'ENERGY STAR v6.1', region: 'All US', seer2: '15.2', hspf2: '8.1', source: 'ENERGY STAR program' },
     { tier: 'ENERGY STAR v6.1 Cold Climate', region: 'Northern climate option', seer2: '15.2', hspf2: '9.0', source: 'ENERGY STAR program' },
-    { tier: 'IRA 25C qualifying', region: 'All US', seer2: '≥ 15.2 (CEE Tier)', hspf2: '≥ 8.1 (CEE Tier)', source: 'IRS Fact Sheet 25C' },
+    { tier: 'IRA 25C qualifying (installs ≤ Dec 31, 2025)', region: 'All US', seer2: '≥ 15.2 (CEE Tier)', hspf2: '≥ 8.1 (CEE Tier)', source: 'IRS Fact Sheet FS-2025-05' },
   ]}
 />
 
@@ -459,42 +462,42 @@ Water-source heat pumps exchange heat with a well, pond, or aquifer. They are un
 Two distinct federal programs apply to heat pump installations in 2026, and they stack with each other and with state and utility rebates.
 
 <DataTable
-  caption="Federal heat pump incentives available in 2026 (IRS and DOE program documentation)"
+  caption="Federal heat pump incentive programs — status snapshot (verify current IRS and DOE guidance before relying on specific amounts)"
   columns={[
     { key: 'program', label: 'Program' },
-    { key: 'amount', label: 'Maximum amount', align: 'right' },
-    { key: 'mechanism', label: 'How it works' },
+    { key: 'amount', label: '2026 status', align: 'right' },
+    { key: 'mechanism', label: 'How it worked / works' },
     { key: 'eligibility', label: 'Eligibility / requirements' },
   ]}
   rows={[
     {
       program: 'IRA Section 25C (Energy Efficient Home Improvement Credit)',
-      amount: '$2,000 per year',
-      mechanism: 'Non-refundable tax credit, 30% of installed cost up to cap',
-      eligibility: 'Equipment must meet CEE highest tier (typically ENERGY STAR Cold Climate or HSPF2 ≥ 8.1)',
+      amount: 'Expired Dec 31, 2025 (HVAC scope)',
+      mechanism: 'Non-refundable tax credit; was 30% of installed cost up to $2,000/year. Last claimable on 2025 tax return for installs completed by Dec 31, 2025.',
+      eligibility: 'Equipment had to meet CEE highest tier (ENERGY STAR Cold Climate or HSPF2 ≥ 8.1, SEER2 ≥ 15.2 for split-systems)',
     },
     {
       program: 'IRA Section 50122 (HEEHRA point-of-sale rebate)',
-      amount: '$8,000',
+      amount: 'State-administered (verify by state)',
       mechanism: 'Reduced sticker price at install, administered by state energy office',
-      eligibility: 'Household income ≤ 80% Area Median Income for full rebate; 80-150% AMI for 50% rebate',
+      eligibility: 'Household income ≤ 80% Area Median Income for full rebate; 80-150% AMI for 50% rebate; state intake status varies',
     },
     {
       program: 'IRA Section 50121 (HOMES rebate)',
-      amount: 'Up to $8,000 (modeled) / $4,000 (measured)',
-      mechanism: 'Whole-home performance rebate based on energy savings',
-      eligibility: 'Project must achieve modeled or measured energy reduction ≥ 20-35%',
+      amount: 'State-administered (verify by state)',
+      mechanism: 'Whole-home performance rebate based on modeled or measured energy savings',
+      eligibility: 'Project must achieve modeled or measured energy reduction ≥ 20-35%; state intake status varies',
     },
   ]}
 />
 
-**The 25C tax credit is the simplest path** and is available to any taxpayer regardless of income, but it requires the equipment to meet the Consortium for Energy Efficiency's highest performance tier — in practice ENERGY STAR Version 6.1 Cold Climate or equivalent (HSPF2 ≥ 8.1, SEER2 ≥ 15.2) for split-systems.<SourceCite id="irs-25c-fact-sheet" number={7} />
+**The §25C tax credit was the simplest federal path for taxpayers who installed by December 31, 2025.** It required the equipment to meet the Consortium for Energy Efficiency's highest performance tier — in practice ENERGY STAR Version 6.1 Cold Climate or equivalent (HSPF2 ≥ 8.1, SEER2 ≥ 15.2) for split-systems.<SourceCite id="irs-25c-fact-sheet" number={7} /> Installs completed in 2026 or later are not eligible under current IRS guidance; verify the current 2026 status with the IRS Energy Efficient Home Improvement Credit page before assuming the credit applies to a new install.
 
-The credit is non-refundable, meaning it can zero out federal tax liability but cannot produce a refund larger than tax owed; unused credit does not roll forward to future years for Section 25C as of 2026.
+The credit was non-refundable, meaning it could zero out federal tax liability but could not produce a refund larger than tax owed; unused credit did not roll forward to future years for Section 25C.
 
-HEEHRA is administered at the state level and rolled out unevenly through 2024 and 2025; most states began accepting applications in 2025-2026.<SourceCite id="doe-heehra" number={8} /> The income test uses Area Median Income (AMI) by household size for the applicant's county, which means the same income qualifies in different ways depending on where the household lives. Check your state energy office's program page for current intake status.
+HEEHRA is administered at the state level and rolled out unevenly through 2024 and 2025; most states began accepting applications in 2025-2026.<SourceCite id="doe-heehra" number={8} /> The income test uses Area Median Income (AMI) by household size for the applicant's county, which means the same income qualifies in different ways depending on where the household lives. Check your state energy office's program page for current intake status and program funding before assuming a specific rebate amount.
 
-State and utility rebates layer on top. Mass Save offers up to $10,000 per home for whole-house heat pump conversions in Massachusetts. NYSERDA's Comfort Home program offers structured rebates for heat pump installations in New York. Most western utilities (PG&E, SoCal Edison, NV Energy) offer $500-$1,500 per ton for ENERGY STAR heat pumps. The stack (25C + HEEHRA + state + utility) can reduce out-of-pocket cost by $5,000-$15,000 for a qualifying household.
+State and utility rebates continue independent of federal program changes. Mass Save offers up to $10,000 per home for whole-house heat pump conversions in Massachusetts. NYSERDA's Comfort Home program offers structured rebates for heat pump installations in New York. Many western utilities (PG&E, SoCal Edison, NV Energy) offer $500-$1,500 per ton for ENERGY STAR heat pumps. The current stackable combination depends on state and utility program status; the historical federal stack that included §25C is no longer available for 2026 installs.
 
 ## Operating Cost Versus Furnaces and Resistance Heat
 
@@ -550,7 +553,7 @@ Households replacing a 15-year-old AC and a 20-year-old gas furnace in a climate
 
 The climate test is more nuanced than the conventional wisdom suggests. Air-source heat pumps work effectively in every US climate zone provided the equipment is appropriately specified. Northern installations need CCASHP-rated equipment sized to a low balance point, plus electric or fossil aux for the coldest hours. Southern installations don't need CCASHP-rated equipment and can use standard heat pumps with very low aux runtime.<SourceCite id="neep-cchp-spec-v4" number={4} />
 
-The eligibility test changes the calculation substantially. A household qualifying for full HEEHRA at 80% AMI receives up to $8,000 off the install at the point of sale, plus the $2,000 25C tax credit, plus typically $1,000-$3,000 in state or utility rebates, bringing a $10,000 standard heat pump install to roughly net $0 to $3,000 out of pocket.<SourceCite id="doe-heehra" number={8} /> At those prices, the operating cost question becomes secondary.
+The eligibility test changes the calculation substantially. A household qualifying for full HEEHRA at 80% AMI can receive up to $8,000 off the install at the point of sale where state funds are available, plus typically $1,000-$3,000 in state or utility rebates. For installs completed on or before December 31, 2025, the §25C federal tax credit added up to $2,000 on top of that stack; that federal credit is no longer available for 2026 installs under current IRS guidance.<SourceCite id="doe-heehra" number={8} /> Even without §25C, an income-qualifying household with active HEEHRA funding in their state can substantially reduce out-of-pocket cost — but verify state program status before assuming the rebate is available.
 
 ## Sizing and Aux Heat: The Two Decisions That Dominate Outcomes
 
