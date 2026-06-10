@@ -94,14 +94,14 @@ export function HeroVerificationProcess({ className }: { className?: string }) {
         viewBox="0 0 1200 600"
         titleId="hero-verification-process-title"
         descId="hero-verification-process-desc"
-        title="Four-layer Manual J calculator verification framework"
-        desc="Four-layer verification framework for the Manual J calculator. Layer 1 ACCA test cases: 8 reference homes published by ACCA with expected loads, target band plus or minus 5 percent on each case. Layer 2 peer software comparison: cross-check against Wrightsoft, Cool Calc, and other Manual J implementations on identical inputs, target band plus or minus 3 to 5 percent per the comparison literature. Layer 3 real-home validation: compare calculator output to inferred peak demand from utility data and datasets like NREL ResStock, target band plus or minus 15 percent consistent with Manual J input-uncertainty floor. Layer 4 publish: methodology, known limitations, corrections log, and audit contact published openly so anyone can verify, criticize, or report bugs."
+        title="Three-layer Manual J calculator verification framework plus public audit surface"
+        desc="Three verification layers and a public audit surface for the Manual J calculator. Layer 1 ACCA test cases: 8 reference homes published by ACCA with expected loads, target band plus or minus 5 percent on each case. Layer 2 peer software comparison: cross-check against Wrightsoft, Cool Calc, and other Manual J implementations on identical inputs, target band plus or minus 3 to 5 percent per the comparison literature. Layer 3 real-home validation: compare calculator output to inferred peak demand from utility data and datasets like NREL ResStock, target band plus or minus 15 percent consistent with Manual J input-uncertainty floor. Audit surface (publish step): methodology, known limitations, corrections log, and audit contact published openly so anyone can verify, criticize, or report bugs."
         className="w-full"
       >
         <rect width={1200} height={600} fill={colors.surface.canvas} />
 
         <text x={600} y={36} textAnchor="middle" fontFamily={FONT} fontSize={typography.size.chartTitle} fontWeight={typography.weight.title} fill={colors.ink[900]}>
-          Four verification layers, public audit surface
+          Three verification layers and a public audit surface
         </text>
 
         {/* Inter-step arrows */}

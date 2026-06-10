@@ -191,7 +191,7 @@ const COMMON_QUESTIONS: Array<{
     q: 'How do I know the calculator output is accurate?',
     href: '/methodology/how-we-verify-manual-j/',
     blurb:
-      'Validation against ACCA reference cases, side-by-side with ACCA-approved software output, with documented accuracy bands and known limitations.',
+      'The Manual J 8th Edition methodology this calculator implements, the three-layer verification framework it is designed against, and the open audit channel for checking the work.',
   },
 ];
 
