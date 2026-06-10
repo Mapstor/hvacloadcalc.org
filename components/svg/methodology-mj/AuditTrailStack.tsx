@@ -6,17 +6,15 @@ const FONT = typography.fontFamily;
 interface Layer {
   title: string;
   description: string;
-  icon: 'code' | 'cases' | 'peer' | 'real' | 'changelog' | 'limitations' | 'contact';
+  icon: 'code' | 'cases' | 'changelog' | 'limitations' | 'contact';
 }
 
 const LAYERS: Layer[] = [
-  { title: 'Audit contact', description: 'Request a review of our work or report a bug; we respond.', icon: 'contact' },
-  { title: 'Known limitations', description: 'Updated openly when discovered. Honest about where we are not strong.', icon: 'limitations' },
-  { title: 'Changelog', description: 'Every code change affecting results documented with date and reason.', icon: 'changelog' },
-  { title: 'Real-home validation', description: '~50 homes from ResStock and user submissions, observed peak demand.', icon: 'real' },
-  { title: 'Peer software comparison', description: 'Side-by-side runs for 4 sample homes; methodology and assumptions documented.', icon: 'peer' },
-  { title: 'Reference case results', description: '8 ACCA cases with our calculator output and deltas published.', icon: 'cases' },
-  { title: 'Source code & formulas', description: 'Plain-language formula references; calculation logic transparent.', icon: 'code' },
+  { title: 'Audit contact', description: 'Request a review of our work or report a bug; responses within a few business days.', icon: 'contact' },
+  { title: 'Corrections log', description: 'Public record of material updates triggered by reader-reported errors or methodology disagreements.', icon: 'changelog' },
+  { title: 'Known limitations', description: 'Documented openly and updated when discovered. Honest about where the calculator is not strong.', icon: 'limitations' },
+  { title: 'Source code & formulas', description: 'Plain-language formula references; calculation logic transparent in the source repository.', icon: 'code' },
+  { title: 'Methodology documentation', description: 'What the calculator implements and the verification framework it targets, published openly.', icon: 'cases' },
 ];
 
 function LayerIcon({ icon }: { icon: Layer['icon'] }) {
@@ -37,20 +35,6 @@ function LayerIcon({ icon }: { icon: Layer['icon'] }) {
           <line x1={6} y1={10} x2={30} y2={10} stroke={colors.good} strokeWidth={1.5} />
           <line x1={6} y1={16} x2={30} y2={16} stroke={colors.good} strokeWidth={1.5} />
           <line x1={6} y1={22} x2={30} y2={22} stroke={colors.good} strokeWidth={1.5} />
-        </g>
-      );
-    case 'peer':
-      return (
-        <g>
-          <rect x={1} y={4} width={10} height={20} fill={colors.brand.primary} fillOpacity={0.5} />
-          <rect x={13} y={4} width={10} height={20} fill={colors.warn} fillOpacity={0.5} />
-          <rect x={25} y={4} width={10} height={20} fill={colors.brand.accent} fillOpacity={0.5} />
-        </g>
-      );
-    case 'real':
-      return (
-        <g>
-          <path d="M 4 24 L 18 8 L 32 24 L 32 28 L 4 28 Z" fill={colors.danger} fillOpacity={0.18} stroke={colors.danger} strokeWidth={1.5} />
         </g>
       );
     case 'changelog':
@@ -88,14 +72,14 @@ export function AuditTrailStack({ className }: { className?: string }) {
         viewBox="0 0 1000 600"
         titleId="audit-trail-stack-title"
         descId="audit-trail-stack-desc"
-        title="Seven layers of audit artifacts available for public review"
-        desc="Vertical stack of seven audit artifacts that anyone can review. Bottom layer source code and formulas: public formula references with calculation logic in plain language. Layer 2 reference case results: 8 ACCA cases with our calculator output and deltas published openly. Layer 3 peer software comparison: side-by-side runs for 4 sample homes with methodology documented. Layer 4 real-home validation: approximately 50 homes from ResStock and user submissions with observed peak demand. Layer 5 changelog: every code change affecting results documented with date and reason. Layer 6 known limitations: published openly and updated when discovered. Top layer audit contact: anyone can request review or report a bug. Anyone can audit at any level."
+        title="Five layers of audit artifacts available for public review"
+        desc="Vertical stack of five audit artifacts that anyone can review. Bottom layer methodology documentation: what the calculator implements and the verification framework it targets, published openly. Layer 2 source code and formulas: plain-language formula references with calculation logic transparent in the source repository. Layer 3 known limitations: documented openly and updated when discovered. Layer 4 corrections log: public record of material updates triggered by reader-reported errors or methodology disagreements. Top layer audit contact: anyone can request review or report a bug, responses within a few business days. Anyone can audit at any level."
         className="w-full"
       >
         <rect width={1000} height={600} fill={colors.surface.canvas} />
 
         <text x={500} y={36} textAnchor="middle" fontFamily={FONT} fontSize={typography.size.chartTitle} fontWeight={typography.weight.title} fill={colors.ink[900]}>
-          Seven layers anyone can audit
+          Five layers anyone can audit
         </text>
         <text x={500} y={58} textAnchor="middle" fontFamily={FONT} fontSize={typography.size.legend} fill={colors.ink[500]}>
           Each layer is publicly accessible; report bugs and we respond

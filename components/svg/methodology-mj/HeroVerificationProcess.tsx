@@ -94,14 +94,14 @@ export function HeroVerificationProcess({ className }: { className?: string }) {
         viewBox="0 0 1200 600"
         titleId="hero-verification-process-title"
         descId="hero-verification-process-desc"
-        title="Four-layer Manual J calculator verification process"
-        desc="Four-step verification process for our Manual J calculator. Step 1 ACCA test cases: 8 reference homes with expected loads published by ACCA, we run our calculator on each and document the delta. Step 2 peer software comparison: cross-check against Wrightsoft, Cool Calc, and reference Manual J 8 implementations on identical inputs. Step 3 real-home validation: compare calculated loads to field-measured peak demand from approximately 50 sample homes from ResStock and BuildingSync. Step 4 tolerance band published: document accuracy ranges, edge cases, and known limitations openly for independent audit. All results published for outside review."
+        title="Four-layer Manual J calculator verification framework"
+        desc="Four-layer verification framework for the Manual J calculator. Layer 1 ACCA test cases: 8 reference homes published by ACCA with expected loads, target band plus or minus 5 percent on each case. Layer 2 peer software comparison: cross-check against Wrightsoft, Cool Calc, and other Manual J implementations on identical inputs, target band plus or minus 3 to 5 percent per the comparison literature. Layer 3 real-home validation: compare calculator output to inferred peak demand from utility data and datasets like NREL ResStock, target band plus or minus 15 percent consistent with Manual J input-uncertainty floor. Layer 4 publish: methodology, known limitations, corrections log, and audit contact published openly so anyone can verify, criticize, or report bugs."
         className="w-full"
       >
         <rect width={1200} height={600} fill={colors.surface.canvas} />
 
         <text x={600} y={36} textAnchor="middle" fontFamily={FONT} fontSize={typography.size.chartTitle} fontWeight={typography.weight.title} fill={colors.ink[900]}>
-          Four layers of verification, all results published
+          Four verification layers, public audit surface
         </text>
 
         {/* Inter-step arrows */}
@@ -122,7 +122,7 @@ export function HeroVerificationProcess({ className }: { className?: string }) {
           num={1}
           title="ACCA test cases"
           icon="acca"
-          description="8 reference homes published by ACCA with expected cooling and heating loads. We run our calculator on each. Delta within ±5% on all 8."
+          description="8 reference homes published by ACCA with expected cooling and heating loads. The verification target for an implementation is ±5% on each case."
         />
 
         <Step
@@ -130,7 +130,7 @@ export function HeroVerificationProcess({ className }: { className?: string }) {
           num={2}
           title="Peer software"
           icon="peer"
-          description="Cross-check against Wrightsoft Right-J and Cool Calc on identical inputs. Differences typically 3-5%, explained by allowed Manual J assumption variations."
+          description="Cross-check against Wrightsoft Right-J and Cool Calc on identical inputs. The comparison-literature target band is ±3-5%, reflecting allowed Manual J assumption variations."
         />
 
         <Step
@@ -138,7 +138,7 @@ export function HeroVerificationProcess({ className }: { className?: string }) {
           num={3}
           title="Real homes"
           icon="real"
-          description="~50 sample homes from NREL ResStock and user-submitted utility data. Calculator output compared to inferred peak demand. 90%+ within ±15%."
+          description="Compare calculator output to inferred peak demand from utility data and datasets like NREL ResStock. Target band: ±15% on most homes, consistent with Manual J's input-uncertainty floor."
         />
 
         <Step
@@ -146,11 +146,11 @@ export function HeroVerificationProcess({ className }: { className?: string }) {
           num={4}
           title="Publish"
           icon="publish"
-          description="Accuracy data, known limitations, changelog, audit contact — all published openly. Anyone can verify, criticize, or report bugs."
+          description="Methodology, known limitations, corrections log, and audit contact published openly. Anyone can run a verification layer and report results."
         />
 
         <text x={600} y={555} textAnchor="middle" fontFamily={FONT} fontSize={typography.size.legend} fontStyle="italic" fill={colors.ink[500]}>
-          Verification, transparency, and an audit contact — the alternative is unverified claims.
+          Methodology, transparency, and an audit contact. The alternative is unverified claims.
         </text>
       </SvgWrapper>
       <figcaption className="mt-2 text-center text-sm text-ink-500">
